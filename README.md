@@ -29,15 +29,15 @@ Cada una de las tiendas debe tener caracteristicas especificas y categorias acor
 Por ejemplo en un libro se esperaria que hayan categorias por tematica como: juvenil, educacion, etc.
 Asi mismo caracterisiticas especificas como: ISBN, autor, numero de publicacion, etc.
 
-Grupo 1: Libros - Brayan Ortiz y Carlos Andrés Tafurt
-Grupo 2: CD's - Johan Ricardo, Gabriel Suárez y Camilo Campaz
-Grupo 3: Peliculas - Gabriel Delgado, Martin Cifuentes y Felipe Barreto
-Grupo 4: Automoviles - Gilmar Amezquita, Jhan Carlos Carvajal y Juan Pablo Ramos
-Grupo 5: Computadores - Juan José Osorio, Carlos Arturo Díaz y Santiago Arévalo
-Grupo 6: Celulares - Laura Daniela Martínez, Keren López Córdoba y Luis Miguel Ossa Arias
-Grupo 7: Electrodomesticos - Angelica Corrales, Santiago Trochez y Diana Olano
-Grupo 8: Televisores - ?
-Grupo 9: Muebles - ?
+- Grupo 1: Libros - Brayan Ortiz y Carlos Andrés Tafurt
+- Grupo 2: CD's - Johan Ricardo, Gabriel Suárez y Camilo Campaz
+- Grupo 3: Peliculas - Gabriel Delgado, Martin Cifuentes y Felipe Barreto
+- Grupo 4: Automoviles - Gilmar Amezquita, Jhan Carlos Carvajal y Juan Pablo Ramos
+- Grupo 5: Computadores - Juan José Osorio, Carlos Arturo Díaz y Santiago Arévalo
+- Grupo 6: Celulares - Laura Daniela Martínez, Keren López Córdoba y Luis Miguel Ossa Arias
+- Grupo 7: Electrodomesticos - Angelica Corrales, Santiago Trochez y Diana Olano
+- Grupo 8: Televisores - ?
+- Grupo 9: Muebles - ?
 
 Calificacion:
 
