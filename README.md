@@ -36,8 +36,8 @@ Asi mismo caracterisiticas especificas como: ISBN, autor, numero de publicacion,
 - Grupo 5: Computadores - Juan José Osorio, Carlos Arturo Díaz y Santiago Arévalo
 - Grupo 6: Celulares - Laura Daniela Martínez, Keren López Córdoba y Luis Miguel Ossa Arias
 - Grupo 7: Electrodomesticos - Angelica Corrales, Santiago Trochez y Diana Olano
-- Grupo 8: Televisores - ?
-- Grupo 9: Muebles - ?
+- Grupo 8: Televisores - Daniela Bonilla, Mateo Rada y Gianni Benavides
+- Grupo 9: Muebles - Juan Manuel Palta, Danilo Erazo Meza y Juan Felipe Blanco
 
 Calificacion:
 
