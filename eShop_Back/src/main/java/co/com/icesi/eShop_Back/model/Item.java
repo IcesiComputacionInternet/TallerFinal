@@ -5,9 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -17,11 +16,14 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Item {
     @Id
-    private UUID orderId;
+    private UUID itemId;
     private String name;
     private String description;
     private Long price;
     private String imageUrl;
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "category_category_id")
     private Category category;
+    @ManyToMany(mappedBy = "items")
+    private List<Order> orders;
 }
