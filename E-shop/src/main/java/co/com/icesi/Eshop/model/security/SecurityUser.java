@@ -1,5 +1,7 @@
-package co.com.icesi.Eshop.model;
+package co.com.icesi.Eshop.model.security;
 
+import co.com.icesi.Eshop.model.Role;
+import co.com.icesi.Eshop.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

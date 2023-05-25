@@ -33,4 +33,8 @@ public class Item {
     @JoinColumn(name = "category_category_id")
     private Category category;
 
+    @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
+    @JoinColumn(name = "order_order_id")
+    private Order order;
+
 }
