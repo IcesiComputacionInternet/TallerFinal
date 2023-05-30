@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Index.module.css'
 import myImage from '../resources/logo.png'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';

@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Index.module.css'
 import { Button, TextField } from "@mui/material";
 import { createTheme } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
