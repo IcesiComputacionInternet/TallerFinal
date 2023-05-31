@@ -14,7 +14,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order {
+public class OrderStore {
 
     @Id
     private UUID orderId;
@@ -30,7 +30,7 @@ public class Order {
     private Long total;
 
 
-    @ManyToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "orderStores", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Item> items;
 
 }

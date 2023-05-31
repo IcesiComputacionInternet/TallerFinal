@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,7 +27,8 @@ public class EShopApplication {
 										OrderRepository orderRepository,
 										ItemRepository itemRepository,
 										CategoryRepository categoryRepository,
-										AuthoritiesRepository authoritiesRepository) {
+										AuthoritiesRepository authoritiesRepository,
+										PasswordEncoder encoder) {
 
 		Authorities authorities1 = Authorities.builder()
 				.authority("ADMIN")
@@ -88,30 +90,33 @@ public class EShopApplication {
 				.firstName("John")
 				.lastName("Doe")
 				.email("email1@email.com")
-				.password("password")
+				.password(encoder.encode("password"))
 				.birthDate(LocalDateTime.of(1999, 1, 1, 0, 0))
 				.phoneNumber("3123342122")
 				.address("Calle 1 # 1-1")
+				.role(role1)
 				.build();
 		UserPrincipal user2 = UserPrincipal.builder()
 				.userId(UUID.fromString("a3516a26-ff13-11ed-be56-0242ac120003"))
 				.firstName("Jane")
 				.lastName("Doe")
 				.email("email2@email.com")
-				.password("password")
+				.password(encoder.encode("password"))
 				.birthDate(LocalDateTime.of(1999, 1, 1, 0, 0))
 				.phoneNumber("3123342122")
 				.address("Calle 1 # 1-1")
+				.role(role2)
 				.build();
 		UserPrincipal user3 = UserPrincipal.builder()
 				.userId(UUID.fromString("a3516a26-ff13-11ed-be56-0242ac120004"))
 				.firstName("Jack")
 				.lastName("Doe")
 				.email("email3@email.com")
-				.password("password")
+				.password(encoder.encode("password"))
 				.birthDate(LocalDateTime.of(1999, 1, 1, 0, 0))
 				.phoneNumber("3123342122")
 				.address("Calle 1 # 1-1")
+				.role(role3)
 				.build();
 		////////////////////////////////////////
 
@@ -148,20 +153,26 @@ public class EShopApplication {
 				.category(category4)
 				.build();
 		////////////////////////////////////////
-		Order order1 = Order.builder()
+		OrderStore orderStore1 = OrderStore.builder()
 				.orderId(UUID.fromString("a35184d4-ff13-11ed-be56-0242ac120002"))
 				.userPrincipal(user1)
 				.items(Arrays.asList(item1, item2))
+				.status("PENDING")
+				.total(3000L)
 				.build();
-		Order order2 = Order.builder()
+		OrderStore orderStore2 = OrderStore.builder()
 				.orderId(UUID.fromString("a35184d4-ff13-11ed-be56-0242ac120003"))
 				.userPrincipal(user2)
 				.items(Arrays.asList(item3, item4))
+				.status("PENDING")
+				.total(3000L)
 				.build();
-		Order order3 = Order.builder()
+		OrderStore orderStore3 = OrderStore.builder()
 				.orderId(UUID.fromString("a35184d4-ff13-11ed-be56-0242ac120004"))
 				.userPrincipal(user3)
 				.items(Arrays.asList(item1, item2, item3, item4))
+				.status("PENDING")
+				.total(3000L)
 				.build();
 		////////////////////////////////////////
 		return args -> {
@@ -170,7 +181,7 @@ public class EShopApplication {
 			categoryRepository.saveAll(Arrays.asList(category1, category2, category3, category4));
 			userRepository.saveAll(Arrays.asList(user1, user2, user3));
 			itemRepository.saveAll(Arrays.asList(item1, item2, item3, item4));
-			orderRepository.saveAll(Arrays.asList(order1, order2, order3));
+			orderRepository.saveAll(Arrays.asList(orderStore1, orderStore2, orderStore3));
 		};
 
 

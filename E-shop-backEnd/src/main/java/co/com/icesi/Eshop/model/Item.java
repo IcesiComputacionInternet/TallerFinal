@@ -34,11 +34,11 @@ public class Item {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
-            name = "item_order",
+            name = "item_order_store",
             joinColumns = @JoinColumn(name = "item_id"),
             inverseJoinColumns = @JoinColumn(name = "order_id")
     )
-    private List<Order> orders;
+    private List<OrderStore> orderStores;
 
 
 

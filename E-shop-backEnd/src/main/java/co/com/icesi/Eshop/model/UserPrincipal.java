@@ -1,6 +1,5 @@
 package co.com.icesi.Eshop.model;
 
-import co.com.icesi.Eshop.model.security.Authorities;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,7 +41,7 @@ public class UserPrincipal {
 
 
     @OneToMany(mappedBy = "userPrincipal")
-    private List<Order> orders;
+    private List<OrderStore> orderStores;
 
 
 
