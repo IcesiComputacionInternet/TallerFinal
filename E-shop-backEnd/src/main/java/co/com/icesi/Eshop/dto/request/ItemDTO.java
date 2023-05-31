@@ -1,11 +1,10 @@
-package co.com.icesi.Eshop.dto;
+package co.com.icesi.Eshop.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -14,18 +13,31 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
-    @NotBlank
-    @NotNull
-    @NotEmpty
-    @Email
-    private String email;
+public class ItemDTO {
+
     @NotBlank
     @NotEmpty
     @NotNull
-    private String password;
-    @NotEmpty
+    private String description;
     @NotBlank
+    @NotEmpty
     @NotNull
-    private String phoneNumber;
+    private String name;
+    @NotBlank
+    @NotEmpty
+    @NotNull
+    private Long price;
+    @NotBlank
+    @NotEmpty
+    @NotNull
+    private String imageUrl;
+    @NotBlank
+    @NotEmpty
+    @NotNull
+    private String categoryId;
+    @NotBlank
+    @NotEmpty
+    @NotNull
+    private String orderId;
+
 }

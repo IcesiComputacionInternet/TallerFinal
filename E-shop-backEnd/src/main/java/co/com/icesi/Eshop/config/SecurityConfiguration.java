@@ -47,7 +47,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
                                                    AuthorizationManager<RequestAuthorizationContext> access) throws Exception {
         return http
-                .cors(AbstractHttpConfigurer::disable)
+                .cors().and()
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth.anyRequest().access(access))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
@@ -75,7 +75,7 @@ public class SecurityConfiguration {
                 = RequestMatcherDelegatingAuthorizationManager.builder()
                 .add(permitAll, (context,other) -> new AuthorizationDecision(true));
 
-        managerBuilder.add(new MvcRequestMatcher(introspector, "/api/icesi-users/**"),
+        managerBuilder.add(new MvcRequestMatcher(introspector, "/api/icesi-userPrincipals/**"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_BANK","SCOPE_ADMIN"));
         managerBuilder.add(new MvcRequestMatcher(introspector, "api/icesi-accounts/**"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_ADMIN"));

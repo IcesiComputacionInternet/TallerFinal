@@ -1,29 +1,26 @@
 package co.com.icesi.Eshop.model.security;
 
-import co.com.icesi.Eshop.model.Role;
-import co.com.icesi.Eshop.model.User;
+import co.com.icesi.Eshop.model.UserPrincipal;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public record SecurityUser(User user) implements UserDetails {
+public record SecurityUser(UserPrincipal userPrincipal) implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Stream.of(user).map(User::getRole).map(Role::getRoleName).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        //return Stream.of(userPrincipal).map(UserPrincipal::getRole).map(Role::getRoleName).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return null;
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return userPrincipal.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return userPrincipal.getEmail();
     }
 
     @Override

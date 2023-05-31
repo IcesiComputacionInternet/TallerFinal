@@ -5,10 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -29,12 +27,19 @@ public class Item {
 
     private String imageUrl;
 
-    @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
-    @JoinColumn(name = "category_category_id")
-    private Category category;
 
     @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
-    @JoinColumn(name = "order_order_id")
-    private Order order;
+    @JoinColumn(name = "category_categoryId")
+    private Category category;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "item_order",
+            joinColumns = @JoinColumn(name = "item_id"),
+            inverseJoinColumns = @JoinColumn(name = "order_id")
+    )
+    private List<Order> orders;
+
+
 
 }

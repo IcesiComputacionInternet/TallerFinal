@@ -19,14 +19,18 @@ public class Order {
     @Id
     private UUID orderId;
 
+
     @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
-    @JoinColumn(name = "user_user_id")
-    private User user;
+    @JoinColumn(name = "user_principal_user_id")
+    private UserPrincipal userPrincipal;
+
 
     private String status;
 
     private Long total;
 
-    @OneToMany(mappedBy = "order", cascade = javax.persistence.CascadeType.ALL)
+
+    @ManyToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Item> items;
+
 }

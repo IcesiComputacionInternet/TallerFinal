@@ -17,6 +17,6 @@ public class UserManagementService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username).map(SecurityUser::new)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("UserPrincipal not found"));
     }
 }

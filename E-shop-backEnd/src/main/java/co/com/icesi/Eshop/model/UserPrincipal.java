@@ -1,5 +1,6 @@
 package co.com.icesi.Eshop.model;
 
+import co.com.icesi.Eshop.model.security.Authorities;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class UserPrincipal {
 
     @Id
     private UUID userId;
@@ -34,11 +35,15 @@ public class User {
 
     private LocalDateTime birthDate;
 
+
     @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
     @JoinColumn(name = "role_role_id")
     private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = javax.persistence.CascadeType.ALL)
+
+    @OneToMany(mappedBy = "userPrincipal")
     private List<Order> orders;
+
+
 
 }

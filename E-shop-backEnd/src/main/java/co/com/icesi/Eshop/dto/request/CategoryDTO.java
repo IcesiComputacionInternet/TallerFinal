@@ -1,4 +1,4 @@
-package co.com.icesi.Eshop.dto;
+package co.com.icesi.Eshop.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,11 +13,13 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleDTO {
+public class CategoryDTO {
+
     @NotBlank
     @NotEmpty
     @NotNull
-    private String roleName;
+    private String name;
+
     @NotBlank
     @NotEmpty
     @NotNull
