@@ -1,0 +1,39 @@
+.bar{
+    display:flex;
+    height:calc(100%);
+    min-width:200px;
+    background-color:#000000;
+    flex-direction:column;
+}
+
+.logo{
+    width: 90;
+    height: 90;
+}
+
+.logoTitle{
+    color:#e6e6e9;
+    padding-right:20px;
+}
+
+.logoContainer{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content: center;
+}
+
+.buttonsContainer{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content: center;
+    padding-top:20px;
+}
+
+.logoutContainer{
+    display:flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-grow: 1;
+}
