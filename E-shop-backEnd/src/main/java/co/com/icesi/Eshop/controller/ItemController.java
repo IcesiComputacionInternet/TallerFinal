@@ -30,20 +30,20 @@ public class ItemController implements ItemApi {
     }
 
     /**
-     * @param itemDTO
+     * @param itemName
      * @return
      */
     @Override
-    public String deleteItem(ItemDTO itemDTO) {
+    public String deleteItem(String itemName) {
         return null;
     }
 
     /**
-     * @param itemDTO
+     * @param itemName
      * @return
      */
     @Override
-    public ItemResponseDTO findItem(ItemDTO itemDTO) {
+    public ItemResponseDTO findItem(String itemName) {
         return null;
     }
 

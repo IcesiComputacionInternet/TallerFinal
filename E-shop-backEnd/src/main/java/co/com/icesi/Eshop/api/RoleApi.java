@@ -2,9 +2,9 @@ package co.com.icesi.Eshop.api;
 
 import co.com.icesi.Eshop.dto.request.RoleDTO;
 import co.com.icesi.Eshop.dto.response.RoleResponseDTO;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping(RoleApi.BASE_URL)
@@ -13,14 +13,14 @@ public interface RoleApi {
     String BASE_URL = "/api/roles";
 
     @PostMapping("/create")
-    RoleResponseDTO createRole(RoleDTO roleResponseDTO);
+    RoleResponseDTO createRole(@RequestBody  @Valid RoleDTO roleResponseDTO);
 
-    @PostMapping("/update")
-    RoleResponseDTO updateRole(RoleDTO roleResponseDTO);
+    @PutMapping("/update")
+    RoleResponseDTO updateRole(@RequestBody  @Valid RoleDTO roleResponseDTO);
 
-    @PostMapping("/delete")
-    RoleResponseDTO deleteRole(RoleDTO roleResponseDTO);
+    @DeleteMapping("/delete/{roleName}")
+    RoleResponseDTO deleteRole(@PathVariable String roleName);
 
-    @PostMapping("/all")
+    @GetMapping("/all")
     List<RoleResponseDTO> getAllRoles();
 }

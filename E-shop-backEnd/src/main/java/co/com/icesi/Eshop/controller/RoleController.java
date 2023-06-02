@@ -33,12 +33,12 @@ public class RoleController implements RoleApi {
     }
 
     /**
-     * @param roleDTO
+     * @param roleName
      * @return
      */
     @Override
-    public RoleResponseDTO deleteRole(RoleDTO roleDTO) {
-        return roleService.deleteRole(roleDTO);
+    public RoleResponseDTO deleteRole(String  roleName) {
+        return null;
     }
 
     /**

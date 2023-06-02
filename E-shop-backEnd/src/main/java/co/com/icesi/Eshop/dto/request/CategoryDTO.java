@@ -16,12 +16,10 @@ import javax.validation.constraints.NotNull;
 public class CategoryDTO {
 
     @NotBlank
-    @NotEmpty
     @NotNull
     private String name;
 
     @NotBlank
-    @NotEmpty
     @NotNull
     private String description;
 }

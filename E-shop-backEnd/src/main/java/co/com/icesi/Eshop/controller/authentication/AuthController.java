@@ -1,6 +1,7 @@
 package co.com.icesi.Eshop.controller.authentication;
 
 import co.com.icesi.Eshop.dto.security.LoginDTO;
+import co.com.icesi.Eshop.dto.security.TokenDTO;
 import co.com.icesi.Eshop.service.security.TokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @AllArgsConstructor
 public class AuthController {
@@ -18,8 +21,8 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
 
-    @PostMapping("/login")
-    public String token(@RequestBody LoginDTO loginDTO) {
+    @PostMapping("/api/login")
+    public TokenDTO token(@RequestBody @Valid LoginDTO loginDTO) {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginDTO.username(), loginDTO.password()));
         return tokenService.generateToken(authentication);

@@ -16,33 +16,32 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-    @NotBlank
+
     @NotNull
-    @NotEmpty
     @Email
     private String email;
+
     @NotBlank
-    @NotEmpty
     @NotNull
     private String password;
-    @NotEmpty
+
     @NotBlank
     @NotNull
     private String phoneNumber;
 
-    @NotEmpty
+
     @NotBlank
     @NotNull
     private String firstName;
-    @NotEmpty
+
     @NotBlank
     @NotNull
     private String lastName;
-    @NotEmpty
+
     @NotBlank
     @NotNull
     private String address;
-    @NotEmpty
+
     @NotBlank
     @NotNull
     private LocalDateTime birthDate;

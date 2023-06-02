@@ -32,39 +32,45 @@ public class OrderController implements OrderApi {
         return null;
     }
 
-    /**
-     * @param orderDTO
-     * @return
-     */
     @Override
-    public OrderResponseDTO cancelOrder(OrderDTO orderDTO) {
+    public OrderResponseDTO delete(String orderName) {
         return null;
     }
 
     /**
      * @param orderDTO
      * @return
+     * public OrderResponseDTO cancelOrder(OrderDTO orderDTO) {
+     *         return null;
+     *     }
+     */
+
+
+
+    /**
+     * @param orderID
+     * @return
      */
     @Override
-    public OrderResponseDTO payOrder(OrderDTO orderDTO) {
+    public OrderResponseDTO payOrder(String orderID) {
         return null;
     }
 
     /**
-     * @param orderDTO
+     * @param orderID
      * @return
      */
     @Override
-    public OrderResponseDTO deliverOrder(OrderDTO orderDTO) {
+    public OrderResponseDTO deliverOrder(String orderID) {
         return null;
     }
 
     /**
-     * @param orderDTO
+     * @param orderID
      * @return
      */
     @Override
-    public OrderResponseDTO receiveOrder(OrderDTO orderDTO) {
+    public OrderResponseDTO receiveOrder(String orderID) {
         return null;
     }
 

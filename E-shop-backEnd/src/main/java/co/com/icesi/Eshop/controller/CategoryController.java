@@ -32,11 +32,11 @@ public class CategoryController implements CategoryApi {
     }
 
     /**
-     * @param categoryDTO
+     * @param categoryMame
      * @return
      */
     @Override
-    public CategoryResponseDTO deleteCategory(CategoryDTO categoryDTO) {
+    public CategoryResponseDTO deleteCategory(String categoryMame) {
         return null;
     }
 

@@ -69,7 +69,7 @@ public class SecurityConfiguration {
     public AuthorizationManager<RequestAuthorizationContext> requestMatcherAuthorizationManager
             (HandlerMappingIntrospector introspector){
 
-        RequestMatcher permitAll = new AndRequestMatcher(new MvcRequestMatcher(introspector, "/token"));
+        RequestMatcher permitAll = new AndRequestMatcher(new MvcRequestMatcher(introspector, "/api/login"));
 
         RequestMatcherDelegatingAuthorizationManager.Builder managerBuilder
                 = RequestMatcherDelegatingAuthorizationManager.builder()

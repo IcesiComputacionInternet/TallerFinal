@@ -14,12 +14,12 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoleDTO {
+
     @NotBlank
-    @NotEmpty
     @NotNull
     private String roleName;
+
     @NotBlank
-    @NotEmpty
     @NotNull
     private String description;
 }

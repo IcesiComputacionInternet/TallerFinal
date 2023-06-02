@@ -2,9 +2,7 @@ package co.com.icesi.Eshop.api;
 
 import co.com.icesi.Eshop.dto.request.UserDTO;
 import co.com.icesi.Eshop.dto.response.UserResponseDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,11 +14,11 @@ public interface UserApi {
     @PostMapping("/create")
     UserResponseDTO createUser(UserDTO userDTO);
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     UserResponseDTO updateUser(UserDTO userDTO);
 
-    @PostMapping("/delete")
-    UserResponseDTO deleteUser(UserDTO userDTO);
+    @DeleteMapping("/delete/{email}")
+    UserResponseDTO deleteUser(@PathVariable String email);
 
     @GetMapping("/all")
     List<UserResponseDTO> getAllUsers();

@@ -18,19 +18,17 @@ import java.util.List;
 public class OrderDTO {
 
     @NotBlank
-    @NotEmpty
     @NotNull
     private String userEmail;
     @NotBlank
-    @NotEmpty
     @NotNull
     private String status;
+
     @NotBlank
-    @NotEmpty
     @NotNull
     private Long total;
-    @NotBlank
-    @NotEmpty
+
+
     @NotNull
     private List<String> items;
 

@@ -2,33 +2,37 @@ package co.com.icesi.Eshop.api;
 
 import co.com.icesi.Eshop.dto.request.OrderDTO;
 import co.com.icesi.Eshop.dto.response.OrderResponseDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping(OrderApi.BASE_URL)
 public interface OrderApi {
-    String BASE_URL = "api/orders";
+    String BASE_URL = "/api/orders";
 
     @PostMapping("/create")
-    OrderResponseDTO createOrder(OrderDTO orderResponseDTO);
+    OrderResponseDTO createOrder(@Valid @RequestBody  OrderDTO orderResponseDTO);
 
-    @PostMapping("/update")
-    OrderResponseDTO updateOrder(OrderDTO orderResponseDTO);
+    @PutMapping("/update")
+    OrderResponseDTO updateOrder( @Valid @RequestBody OrderDTO orderResponseDTO);
 
-    @PostMapping("/cancel")
-    OrderResponseDTO cancelOrder(OrderDTO orderResponseDTO);
+    @DeleteMapping("/delete/{orderName}")
+    OrderResponseDTO delete(@PathVariable String orderName);
 
-    @PostMapping("/pay")
-    OrderResponseDTO payOrder(OrderDTO orderResponseDTO);
 
-    @PostMapping("/deliver")
-    OrderResponseDTO deliverOrder(OrderDTO orderResponseDTO);
 
-    @PostMapping("/receive")
-    OrderResponseDTO receiveOrder(OrderDTO orderResponseDTO);
+//    @PostMapping("/cancel") si cancela no deberia llegar al backend
+    //OrderResponseDTO cancelOrder(OrderDTO orderResponseDTO);
+
+    @PatchMapping("/pay/{orderID}")
+    OrderResponseDTO payOrder(@PathVariable String orderID);
+
+    @PatchMapping("/deliver/{orderID}")
+    OrderResponseDTO deliverOrder(@PathVariable String orderID);
+
+    @PatchMapping("/receive/{orderID}")
+    OrderResponseDTO receiveOrder(@PathVariable String orderID);
 
     @GetMapping("/all")
     List<OrderResponseDTO> getAllOrders();
