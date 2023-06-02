@@ -76,12 +76,12 @@ public class SecurityConfiguration {
                 .add(permitAll, (context,other) -> new AuthorizationDecision(true));
 
         managerBuilder.add(new MvcRequestMatcher(introspector, "/api/icesi-userPrincipals/**"),
-                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_BANK","SCOPE_ADMIN"));
-        managerBuilder.add(new MvcRequestMatcher(introspector, "api/icesi-accounts/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_Store","SCOPE_ADMIN"));
+        managerBuilder.add(new MvcRequestMatcher(introspector, "/api/icesi-accounts/**"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_ADMIN"));
-        managerBuilder.add(new MvcRequestMatcher(introspector, "api/icesi-accounts/activate"),
+        managerBuilder.add(new MvcRequestMatcher(introspector, "/api/icesi-accounts/activate"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_ADMIN"));
-        managerBuilder.add(new MvcRequestMatcher(introspector, "api/icesi-accounts/deactivate"),
+        managerBuilder.add(new MvcRequestMatcher(introspector, "/api/icesi-accounts/deactivate"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_ADMIN"));
         managerBuilder.add(new MvcRequestMatcher(introspector, "/**"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));

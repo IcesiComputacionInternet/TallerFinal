@@ -1,16 +1,22 @@
 package co.com.icesi.Eshop.model.security;
 
+import co.com.icesi.Eshop.model.Role;
 import co.com.icesi.Eshop.model.UserPrincipal;
+import lombok.Data;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public record SecurityUser(UserPrincipal userPrincipal) implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //return Stream.of(userPrincipal).map(UserPrincipal::getRole).map(Role::getRoleName).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-        return null;
+        return Stream.of(userPrincipal).map(UserPrincipal::getRole).map(Role::getRoleName).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        //return null;
     }
 
     @Override
@@ -42,4 +48,8 @@ public record SecurityUser(UserPrincipal userPrincipal) implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
+
+
 }
