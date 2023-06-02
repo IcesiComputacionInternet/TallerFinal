@@ -1,9 +1,8 @@
 package co.com.icesi.eShopBackEnd;
 
+import co.com.icesi.eShopBackEnd.model.Customer;
 import co.com.icesi.eShopBackEnd.model.Role;
-import co.com.icesi.eShopBackEnd.model.User;
-import co.com.icesi.eShopBackEnd.repository.UserRepository;
-import net.bytebuddy.asm.Advice;
+import co.com.icesi.eShopBackEnd.repository.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,15 +14,26 @@ import java.util.UUID;
 
 @SpringBootApplication
 public class EShopBackEndApplication {
+	/*
+	Una orden pertenece a un user
+	Un user puede tener muchas ordenes
+
+	Un rol puede pertenecer a muchos usuarios
+	Muchos usuarios tienen UN rol
+
+	Una orden tiene muchos items
+	Los items pueden pertenecer a muchas ordenes
+
+	Muchos items tienen UNA category
+	Una category puede pertenecer a muchos items
+	 */
 
 	public static void main(String[] args) {
 		SpringApplication.run(EShopBackEndApplication.class, args);
 	}
 	@Bean
-	CommandLineRunner commandLineRunner(UserRepository users,
+	CommandLineRunner commandLineRunner(CustomerRepository users,
 										PasswordEncoder encoder) {
-
-
 
 		Role admin = Role.builder()
 				.roleId(UUID.randomUUID())
@@ -45,8 +55,8 @@ public class EShopBackEndApplication {
 
 		LocalDate date1 = LocalDate.of(1990, 1, 1);
 
-		User adminUser = User.builder()
-				.userId(UUID.randomUUID())
+		Customer adminCustomer = Customer.builder()
+				.customerId(UUID.randomUUID())
 				.firstName("John")
 				.lastName("Doe")
 				.email("jhonDoe@email.com")
@@ -57,8 +67,8 @@ public class EShopBackEndApplication {
 				.role(admin)
 				.build();
 
-		User normalUser = User.builder()
-				.userId(UUID.randomUUID())
+		Customer normalCustomer = Customer.builder()
+				.customerId(UUID.randomUUID())
 				.firstName("Zara")
 				.lastName("Gomez")
 				.email("z@email.com")
@@ -69,10 +79,10 @@ public class EShopBackEndApplication {
 				.role(user)
 				.build();
 
-		users.save(adminUser);
-		users.save(normalUser);
-		return args -> {
 
+		return args -> {
+			users.save(adminCustomer);
+			users.save(normalCustomer);
 		};
 
 	}

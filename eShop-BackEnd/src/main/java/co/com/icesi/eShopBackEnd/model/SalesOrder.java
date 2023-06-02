@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -14,7 +13,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+public class SalesOrder {
 
     @Id
     private UUID orderId;
@@ -22,15 +21,17 @@ public class Order {
     private Long total;
 
     @ManyToOne
-    @JoinColumn(name = "user_user_id")
-    private User user;
+    @JoinColumn(name = "customer_customer_id")
+    private Customer customer;
 
+    /*
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
             name = "order_item",
-            joinColumns = { @JoinColumn(name = "order_id") },
-            inverseJoinColumns = { @JoinColumn(name = "item_id") }
+            joinColumns = { @JoinColumn(name = "order_order_id") },
+            inverseJoinColumns = { @JoinColumn(name = "item_item_id") }
     )
-    private List<Item> items;
+     */
+    //private List<Item> items;
 
 }

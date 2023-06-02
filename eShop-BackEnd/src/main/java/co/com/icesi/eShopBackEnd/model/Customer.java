@@ -15,10 +15,10 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Customer {
 
     @Id
-    private UUID userId;
+    private UUID customerId;
     private String firstName;
     private String lastName;
     private String email;
@@ -31,6 +31,6 @@ public class User {
     @JoinColumn(name = "role_role_id")
     private Role role;
 
-    @OneToMany(mappedBy = "user")
-    private List<Order> orders;
+    @OneToMany(mappedBy = "customer")
+    private List<SalesOrder> salesOrders;
 }

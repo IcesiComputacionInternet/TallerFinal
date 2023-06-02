@@ -7,22 +7,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.stream.Stream;
 
-public record SecurityUser(User user) implements UserDetails {
+public record SecurityUser(Customer customer) implements UserDetails {
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Stream.of(user).map(User::getRole).map(Role::getRoleName).map(SimpleGrantedAuthority::new).toList();
+        return Stream.of(customer).map(Customer::getRole).map(Role::getRoleName).map(SimpleGrantedAuthority::new).toList();
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return customer.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return customer.getEmail();
     }
 
     @Override

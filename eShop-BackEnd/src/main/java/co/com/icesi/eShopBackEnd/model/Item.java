@@ -26,7 +26,7 @@ public class Item {
     @JoinColumn(name = "category_category_id")
     private Category category;
 
-    @ManyToMany(mappedBy = "items")
-    private List<Order> orders;
+    //@ManyToMany(mappedBy = "items")
+    //private List<Order> orders;
 
 }

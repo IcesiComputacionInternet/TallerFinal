@@ -23,7 +23,7 @@ public class AuthenticatorManager extends DaoAuthenticationProvider {
     public Authentication createSuccessAuthentication(Object principal, Authentication authentication, UserDetails user){
         UsernamePasswordAuthenticationToken successAuth = (UsernamePasswordAuthenticationToken) super.createSuccessAuthentication(principal, authentication, user);
         SecurityUser securityUser = (SecurityUser) user;
-        return new CustomAuthentication(successAuth, securityUser.user().getUserId().toString());
+        return new CustomAuthentication(successAuth, securityUser.customer().getCustomerId().toString());
 
     }
 }

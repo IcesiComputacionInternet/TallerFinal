@@ -20,6 +20,7 @@ import java.util.Objects;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+
     @ExceptionHandler(value = ArgumentsException.class)
     public ResponseEntity<ArgumentsError> handleMissingArgumentsException (ArgumentsException argumentsException){
         return ResponseEntity.status(argumentsException.getError().getStatus()).body(argumentsException.getError());
@@ -56,4 +57,6 @@ public class GlobalExceptionHandler {
         var error = ArgumentsExceptionBuilder.createArgumentsError(HttpStatus.UNAUTHORIZED,new DetailBuilder(ErrorCode.ERR_500_ACC,badCredentialsException.getMessage()));
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
+
+
 }

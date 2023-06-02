@@ -1,14 +1,17 @@
 package co.com.icesi.eShopBackEnd.dto.response;
 
-import co.com.icesi.eShopBackEnd.model.Role;
+import co.com.icesi.eShopBackEnd.dto.CreateRoleDTO;
+
 
 import lombok.Builder;
 import lombok.Data;
+
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
 @Builder
-public class ResponseUserDTO {
+public class ResponseCustomerDTO {
     private UUID userId;
     private String firstName;
     private String lastName;
@@ -16,6 +19,6 @@ public class ResponseUserDTO {
     private String password;
     private String phoneNumber;
     private String address;
-    private String birthday;
-    private Role role;
+    private LocalDate birthday;
+    private CreateRoleDTO role;
 }

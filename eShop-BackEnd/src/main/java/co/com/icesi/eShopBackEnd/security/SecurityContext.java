@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class SecurityContext {
     public  String getCurrentUserId(){
         return ((JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication())
-                .getToken().getClaimAsString("userId");
+                .getToken().getClaimAsString("customerId");
     }
 
     public  String getCurrentUserRole() {
