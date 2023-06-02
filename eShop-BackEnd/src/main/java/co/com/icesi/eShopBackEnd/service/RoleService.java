@@ -21,7 +21,7 @@ public class RoleService {
 
     public CreateRoleDTO save(CreateRoleDTO role) {
 
-        boolean exists = roleRepository.roleExists(role.name());
+        boolean exists = roleRepository.roleExists(role.roleName());
         if (exists){
             throw ArgumentsExceptionBuilder.createArgumentsException(
                     "Existing data",

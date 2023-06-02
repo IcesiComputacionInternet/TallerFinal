@@ -8,6 +8,6 @@ import javax.validation.constraints.NotBlank;
 public record CreateRoleDTO(
 
         @NotBlank
-        String name,
+        String roleName,
         String description) {
 }

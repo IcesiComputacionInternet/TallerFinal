@@ -11,7 +11,6 @@ public record CreateItemDTO(
         @NotBlank
         String name,
 
-        @NotBlank
         @Min(value = 0, message = "El precio debe ser mayor a 0")
         Long price,
 
