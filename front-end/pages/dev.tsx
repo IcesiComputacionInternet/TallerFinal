@@ -3,15 +3,15 @@ import Router from "next/router";
 export default function Dev() {
     const handleAdmin = () => {
         localStorage.setItem('role', 'admin');
-        Router.push('/home');
+        window.location.href = '/home';
     }
     const handleUser = () => {
         localStorage.setItem('role', 'user');
-        Router.push('/home');
+        window.location.href = '/home';
     }
     const handleClean = () => {
         localStorage.clear();
-        Router.push('/home');
+        window.location.href = '/';
     }
     return (
         <div>

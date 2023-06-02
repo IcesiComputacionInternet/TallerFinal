@@ -57,7 +57,7 @@ const items  = [
 const Sidebar : NextPage = () => {
     const handleLogout = () => {
         localStorage.clear();
-        Router.push("/");
+        window.location.href = "/";
     }
 
     return (
