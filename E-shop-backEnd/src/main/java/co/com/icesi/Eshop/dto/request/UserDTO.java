@@ -38,11 +38,12 @@ public class UserDTO {
     @NotNull
     private String lastName;
 
-    @NotBlank
-    @NotNull
+
     private String address;
 
-    @NotBlank
-    @NotNull
+
     private LocalDateTime birthDate;
+
+    @NotBlank
+    private String role;
 }

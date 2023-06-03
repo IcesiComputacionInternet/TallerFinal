@@ -20,13 +20,10 @@ public class ItemService {
     private final CategoryRepository categoryRepository;
     private final ItemMapper itemMapper;
     public ItemResponseDTO createItem(ItemDTO itemDTO) {
-        /*
         Item item = itemMapper.toItem(itemDTO);
         item.setCategory(categoryRepository.findById(UUID.fromString(itemDTO.getCategoryId())).orElseThrow(() -> new RuntimeException("Category not found")));
-        item.setOrder(null); //TODO: set order correctly
+        item.setOrderStores(null); //TODO: set order correctly
         return itemMapper.toItemResponseDTO(itemRepository.save(item));
-         */
-        return null;
     }
 
     public List<ItemResponseDTO> getAllItems() {

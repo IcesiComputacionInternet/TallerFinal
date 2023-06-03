@@ -22,7 +22,7 @@ public class Authorities {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid2")
     private UUID authorityId;
 
     private String authority;
