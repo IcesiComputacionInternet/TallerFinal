@@ -38,7 +38,7 @@ public class RoleController implements RoleApi {
      */
     @Override
     public RoleResponseDTO deleteRole(String  roleName) {
-        return null;
+        return roleService.deleteRole(roleName);
     }
 
     /**

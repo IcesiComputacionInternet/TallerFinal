@@ -9,7 +9,7 @@ interface UserDTO {
   lastName: string;
   address: string;
   birthDate: string;
-  rol: string;
+  role: string;
 }
 
 const URL_API = "http://localhost:8080/api/";
