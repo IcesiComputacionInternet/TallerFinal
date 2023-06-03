@@ -35,8 +35,8 @@ public class RoleService {
         return roleMapper.toRoleResponseDTO(roleRepository.save(roleInDB));
     }
 
-    public RoleResponseDTO deleteRole(RoleDTO roleDTO) {
-        Role role = roleRepository.findByRoleName(roleDTO.getRoleName()).orElseThrow(() -> new RuntimeException("Role with " + roleDTO.getRoleName() + " does not exists"));
+    public RoleResponseDTO deleteRole(String roleName) {
+        Role role = roleRepository.findByRoleName(roleName).orElseThrow(() -> new RuntimeException("Role with " + roleName + " does not exists"));
         roleRepository.delete(role);
         return roleMapper.toRoleResponseDTO(role);
     }
