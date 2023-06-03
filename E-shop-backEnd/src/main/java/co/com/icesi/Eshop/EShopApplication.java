@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
 @SpringBootApplication
@@ -34,35 +35,44 @@ public class EShopApplication {
 										PasswordEncoder encoder) {
 
 		Authorities authorities1 = Authorities.builder()
-				.authority("ADMIN")
+				.authority("/**")
 				.build();
 		Authorities authorities2 = Authorities.builder()
-				.authority("USER")
+				.authority("/api/users/**")
+				.build();
+		Authorities authorities3 = Authorities.builder()
+				.authority("/api/role/**")
+				.build();
+		Authorities authorities4 = Authorities.builder()
+				.authority("/api/order/**")
+				.build();
+		Authorities authorities5 = Authorities.builder()
+				.authority("/api/item/**")
 				.build();
 		////////////////////////////////////////
 		Role role1 = Role.builder()
 				.roleId(UUID.fromString("a351796c-ff13-11ed-be56-0242ac120002"))
 				.roleName("ADMIN")
 				.description("Administrator")
-				.authorities(new ArrayList<>(Arrays.asList(authorities2)))
+				.authorities(new ArrayList<>(Collections.singletonList(authorities1)))
 				.build();
 		Role role2 = Role.builder()
 				.roleId(UUID.fromString("a351796c-ff13-11ed-be56-0242ac120003"))
 				.roleName("USER")
 				.description("UserPrincipal")
-				.authorities(new ArrayList<>(Arrays.asList(authorities2)))
+				.authorities(new ArrayList<>(Collections.singletonList(authorities2)))
 				.build();
 		Role role3 = Role.builder()
 				.roleId(UUID.fromString("a351796c-ff13-11ed-be56-0242ac120004"))
 				.roleName("Store")
 				.description("Store")
-				.authorities(new ArrayList<>(Arrays.asList(authorities2)))
+				.authorities(new ArrayList<>(Arrays.asList(authorities4,authorities5)))
 				.build();
 		Role role4 = Role.builder()
 				.roleId(UUID.fromString("a351796c-ff13-11ed-be56-0242ac120005"))
 				.roleName("Supervisor")
 				.description("Supervisor")
-				.authorities(new ArrayList<>(Arrays.asList(authorities1, authorities2)))
+				.authorities(new ArrayList<>(Arrays.asList(authorities3,authorities4,authorities5)))
 				.build();
 		////////////////////////////////////////
 

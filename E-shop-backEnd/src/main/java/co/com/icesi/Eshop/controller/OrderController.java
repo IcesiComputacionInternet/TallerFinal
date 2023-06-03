@@ -29,7 +29,7 @@ public class OrderController implements OrderApi {
      */
     @Override
     public OrderResponseDTO updateOrder(OrderDTO orderDTO) {
-        return null;
+        return orderService.updateOrder(orderDTO);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class OrderController implements OrderApi {
      */
     @Override
     public OrderResponseDTO payOrder(String orderName) {
-        return null;
+        return orderService.payOrder(orderName);
     }
 
     /**
@@ -63,7 +63,7 @@ public class OrderController implements OrderApi {
      */
     @Override
     public OrderResponseDTO deliverOrder(String orderName) {
-        return null;
+        return orderService.deliverOrder(orderName);
     }
 
     /**
@@ -72,7 +72,7 @@ public class OrderController implements OrderApi {
      */
     @Override
     public OrderResponseDTO receiveOrder(String orderName) {
-        return null;
+        return orderService.receiveOrder(orderName);
     }
 
     /**
