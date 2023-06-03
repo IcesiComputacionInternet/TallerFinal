@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import "./optionsAdm.css";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const OptionsAdmin = () => {
   const navigate = useNavigate();
