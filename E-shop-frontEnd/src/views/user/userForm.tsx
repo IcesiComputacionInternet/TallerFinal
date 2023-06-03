@@ -23,7 +23,7 @@ const formUser = {
   lastName: "",
   address: "",
   birthDate: "",
-  rol: "USER",
+  role: "USER",
 };
 
 const UserForm: React.FC<props> = ({ rolAdmin, roles }) => {
@@ -53,7 +53,6 @@ const UserForm: React.FC<props> = ({ rolAdmin, roles }) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDataUser({ ...dataUser, [event.target.name]: event.target.value });
-    console.log(dataUser);
   };
 
   const handleDate = (date: Date) => {
