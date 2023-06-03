@@ -1,0 +1,21 @@
+.container-options-top{
+    width: 900px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 10px auto;
+}
+
+.container-options-bottom{
+    width: 900px;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.container-options {
+    width: 1200px;
+    margin: 20px auto;
+    border: 1px solid #D3D3D3;
+}
