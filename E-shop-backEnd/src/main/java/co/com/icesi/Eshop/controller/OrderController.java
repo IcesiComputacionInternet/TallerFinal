@@ -34,7 +34,7 @@ public class OrderController implements OrderApi {
 
     @Override
     public OrderResponseDTO delete(String orderName) {
-        return null;
+        return orderService.deleteOrder(orderName);
     }
 
     /**
