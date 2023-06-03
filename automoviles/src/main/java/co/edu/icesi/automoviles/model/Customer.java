@@ -5,6 +5,9 @@ import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,13 +23,18 @@ import java.util.List;
 @NoArgsConstructor
 public class Customer {
     @Id
-    private UUID userId;
+    private UUID customerId;
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
     private String address;
     private LocalDateTime birthDate;
-    //private Role role;
-    //private List<Order> orders;
+
+    @ManyToOne
+    @JoinColumn(name = "role_roleId", nullable = false)
+    private Role role;
+
+    @OneToMany(mappedBy = "customer")
+    private List<PurchaseOrder> orders;
 }

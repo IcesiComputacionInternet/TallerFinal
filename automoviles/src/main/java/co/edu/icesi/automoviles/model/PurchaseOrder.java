@@ -4,6 +4,10 @@ import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,10 +23,21 @@ import java.util.List;
 @NoArgsConstructor
 public class PurchaseOrder {
     @Id
-    private UUID orderId;
-    //private User user;
+    private UUID purchaseOrderId;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_customerId", nullable = false)
+    private Customer customer;
+
     private String status;
     private long total;
-    //private List<Item> items;
+
+    @ManyToMany
+    @JoinTable(
+        name = "item_order",
+        joinColumns = @JoinColumn(name = "purchaseOrder_purchaseOrderId"),
+        inverseJoinColumns = @JoinColumn(name = "item_itemId")
+    )
+    private List<Item> items;
     
 }

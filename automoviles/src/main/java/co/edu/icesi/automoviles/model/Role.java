@@ -1,9 +1,11 @@
 package co.edu.icesi.automoviles.model;
 
 import java.util.UUID;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,4 +22,7 @@ public class Role {
     private UUID roleId;
     private String roleName;
     private String description;
+
+    @OneToMany(mappedBy = "role")
+    private List<Customer> customers;
 }
