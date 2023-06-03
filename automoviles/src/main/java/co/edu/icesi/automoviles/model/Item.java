@@ -37,5 +37,5 @@ public class Item {
         joinColumns = @JoinColumn(name = "item_itemId"),
         inverseJoinColumns = @JoinColumn(name = "purchaseOrder_purchaseOrderId")
     )
-    private List<PurchaseOrder> purchaseOrder;
+    private List<PurchaseOrder> purchaseOrders;
 }
