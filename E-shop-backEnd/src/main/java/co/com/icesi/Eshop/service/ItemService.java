@@ -23,6 +23,7 @@ public class ItemService {
         Item item = itemMapper.toItem(itemDTO);
         item.setCategory(categoryRepository.findById(UUID.fromString(itemDTO.getCategoryId())).orElseThrow(() -> new RuntimeException("Category not found")));
         item.setOrderStores(null); //TODO: set order correctly
+        item.setItemId(UUID.randomUUID());
         return itemMapper.toItemResponseDTO(itemRepository.save(item));
     }
 
