@@ -9,6 +9,10 @@ const OptionsAdmin = () => {
     navigate("/add_user_admin", { replace: true });
   };
 
+  const handleCrudRoles = () => {
+    navigate("/crud_role", { replace: true });
+  };
+
   return (
     <>
       <div className="container-options">
@@ -33,6 +37,7 @@ const OptionsAdmin = () => {
             Crear Usuarios
           </Button>
           <Button
+            onClick={handleCrudRoles}
             variant="contained"
             sx={{
               width: "20%",
@@ -50,6 +55,7 @@ const OptionsAdmin = () => {
             Gestionar Usuarios
           </Button>
           <Button
+            onClick={handleCrudRoles}
             variant="contained"
             sx={{
               width: "20%",
