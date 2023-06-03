@@ -42,5 +42,5 @@ public class UserResponseDTO {
     @NotEmpty
     @NotBlank
     @NotNull
-    private LocalDateTime birthDate;
+    private String birthDate;
 }
