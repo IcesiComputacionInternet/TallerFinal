@@ -6,7 +6,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { useState } from "react";
-import { json, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./login.css";
 import authServices from "../../services/authServices";
 import Swal from "sweetalert2";
@@ -55,7 +55,7 @@ const LoginForm = () => {
 
     try {
       const user = await authServices.login({ username, password });
-      localStorage.setItem("token", JSON.stringify(user.data));
+      localStorage.setItem("token", JSON.stringify(user.data.token));
       navigate("/", { replace: true });
     } catch (error) {
       Swal.fire({

@@ -22,7 +22,6 @@ public class EShopApplication {
 	}
 
 
-	/**
 
 	@Bean
 	CommandLineRunner commandLineRunner(UserRepository userRepository,
@@ -189,7 +188,6 @@ public class EShopApplication {
 
 
 	}
-
-	**/
+	
 
 }
