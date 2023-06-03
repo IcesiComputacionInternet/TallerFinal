@@ -25,11 +25,12 @@ public class UserService {
 
 
     public UserResponseDTO createUser(UserDTO userDTO) {
-        authoritiesService.validateRole("ADMIN");
         userAlreadyExists(userDTO.getEmail());
         phoneAlreadyExists(userDTO.getPhoneNumber());
 
         UserPrincipal userPrincipal = userMapper.toUser(userDTO);
+        if(userDTO.getRole().equals("ADMIN")){authoritiesService.validateRole("ADMIN");}
+
         userPrincipal.setRole(roleRepository.findByRoleName(userDTO.getRole()).orElseThrow(() -> new RuntimeException("Role with " + userDTO.getRole() + " does not exists")));
 
         return userMapper.toUserResponseDTO(userRepository.save(userPrincipal));
