@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TokenGenerator {
     @SneakyThrows
     public static String geToken( MockMvc mockMvc,ObjectMapper objectMapper ,String email) {
-        var login =   mockMvc.perform(MockMvcRequestBuilders.post("/login").content(
+        var login =   mockMvc.perform(MockMvcRequestBuilders.post("/api/authorities/login").content(
                                 objectMapper.writeValueAsString(LoginDTO.builder().username(email).password("password").build())
                         )
                         .contentType(MediaType.APPLICATION_JSON)
