@@ -1,6 +1,6 @@
 import { Typography, TextField, ThemeProvider, Container } from "@mui/material";
 import { Box, createTheme, FormControl, InputLabel } from "@mui/material";
-import { OutlinedInput, Button } from "@mui/material";
+import { OutlinedInput, Button, Autocomplete } from "@mui/material";
 import { InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
@@ -70,8 +70,14 @@ const UserForm = () => {
               label="Usuario"
               name="username"
               autoFocus
+              sx={{ mb: 3 }}
             />
-            <FormControl fullWidth variant="outlined" color="primary">
+            <FormControl
+              fullWidth
+              variant="outlined"
+              color="primary"
+              sx={{ mb: 1 }}
+            >
               <InputLabel htmlFor="outlined-adornment-password">
                 Password
               </InputLabel>
@@ -128,6 +134,14 @@ const UserForm = () => {
               label="Dirección"
               name="address"
               autoFocus
+              sx={{ mb: 3 }}
+            />
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              options={["Hola Mundo", "Hola Mundo 2"]}
+              sx={{ width: "100%", mb: 3 }}
+              renderInput={(params) => <TextField {...params} label="Rol" />}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker label="Fecha de nacimiento" sx={{ width: "100%" }} />
@@ -138,7 +152,7 @@ const UserForm = () => {
               variant="contained"
               sx={{
                 mt: 3,
-                mb: 2,
+                mb: 5,
                 bgcolor: "#D3D3D3",
                 color: "black",
                 "&:hover": {
