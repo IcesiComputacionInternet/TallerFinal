@@ -1,6 +1,7 @@
 import axios from "axios";
+import authHeader from "./authHeader";
 
-const URL_API = "http://localhost:8080/";
+const URL_API = "http://localhost:8080/api/";
 
 interface Credentials {
   username: string;
@@ -8,7 +9,9 @@ interface Credentials {
 }
 
 const login = (credentials: Credentials) => {
-  return axios.post(`${URL_API}/token`, credentials);
+  return axios.post(`${URL_API}login`, credentials, {
+    headers: authHeader(),
+  });
 };
 
 const validateToken = (response: {
@@ -27,7 +30,7 @@ const validateToken = (response: {
 
 const logout = () => {
   localStorage.removeItem("token");
-  window.location.href = "/login?logout=true";
+  window.location.href = "/";
 };
 
 const authServices = {

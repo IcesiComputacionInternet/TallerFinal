@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { Typography } from "@mui/material";
 import UtilServices from "../../services/utilServices";
-import Logo from "../../assets/logo_transparent_min.png";
 import LoginForm from "./loginForm";
-import Swal from "sweetalert2";
+import Header from "../utils/header";
+import Footer from "../utils/footer";
 import "./login.css";
 
 const Login = () => {
@@ -11,9 +11,7 @@ const Login = () => {
 
   return (
     <div className="main">
-      <div className="header">
-        <img src={Logo} alt="Logo" className="logo" />
-      </div>
+      <Header />
       <div className="container">
         <div className="container-left">
           <Typography
@@ -41,45 +39,15 @@ const Login = () => {
         </div>
         <div className="container-right">
           <LoginForm />
+          <Link
+            to="/sing_up"
+            style={{ fontFamily: "sans-serif", color: "gray" }}
+          >
+            ¿No tienes una cuenta? Crea una aquí
+          </Link>
         </div>
       </div>
-      <footer className="footer">
-        <Typography
-          variant="subtitle1"
-          color="black"
-          align="center"
-          className="credits"
-        >
-          {"Copyright © "}
-          <Link
-            style={{ textDecoration: "none", color: "inherit" }}
-            to="https://github.com/GabrielSB19"
-            className="links"
-          >
-            Gabriel Suarez -
-          </Link>{" "}
-          <Link
-            style={{ textDecoration: "none", color: "inherit" }}
-            to="https://github.com/GabrielSB19"
-            className="links"
-          >
-            Camilo Campaz -
-          </Link>{" "}
-          <Link
-            style={{
-              textDecoration: "none",
-              color: "inherit",
-              marginRight: "5px",
-            }}
-            to="https://github.com/GabrielSB19"
-            className="links"
-          >
-            Johan Ricardo
-          </Link>{" "}
-          {new Date().getFullYear()}
-          {"."}
-        </Typography>
-      </footer>
+      <Footer />
     </div>
   );
 };

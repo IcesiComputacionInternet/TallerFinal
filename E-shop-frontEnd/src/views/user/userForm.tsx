@@ -1,22 +1,24 @@
-import * as React from "react";
-import { TextField, Container, Box, Button } from "@mui/material";
-import { FormControl, InputLabel, OutlinedInput } from "@mui/material";
+import { Typography, TextField, ThemeProvider, Container } from "@mui/material";
+import { Box, createTheme, FormControl, InputLabel } from "@mui/material";
+import { OutlinedInput, Button } from "@mui/material";
 import { InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./login.css";
-import authServices from "../../services/authServices";
-import Swal from "sweetalert2";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-const credentials = {
-  username: "",
+const form = {
+  email: "",
   password: "",
+  phoneNumber: "",
+  firstName: "",
+  lastName: "",
+  address: "",
+  birthDate: "",
 };
 
-const LoginForm = () => {
+const UserForm = () => {
   const theme = createTheme({
     palette: {
       primary: {
@@ -28,9 +30,8 @@ const LoginForm = () => {
     },
   });
 
-  const [username, setUsername] = useState(credentials.username);
-  const [password, setPassword] = useState(credentials.password);
-  const navigate = useNavigate();
+  const [dataUser, setDataUser] = useState(form);
+  const [password, setPassword] = useState(form.password);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -40,31 +41,6 @@ const LoginForm = () => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
-  };
-
-  const handleUsername = (e: any) => {
-    setUsername(e.target.value);
-  };
-
-  const handlePassword = (e: any) => {
-    setPassword(e.target.value);
-  };
-
-  const handleLogin = async (e: any) => {
-    e.preventDefault();
-
-    try {
-      const user = await authServices.login({ username, password });
-      localStorage.setItem("token", JSON.stringify(user.data.token));
-      navigate("/", { replace: true });
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title:
-          '<span style="font-family: Arial, sans-serif;">Error al autenticar</span>',
-        html: '<div style="font-family: Arial, sans-serif;">Usuario o contraseña incorrectos</div>',
-      });
-    }
   };
 
   return (
@@ -78,12 +54,14 @@ const LoginForm = () => {
             alignItems: "center",
           }}
         >
-          <Box
-            component="form"
-            onSubmit={handleLogin}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" noValidate sx={{ mt: 1 }}>
+            <Typography
+              variant="h4"
+              component="h4"
+              sx={{ textAlign: "center" }}
+            >
+              Crea una cuenta
+            </Typography>
             <TextField
               color="primary"
               margin="normal"
@@ -92,7 +70,6 @@ const LoginForm = () => {
               label="Usuario"
               name="username"
               autoFocus
-              onChange={handleUsername}
             />
             <FormControl fullWidth variant="outlined" color="primary">
               <InputLabel htmlFor="outlined-adornment-password">
@@ -114,10 +91,47 @@ const LoginForm = () => {
                   </InputAdornment>
                 }
                 label="Password"
-                onChange={handlePassword}
               />
             </FormControl>
-
+            <TextField
+              color="primary"
+              margin="normal"
+              fullWidth
+              id="phoneNumber"
+              label="Número de teléfono"
+              name="phoneNumber"
+              autoFocus
+            />
+            <TextField
+              color="primary"
+              margin="normal"
+              fullWidth
+              id="firstName"
+              label="Nombres"
+              name="firstName"
+              autoFocus
+            />
+            <TextField
+              color="primary"
+              margin="normal"
+              fullWidth
+              id="lastName"
+              label="Apellidos"
+              name="lastName"
+              autoFocus
+            />
+            <TextField
+              color="primary"
+              margin="normal"
+              fullWidth
+              id="address"
+              label="Dirección"
+              name="address"
+              autoFocus
+            />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker label="Fecha de nacimiento" sx={{ width: "100%" }} />
+            </LocalizationProvider>
             <Button
               type="submit"
               fullWidth
@@ -134,7 +148,7 @@ const LoginForm = () => {
                 },
               }}
             >
-              Iniciar Sesión
+              Crear cuenta
             </Button>
           </Box>
         </Box>
@@ -143,4 +157,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default UserForm;
