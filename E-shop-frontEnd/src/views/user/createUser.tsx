@@ -1,4 +1,6 @@
 import UtilServices from "../../services/utilServices";
+import RoleServices from "../../services/roleServices";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../utils/header";
 import Footer from "../utils/footer";
@@ -9,12 +11,23 @@ interface props {
 }
 
 const CreateUser: React.FC<props> = ({ rolAdmin }) => {
+  const [roles, setRoles] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (rolAdmin) {
+      RoleServices.getRoles().then((res) => {
+        const newRoles = res.data.map((element: any) => element.roleName);
+        setRoles((prevRoles) => [...prevRoles, ...newRoles]);
+      });
+    }
+  }, []);
+
   UtilServices.setTitlePage("E-Shop | Sing Up");
   return (
     <div className="main">
       <Header />
       <div className="container">
-        <UserForm rolAdmin={rolAdmin} />
+        <UserForm rolAdmin={rolAdmin} roles={roles} />
       </div>
       <Link
         to="/login"

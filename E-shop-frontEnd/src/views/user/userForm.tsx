@@ -7,9 +7,12 @@ import { useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import UserServices from "../../services/userServices";
+import { useNavigate } from "react-router-dom";
 
 interface props {
   rolAdmin: Boolean;
+  roles: any;
 }
 
 const formUser = {
@@ -23,7 +26,8 @@ const formUser = {
   rol: "USER",
 };
 
-const UserForm: React.FC<props> = ({ rolAdmin }) => {
+const UserForm: React.FC<props> = ({ rolAdmin, roles }) => {
+  const navigate = useNavigate();
   const theme = createTheme({
     palette: {
       primary: {
@@ -64,9 +68,14 @@ const UserForm: React.FC<props> = ({ rolAdmin }) => {
     setDataUser({ ...dataUser, birthDate: newDate });
   };
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
-    console.log(dataUser);
+    try {
+      const user = await UserServices.addUser(dataUser);
+      navigate("/login", { replace: true });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -168,11 +177,11 @@ const UserForm: React.FC<props> = ({ rolAdmin }) => {
               sx={{ mb: 3 }}
               onChange={handleChange}
             />
-            {rolAdmin ? (
+            {rolAdmin && roles ? (
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
-                options={["Hola Mundo", "Hola Mundo 2"]}
+                options={roles}
                 sx={{ width: "100%", mb: 3 }}
                 renderInput={(params) => <TextField {...params} label="Rol" />}
               />
@@ -205,7 +214,6 @@ const UserForm: React.FC<props> = ({ rolAdmin }) => {
             </Button>
           </Box>
         </Box>
-
       </Container>
     </ThemeProvider>
   );
