@@ -18,8 +18,8 @@ public interface RoleApi {
     @PutMapping("/update")
     RoleResponseDTO updateRole(@RequestBody  @Valid RoleDTO roleResponseDTO);
 
-    @DeleteMapping("/delete/{roleName}")
-    RoleResponseDTO deleteRole(@PathVariable String roleName);
+    @DeleteMapping("/delete")
+    RoleResponseDTO deleteRole(@RequestBody String roleName);
 
     @GetMapping("/all")
     List<RoleResponseDTO> getAllRoles();

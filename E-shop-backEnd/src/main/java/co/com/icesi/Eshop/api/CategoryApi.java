@@ -18,9 +18,9 @@ public interface CategoryApi {
     @PutMapping("/update")
     CategoryResponseDTO updateCategory(@Valid @RequestBody CategoryDTO categoryResponseDTO);
 
-    @DeleteMapping("/delete/{name}")
-    CategoryResponseDTO deleteCategory(@PathVariable String name);
+    @DeleteMapping("/delete")
+    CategoryResponseDTO deleteCategory(@RequestBody String name);
 
-    @GetMapping
+    @GetMapping("/all")
     List<CategoryResponseDTO> getAllCategories();
 }
