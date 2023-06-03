@@ -28,7 +28,7 @@ public class AuthControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    private static final String URL="/api/login";
+    private static final String URL="/api/authorities/login";
 
 
     @Test
