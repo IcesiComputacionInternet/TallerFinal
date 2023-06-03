@@ -19,4 +19,6 @@ public class MovieDTO {
 
     private String imageURL;
 
+    private String category;
+
 }

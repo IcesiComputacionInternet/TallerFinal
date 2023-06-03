@@ -27,7 +27,7 @@ public class MovieOrder {
 
     @ManyToOne
     @JoinColumn(name="usermv_user_id", nullable=false)
-    private MovieUser order;
+    private MovieUser user;
 
     @ManyToMany
     @JoinTable(

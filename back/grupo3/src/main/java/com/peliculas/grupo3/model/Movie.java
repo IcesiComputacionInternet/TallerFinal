@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.UUID;
 import java.util.List;
 
@@ -31,6 +28,11 @@ public class Movie {
     private long price;
 
     private String imageURL;
+
+    @ManyToOne
+    @JoinColumn(name="category_category_id", nullable=false)
+    private Category category;
+
 
     @ManyToMany(mappedBy = "movies")
     private List<MovieOrder> oders;

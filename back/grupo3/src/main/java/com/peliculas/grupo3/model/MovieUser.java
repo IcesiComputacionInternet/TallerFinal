@@ -38,7 +38,7 @@ public class MovieUser {
     @JoinColumn(name="role_role_id", nullable=false)
     private Role role;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "user")
     private List<MovieOrder> movieOrders;
 
 }
