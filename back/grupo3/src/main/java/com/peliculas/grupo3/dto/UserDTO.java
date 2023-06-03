@@ -34,4 +34,5 @@ public class UserDTO {
 
     @NotBlank
     private String roleName;
+
 }
