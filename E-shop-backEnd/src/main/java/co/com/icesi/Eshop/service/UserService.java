@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,7 +33,7 @@ public class UserService {
         if(userDTO.getRole().equals("ADMIN")){authoritiesService.validateRole("ADMIN");}
 
         userPrincipal.setRole(roleRepository.findByRoleName(userDTO.getRole()).orElseThrow(() -> new RuntimeException("Role with " + userDTO.getRole() + " does not exists")));
-
+        userPrincipal.setUserId(UUID.randomUUID());
         return userMapper.toUserResponseDTO(userRepository.save(userPrincipal));
     }
 
