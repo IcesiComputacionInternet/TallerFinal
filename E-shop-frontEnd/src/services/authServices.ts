@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "./authHeader";
 
-const URL_API = "http://localhost:8080/api/";
+const URL_API = "http://localhost:8080/";
 
 interface Credentials {
   username: string;
@@ -14,20 +14,6 @@ const login = (credentials: Credentials) => {
   });
 };
 
-const validateToken = (response: {
-  status: number;
-  data: { error_message: string };
-}) => {
-  if (response.status === 403) {
-    localStorage.removeItem("token");
-    if (response.data.error_message.startsWith("JWT expired")) {
-      window.location.href = "/login?expired=true";
-    } else {
-      window.location.href = "/login";
-    }
-  }
-};
-
 const logout = () => {
   localStorage.removeItem("token");
   window.location.href = "/";
@@ -35,7 +21,6 @@ const logout = () => {
 
 const authServices = {
   login,
-  validateToken,
   logout,
 };
 

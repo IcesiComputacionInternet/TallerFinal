@@ -47,8 +47,16 @@ const ThemeRoutes = () => {
           path="/sing_up"
           element={
             <IsNotLoggedRoutes>
-              <CreateUser />
+              <CreateUser rolAdmin={false} />
             </IsNotLoggedRoutes>
+          }
+        />
+        <Route
+          path="/add_user_admin"
+          element={
+            <ProtectedRoutes>
+              <CreateUser rolAdmin={true} />
+            </ProtectedRoutes>
           }
         />
         <Route path="*" element={<Navigate to="/" />} />
