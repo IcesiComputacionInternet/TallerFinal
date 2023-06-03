@@ -4,6 +4,7 @@ import co.com.icesi.Eshop.dto.request.UserDTO;
 import co.com.icesi.Eshop.dto.response.UserResponseDTO;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -12,10 +13,10 @@ public interface UserApi {
     String BASE_URL = "/api/users";
 
     @PostMapping("/create")
-    UserResponseDTO createUser(UserDTO userDTO);
+    UserResponseDTO createUser(@RequestBody @Valid UserDTO userDTO);
 
     @PutMapping("/update")
-    UserResponseDTO updateUser(UserDTO userDTO);
+    UserResponseDTO updateUser(@RequestBody @Valid UserDTO userDTO);
 
     @DeleteMapping("/delete/{email}")
     UserResponseDTO deleteUser(@PathVariable String email);
