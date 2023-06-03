@@ -23,6 +23,7 @@ public class EShopApplication {
 
 
 
+
 	//@Bean
 	CommandLineRunner commandLineRunner(UserRepository userRepository,
 										RoleRepository roleRepository,

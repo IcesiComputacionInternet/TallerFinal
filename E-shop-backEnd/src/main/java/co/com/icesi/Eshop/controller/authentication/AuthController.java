@@ -25,7 +25,7 @@ public class AuthController implements AuthorityApi {
 
     private final AuthenticationManager authenticationManager;
 
-    @PostMapping("/api/login")
+    @PostMapping("/login")
     public JwtDTO token(@RequestBody @Valid LoginDTO loginDTO) {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginDTO.username(), loginDTO.password()));

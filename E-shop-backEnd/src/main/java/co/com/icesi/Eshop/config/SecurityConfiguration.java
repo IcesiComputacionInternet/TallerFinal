@@ -80,7 +80,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true, noRollbackFor = Exception.class, timeout = 1000)
+   @Transactional(propagation = Propagation.REQUIRED, readOnly = true, noRollbackFor = Exception.class, timeout = 1000)
     public AuthorizationManager<RequestAuthorizationContext> requestMatcherAuthorizationManager
             (HandlerMappingIntrospector introspector) {
 
@@ -92,7 +92,7 @@ public class SecurityConfiguration {
                         )
                 );
 
-        RequestMatcher permitAll = new AndRequestMatcher(new MvcRequestMatcher(introspector, "/api/login"));
+        RequestMatcher permitAll = new AndRequestMatcher(new MvcRequestMatcher(introspector, "/api/authorities/login"));
         RequestMatcher createUsers = new AndRequestMatcher(new MvcRequestMatcher(introspector, "/api/users/create"));
 
         RequestMatcherDelegatingAuthorizationManager.Builder managerBuilder = RequestMatcherDelegatingAuthorizationManager.builder()
