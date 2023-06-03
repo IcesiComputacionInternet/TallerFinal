@@ -14,7 +14,7 @@ const Login = ({setLogin}: Props) => {
     };
 
     return (
-        <div className='container d-flex align-items-center' style={{ height: "80vh"}}>
+        <div className='container d-flex align-items-center' style={{ height: "78vh"}}>
             <div className='row justify-content-center w-100'>
                 <div className='col-md-6'>
                     <h1 className="display-4 text-center mb-4" 
