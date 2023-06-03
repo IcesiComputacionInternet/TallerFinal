@@ -4,6 +4,7 @@ import co.com.icesi.Eshop.dto.request.UserDTO;
 import co.com.icesi.Eshop.dto.response.UserResponseDTO;
 import co.com.icesi.Eshop.mapper.UserMapper;
 import co.com.icesi.Eshop.model.UserPrincipal;
+import co.com.icesi.Eshop.repository.RoleRepository;
 import co.com.icesi.Eshop.repository.UserRepository;
 import co.com.icesi.Eshop.service.security.AuthoritiesService;
 import lombok.AllArgsConstructor;
@@ -18,16 +19,20 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final AuthoritiesService authoritiesService;
     private final UserMapper userMapper;
 
 
     public UserResponseDTO createUser(UserDTO userDTO) {
-        authoritiesService.validateAuthorities("ADMIN");
+        authoritiesService.validateRole("ADMIN");
         userAlreadyExists(userDTO.getEmail());
         phoneAlreadyExists(userDTO.getPhoneNumber());
 
-        return userMapper.toUserResponseDTO(userRepository.save(userMapper.toUser(userDTO)));
+        UserPrincipal userPrincipal = userMapper.toUser(userDTO);
+        userPrincipal.setRole(roleRepository.findByRoleName(userDTO.getRole()).orElseThrow(() -> new RuntimeException("Role with " + userDTO.getRole() + " does not exists")));
+
+        return userMapper.toUserResponseDTO(userRepository.save(userPrincipal));
     }
 
     private void userAlreadyExists(String email) {
