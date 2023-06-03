@@ -1,7 +1,9 @@
 package co.com.icesi.Eshop.service.security;
 
-import co.com.icesi.Eshop.dto.security.TokenDTO;
+import co.com.icesi.Eshop.dto.security.JwtDTO;
+import co.com.icesi.Eshop.repository.UserRepository;
 import co.com.icesi.Eshop.security.CustomAuthentication;
+import co.com.icesi.Eshop.security.SecurityContext;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,14 +24,16 @@ import java.util.stream.Collectors;
 public class TokenService {
 
     private final JwtEncoder encoder;
+    private final UserRepository userRepository;
 
-    public TokenDTO generateToken(Authentication authentication) {
+    public JwtDTO generateToken(Authentication authentication) {
 
         CustomAuthentication customAuthentication = (CustomAuthentication) authentication;
         Instant now = Instant.now();
         String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
+
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
@@ -39,6 +43,10 @@ public class TokenService {
                 .claim("userId", customAuthentication.getUserId())
                 .build();
         var encoderParameters = JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS256).build(),claims);
-        return TokenDTO.builder().token(this.encoder.encode(encoderParameters).getTokenValue()).build();
+        return JwtDTO.builder()
+                .role(scope)
+                .token(this.encoder.encode(encoderParameters).getTokenValue()).build();
     }
+
+
 }

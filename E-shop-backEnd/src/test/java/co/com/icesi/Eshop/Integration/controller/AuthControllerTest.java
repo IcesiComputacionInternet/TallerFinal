@@ -43,6 +43,7 @@ public class AuthControllerTest {
         var response = objectMapper.readTree(login.getResponse().getContentAsString());
 
         System.out.println("Token response: "+response.get("token").asText());
+        System.out.println("Current role: "+response.get("role").asText());
     }
 
     @Test
