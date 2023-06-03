@@ -40,7 +40,7 @@ public class UserController implements UserApi {
      */
     @Override
     public UserResponseDTO deleteUser(String userEmail) {
-        return null;
+        return userService.deleteUser(userEmail);
     }
 
     /**
