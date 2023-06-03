@@ -27,11 +27,41 @@ public class OrderService {
         order.setItems(orderDTO.getItems().stream().map(itemRepository::findByName).collect(Collectors.toList()));
         return orderMapper.toOrderResponseDTO(orderRepository.save(order));
     }
-
+    public OrderResponseDTO updateOrder(OrderDTO orderDTO) {
+        OrderStore order = orderRepository.findById(UUID.fromString(orderDTO.getOrderId())).orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setItems(orderDTO.getItems().stream().map(itemRepository::findByName).collect(Collectors.toList()));
+        order.setStatus(orderDTO.getStatus());
+        order.setTotal(orderDTO.getTotal());
+        order.setUserPrincipal(userRepository.findByEmail(orderDTO.getUserEmail()).orElseThrow(() -> new RuntimeException("UserPrincipal not found")));
+        return orderMapper.toOrderResponseDTO(orderRepository.save(order));
+    }
     public OrderResponseDTO deleteOrder(String orderId) {
         OrderStore order = orderRepository.findById(UUID.fromString(orderId)).orElseThrow(() -> new RuntimeException("Order not found"));
         orderRepository.delete(order);
         return orderMapper.toOrderResponseDTO(order);
+    }
+    public OrderResponseDTO payOrder(String orderId) {
+        OrderStore order = orderRepository.findById(UUID.fromString(orderId)).orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setStatus("PAYED");
+        return orderMapper.toOrderResponseDTO(orderRepository.save(order));
+    }
+    public OrderResponseDTO cancelOrder(String orderId) {
+        OrderStore order = orderRepository.findById(UUID.fromString(orderId)).orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setStatus("CANCELED");
+        return orderMapper.toOrderResponseDTO(orderRepository.save(order));
+    }
+    public OrderResponseDTO deliverOrder(String orderId) {
+        OrderStore order = orderRepository.findById(UUID.fromString(orderId)).orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setStatus("DELIVERED");
+        return orderMapper.toOrderResponseDTO(orderRepository.save(order));
+    }
+    public OrderResponseDTO receiveOrder(String orderId) {
+        OrderStore order = orderRepository.findById(UUID.fromString(orderId)).orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setStatus("RECEIVED");
+        return orderMapper.toOrderResponseDTO(orderRepository.save(order));
+    }
+    public OrderResponseDTO getOrderById(String orderId) {
+        return orderMapper.toOrderResponseDTO(orderRepository.findById(UUID.fromString(orderId)).orElseThrow(() -> new RuntimeException("Order not found")));
     }
     public List<OrderResponseDTO> getAllOrders() {
         return orderRepository.findAll().stream().map(orderMapper::toOrderResponseDTO).collect(Collectors.toList());
