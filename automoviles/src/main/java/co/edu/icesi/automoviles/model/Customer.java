@@ -30,6 +30,7 @@ public class Customer {
     private String phoneNumber;
     private String address;
     private LocalDateTime birthDate;
+    private String password;
 
     @ManyToOne
     @JoinColumn(name = "role_roleId", nullable = false)
