@@ -32,7 +32,7 @@ public class UserPrincipal {
 
     private String address;
 
-    private LocalDateTime birthDate;
+    private String birthDate;
 
 
     @ManyToOne(cascade = javax.persistence.CascadeType.ALL)

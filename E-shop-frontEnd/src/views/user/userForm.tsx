@@ -40,7 +40,6 @@ const UserForm: React.FC<props> = ({ rolAdmin, roles }) => {
   });
 
   const [dataUser, setDataUser] = useState(formUser);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -56,8 +55,6 @@ const UserForm: React.FC<props> = ({ rolAdmin, roles }) => {
   };
 
   const handleDate = (date: Date) => {
-    setSelectedDate(date);
-
     const fecha = new Date(date.toString());
 
     const newDate = `${fecha.getDate()}/${
@@ -65,6 +62,10 @@ const UserForm: React.FC<props> = ({ rolAdmin, roles }) => {
     }/${fecha.getFullYear()}`;
 
     setDataUser({ ...dataUser, birthDate: newDate });
+  };
+
+  const handleRole = (role: any) => {
+    setDataUser({ ...dataUser, role: role.name });
   };
 
   const handleSubmit = async (event: any) => {
@@ -182,6 +183,7 @@ const UserForm: React.FC<props> = ({ rolAdmin, roles }) => {
                 id="combo-box-demo"
                 options={roles}
                 sx={{ width: "100%", mb: 3 }}
+                onChange={(role) => handleRole(role)}
                 renderInput={(params) => <TextField {...params} label="Rol" />}
               />
             ) : null}
@@ -189,7 +191,6 @@ const UserForm: React.FC<props> = ({ rolAdmin, roles }) => {
               <DatePicker
                 label="Fecha de nacimiento"
                 sx={{ width: "100%" }}
-                value={selectedDate}
                 onChange={(date) => handleDate(date as Date)} // Asegúrate de realizar la conversión de tipos aquí
               />
             </LocalizationProvider>
