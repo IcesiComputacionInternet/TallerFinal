@@ -59,8 +59,8 @@ public class UserService {
         return userMapper.toUserResponseDTO(userRepository.save(userPrincipalUpdated));
     }
 
-    public UserResponseDTO deleteUser(UserDTO userDTO) {
-        Optional<UserPrincipal> user = Optional.ofNullable(userRepository.findByEmail(userDTO.getEmail()).orElseThrow(() -> new RuntimeException("UserPrincipal with " + userDTO.getEmail() + " does not exists")));
+    public UserResponseDTO deleteUser(String userEmail) {
+        Optional<UserPrincipal> user = Optional.ofNullable(userRepository.findByEmail(userEmail).orElseThrow(() -> new RuntimeException("UserPrincipal with " + userEmail + " does not exists")));
         return user.map(value -> {
             userRepository.delete(value);
             return userMapper.toUserResponseDTO(value);
