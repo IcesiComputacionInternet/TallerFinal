@@ -93,7 +93,7 @@ public class SecurityConfiguration {
                 );
 
         RequestMatcher permitAll = new AndRequestMatcher(new MvcRequestMatcher(introspector, "/api/login"));
-        RequestMatcher createUsers = new AndRequestMatcher(new MvcRequestMatcher(introspector, "/api/users"));
+        RequestMatcher createUsers = new AndRequestMatcher(new MvcRequestMatcher(introspector, "/api/users/create"));
 
         RequestMatcherDelegatingAuthorizationManager.Builder managerBuilder = RequestMatcherDelegatingAuthorizationManager.builder()
                 .add(permitAll, (context, other) -> new AuthorizationDecision(true));
