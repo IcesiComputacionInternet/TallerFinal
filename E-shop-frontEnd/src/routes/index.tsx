@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "../views/login/login";
 import Home from "../views/home/home";
 import CreateUser from "../views/user/createUser";
+import CrudRoles from "../views/roles/crudRoles";
 
 interface Props {
   children: React.ReactComponentElement<any>;
@@ -12,6 +13,17 @@ const ProtectedRoutes = ({ children }: Props) => {
     return <Navigate to="/login" />;
   } else {
     return children;
+  }
+};
+
+const ProtectedRoutesAdmin = ({ children }: Props) => {
+  if (
+    localStorage.getItem("token") !== null &&
+    localStorage.getItem("role") === '"ADMIN"'
+  ) {
+    return children;
+  } else {
+    return <Navigate to="/" />;
   }
 };
 
@@ -54,9 +66,17 @@ const ThemeRoutes = () => {
         <Route
           path="/add_user_admin"
           element={
-            <ProtectedRoutes>
+            <ProtectedRoutesAdmin>
               <CreateUser rolAdmin={true} />
-            </ProtectedRoutes>
+            </ProtectedRoutesAdmin>
+          }
+        />
+        <Route
+          path="/crud_role"
+          element={
+            <ProtectedRoutesAdmin>
+              <CrudRoles></CrudRoles>
+            </ProtectedRoutesAdmin>
           }
         />
         <Route path="*" element={<Navigate to="/" />} />
