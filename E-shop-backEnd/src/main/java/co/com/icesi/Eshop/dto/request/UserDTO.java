@@ -42,7 +42,7 @@ public class UserDTO {
     private String address;
 
 
-    private LocalDateTime birthDate;
+    private String birthDate;
 
     @NotBlank
     private String role;

@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -20,7 +21,9 @@ public class RoleService {
 
     public RoleResponseDTO createRole(RoleDTO roleDTO) {
         validateRoleNameDontExist(roleDTO.getRoleName());
-        return roleMapper.toRoleResponseDTO(roleRepository.save(roleMapper.toRole(roleDTO)));
+        Role role = roleMapper.toRole(roleDTO);
+        role.setRoleId(UUID.randomUUID());
+        return roleMapper.toRoleResponseDTO(roleRepository.save(role));
     }
 
     private void validateRoleNameDontExist(String roleName) {
