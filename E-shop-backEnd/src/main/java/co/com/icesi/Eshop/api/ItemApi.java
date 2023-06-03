@@ -16,8 +16,8 @@ public interface ItemApi {
     @PutMapping("/update")
     ItemResponseDTO updateItem( @Valid @RequestBody ItemDTO itemResponseDTO);
 
-    @DeleteMapping("/delete/{itemName}")
-    String deleteItem(@PathVariable String itemName);
+    @DeleteMapping("/delete")
+    String deleteItem(@RequestBody String itemName);
 
     @GetMapping("/find/{name}")
     ItemResponseDTO findItem(@PathVariable String name);

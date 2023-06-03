@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(TestConfigurationData.class )
 public class TokenGenerator {
     @SneakyThrows
-    public static String geToken( MockMvc mockMvc,ObjectMapper objectMapper ,String email) {
+    public static String getToken(MockMvc mockMvc, ObjectMapper objectMapper , String email) {
         var login =   mockMvc.perform(MockMvcRequestBuilders.post("/api/authorities/login").content(
                                 objectMapper.writeValueAsString(LoginDTO.builder().username(email).password("password").build())
                         )
