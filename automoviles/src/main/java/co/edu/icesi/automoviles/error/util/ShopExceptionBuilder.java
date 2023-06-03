@@ -12,24 +12,24 @@ import java.util.Arrays;
 import java.util.function.Supplier;
 
 public class ShopExceptionBuilder {
-    public static ShopError createIcesiError(String message, HttpStatus httpStatus, DetailBuilder... details){
+    public static ShopError createShopError(String message, HttpStatus httpStatus, DetailBuilder... details){
         return ShopError.builder().status(httpStatus)
                 .details(
                         Arrays.stream(details)
-                                .map(ShopExceptionBuilder::mapToIcesiErrorDetail)
+                                .map(ShopExceptionBuilder::mapToShopErrorDetail)
                                 .toList()
                 ).build();
     }
 
-    public static ShopErrorDetail mapToIcesiErrorDetail(DetailBuilder detailBuilder) {
+    public static ShopErrorDetail mapToShopErrorDetail(DetailBuilder detailBuilder) {
         return ShopErrorDetail.builder()
                 .errorCode(detailBuilder.errorCode().getCode())
                 .errorMessage(detailBuilder.errorCode().getMessage().formatted(detailBuilder.fields()))
                 .build();
     }
 
-    public static Supplier<ShopException> createIcesiException(String message, HttpStatus httpStatus, DetailBuilder... details) {
-        return () -> new ShopException(message, createIcesiError(message, httpStatus, details));
+    public static Supplier<ShopException> createShopException(String message, HttpStatus httpStatus, DetailBuilder... details) {
+        return () -> new ShopException(message, createShopError(message, httpStatus, details));
     }
 
 }
