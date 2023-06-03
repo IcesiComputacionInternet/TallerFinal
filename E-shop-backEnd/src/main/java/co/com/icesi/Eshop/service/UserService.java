@@ -25,11 +25,12 @@ public class UserService {
 
 
     public UserResponseDTO createUser(UserDTO userDTO) {
-        authoritiesService.validateRole("ADMIN");
         userAlreadyExists(userDTO.getEmail());
         phoneAlreadyExists(userDTO.getPhoneNumber());
 
         UserPrincipal userPrincipal = userMapper.toUser(userDTO);
+        if(userDTO.getRole().equals("ADMIN")){authoritiesService.validateRole("ADMIN");}
+
         userPrincipal.setRole(roleRepository.findByRoleName(userDTO.getRole()).orElseThrow(() -> new RuntimeException("Role with " + userDTO.getRole() + " does not exists")));
 
         return userMapper.toUserResponseDTO(userRepository.save(userPrincipal));
@@ -58,8 +59,8 @@ public class UserService {
         return userMapper.toUserResponseDTO(userRepository.save(userPrincipalUpdated));
     }
 
-    public UserResponseDTO deleteUser(UserDTO userDTO) {
-        Optional<UserPrincipal> user = Optional.ofNullable(userRepository.findByEmail(userDTO.getEmail()).orElseThrow(() -> new RuntimeException("UserPrincipal with " + userDTO.getEmail() + " does not exists")));
+    public UserResponseDTO deleteUser(String userEmail) {
+        Optional<UserPrincipal> user = Optional.ofNullable(userRepository.findByEmail(userEmail).orElseThrow(() -> new RuntimeException("UserPrincipal with " + userEmail + " does not exists")));
         return user.map(value -> {
             userRepository.delete(value);
             return userMapper.toUserResponseDTO(value);

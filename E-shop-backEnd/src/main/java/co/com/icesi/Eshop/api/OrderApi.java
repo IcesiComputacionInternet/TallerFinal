@@ -17,22 +17,22 @@ public interface OrderApi {
     @PutMapping("/update")
     OrderResponseDTO updateOrder( @Valid @RequestBody OrderDTO orderResponseDTO);
 
-    @DeleteMapping("/delete/{orderName}")
-    OrderResponseDTO delete(@PathVariable String orderName);
+    @DeleteMapping("/delete")
+    OrderResponseDTO delete(@RequestBody String orderName);
 
 
 
 //    @PostMapping("/cancel") si cancela no deberia llegar al backend
     //OrderResponseDTO cancelOrder(OrderDTO orderResponseDTO);
 
-    @PatchMapping("/pay/{orderID}")
-    OrderResponseDTO payOrder(@PathVariable String orderID);
+    @PatchMapping("/pay")
+    OrderResponseDTO payOrder(@RequestBody String orderName);
 
-    @PatchMapping("/deliver/{orderID}")
-    OrderResponseDTO deliverOrder(@PathVariable String orderID);
+    @PatchMapping("/deliver")
+    OrderResponseDTO deliverOrder(@RequestBody String orderName);
 
-    @PatchMapping("/receive/{orderID}")
-    OrderResponseDTO receiveOrder(@PathVariable String orderID);
+    @PatchMapping("/receive")
+    OrderResponseDTO receiveOrder(@RequestBody String orderName);
 
     @GetMapping("/all")
     List<OrderResponseDTO> getAllOrders();
