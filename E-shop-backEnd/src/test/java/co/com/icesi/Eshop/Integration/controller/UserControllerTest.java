@@ -107,7 +107,7 @@ public class UserControllerTest {
         return UserDTO.builder()
                 .email("emailtest@email.com")
                 .password("password")
-                .phoneNumber("3123342122")
+                .phoneNumber("3123842122")
                 .firstName("Campaz")
                 .lastName("Sasuke")
                 .role("USER")
