@@ -9,4 +9,5 @@ import org.mapstruct.Mapper;
 public interface RoleMapper {
 
         Role fromRoleDTO(RoleDTO orderDTO);
+        RoleDTO fromRole(Role role);
 }

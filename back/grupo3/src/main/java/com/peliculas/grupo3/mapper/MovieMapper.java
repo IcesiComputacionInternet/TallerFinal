@@ -9,4 +9,6 @@ public interface MovieMapper {
 
     Movie fromMovieDTO(MovieDTO movieDTO);
 
+    MovieDTO fromMovie(Movie movie);
+
 }

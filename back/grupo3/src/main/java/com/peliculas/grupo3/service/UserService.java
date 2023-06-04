@@ -1,7 +1,9 @@
 package com.peliculas.grupo3.service;
 
 import com.peliculas.grupo3.dto.UserDTO;
+import com.peliculas.grupo3.dto.response.UserResponseDTO;
 import com.peliculas.grupo3.mapper.UserMapper;
+import com.peliculas.grupo3.mapper.response.UserResponseMapper;
 import com.peliculas.grupo3.model.MovieUser;
 import com.peliculas.grupo3.model.Role;
 import com.peliculas.grupo3.repository.RoleRepository;
@@ -11,6 +13,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -22,6 +26,8 @@ public class UserService {
     private final UserMapper userMapper;
 
     private final RoleRepository roleRepository;
+
+    private final UserResponseMapper userResponseMapper;
 
     public UserDTO save(UserDTO userDTO) {
         if(userRepository.findByEmail(userDTO.getEmail()).isPresent()){
@@ -49,5 +55,13 @@ public class UserService {
         userRepository.save(user);
 
         return userDTO;
+    }
+
+    public List<UserResponseDTO> findAll() {
+        return userRepository.findAll().stream().map(userResponseMapper::fromUser).toList();
+    }
+
+    public Optional<UserResponseDTO> findByName(String name) {
+        return userRepository.findByFirstName(name).map(userResponseMapper::fromUser);
     }
 }

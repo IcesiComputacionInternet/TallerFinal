@@ -6,6 +6,8 @@ import com.peliculas.grupo3.service.CategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
 public class CategoryController implements CategoryApi {
@@ -15,7 +17,13 @@ public class CategoryController implements CategoryApi {
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
         return categoryService.save(categoryDTO);
     }
-    //TODO implementar metodos de la api
+
+    @Override
+    public List<CategoryDTO> getAllCategories() {
+        return categoryService.findAll();
+    }
+    // TODO implementar metodos de la api
+
 
 
 }

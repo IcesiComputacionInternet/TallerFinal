@@ -9,6 +9,8 @@ import com.peliculas.grupo3.repository.MovieRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -26,9 +28,15 @@ public class MovieService {
             throw new RuntimeException("La pelicula ya existe");
         }
 
-        Category category = categoryRepository.findByName(movieDTO.getCategory()).orElseThrow(
+        Category category = categoryRepository.findByName(movieDTO.getCategoryName()).orElseThrow(
                 ()-> new RuntimeException("La categoria no existe")
         );
+
+        String pgRating= movieDTO.getPgRating();
+
+        if(pgRating.equals("G") || pgRating.equals("PG") || pgRating.equals("PG-13") || pgRating.equals("R") || pgRating.equals("NC-17")){
+            throw new RuntimeException("Category already exists");
+        }
 
         if(movieDTO.getPrice()<=0){
             throw new RuntimeException("El precio debe ser mayor a 0");
@@ -39,5 +47,13 @@ public class MovieService {
         movie.setCategory(category);
         movieRepository.save(movie);
         return movieDTO;
+    }
+
+    public List<MovieDTO> findAll(){
+        return movieRepository.findAll().stream().map(movieMapper::fromMovie).toList();
+    }
+
+    public Optional<MovieDTO> findByName(String name){
+        return movieRepository.findByName(name).map(movieMapper::fromMovie);
     }
 }

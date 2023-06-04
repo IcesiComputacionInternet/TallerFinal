@@ -7,6 +7,7 @@ import com.peliculas.grupo3.repository.CategoryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -22,16 +23,14 @@ public class CategoryService {
             throw new RuntimeException("Category already exists");
         }
 
-        String pgRating= categoryDTO.getPgRating();
-
-        if(pgRating.equals("G") || pgRating.equals("PG") || pgRating.equals("PG-13") || pgRating.equals("R") || pgRating.equals("NC-17")){
-            throw new RuntimeException("Category already exists");
-        }
-
         Category category = categoryMapper.fromCategoryDTO(categoryDTO);
         category.setCategoryId(UUID.randomUUID());
         categoryRepository.save(category);
 
         return categoryDTO;
+    }
+
+    public List<CategoryDTO> findAll(){
+        return categoryRepository.findAll().stream().map(categoryMapper::fromCategory).toList();
     }
 }

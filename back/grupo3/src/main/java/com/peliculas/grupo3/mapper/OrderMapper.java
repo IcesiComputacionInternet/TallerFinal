@@ -8,4 +8,6 @@ import org.mapstruct.Mapper;
 public interface OrderMapper {
 
     MovieOrder fromOrderDTO(OrderDTO orderDTO);
+
+    OrderDTO fromOrder(MovieOrder movieOrder);
 }
