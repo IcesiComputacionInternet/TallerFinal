@@ -2,14 +2,17 @@
 import React, { useState } from "react";
 
 const SignUp = () => {
-    const [emailOrphoneNumber, setEmailOrphoneNumber] = useState("");
+    const [name, setName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [address, setAddress] = useState("");
+    const [birthday, setBirthday] = useState("");
     // const [rol, setRol] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmit = async (event: any) => {
         event.preventDefault();
-
-        // console.log(name, email, password);
     };
 
     return (
@@ -24,9 +27,54 @@ const SignUp = () => {
                                         <input
                                             type="text"
                                             className="form-control"
-                                            placeholder="Email or Phone Number"
-                                            value={emailOrphoneNumber}
-                                            onChange={(event) => setEmailOrphoneNumber(event.target.value)}
+                                            placeholder="Name"
+                                            value={name}
+                                            onChange={(event) => setName(event.target.value)}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Last Name"
+                                            value={lastName}
+                                            onChange={(event) => setLastName(event.target.value)}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Email"
+                                            value={email}
+                                            onChange={(event) => setEmail(event.target.value)}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Phone Number"
+                                            value={phoneNumber}
+                                            onChange={(event) => setPhoneNumber(event.target.value)}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <input
+                                            type="date"
+                                            className="form-control"
+                                            placeholder="Birthdate"
+                                            value={birthday}
+                                            onChange={(event) => setBirthday(event.target.value)}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Address"
+                                            value={address}
+                                            onChange={(event) => setAddress(event.target.value)}
                                         />
                                     </div>
                                     <div className="form-group">
