@@ -1,6 +1,6 @@
 package co.com.icesi.backend.constraint;
 
-import co.com.icesi.backend.validator.PhoneAndNumberValidator;
+import co.com.icesi.backend.validator.PhoneAndEmailValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -9,6 +9,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+@Constraint(validatedBy = PhoneAndEmailValidator.class)
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PhoneEmailConstraint {

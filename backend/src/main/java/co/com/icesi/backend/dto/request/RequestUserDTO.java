@@ -1,5 +1,7 @@
 package co.com.icesi.backend.dto.request;
 
+import co.com.icesi.backend.constraint.PhoneEmailConstraint;
+import co.com.icesi.backend.constraint.PhoneNumberConstraint;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -11,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@PhoneEmailConstraint
 public class RequestUserDTO {
     private String firstName;
 
@@ -23,7 +26,7 @@ public class RequestUserDTO {
     @NotNull(message = "The password of a user can't be null")
     private String password;
 
-    //AGREGAR PHONE CONSTRAINT!!!
+    @PhoneNumberConstraint
     private String phoneNumber;
 
     private String address;
