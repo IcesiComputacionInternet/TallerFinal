@@ -1,3 +1,4 @@
+// @ts-ignore
 import React, { useState } from "react";
 import axios from "axios";
 import { NavigateFunction, useNavigate } from "react-router-dom";
@@ -71,6 +72,7 @@ const Login = ({ setLogin }: Props) => {
                                 <button type="submit" className="btn btn-primary">
                                     Login
                                 </button>
+                                <a href="/SignUp" className="link-primary">Sign up</a>
                             </form>
                         </div>
                     </div>
