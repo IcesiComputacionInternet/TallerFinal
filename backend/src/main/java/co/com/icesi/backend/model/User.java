@@ -18,8 +18,10 @@ public class User {
     private UUID userId;
     private String firstName;
     private String lastName;
+    @Column(unique=true)
     private String email;
     private String password;
+    @Column(unique=true)
     private String phoneNumber;
     private String address;
     private LocalDateTime birthday;
