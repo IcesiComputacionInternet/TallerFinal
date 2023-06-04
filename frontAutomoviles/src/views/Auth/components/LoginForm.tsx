@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { NavigateFunction, useNavigate} from "react-router-dom";
 
 interface Props {
     setLogin: () => void;
@@ -8,20 +9,18 @@ const Login = ({setLogin}: Props) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
+    const navigation: NavigateFunction = useNavigate();
+    
     const handleSubmit = async (event: any) => {
         event.preventDefault();
-        console
+        setLogin();
+        navigation("/home");
     };
 
     return (
         <div className='container d-flex align-items-center' style={{ height: "78vh"}}>
             <div className='row justify-content-center w-100'>
                 <div className='col-md-6'>
-                    <h1 className="display-4 text-center mb-4" 
-                        style={{ fontWeight: "bold", 
-                                background: "linear-gradient(to right, #ffff00, #e52e71)", 
-                                WebkitBackgroundClip: "text", 
-                                WebkitTextFillColor: "transparent" }}>Icesi Accounts</h1>
                     <div className='card'>
                         <div className='card-body text-center'>
                             <h3 className='card-title'>Login</h3>
