@@ -56,8 +56,8 @@ public class SecurityConfiguration {
 
     @Bean
     public AuthorizationManager<RequestAuthorizationContext> requestAuthorizationContextAuthenticationManager(
-            HandlerMappingIntrospector introspector){
-        RequestMatcher permitAll = new AndRequestMatcher(new MvcRequestMatcher(introspector, "/token"));
+            HandlerMappingIntrospector introspection){
+        RequestMatcher permitAll = new AndRequestMatcher(new MvcRequestMatcher(introspection, "/token"));
 
         RequestMatcherDelegatingAuthorizationManager.Builder managerBuilder =
             RequestMatcherDelegatingAuthorizationManager.builder()
