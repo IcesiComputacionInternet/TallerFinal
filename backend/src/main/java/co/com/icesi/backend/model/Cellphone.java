@@ -3,6 +3,7 @@ package co.com.icesi.backend.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -22,4 +23,6 @@ public class Cellphone {
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_category_id", nullable = false)
     private Category category;
+    @ManyToMany(mappedBy = "items")
+    private List<Order> orders;
 }

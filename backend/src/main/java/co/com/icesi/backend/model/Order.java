@@ -21,6 +21,10 @@ public class Order {
     private User user;
     private String status;
     private Long total;
-    @OneToMany(mappedBy = "cellphone_id")
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "order_item",
+            joinColumns = @JoinColumn(name = "order_order_id"),
+            inverseJoinColumns = @JoinColumn(name = "cellphone_cellphone_id"))
     private List<Cellphone> items;
 }
