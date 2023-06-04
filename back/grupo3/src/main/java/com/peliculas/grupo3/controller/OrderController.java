@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
@@ -36,8 +35,18 @@ public class OrderController implements OrderApi {
     }
 
     @Override
+    public OrderDTO deleteMovie(String number, String movieName) {
+        return orderService.removeMovie(number, movieName);
+    }
+
+    @Override
     public List<OrderDTO> getUserOrders(String email) {
         return orderService.findByUser(email);
+    }
+
+    @Override
+    public OrderDTO changeStatus(String number, String status) {
+        return orderService.changeStatus(number, status);
     }
 
     //TODO implementar metodos de la api

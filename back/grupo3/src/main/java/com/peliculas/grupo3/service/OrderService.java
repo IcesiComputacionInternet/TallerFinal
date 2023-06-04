@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
+
 
 
 @AllArgsConstructor
@@ -46,6 +46,15 @@ public class OrderService {
 
         if(orderDTO.getMovies().isEmpty() && orderDTO.getTotal()>0){
             throw new RuntimeException("No se puede tener un total mayor a 0 sin peliculas");
+        }
+
+
+        String status = orderDTO.getStatus().toLowerCase();
+
+        if(status.equals("cancelada") || status.equals("en proceso") || status.equals("confirmada") || status.equals("terminada")){
+            orderDTO.setStatus(status);
+        }else{
+            throw new RuntimeException("El estado de la orden no es valido");
         }
 
         orderRepository.findByOrderNumber(orderDTO.getOrderNumber()).ifPresent(
@@ -101,6 +110,39 @@ public class OrderService {
         }
 
         return user.getMovieOrders().stream().map(orderMapper::fromOrder).toList();
+    }
+
+    public OrderDTO changeStatus(String number, String status){
+        MovieOrder order = orderRepository.findByOrderNumber(number).orElseThrow(
+                ()-> new RuntimeException("No existe una orden con este numero") );
+
+        if(status.equalsIgnoreCase("cancelada")
+                || status.equalsIgnoreCase("en proceso")
+                || status.equalsIgnoreCase("confirmada")
+                || status.equalsIgnoreCase("terminada")){
+            order.setStatus(status);
+        }else{
+            throw new RuntimeException("El estado de la orden no es valido");
+        }
+
+        return orderMapper.fromOrder(order);
+    }
+
+    public OrderDTO removeMovie(String number, String name){
+        MovieOrder order = orderRepository.findByOrderNumber(number).orElseThrow(
+                ()-> new RuntimeException("No existe una orden con este numero") );
+
+        Movie movie = movieRepository.findByName(name).orElseThrow(
+                ()-> new RuntimeException("No existe una pelicula con este nombre") );
+
+        if(!order.getMovies().contains(movie)){
+            throw new RuntimeException("La orden no contiene esta pelicula");
+        }
+
+        order.getMovies().remove(movie);
+        order.setTotal(order.getTotal()-movie.getPrice());
+
+        return orderMapper.fromOrder(order);
     }
 
 }

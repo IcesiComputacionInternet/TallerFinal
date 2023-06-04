@@ -30,6 +30,13 @@ public interface OrderApi {
     @PostMapping("/addMovie")
     OrderDTO addMovie(@RequestBody String number , String movieName);
 
+    @PostMapping("/deleteMovie")
+    OrderDTO deleteMovie(@RequestBody String number , String movieName);
+
     @PostMapping("/getUserOrders")
     List<OrderDTO> getUserOrders(@RequestBody String email);
+
+    @PostMapping("/changeStatus")
+    OrderDTO changeStatus(@RequestBody String number, String status);
+
 }
