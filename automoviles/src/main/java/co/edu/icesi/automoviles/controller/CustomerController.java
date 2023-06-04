@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import co.edu.icesi.automoviles.api.CustomerAPI;
 import co.edu.icesi.automoviles.dto.CustomerCreateDTO;
 import co.edu.icesi.automoviles.dto.CustomerShowDTO;
+import co.edu.icesi.automoviles.security.ShopSecurityContext;
 import co.edu.icesi.automoviles.service.CustomerService;
 import lombok.AllArgsConstructor;
 
@@ -20,7 +21,8 @@ public class CustomerController implements CustomerAPI {
 
     @Override
     public CustomerShowDTO registerCustomer(@Valid CustomerCreateDTO customerCreateDTO) {
-        return null;
+        String role = ShopSecurityContext.getCurrentUserRole();
+        return customerService.registerCustomer(customerCreateDTO, role);
     }
 
     @Override
