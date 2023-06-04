@@ -30,7 +30,7 @@ public class RoleService {
             ).get();
         }
 
-        Role role = roleMapper.fromRoleCreateDTO(roleCreateDTO);
+        Role role = roleMapper.fromRoleCreateDTOToRole(roleCreateDTO);
         role.setRoleId(UUID.randomUUID());
         return roleMapper.fromRoleToRoleShowDTO(roleRepository.save(role));
     }

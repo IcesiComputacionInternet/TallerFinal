@@ -8,8 +8,8 @@ import co.icesi.automoviles.dto.RoleShowDTO;
 import co.icesi.automoviles.service.RoleService;
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 @RestController
+@AllArgsConstructor
 public class RoleController implements RoleAPI{
 
     private final RoleService roleService;

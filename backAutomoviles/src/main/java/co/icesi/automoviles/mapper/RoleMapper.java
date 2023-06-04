@@ -9,6 +9,6 @@ import co.icesi.automoviles.model.Role;
 
 @Mapper(componentModel = "spring")
 public interface RoleMapper {
-    Role fromRoleCreateDTO(RoleCreateDTO roleCreateDTO);
+    Role fromRoleCreateDTOToRole(RoleCreateDTO roleCreateDTO);
     RoleShowDTO fromRoleToRoleShowDTO(Role role);
 }

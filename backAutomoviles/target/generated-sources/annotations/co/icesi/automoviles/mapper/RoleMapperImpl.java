@@ -18,14 +18,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-04T15:22:36-0500",
+    date = "2023-06-04T15:51:56-0500",
     comments = "version: 1.5.3.Final, compiler: Eclipse JDT (IDE) 3.34.0.v20230511-1142, environment: Java 17.0.7 (Eclipse Adoptium)"
 )
 @Component
 public class RoleMapperImpl implements RoleMapper {
 
     @Override
-    public Role fromRoleCreateDTO(RoleCreateDTO roleCreateDTO) {
+    public Role fromRoleCreateDTOToRole(RoleCreateDTO roleCreateDTO) {
         if ( roleCreateDTO == null ) {
             return null;
         }
