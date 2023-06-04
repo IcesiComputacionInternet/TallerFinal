@@ -26,7 +26,7 @@ public class ItemController implements ItemApi {
      */
     @Override
     public ItemResponseDTO updateItem(ItemDTO itemDTO) {
-        return null;
+        return itemService.updateItem(itemDTO);
     }
 
     /**
@@ -35,7 +35,7 @@ public class ItemController implements ItemApi {
      */
     @Override
     public String deleteItem(String itemName) {
-        return null;
+        return itemService.deleteItem(itemName);
     }
 
     /**
@@ -44,7 +44,7 @@ public class ItemController implements ItemApi {
      */
     @Override
     public ItemResponseDTO findItem(String itemName) {
-        return null;
+        return itemService.findItem(itemName);
     }
 
     /**

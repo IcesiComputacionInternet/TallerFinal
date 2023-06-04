@@ -23,6 +23,19 @@ public class CategoryService {
         category.setCategoryId(UUID.randomUUID());
         return categoryMapper.toCategoryResponseDTO(categoryRepository.save(category));
     }
+
+    public CategoryResponseDTO updateCategory(CategoryDTO categoryDTO) {
+        Category category = categoryRepository.findByName(categoryDTO.getName()).orElseThrow(() -> new RuntimeException("Category not found"));
+        category.setName(categoryDTO.getName());
+        category.setDescription(categoryDTO.getDescription());
+        return categoryMapper.toCategoryResponseDTO(categoryRepository.save(category));
+    }
+
+    public CategoryResponseDTO deleteCategory(String categoryName) {
+        Category category = categoryRepository.findByName(categoryName).orElseThrow(() -> new RuntimeException("Category not found"));
+        categoryRepository.delete(category);
+        return categoryMapper.toCategoryResponseDTO(category);
+    }
     public List<CategoryResponseDTO> getAllCategories() {
         return categoryRepository.findAll().stream().map(categoryMapper::toCategoryResponseDTO).collect(Collectors.toList());
     }

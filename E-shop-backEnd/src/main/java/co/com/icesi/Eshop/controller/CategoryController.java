@@ -28,7 +28,7 @@ public class CategoryController implements CategoryApi {
      */
     @Override
     public CategoryResponseDTO updateCategory(CategoryDTO categoryDTO) {
-        return null;
+        return categoryService.updateCategory(categoryDTO);
     }
 
     /**
@@ -37,7 +37,7 @@ public class CategoryController implements CategoryApi {
      */
     @Override
     public CategoryResponseDTO deleteCategory(String categoryMame) {
-        return null;
+        return categoryService.deleteCategory(categoryMame);
     }
 
     /**
