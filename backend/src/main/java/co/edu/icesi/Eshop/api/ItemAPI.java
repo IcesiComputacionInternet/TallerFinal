@@ -1,10 +1,7 @@
 package co.edu.icesi.Eshop.api;
 
 import co.edu.icesi.Eshop.dto.ItemDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -17,4 +14,10 @@ public interface ItemAPI {
 
     @PostMapping("/create")
     ItemDTO createItem(@Valid @RequestBody ItemDTO itemDTO);
+
+    @PutMapping("/setState/{name}")
+    ItemDTO setItemState(@PathVariable String name);
+
+    @PutMapping("/setPrice/{name}")
+    ItemDTO setItemPrice(@PathVariable String name, Long price);
 }

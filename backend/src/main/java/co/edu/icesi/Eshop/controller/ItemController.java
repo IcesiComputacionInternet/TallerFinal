@@ -23,6 +23,16 @@ public class ItemController implements ItemAPI {
 
     @Override
     public ItemDTO createItem(ItemDTO itemDTO) {
-        return null;
+        return itemService.save(itemDTO);
+    }
+
+    @Override
+    public ItemDTO setItemState(String name) {
+        return itemService.setItemState(name);
+    }
+
+    @Override
+    public ItemDTO setItemPrice(String name, Long price) {
+        return itemService.setItemPrice(name, price);
     }
 }

@@ -23,6 +23,6 @@ public class RoleController implements RoleAPI {
 
     @Override
     public RoleDTO createRole(RoleDTO roleDTO) {
-        return null;
+        return roleService.save(roleDTO);
     }
 }
