@@ -22,4 +22,11 @@ public class CustomerController implements CustomerAPI {
     public CustomerShowDTO registerCustomer(@Valid CustomerCreateDTO customerCreateDTO) {
         return null;
     }
+
+    @Override
+    public CustomerShowDTO assignRole(String customerId, String roleName) {
+        throw new UnsupportedOperationException("Unimplemented method 'assignRole'");
+    }
+
+    
 }

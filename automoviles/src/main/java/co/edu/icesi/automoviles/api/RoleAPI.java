@@ -11,6 +11,9 @@ import co.edu.icesi.automoviles.dto.RoleShowDTO;
 
 @RequestMapping("/roles")  
 public interface RoleAPI {
+
+    public static final String ROOT_PATH = "/roles";
+
     @PostMapping
     public RoleShowDTO registerRole(@Valid @RequestBody RoleCreateDTO roleCreateDTO);
 }

@@ -12,8 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CustomerAuthenticatiorManager extends DaoAuthenticationProvider {
-    public CustomerAuthenticatiorManager(CustomerManagementService userManagementService,
+public class CustomerAuthenticatorManager extends DaoAuthenticationProvider {
+    public CustomerAuthenticatorManager(CustomerManagementService userManagementService,
                                      PasswordEncoder passwordEncoder){
         this.setUserDetailsService(userManagementService);
         this.setPasswordEncoder(passwordEncoder);
