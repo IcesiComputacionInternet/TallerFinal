@@ -1,5 +1,6 @@
 import { Box, TextField, Button } from "@mui/material";
 import { useState } from "react";
+import "./roles.css";
 
 const role = {
   name: "",
@@ -18,11 +19,16 @@ const AddRole = () => {
   };
 
   return (
-    <Box component="form" onSubmit={handleAddRole} noValidate sx={{ mt: 1 }}>
+    <Box
+      className="container-form-role"
+      component="form"
+      onSubmit={handleAddRole}
+      noValidate
+      sx={{ mt: 1 }}
+    >
       <TextField
         color="primary"
         margin="normal"
-        fullWidth
         id="name"
         label="Nombre del rol"
         name="name"
@@ -32,7 +38,6 @@ const AddRole = () => {
       <TextField
         color="primary"
         margin="normal"
-        fullWidth
         id="description"
         label="Descripción"
         name="description"
@@ -41,10 +46,10 @@ const AddRole = () => {
       />
       <Button
         type="submit"
-        fullWidth
         variant="contained"
         sx={{
-          mt: 3,
+          height: "55px",
+          mt: 2,
           mb: 2,
           bgcolor: "#D3D3D3",
           color: "black",

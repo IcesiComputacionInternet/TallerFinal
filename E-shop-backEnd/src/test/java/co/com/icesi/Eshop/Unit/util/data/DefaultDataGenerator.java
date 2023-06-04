@@ -40,7 +40,7 @@ public class DefaultDataGenerator {
                 .lastName("Doe")
                 .email("email2@email.com")
                 .password(encoder.encode("password"))
-                .birthDate(LocalDateTime.of(1999, 1, 1, 0, 0))
+                .birthDate("1/1/1999")
                 .phoneNumber("3123342122")
                 .address("Calle 1 # 1-1")
                 .role(defaultRole())

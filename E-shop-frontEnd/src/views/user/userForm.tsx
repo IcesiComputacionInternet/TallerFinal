@@ -9,6 +9,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import UserServices from "../../services/userServices";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 interface props {
   rolAdmin: Boolean;
@@ -74,7 +75,12 @@ const UserForm: React.FC<props> = ({ rolAdmin, roles }) => {
       const user = await UserServices.addUser(dataUser);
       navigate("/login", { replace: true });
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title:
+          '<span style="font-family: Arial, sans-serif;">Error al autenticar</span>',
+        html: '<div style="font-family: Arial, sans-serif;">Usuario o contraseña incorrectos</div>',
+      });
     }
   };
 
