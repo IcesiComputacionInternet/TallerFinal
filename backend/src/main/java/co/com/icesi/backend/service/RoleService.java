@@ -10,7 +10,9 @@ import co.com.icesi.backend.security.CellphoneSecurityContext;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -35,8 +37,20 @@ public class RoleService {
     public void checkPermissions() {
         if(!CellphoneSecurityContext.getCurrentUserRole().equals(UserRole.ADMIN)){
             throw exceptionBuilder.noPermissionException(
-                    "Only an ADMIN user can create new roles."
+                    "Only an ADMIN user can create new roles and visualize them."
             );
         }
+    }
+
+    public RoleDTO getRole(String roleName) {
+        checkPermissions();
+        return roleMapper.fromRoleToRoleDTO(
+                roleRepository.findByName(roleName).orElseThrow(
+                        () -> exceptionBuilder.notFoundException(
+                                "The role with the specified name does not exists.", roleName))
+        );
+    }
+    public List<RoleDTO> getAllRoles() {
+        return roleRepository.findAll().stream().map(roleMapper::fromRoleToRoleDTO).collect(Collectors.toList());
     }
 }
