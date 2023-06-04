@@ -15,6 +15,6 @@ public class RoleService {
     private final RoleMapper roleMapper;
 
     public RoleDTO getRoleByName(String roleName){
-        return roleMapper.fromRole(roleRepository.findRoleByName(roleName).orElseThrow(() -> new RuntimeException("Role not found")));
+        return roleMapper.fromRole(roleRepository.findByName(roleName).orElseThrow(() -> new RuntimeException("Role not found")));
     }
 }
