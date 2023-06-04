@@ -28,7 +28,7 @@ public class Category {
 
     private String description;
 
-    private String pgRating;
+
 
     @OneToMany(mappedBy = "category")
     private List<Movie> movies;

@@ -7,6 +7,7 @@ import com.peliculas.grupo3.repository.RoleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -27,6 +28,10 @@ public class RoleService {
         role.setRoleId(UUID.randomUUID());
         roleRepository.save(role);
         return roleDTO;
+    }
+
+    public List<RoleDTO> findAll(){
+        return roleRepository.findAll().stream().map(roleMapper::fromRole).toList();
     }
 
 

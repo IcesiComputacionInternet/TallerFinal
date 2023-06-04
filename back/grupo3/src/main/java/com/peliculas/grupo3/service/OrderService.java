@@ -6,6 +6,7 @@ import com.peliculas.grupo3.mapper.OrderMapper;
 import com.peliculas.grupo3.model.Movie;
 import com.peliculas.grupo3.model.MovieOrder;
 import com.peliculas.grupo3.model.MovieUser;
+import com.peliculas.grupo3.repository.MovieRepository;
 import com.peliculas.grupo3.repository.OrderRepository;
 import com.peliculas.grupo3.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,8 @@ public class OrderService {
     private final UserRepository userRepository;
 
     private final MovieMapper movieMapper;
+
+    private final MovieRepository movieRepository;
 
     public OrderDTO save(OrderDTO orderDTO){
 
@@ -62,5 +65,42 @@ public class OrderService {
         return orderDTO;
     }
 
+    public List<OrderDTO> findAll() {
+
+        if(orderRepository.findAll().isEmpty()){
+            throw new RuntimeException("No hay ordenes");
+        }
+
+        return orderRepository.findAll().stream().map(orderMapper::fromOrder).toList();
+    }
+
+    public OrderDTO findByOrderNumber(String orderNumber) {
+        return orderMapper.fromOrder(orderRepository.findByOrderNumber(orderNumber).orElseThrow(
+                ()-> new RuntimeException("No existe una orden con este numero") ));
+    }
+
+    public OrderDTO addMovie(String number, String name){
+        MovieOrder order = orderRepository.findByOrderNumber(number).orElseThrow(
+                ()-> new RuntimeException("No existe una orden con este numero") );
+
+        Movie movie = movieRepository.findByName(name).orElseThrow(
+                ()-> new RuntimeException("No existe una pelicula con este nombre") );
+
+        order.getMovies().add(movie);
+        order.setTotal(order.getTotal()+movie.getPrice());
+
+        return orderMapper.fromOrder(order);
+    }
+
+    public List<OrderDTO> findByUser(String email) {
+        MovieUser user = userRepository.findByEmail(email).orElseThrow(
+                ()-> new RuntimeException("No existe un usuario con este email") );
+
+        if(user.getMovieOrders().isEmpty()){
+            throw new RuntimeException("El usuario no tiene ordenes");
+        }
+
+        return user.getMovieOrders().stream().map(orderMapper::fromOrder).toList();
+    }
 
 }

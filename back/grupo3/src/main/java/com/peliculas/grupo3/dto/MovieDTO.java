@@ -19,6 +19,8 @@ public class MovieDTO {
 
     private String imageURL;
 
-    private String category;
+    private String categoryName;
+
+    private String pgRating;
 
 }

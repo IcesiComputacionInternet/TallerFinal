@@ -29,6 +29,8 @@ public class Movie {
 
     private String imageURL;
 
+    private String pgRating;
+
     @ManyToOne
     @JoinColumn(name="category_category_id", nullable=false)
     private Category category;

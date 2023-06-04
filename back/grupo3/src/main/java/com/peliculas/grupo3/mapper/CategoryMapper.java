@@ -10,4 +10,6 @@ import org.mapstruct.Mapper;
 public interface CategoryMapper {
 
         Category fromCategoryDTO(CategoryDTO categoryDTO);
+
+        CategoryDTO fromCategory(Category category);
 }
