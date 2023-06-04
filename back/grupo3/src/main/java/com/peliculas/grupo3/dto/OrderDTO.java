@@ -20,5 +20,7 @@ public class OrderDTO {
 
     private UserDTO user;
 
+    private String orderNumber;
+
     private List<MovieDTO> movies;
 }

@@ -25,6 +25,8 @@ public class MovieOrder {
 
     private long total;
 
+    private String orderNumber;
+
     @ManyToOne
     @JoinColumn(name="usermv_user_id", nullable=false)
     private MovieUser user;
