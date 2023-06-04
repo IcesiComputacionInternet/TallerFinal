@@ -20,7 +20,7 @@ public class Order {
     @JoinColumn(name = "user_user_id", nullable = false)
     private User user;
     private String status;
-    private Long total;
+    private long total;
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
             name = "order_item",
