@@ -1,6 +1,6 @@
 package co.edu.icesi.Eshop.repository;
 
-import co.edu.icesi.Eshop.model.Role;
+import co.edu.icesi.Eshop.model.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -9,8 +9,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, UUID> {
+public interface ItemRepository extends JpaRepository<Item, UUID> {
 
-    @Query("SELECT role FROM ROLE role WHERE role.name = :name")
-    Optional<Role> findByName(String name);
+    @Query("SELECT item FROM ITEM item WHERE item.name = :name")
+    Optional<Item> findByName(String name);
 }
