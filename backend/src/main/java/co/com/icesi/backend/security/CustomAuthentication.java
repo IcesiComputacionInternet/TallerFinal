@@ -1,4 +1,4 @@
-package co.com.icesi.backend.Security;
+package co.com.icesi.backend.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
