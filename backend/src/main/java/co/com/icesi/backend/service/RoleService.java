@@ -24,22 +24,14 @@ public class RoleService {
 
     public RoleDTO saveRole(RoleDTO roleDTO){
         checkPermissions();
-        roleRepository.findByName(roleDTO.getName()).orElseThrow(
-                () -> exceptionBuilder.duplicatedValueException(
+        roleRepository.findByName(roleDTO.getName())
+                .orElseThrow(() -> exceptionBuilder.duplicatedValueException(
                         "Another role already has this name.", roleDTO.getName()));
 
         Role newRole = roleMapper.fromRoleDTO(roleDTO);
         newRole.setRoleId(UUID.randomUUID());
         roleRepository.save(newRole);
         return roleMapper.fromRoleToRoleDTO(newRole);
-    }
-
-    public void checkPermissions() {
-        if(!CellphoneSecurityContext.getCurrentUserRole().equals(UserRole.ADMIN)){
-            throw exceptionBuilder.noPermissionException(
-                    "Only an ADMIN user can create new roles and visualize them."
-            );
-        }
     }
 
     public RoleDTO getRole(String roleName) {
@@ -50,6 +42,15 @@ public class RoleService {
                                 "The role with the specified name does not exists.", roleName))
         );
     }
+
+    public void checkPermissions() {
+        if(!CellphoneSecurityContext.getCurrentUserRole().equals(UserRole.ADMIN)){
+            throw exceptionBuilder.noPermissionException(
+                    "Only an ADMIN user can create new roles and visualize them."
+            );
+        }
+    }
+
     public List<RoleDTO> getAllRoles() {
         return roleRepository.findAll().stream().map(roleMapper::fromRoleToRoleDTO).collect(Collectors.toList());
     }

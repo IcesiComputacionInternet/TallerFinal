@@ -9,9 +9,9 @@ import java.util.List;
 @RequestMapping(RoleAPI.BASE_ROLE_URL)
 public interface RoleAPI {
     String BASE_ROLE_URL="/roles";
+    @PostMapping("/create")
+    RoleDTO createRole(@RequestBody @Valid RoleDTO roleDTO);
     @GetMapping("/{name}")
     RoleDTO getRole(@PathVariable("name") String roleName);
     List<RoleDTO> getAllRoles();
-    @PostMapping("/create")
-    RoleDTO createRole(@RequestBody @Valid RoleDTO roleDTO);
 }
