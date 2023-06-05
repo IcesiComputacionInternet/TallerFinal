@@ -58,6 +58,8 @@ public class UserService {
         UserPrincipal userPrincipalUpdated = userMapper.toUser(userDTO);
 
         userPrincipalUpdated.setUserId(userPrincipalInDB.getUserId());
+        userPrincipalUpdated.setRole(roleRepository.findByRoleName(userDTO.getRole()).orElseThrow(() -> new RuntimeException("Role with " + userDTO.getRole() + " does not exists")));
+        userPrincipalUpdated.setPassword(userPrincipalInDB.getPassword());
 
         userRepository.save(userPrincipalUpdated);
 
