@@ -23,9 +23,11 @@ public class CategoryService {
 
     public CategoryDTO save(CategoryDTO categoryDTO){
         checkPermissions();
-        categoryRepository.findByName(categoryDTO.getName())
-                .orElseThrow(() -> exceptionBuilder.duplicatedValueException(
-                        "Another role already has this name.", categoryDTO.getName()));
+
+        if(categoryRepository.isNameInUse(categoryDTO.getName())){
+            throw exceptionBuilder.duplicatedValueException(
+                    "Another category already has this name.", categoryDTO.getName());
+        }
 
         Category category = categoryMapper.fromCategoryDTO(categoryDTO);
         category.setCategoryId(UUID.randomUUID());
@@ -38,7 +40,7 @@ public class CategoryService {
         return categoryMapper.fromCategoryToCategoryDTO(
                 categoryRepository.findByName(categoryName)
                         .orElseThrow(() -> exceptionBuilder.notFoundException(
-                        "The role with the specified name does not exists.", categoryName))
+                        "The category with the specified name does not exists.", categoryName))
         );
     }
 

@@ -17,9 +17,6 @@ const SignUp = () => {
 
     return (
             <div className="container">
-                <div className="row justify-content-center">
-                    <div className= "col-md-6">
-                        <div className= "card text-center mb-3">
                             <div className="card-body">
                                 <h3 className="card-title">Sign Up</h3>
                                 <form onSubmit={handleSubmit}>
@@ -92,9 +89,6 @@ const SignUp = () => {
                                 </form>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
     );
 };
 export default SignUp;

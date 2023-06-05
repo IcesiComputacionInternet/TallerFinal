@@ -14,4 +14,7 @@ import java.util.UUID;
 public interface CategoryRepository extends JpaRepository<Category, UUID> {
     @Query("SELECT category FROM Category category WHERE category.name = :name")
     Optional<Category> findByName(@Param("name") String name);
+
+    @Query("SELECT COUNT(category) > 0 FROM Category category WHERE category.name = :name")
+    boolean isNameInUse(@Param("name") String name);
 }
