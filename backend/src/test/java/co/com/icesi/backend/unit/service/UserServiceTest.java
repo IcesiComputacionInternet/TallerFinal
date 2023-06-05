@@ -1,6 +1,7 @@
 package co.com.icesi.backend.unit.service;
 
 import co.com.icesi.backend.dto.request.RequestUserDTO;
+import co.com.icesi.backend.error.exception.CellphoneException;
 import co.com.icesi.backend.error.util.CellphoneShopExceptionBuilder;
 import co.com.icesi.backend.mapper.RoleMapper;
 import co.com.icesi.backend.mapper.UserMapper;
@@ -10,6 +11,7 @@ import co.com.icesi.backend.model.User;
 import co.com.icesi.backend.repository.RoleRepository;
 import co.com.icesi.backend.repository.UserRepository;
 import co.com.icesi.backend.service.UserService;
+import co.com.icesi.backend.unit.service.matcher.UserMatcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -41,9 +43,9 @@ public class UserServiceTest {
         userService = new UserService(userRepository, roleRepository, userMapper,roleMapper,exceptionBuilder);
         userService=spy(userService);
     }
-/*
+
     @Test
-    public void testCreateUser(){
+    public void testCreateUser_HappyPath(){
         // Arrange
         var userDTO = defaultUserDTO();
         var icesiRole= defaultIcesiRole();
@@ -76,16 +78,16 @@ public class UserServiceTest {
             // Act
             userService.saveUser(userDTO);
             fail();
-        } catch (AccountSystemException exception){
+        } catch (CellphoneException exception){
             String message = exception.getMessage();
             var error = exception.getError();
             var details = error.getDetails();
             assertEquals(1, details.size());
             var detail = details.get(0);
             // Assert
-            assertEquals("Role does not exist.", message);
+            assertEquals("The role with the specified name does not exists.", message);
             assertEquals("ERR_404", detail.getErrorCode(), "Code doesn't match");
-            assertEquals("Role with name:  not found.", detail.getErrorMessage(), "Error message doesn't match");
+            assertEquals("Not found ", detail.getErrorMessage(), "Error message doesn't match");
         }
     }
 
@@ -97,16 +99,16 @@ public class UserServiceTest {
             // Act
             userService.saveUser(userDTO);
             fail();
-        } catch (AccountSystemException exception){
+        } catch (CellphoneException exception){
             String message = exception.getMessage();
             var error = exception.getError();
             var details = error.getDetails();
             assertEquals(1, details.size());
             var detail = details.get(0);
             // Assert
-            assertEquals("Role does not exist.", message);
+            assertEquals("The role with the specified name does not exists.", message);
             assertEquals("ERR_404", detail.getErrorCode(), "Code doesn't match");
-            assertEquals("Role with name: Director SIS not found.", detail.getErrorMessage(), "Error message doesn't match");
+            assertEquals("Not found Director SIS", detail.getErrorMessage(), "Error message doesn't match");
         }
     }
 
@@ -122,7 +124,7 @@ public class UserServiceTest {
             // Act
             userService.saveUser(userDTO);
             fail();
-        } catch (AccountSystemException exception){
+        } catch (CellphoneException exception){
             String message = exception.getMessage();
             var error = exception.getError();
             var details = error.getDetails();
@@ -131,7 +133,7 @@ public class UserServiceTest {
             // Assert
             assertEquals("A user with the entered email already exists.", message);
             assertEquals("ERR_DUPLICATED", detail1.getErrorCode(), "Code doesn't match");
-            assertEquals("Resource user with field email: ykaar@gmail.com, already exists.", detail1.getErrorMessage(), "Error message doesn't match");
+            assertEquals("ykaar@gmail.com, already exists.", detail1.getErrorMessage(), "Error message doesn't match");
         }
     }
 
@@ -147,7 +149,7 @@ public class UserServiceTest {
             // Act
             userService.saveUser(userDTO);
             fail();
-        } catch (AccountSystemException exception){
+        } catch (CellphoneException exception){
             String message = exception.getMessage();
             var error = exception.getError();
             var details = error.getDetails();
@@ -156,7 +158,7 @@ public class UserServiceTest {
             // Assert
             assertEquals("A user with the entered phone already exists.", message);
             assertEquals("ERR_DUPLICATED", detail1.getErrorCode(), "Code doesn't match");
-            assertEquals("Resource user with field phone: 3152485689, already exists.", detail1.getErrorMessage(), "Error message doesn't match");
+            assertEquals("3152485689, already exists.", detail1.getErrorMessage(), "Error message doesn't match");
         }
     }
 
@@ -200,5 +202,5 @@ public class UserServiceTest {
                 .description("Director del programa de Ingenieria de sistemas")
                 .roleName("Director SIS")
                 .build();
-    }*/
+    }
 }
