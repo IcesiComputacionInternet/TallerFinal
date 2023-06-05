@@ -19,9 +19,9 @@ public class Order {
     @Id
     private UUID orderId;
 
-  private String status;
+    private String status;
 
-  private long total;
+    private long total;
 
     @ManyToOne(optional = false,cascade= CascadeType.ALL)
     @JoinColumn(name="user_user_id", nullable = false)

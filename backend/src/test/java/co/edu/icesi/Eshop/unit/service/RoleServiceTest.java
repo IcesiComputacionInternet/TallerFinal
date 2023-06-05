@@ -1,8 +1,8 @@
 package co.edu.icesi.Eshop.unit.service;
 
-import co.edu.icesi.Eshop.dto.RoleDTO;
 import co.edu.icesi.Eshop.error.exception.EShopException;
 import co.edu.icesi.Eshop.mapper.RoleMapper;
+import co.edu.icesi.Eshop.mapper.RoleMapperImpl;
 import co.edu.icesi.Eshop.model.Role;
 import co.edu.icesi.Eshop.repository.RoleRepository;
 import co.edu.icesi.Eshop.service.RoleService;
@@ -28,7 +28,7 @@ public class RoleServiceTest {
     @BeforeEach
     private void init(){
         roleRepository = mock(RoleRepository.class);
-        roleMapper = spy(RoleMapper.class);
+        roleMapper = spy(RoleMapperImpl.class);
         roleService = new RoleService(roleRepository, roleMapper);
     }
 
@@ -36,18 +36,21 @@ public class RoleServiceTest {
     @DisplayName("Role created")
     public void testCreateRole(){
         var role = defaultRole();
-        when(roleRepository.findByName(any())).thenReturn(Optional.of(role));
+        when(roleRepository.findByName(any())).thenReturn(Optional.empty());
 
         roleService.save(roleMapper.fromRole(role));
 
-        verify(roleRepository, times(1)).save(role);
+        verify(roleRepository, times(1)).findByName(any());
+        verify(roleRepository, times(1)).save(any());
+        verify(roleMapper, times(1)).fromRoleDTO(any());
+
     }
 
     @Test
     @DisplayName("Role not created. Duplicated name")
     public void testCreateRoleWithNameThatAlreadyExists(){
         var role = defaultRole();
-        when(roleRepository.findByName(any())).thenReturn(Optional.of(role));
+        when(roleRepository.findByName(role.getRoleName())).thenReturn(Optional.of(role));
 
         var exception = assertThrows(EShopException.class, () -> roleService.save(roleMapper.fromRole(role)), "No exception was thrown");
 

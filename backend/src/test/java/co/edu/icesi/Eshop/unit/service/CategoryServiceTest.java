@@ -1,6 +1,7 @@
 package co.edu.icesi.Eshop.unit.service;
 
 import co.edu.icesi.Eshop.mapper.CategoryMapper;
+import co.edu.icesi.Eshop.mapper.CategoryMapperImpl;
 import co.edu.icesi.Eshop.repository.CategoryRepository;
 import co.edu.icesi.Eshop.service.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +20,7 @@ public class CategoryServiceTest {
     @BeforeEach
     private void init(){
         categoryRepository = mock(CategoryRepository.class);
-        categoryMapper = spy(CategoryMapper.class);
+        categoryMapper = spy(CategoryMapperImpl.class);
         categoryService = new CategoryService(categoryRepository, categoryMapper);
     }
 }

@@ -28,6 +28,10 @@ public class ItemService {
 
         verifyItemName(itemDTO.getName());
         verifyLevelOfEfficiency(itemDTO.getLevelOfEfficiency());
+        verifyPrice(itemDTO.getPrice());
+        verifyVoltage(itemDTO.getMaxVoltage());
+        verifyVoltage(itemDTO.getMinVoltage());
+        verifyGuarantee(itemDTO.getGuarantee());
 
         Item item = itemMapper.fromItemDTO(itemDTO);
         item.setItemId(UUID.randomUUID());
@@ -64,6 +68,36 @@ public class ItemService {
                     "Level of efficiency invalid",
                     HttpStatus.BAD_REQUEST,
                     new DetailBuilder(ErrorCode.ERR_400, "Level of efficiency "+levelOfEfficiency, "invalid")
+            ).get();
+        }
+    }
+
+    private void verifyPrice(Long price){
+        if (price <= 0){
+            throw createEShopException(
+                    "Invalid value",
+                    HttpStatus.BAD_REQUEST,
+                    new DetailBuilder(ErrorCode.ERR_400, "Invalid price for Item. Can't be", price)
+            ).get();
+        }
+    }
+
+    private void verifyVoltage(double voltage){
+        if (voltage <= 0){
+            throw createEShopException(
+                    "Invalid value",
+                    HttpStatus.BAD_REQUEST,
+                    new DetailBuilder(ErrorCode.ERR_400, "Invalid voltage for Item. Can't be", voltage)
+            ).get();
+        }
+    }
+
+    private void verifyGuarantee(int guarantee){
+        if (guarantee < 0){
+            throw createEShopException(
+                    "Invalid value",
+                    HttpStatus.BAD_REQUEST,
+                    new DetailBuilder(ErrorCode.ERR_400, "Invalid guarantee for Item. Can't be", guarantee)
             ).get();
         }
     }

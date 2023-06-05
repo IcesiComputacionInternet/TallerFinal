@@ -29,7 +29,6 @@ public class CategoryService {
         Category category = categoryMapper.fromCategoryDTO(categoryDTO);
 
         category.setCategoryId(UUID.randomUUID());
-
         return categoryMapper.fromCategory(categoryRepository.save(category));
     }
 
