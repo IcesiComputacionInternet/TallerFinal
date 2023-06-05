@@ -21,6 +21,6 @@ public interface OrderAPI {
     @PostMapping
     OrderDTO addOrder(@Valid @RequestBody OrderDTO orderDTO);
 
-    @PutMapping
+    @PutMapping("/{orderId}")
     OrderDTO changeStatus(@Valid @RequestBody ChangeStatusDTO changeStatusDTO);
 }

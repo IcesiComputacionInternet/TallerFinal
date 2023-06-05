@@ -16,7 +16,7 @@ public interface RoleAPI {
     @GetMapping("/{name}")
     RoleDTO getRoleByName(@PathVariable String name);
 
-    @PostMapping("/create")
+    @PostMapping
     RoleDTO createRole(@Valid @RequestBody RoleDTO roleDTO);
 
     @GetMapping

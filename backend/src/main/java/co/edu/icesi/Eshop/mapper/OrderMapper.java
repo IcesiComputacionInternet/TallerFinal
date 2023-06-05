@@ -12,5 +12,7 @@ public interface OrderMapper {
     EShopOrder fromOrderDTO(OrderDTO orderDTO);
 
     @Mapping(target = "items", expression = "java(order.getItems().stream().map(item -> item.getName()).toList())")
+    @Mapping(target = "userEmail", expression = "java(order.getUser().getEmail())")
+    @Mapping(target = "userPhoneNumber", expression = "java(order.getUser().getPhoneNumber())")
     OrderDTO fromOrder(EShopOrder order);
 }

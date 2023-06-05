@@ -4,6 +4,7 @@ import co.edu.icesi.Eshop.api.CategoryAPI;
 import co.edu.icesi.Eshop.dto.CategoryDTO;
 import co.edu.icesi.Eshop.service.CategoryService;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +15,7 @@ import static co.edu.icesi.Eshop.api.CategoryAPI.BASE_CATEGORY_URL;
 @RestController
 @RequestMapping(BASE_CATEGORY_URL)
 @AllArgsConstructor
+@CrossOrigin
 public class CategoryController implements CategoryAPI {
 
     private final CategoryService categoryService;

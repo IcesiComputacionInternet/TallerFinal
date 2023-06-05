@@ -5,6 +5,7 @@ import co.edu.icesi.Eshop.dto.ChangeStatusDTO;
 import co.edu.icesi.Eshop.dto.OrderDTO;
 import co.edu.icesi.Eshop.service.OrderService;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +16,7 @@ import static co.edu.icesi.Eshop.api.OrderAPI.BASE_ORDER_URL;
 @RestController
 @RequestMapping(BASE_ORDER_URL)
 @AllArgsConstructor
+@CrossOrigin
 public class OrderController implements OrderAPI {
     private OrderService orderService;
     @Override
