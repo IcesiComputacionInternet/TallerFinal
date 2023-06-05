@@ -26,7 +26,7 @@ public class CategoryService {
 
         if(categoryRepository.isNameInUse(categoryDTO.getName())){
             throw exceptionBuilder.duplicatedValueException(
-                    "Another role already has this name.", categoryDTO.getName());
+                    "Another category already has this name.", categoryDTO.getName());
         }
 
         Category category = categoryMapper.fromCategoryDTO(categoryDTO);
@@ -40,7 +40,7 @@ public class CategoryService {
         return categoryMapper.fromCategoryToCategoryDTO(
                 categoryRepository.findByName(categoryName)
                         .orElseThrow(() -> exceptionBuilder.notFoundException(
-                        "The role with the specified name does not exists.", categoryName))
+                        "The category with the specified name does not exists.", categoryName))
         );
     }
 

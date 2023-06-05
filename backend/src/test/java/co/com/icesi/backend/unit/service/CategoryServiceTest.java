@@ -13,10 +13,9 @@ import co.com.icesi.backend.unit.service.matcher.CategoryMatcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.*;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class CategoryServiceTest {
@@ -56,7 +55,13 @@ public class CategoryServiceTest {
         }catch (CellphoneException exception){
             String message = exception.getMessage();
             var error = exception.getError();
-            var details = error.getDetails().get(0);
+            var details = error.getDetails();
+            var detail = details.get(0);
+
+            assertEquals(1, details.size());
+            assertEquals("ERR_DUPLICATED", detail.getErrorCode(), "Code doesn't match");
+            assertEquals("LOW_MED_RANGE, already exists.", detail.getErrorMessage(), "Error message doesn't match");
+            assertEquals("Another category already has this name.", message);
         }
     }
 
