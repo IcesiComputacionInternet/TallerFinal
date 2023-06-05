@@ -73,7 +73,7 @@ public class RoleServiceTest {
             var detail = details.get(0);
             // Assert
             assertEquals("ERR_DUPLICATED", detail.getErrorCode(), "Code doesn't match");
-            //assertEquals("SHOP, already exists.", detail.getErrorMessage(), "Error message doesn't match");
+            assertEquals("SHOP, already exists.", detail.getErrorMessage(), "Error message doesn't match");
             assertEquals("Another role already has this name.", message);
         }
     }

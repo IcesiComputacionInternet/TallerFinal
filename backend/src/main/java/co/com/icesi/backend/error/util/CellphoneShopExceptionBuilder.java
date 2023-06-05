@@ -29,8 +29,7 @@ public class CellphoneShopExceptionBuilder {
     }
 
     public CellphoneException duplicatedValueException(String message, String field){
-        CellphoneError error = createCellphoneError(HttpStatus.CONFLICT, new DetailBuilder(ErrorCode.ERR_DUPLICATED,
-                String.format(ErrorCode.ERR_DUPLICATED.getMessage(),field)));
+        CellphoneError error = createCellphoneError(HttpStatus.CONFLICT, new DetailBuilder(ErrorCode.ERR_DUPLICATED, field));
         return new CellphoneException(message, error);
     }
 
