@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 public class RoleDTO {
     @NotNull(message = "The name of a role can't be null")
     @NotBlank(message = "The name of a role can't be blank")
-    private String name;
+    private String roleName;
     @NotBlank(message = "The description of a role can't be blank")
     private String description;
 }

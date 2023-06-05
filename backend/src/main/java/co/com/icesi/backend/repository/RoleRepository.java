@@ -11,6 +11,9 @@ import java.util.UUID;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, UUID> {
-    @Query("SELECT role FROM Role role WHERE role.name = :name")
-    Optional<Role> findByName(@Param("name") String name);
+    @Query("SELECT role FROM Role role WHERE role.roleName = :roleName")
+    Optional<Role> findByName(@Param("roleName") String roleName);
+
+    @Query("SELECT COUNT(role) > 0 FROM Role role WHERE role.roleName = :roleName")
+    Boolean isNameInUse(@Param("roleName") String roleName);
 }
