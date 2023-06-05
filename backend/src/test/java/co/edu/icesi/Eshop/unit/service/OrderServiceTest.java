@@ -64,6 +64,22 @@ public class OrderServiceTest {
         verify(orderMapper,times(1)).fromOrder(any());
     }
 
+    @Test
+    public void testCreateOrderWithMoreThanOneItem(){
+        when(userRepository.findByEmail(any())).thenReturn(Optional.of(defaultUser()));
+        when(itemRepository.findByName("Licuadora 200X")).thenReturn(Optional.of(defaultItem()));
+        when(itemRepository.findByName("Digital Air Fryer 3.7 L")).thenReturn(Optional.of(defaultItem2()));
+
+
+        orderService.save(defaultOrderDTO2());
+        EShopOrder order= defaultOrder2();
+
+        verify(orderMapper,times(1)).fromOrderDTO(any());
+        verify(orderRepository,times(1)).save(argThat(new OrderMatcher(order)));
+        verify(orderMapper,times(1)).fromOrder(any());
+    }
+
+
 
     @Test
     public void testCreateOrderWhenUserDoesNotExist(){
@@ -80,6 +96,31 @@ public class OrderServiceTest {
             var detail = details.get(0);
             assertEquals("ERR_404", detail.getErrorCode(), "Code doesn't match");
             assertEquals("User with email julietav@example.com not found", detail.getErrorMessage(), "Error message doesn't match");
+
+
+            verify(orderMapper,never()).fromOrderDTO(any());
+            verify(orderRepository,never()).findById(any());
+            verify(orderRepository,never()).save(any());
+            verify(orderMapper,never()).fromOrder(any());
+        }
+    }
+
+    @Test
+    public void testCreateOrderWhenItemDoesNotExist(){
+        when(userRepository.findByEmail(any())).thenReturn(Optional.of(defaultUser()));
+
+        try {
+            orderService.save(defaultOrderDTO());
+            fail();
+        }catch(EShopException exception){
+            String message= exception.getMessage();
+            assertEquals("Item does not exists",message);
+            var error = exception.getError();
+            var details = error.getDetails();
+            assertEquals(1, details.size());
+            var detail = details.get(0);
+            assertEquals("ERR_404", detail.getErrorCode(), "Code doesn't match");
+            assertEquals("Item Licuadora 200X not found", detail.getErrorMessage(), "Error message doesn't match");
 
 
             verify(orderMapper,never()).fromOrderDTO(any());
@@ -154,19 +195,35 @@ public class OrderServiceTest {
         return EShopOrder.builder()
                 .orderId(UUID.fromString("a3411d0a-1350-4108-84e2-d13916faf08f"))
                 .status(Status.PENDING.toString())
-                .total(1000)
                 .eShopUser(defaultUser())
+                .total(250000L)
                 .items(Stream.of(defaultItem()).collect(Collectors.toList()))
                 .build();
     }
 
     private OrderDTO defaultOrderDTO(){
         return OrderDTO.builder()
-                .status(Status.PENDING.toString())
-                .total(1000)
                 .userEmail("julietav@example.com")
                 .userPhoneNumber("3184441232")
                 .items(Stream.of("Licuadora 200X").collect(Collectors.toList()))
+                .build();
+    }
+
+    private EShopOrder defaultOrder2(){
+        return EShopOrder.builder()
+                .orderId(UUID.fromString("a3411d0a-1350-4108-84e2-d13916faf08f"))
+                .status(Status.PENDING.toString())
+                .eShopUser(defaultUser())
+                .total(350000L)
+                .items(Stream.of(defaultItem(),defaultItem2()).collect(Collectors.toList()))
+                .build();
+    }
+
+    private OrderDTO defaultOrderDTO2(){
+        return OrderDTO.builder()
+                .userEmail("julietav@example.com")
+                .userPhoneNumber("3184441232")
+                .items(Stream.of("Licuadora 200X","Digital Air Fryer 3.7 L").collect(Collectors.toList()))
                 .build();
     }
 
@@ -185,6 +242,25 @@ public class OrderServiceTest {
                 .marca("IMUSA")
                 .model("200X")
                 .guarantee(24)
+                .available(true)
+                .build();
+    }
+
+    private Item defaultItem2(){
+        return Item.builder()
+                .itemId(UUID.fromString("6b5b09b8-55b9-4186-99cf-adae13957427"))
+                .name("Digital Air Fryer 3.7 L")
+                .description("Freidora De Aire Digital Air Fryer 3.7 L")
+                .category(defaultCategory())
+                .imageUrl("")
+                .price(100000L)
+                .minVoltage(1.2)
+                .maxVoltage(1.7)
+                .sourceOfEnergy("Energía por cable")
+                .levelOfEfficiency("B")
+                .marca("IMUSA")
+                .model("300X")
+                .guarantee(5)
                 .available(true)
                 .build();
     }

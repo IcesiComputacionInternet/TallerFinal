@@ -63,14 +63,25 @@ public class OrderService {
                     new DetailBuilder(ErrorCode.ERR_404, "User with phone number",orderDTO.getUserPhoneNumber() )
             ));
         }
-        List<Item> items= orderDTO.getItems().stream().map(x-> itemRepository.findByName(x).get()).toList();
+        List<Item> items= orderDTO.getItems().stream().map(x-> itemRepository.findByName(x).orElseThrow(
+                createEShopException(
+                        "Item does not exists",
+                        HttpStatus.NOT_FOUND,
+                        new DetailBuilder(ErrorCode.ERR_404, "Item",x )
+                )
+        )).toList();
         EShopOrder order= orderMapper.fromOrderDTO(orderDTO);
         order.setOrderId(UUID.randomUUID());
         order.setEShopUser(EShopUser);
         order.setStatus(Status.PENDING.toString());
         order.setItems(items);
+        order.setTotal(calculateTotal(items));
 
         return orderMapper.fromOrder(orderRepository.save(order));
+    }
+
+    private long calculateTotal(List<Item> items){
+        return items.stream().mapToLong(Item::getPrice).sum();
     }
 
 
