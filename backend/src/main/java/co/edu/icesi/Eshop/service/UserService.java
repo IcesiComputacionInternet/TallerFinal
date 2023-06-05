@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,8 +29,7 @@ public class UserService {
 
 
     public UserDTO save(UserDTO userDTO){
-
-
+        validateEmailAndPhoneNumber(userDTO);
         Role role=roleRepository.findByName(userDTO.getRoleName()).orElseThrow(createEShopException(
                 "User role does not exists",
                 HttpStatus.NOT_FOUND,
@@ -43,7 +43,6 @@ public class UserService {
 
     }
     public UserDTO getUser(String userEmail) {
-
         return  userMapper.fromUser(userRepository.findByEmail(userEmail).orElseThrow(
                 createEShopException(
                         "User email not found",
@@ -59,6 +58,27 @@ public class UserService {
                 .toList();
     }
 
+    public void validateEmailAndPhoneNumber(UserDTO user){
+        List<DetailBuilder> details= new ArrayList<>();
+        String exMessage="";
 
+        if (userRepository.findByEmail(user.getEmail()).isPresent()){
+            details.add(new DetailBuilder(ErrorCode.ERR_DUPLICATED, "User email",user.getEmail() ));
+            exMessage+="User email is in use. ";
+        }
+
+        if(userRepository.findByPhoneNumber(user.getPhoneNumber()).isPresent()){
+            details.add(new DetailBuilder(ErrorCode.ERR_DUPLICATED, "Phone Number",user.getPhoneNumber()));
+            exMessage+="User email is in use.";
+        }
+
+        if(!details.isEmpty()){
+            throw createEShopException(
+                    exMessage,
+                    HttpStatus.CONFLICT,
+                    details.toArray(DetailBuilder[]::new)
+            ).get();
+        }
+    }
 
 }
