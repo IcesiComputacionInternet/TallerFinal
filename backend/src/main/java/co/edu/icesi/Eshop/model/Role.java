@@ -8,8 +8,7 @@ import javax.persistence.OneToMany;
 import java.util.List;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Builder
 @AllArgsConstructor
@@ -24,5 +23,5 @@ public class Role {
     private String description;
 
     @OneToMany(mappedBy = "role")
-    private List<User> users;
+    private List<EShopUser> EShopUsers;
 }

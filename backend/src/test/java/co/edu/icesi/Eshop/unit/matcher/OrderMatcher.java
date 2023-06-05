@@ -15,7 +15,7 @@ public class OrderMatcher implements ArgumentMatcher<EShopOrder> {
     @Override
     public boolean matches( EShopOrder orderRight) {
         return orderRight.getOrderId()!=null &&
-                orderRight.getUser()!=null &&
+                orderRight.getEShopUser()!=null &&
                 Objects.equals(orderRight.getStatus(),orderLeft.getStatus()) &&
                 Objects.equals(orderRight.getTotal(), orderLeft.getTotal()) &&
                 Objects.equals(orderRight.getItems().size(),orderLeft.getItems().size())

@@ -8,21 +8,21 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public record SecurityUser (User user) implements UserDetails {
+public record SecurityUser (EShopUser eShopUser) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Stream.of(user).map(User::getRole).map(Role::getRoleName).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return Stream.of(eShopUser).map(EShopUser::getRole).map(Role::getRoleName).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return eShopUser.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return eShopUser.getEmail();
     }
 
     @Override

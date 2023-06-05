@@ -6,15 +6,13 @@ import co.edu.icesi.Eshop.mapper.UserMapper;
 import co.edu.icesi.Eshop.mapper.UserMapperImpl;
 import co.edu.icesi.Eshop.model.Role;
 import co.edu.icesi.Eshop.model.Roles;
-import co.edu.icesi.Eshop.model.User;
+import co.edu.icesi.Eshop.model.EShopUser;
 import co.edu.icesi.Eshop.repository.RoleRepository;
 import co.edu.icesi.Eshop.repository.UserRepository;
 import co.edu.icesi.Eshop.service.UserService;
 import co.edu.icesi.Eshop.unit.matcher.UserMatcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,7 +26,7 @@ import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.never;
 
-public class UserServiceTest {
+public class EShopUserServiceTest {
 
     private UserService userService;
 
@@ -55,10 +53,10 @@ public class UserServiceTest {
         when(roleRepository.findByName(any())).thenReturn(Optional.of(defaultRole()));
 
         userService.save(defaultUserDTO());
-        User user = defaultUser();
+        EShopUser EShopUser = defaultUser();
 
         verify(userMapper,times(1)).fromUserDTO(any());
-        verify(userRepository, times(1)).save(argThat(new UserMatcher(user)));
+        verify(userRepository, times(1)).save(argThat(new UserMatcher(EShopUser)));
         verify(userMapper,times(1)).fromUser(any());
 
     }
@@ -184,9 +182,9 @@ public class UserServiceTest {
                 .build();
     }
 
-    private User defaultUser(){
+    private EShopUser defaultUser(){
 
-        return User.builder()
+        return EShopUser.builder()
                 .firstName("Julieta")
                 .lastName("Venegas")
                 .email("julietav@example.com")

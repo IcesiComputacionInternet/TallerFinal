@@ -2,12 +2,10 @@ package co.edu.icesi.Eshop.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Builder
 @AllArgsConstructor
@@ -25,6 +23,8 @@ public class Item {
 
     private String imageUrl;
 
+    @ManyToOne(optional = false,cascade= CascadeType.ALL)
+    @JoinColumn(name="category_category_id", nullable = false)
     private Category category;
 
     private double minVoltage;
@@ -42,4 +42,8 @@ public class Item {
     private int guarantee;
 
     private boolean available;
+
+    @ManyToOne(optional = false,cascade= CascadeType.ALL)
+    @JoinColumn(name="eshop_order_order_id", nullable = false)
+    private EShopOrder order;
 }

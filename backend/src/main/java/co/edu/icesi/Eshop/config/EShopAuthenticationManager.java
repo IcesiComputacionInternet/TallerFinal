@@ -26,7 +26,7 @@ public class EShopAuthenticationManager extends DaoAuthenticationProvider {
 
         SecurityUser securityUser = (SecurityUser) userDetails;
 
-        return new CustomAuthentication(successAuthentication, securityUser.user().getUserId().toString());
+        return new CustomAuthentication(successAuthentication, securityUser.eShopUser().getUserId().toString());
     }
 
 }

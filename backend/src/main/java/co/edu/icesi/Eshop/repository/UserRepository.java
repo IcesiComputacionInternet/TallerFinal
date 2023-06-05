@@ -1,6 +1,6 @@
 package co.edu.icesi.Eshop.repository;
 
-import co.edu.icesi.Eshop.model.User;
+import co.edu.icesi.Eshop.model.EShopUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -9,12 +9,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface UserRepository extends JpaRepository<EShopUser, UUID> {
 
-    @Query("SELECT user FROM User user WHERE  user.email= :email")
-    Optional<User> findByEmail(String email);
+    @Query("SELECT user FROM EShopUser user WHERE  user.email= :email")
+    Optional<EShopUser> findByEmail(String email);
 
-    @Query("SELECT user FROM User user WHERE  user.phoneNumber= :phoneNumber")
-    Optional<User> findByPhoneNumber(String phoneNumber);
+    @Query("SELECT user FROM EShopUser user WHERE  user.phoneNumber= :phoneNumber")
+    Optional<EShopUser> findByPhoneNumber(String phoneNumber);
 
 }

@@ -127,9 +127,9 @@ public class OrderServiceTest {
 
     }
 
-    private User defaultUser(){
+    private EShopUser defaultUser(){
 
-        return User.builder()
+        return EShopUser.builder()
                 .firstName("Julieta")
                 .lastName("Venegas")
                 .email("julietav@example.com")
@@ -155,7 +155,7 @@ public class OrderServiceTest {
                 .orderId(UUID.fromString("a3411d0a-1350-4108-84e2-d13916faf08f"))
                 .status(Status.PENDING.toString())
                 .total(1000)
-                .user(defaultUser())
+                .eShopUser(defaultUser())
                 .items(Stream.of(defaultItem()).collect(Collectors.toList()))
                 .build();
     }
