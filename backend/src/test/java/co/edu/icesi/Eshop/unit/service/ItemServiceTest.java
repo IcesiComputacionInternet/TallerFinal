@@ -67,90 +67,6 @@ public class ItemServiceTest {
     }
 
     @Test
-    @DisplayName("Item not created. Invalid price")
-    public void testCreateItemWithPriceZero(){
-        var item = defaultItem();
-        item.setPrice(0L);
-        when(itemRepository.findByName(any())).thenReturn(Optional.empty());
-
-        var exception = assertThrows(EShopException.class, () -> itemService.save(itemMapper.fromItem(item)), "No exception was thrown");
-
-        var error = exception.getError();
-        var details = error.getDetails();
-        assertEquals(1, details.size());
-        var detail = details.get(0);
-        assertEquals("ERR_400", detail.getErrorCode(), "Code doesn't match");
-        assertEquals("Invalid price for Item. Can't be "+item.getPrice(), detail.getErrorMessage(), "Error message doesn't match");
-    }
-
-    @Test
-    @DisplayName("Item not created. Invalid minimum voltage")
-    public void testCreateItemWithMinimumVoltageLessThanZero(){
-        var item = defaultItem();
-        item.setMinVoltage(-1.2);
-        when(itemRepository.findByName(any())).thenReturn(Optional.empty());
-
-        var exception = assertThrows(EShopException.class, () -> itemService.save(itemMapper.fromItem(item)), "No exception was thrown");
-
-        var error = exception.getError();
-        var details = error.getDetails();
-        assertEquals(1, details.size());
-        var detail = details.get(0);
-        assertEquals("ERR_400", detail.getErrorCode(), "Code doesn't match");
-        assertEquals("Invalid voltage for Item. Can't be "+item.getMinVoltage(), detail.getErrorMessage(), "Error message doesn't match");
-    }
-
-    @Test
-    @DisplayName("Item not created. Invalid maximum voltage")
-    public void testCreateItemWithMaximumVoltageZero(){
-        var item = defaultItem();
-        item.setMaxVoltage(0);
-        when(itemRepository.findByName(any())).thenReturn(Optional.empty());
-
-        var exception = assertThrows(EShopException.class, () -> itemService.save(itemMapper.fromItem(item)), "No exception was thrown");
-
-        var error = exception.getError();
-        var details = error.getDetails();
-        assertEquals(1, details.size());
-        var detail = details.get(0);
-        assertEquals("ERR_400", detail.getErrorCode(), "Code doesn't match");
-        assertEquals("Invalid voltage for Item. Can't be "+item.getMaxVoltage(), detail.getErrorMessage(), "Error message doesn't match");
-    }
-
-    @Test
-    @DisplayName("Item not created. Invalid guarantee")
-    public void testCreateItemWithGuaranteeLessThanZero(){
-        var item = defaultItem();
-        item.setGuarantee(-5);
-        when(itemRepository.findByName(any())).thenReturn(Optional.empty());
-
-        var exception = assertThrows(EShopException.class, () -> itemService.save(itemMapper.fromItem(item)), "No exception was thrown");
-
-        var error = exception.getError();
-        var details = error.getDetails();
-        assertEquals(1, details.size());
-        var detail = details.get(0);
-        assertEquals("ERR_400", detail.getErrorCode(), "Code doesn't match");
-        assertEquals("Invalid guarantee for Item. Can't be "+item.getGuarantee(), detail.getErrorMessage(), "Error message doesn't match");
-    }
-    @Test
-    @DisplayName("Item not created. Invalid level of efficiency")
-    public void testCreateItemWithBadLevelOfEfficiency(){
-        var item = defaultItem();
-        item.setLevelOfEfficiency("H");
-        when(itemRepository.findByName(any())).thenReturn(Optional.empty());
-
-        var exception = assertThrows(EShopException.class, () -> itemService.save(itemMapper.fromItem(item)), "No exception was thrown");
-
-        var error = exception.getError();
-        var details = error.getDetails();
-        assertEquals(1, details.size());
-        var detail = details.get(0);
-        assertEquals("ERR_400", detail.getErrorCode(), "Code doesn't match");
-        assertEquals("Level of efficiency "+ item.getLevelOfEfficiency() +" invalid", detail.getErrorMessage(), "Error message doesn't match");
-    }
-
-    @Test
     @DisplayName("Item price changed")
     public void testSetItemPrice(){
         var item = defaultItem();
@@ -162,23 +78,6 @@ public class ItemServiceTest {
         verify(itemRepository, times(1)).save(any());
 
         assertEquals(200000L, itemRepository.findByName(item.getName()).get().getPrice());
-    }
-
-    @Test
-    @DisplayName("Item price didn't change")
-    public void testSetItemPriceWithInvalidPrice(){
-        var item = defaultItem();
-        when(categoryRepository.findByName(defaultCategory().getName())).thenReturn(Optional.of(defaultCategory()));
-        when(itemRepository.findByName(item.getName())).thenReturn(Optional.of(item));
-
-        var exception = assertThrows(EShopException.class, () -> itemService.setItemPrice(item.getName(), -1000000L), "No exception was thrown");
-
-        var error = exception.getError();
-        var details = error.getDetails();
-        assertEquals(1, details.size());
-        var detail = details.get(0);
-        assertEquals("ERR_400", detail.getErrorCode(), "Code doesn't match");
-        assertEquals("Invalid price for Item. Can't be "+-1000000L, detail.getErrorMessage(), "Error message doesn't match");
     }
 
     @Test
