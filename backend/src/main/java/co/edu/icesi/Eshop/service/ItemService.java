@@ -31,7 +31,6 @@ public class ItemService {
     public ItemDTO save(ItemDTO itemDTO){
 
         verifyItemName(itemDTO.getName());
-        verifyLevelOfEfficiency(itemDTO.getLevelOfEfficiency());
 
         Category category = searchCategory(itemDTO.getCategory());
         Item item = itemMapper.fromItemDTO(itemDTO);
@@ -45,7 +44,6 @@ public class ItemService {
 
         Item item = getItem(itemName);
         item.setAvailable(!item.isAvailable());
-
         itemRepository.save(item);
 
         return itemMapper.fromItem(item);
@@ -58,19 +56,6 @@ public class ItemService {
         itemRepository.save(item);
 
         return itemMapper.fromItem(item);
-    }
-
-    private void verifyLevelOfEfficiency(String levelOfEfficiency){
-        levelOfEfficiency = levelOfEfficiency.toUpperCase(Locale.ENGLISH);
-        String rule = "[A-G]";
-
-        if (!levelOfEfficiency.matches(rule)){
-            throw createEShopException(
-                    "Level of efficiency invalid",
-                    HttpStatus.BAD_REQUEST,
-                    new DetailBuilder(ErrorCode.ERR_400, "Level of efficiency "+levelOfEfficiency, "invalid")
-            ).get();
-        }
     }
 
     private void verifyItemName(String itemName){
