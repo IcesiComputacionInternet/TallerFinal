@@ -40,8 +40,6 @@ const UpdateUser: React.FC<IProps> = ({
     dataToEdit ? setDataUser(dataToEdit) : setDataUser(formUser);
   }, [dataToEdit]);
 
-  const handleUser = (e: any) => {};
-
   const handleRole = (role: any) => {
     setDataUser({ ...dataUser, role: role });
   };
@@ -60,8 +58,29 @@ const UpdateUser: React.FC<IProps> = ({
     setDataUser({ ...dataUser, [e.target.name]: e.target.value });
   };
 
+  const handleUser = (e: any) => {
+    e.preventDefault();
+
+    if (
+      !dataUser.email ||
+      !dataUser.lastName ||
+      !dataUser.phoneNumber ||
+      !dataUser.firstName ||
+      !dataUser.address ||
+      !dataUser.birthDate ||
+      !dataUser.role
+    ) {
+      alert("Datos incompletos");
+      return;
+    }
+
+    updateData(dataUser);
+    handleReset();
+  };
+
   const handleReset = () => {
-    console.log("Madre");
+    setDataUser(formUser);
+    setDataToEdit(null);
   };
 
   return (
@@ -167,6 +186,7 @@ const UpdateUser: React.FC<IProps> = ({
             onChange={(_event, newValue) => {
               handleRole(newValue);
             }}
+            value={dataUser.role}
             renderInput={(params) => <TextField {...params} label="Rol" />}
           />
           <Button
