@@ -26,8 +26,8 @@ public class RoleService {
 
     public RoleDTO save(RoleDTO roleDTO){
 
-        verifyRoleName(roleDTO.getName());
-        String roleName = getRoleName(roleDTO.getName());
+        verifyRoleName(roleDTO.getRoleName());
+        String roleName = getRoleName(roleDTO.getRoleName());
         Role role = roleMapper.fromRoleDTO(roleDTO);
 
         role.setRoleId(UUID.randomUUID());
@@ -73,6 +73,7 @@ public class RoleService {
     }
 
     private void verifyRoleName(String roleName){
+
         if (roleRepository.findByName(roleName).isPresent()){
             throw createEShopException(
                     "Duplicated role name",

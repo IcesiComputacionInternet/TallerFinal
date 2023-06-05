@@ -11,6 +11,6 @@ public interface ItemMapper {
     @Mapping(target = "category", source = "category",ignore=true)
     Item fromItemDTO(ItemDTO itemDTO);
 
-    @Mapping(target = "category", expression = "java(category.getName())")
+    @Mapping(target = "category", expression = "java(item.getCategory().getName())")
     ItemDTO fromItem(Item item);
 }

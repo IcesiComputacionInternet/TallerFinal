@@ -18,7 +18,7 @@ public class RoleDTO {
 
     @NotNull(message = "A name is required for the role")
     @Column(unique = true)
-    private String name;
+    private String roleName;
 
     private String description;
 

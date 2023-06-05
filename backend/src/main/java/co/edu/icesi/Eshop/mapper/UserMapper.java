@@ -10,6 +10,6 @@ public interface UserMapper {
 
     User fromUserDTO(UserDTO userDTO);
 
-    @Mapping(target = "roleName", expression = "java(user.getRole().getName())")
+    @Mapping(target = "roleName", expression = "java(user.getRole().getRoleName())")
     UserDTO fromUser(User user);
 }
