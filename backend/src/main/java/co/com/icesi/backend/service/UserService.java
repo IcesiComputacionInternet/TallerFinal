@@ -11,10 +11,13 @@ import co.com.icesi.backend.repository.RoleRepository;
 import co.com.icesi.backend.repository.UserRepository;
 import co.com.icesi.backend.security.CellphoneSecurityContext;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -62,5 +65,16 @@ public class UserService {
             throw exceptionBuilder.duplicatedValueException(
                     "A user with the entered phone already exists.", userPhone);
         }
+    }
+
+    public ResponseUserDTO getUser(String userEmail) {
+        return userMapper.fromUserToResponseUserDTO(
+                userRepository.findByEmail(userEmail).orElseThrow(
+                        () -> exceptionBuilder.notFoundException(
+                                "The user with the specified email does not exists.", userEmail))
+        );
+    }
+    public List<ResponseUserDTO> getAllUsers() {
+        return userRepository.findAll().stream().map(userMapper::fromUserToResponseUserDTO).collect(Collectors.toList());
     }
 }

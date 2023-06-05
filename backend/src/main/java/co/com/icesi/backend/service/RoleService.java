@@ -24,6 +24,7 @@ public class RoleService {
 
     public RoleDTO saveRole(RoleDTO roleDTO){
         checkPermissions();
+        System.out.println(roleDTO.getRoleName());
         if(roleRepository.isNameInUse(roleDTO.getRoleName())){
             throw exceptionBuilder.duplicatedValueException(
                     "Another role already has this name.", roleDTO.getRoleName());
