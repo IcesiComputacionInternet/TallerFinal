@@ -1,15 +1,20 @@
 package co.edu.icesi.Eshop.service;
 
 import co.edu.icesi.Eshop.dto.RoleDTO;
+import co.edu.icesi.Eshop.error.exception.DetailBuilder;
+import co.edu.icesi.Eshop.error.exception.ErrorCode;
 import co.edu.icesi.Eshop.mapper.RoleMapper;
 import co.edu.icesi.Eshop.model.Role;
 import co.edu.icesi.Eshop.model.Roles;
 import co.edu.icesi.Eshop.repository.RoleRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+
+import static co.edu.icesi.Eshop.error.util.EShopExceptionBuilder.createEShopException;
 
 @Service
 @AllArgsConstructor
@@ -69,7 +74,11 @@ public class RoleService {
 
     private void verifyRoleName(String roleName){
         if (roleRepository.findByName(roleName).isPresent()){
-            //Toca hacer lo del error duplicated
+            throw createEShopException(
+                    "Duplicated role name",
+                    HttpStatus.CONFLICT,
+                    new DetailBuilder(ErrorCode.ERR_DUPLICATED, "Role with name", roleName)
+            ).get();
         }
     }
 
@@ -86,6 +95,9 @@ public class RoleService {
     }
 
     public RoleDTO getRoleByName(String roleName){
-        return roleMapper.fromRole(roleRepository.findByName(roleName).orElseThrow(() -> new RuntimeException("Role not found")));
+        return roleMapper.fromRole(roleRepository.findByName(roleName).orElseThrow(createEShopException("Role not found",
+                HttpStatus.NOT_FOUND,
+                new DetailBuilder(ErrorCode.ERR_404, "Role with name", roleName)
+        )));
     }
 }
