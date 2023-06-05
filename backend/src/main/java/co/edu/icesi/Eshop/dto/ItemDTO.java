@@ -1,5 +1,6 @@
 package co.edu.icesi.Eshop.dto;
 
+import co.edu.icesi.Eshop.validation.constraint.LevelOfEfficiencyConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,6 +42,7 @@ public class ItemDTO {
     private String sourceOfEnergy;
 
     @NotBlank(message = "is missing")
+    @LevelOfEfficiencyConstraint
     private String levelOfEfficiency;
 
     @NotBlank(message = "is missing")
