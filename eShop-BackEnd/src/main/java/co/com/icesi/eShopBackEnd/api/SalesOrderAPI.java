@@ -3,10 +3,7 @@ package co.com.icesi.eShopBackEnd.api;
 import co.com.icesi.eShopBackEnd.dto.CreateSalesOderDTO;
 import co.com.icesi.eShopBackEnd.dto.UpdateOrderStateDTO;
 import co.com.icesi.eShopBackEnd.dto.response.ResponseSalesOrderDTO;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -19,6 +16,9 @@ public interface SalesOrderAPI {
 
     @PostMapping
     ResponseSalesOrderDTO createSalesOrder(@Valid @RequestBody CreateSalesOderDTO salesOrder);
+
+    @GetMapping("/{salesOrderId}")
+    ResponseSalesOrderDTO getSalesOrderById(@PathVariable String salesOrderId);
 
     @PatchMapping("/updateState")
     ResponseSalesOrderDTO updateState(@Valid @RequestBody UpdateOrderStateDTO salesOrder);

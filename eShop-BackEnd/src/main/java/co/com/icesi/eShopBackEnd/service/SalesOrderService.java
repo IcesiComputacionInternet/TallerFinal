@@ -75,6 +75,17 @@ public class SalesOrderService {
                 .sum();
     }
 
+    public ResponseSalesOrderDTO getSalesOrderById(String salesOrderId){
+        SalesOrder order = salesOrderRepository.returnOrder(UUID.fromString(salesOrderId)).orElseThrow(
+                ArgumentsExceptionBuilder.createArgumentsExceptionSup(
+                        "Not existing data",
+                        HttpStatus.BAD_REQUEST,
+                        new DetailBuilder(ErrorCode.ERR_NOT_FOUND,"order")
+                )
+        );
+        return salesOrderMapper.fromSalesOrderToResponse(order);
+    }
+
     public ResponseSalesOrderDTO updateOrderState(UpdateOrderStateDTO orderDTO){
         SalesOrder order = salesOrderRepository.returnOrder(orderDTO.orderId()).orElseThrow(
                 ArgumentsExceptionBuilder.createArgumentsExceptionSup(

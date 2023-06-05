@@ -2,10 +2,7 @@ package co.com.icesi.eShopBackEnd.api;
 
 import co.com.icesi.eShopBackEnd.dto.CreateItemDTO;
 import co.com.icesi.eShopBackEnd.dto.response.ResponseItemDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import javax.validation.Valid;
@@ -20,6 +17,9 @@ public interface ItemAPI {
 
     @PostMapping
     ResponseItemDTO createItem(@Valid @RequestBody CreateItemDTO itemDTO);
+
+    @GetMapping("/{itemName}")
+    ResponseItemDTO getItemByName(@PathVariable String itemName);
 
     @GetMapping("/all")
     List<ResponseItemDTO> getAllItems();

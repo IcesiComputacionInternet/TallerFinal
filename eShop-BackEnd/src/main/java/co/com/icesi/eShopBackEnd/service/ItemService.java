@@ -49,6 +49,18 @@ public class ItemService {
         return responseDTO;
     }
 
+    public ResponseItemDTO getItemByName(String itemName){
+        Item item = itemRepository.returnItem(itemName).orElseThrow(
+                ArgumentsExceptionBuilder.createArgumentsExceptionSup(
+                        "Not existing data",
+                        HttpStatus.BAD_REQUEST,
+                        new DetailBuilder(ErrorCode.ERR_NOT_FOUND,"item")
+                )
+        );
+        return itemMapper.fromItemToResponseItemDTO(item);
+
+    }
+
 
 
     public List<ResponseItemDTO> getAllItems(){

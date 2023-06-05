@@ -19,6 +19,11 @@ public class SalesOrderController implements SalesOrderAPI {
     }
 
     @Override
+    public ResponseSalesOrderDTO getSalesOrderById(String salesOrderId) {
+        return salesOrderService.getSalesOrderById(salesOrderId);
+    }
+
+    @Override
     public ResponseSalesOrderDTO updateState(UpdateOrderStateDTO salesOrder) {
         return salesOrderService.updateOrderState(salesOrder);
     }
