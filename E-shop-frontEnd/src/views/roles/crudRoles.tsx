@@ -33,11 +33,9 @@ const CrudRoles = () => {
       }
       return el;
     });
-    setRoles(newRoles);
 
-    RoleServices.update(updatedRole).then((res) => {
-      console.log(res);
-      console.log(updatedRole); // Valor actualizado
+    RoleServices.update(updatedRole).then((_res) => {
+      setRoles(newRoles);
     });
   };
 
