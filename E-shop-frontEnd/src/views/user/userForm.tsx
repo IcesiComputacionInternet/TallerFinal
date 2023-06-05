@@ -66,21 +66,38 @@ const UserForm: React.FC<props> = ({ rolAdmin, roles }) => {
   };
 
   const handleRole = (role: any) => {
-    setDataUser({ ...dataUser, role: role.name });
+    setDataUser({ ...dataUser, role: role });
   };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     try {
+      console.log(dataUser);
+
       await UserServices.addUser(dataUser);
       navigate("/login", { replace: true });
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title:
-          '<span style="font-family: Arial, sans-serif;">Error al autenticar</span>',
-        html: '<div style="font-family: Arial, sans-serif;">Usuario o contraseña incorrectos</div>',
-      });
+    } catch (error: any) {
+      const errorConfigurations: any = {
+        400: {
+          title: "Error al crear usuarios",
+          html: "Llena todos los campos",
+        },
+        500: {
+          title: "Error al crear usuarios",
+          html: "Puede que el telefono o correo electronico ya existan",
+        },
+      };
+
+      const status = error.response?.status;
+      const configuration = errorConfigurations[status];
+
+      if (configuration) {
+        Swal.fire({
+          icon: "error",
+          title: `<span style="font-family: Arial, sans-serif;">${configuration.title}</span>`,
+          html: `<div style="font-family: Arial, sans-serif;">${configuration.html}</div>`,
+        });
+      }
     }
   };
 
@@ -189,7 +206,9 @@ const UserForm: React.FC<props> = ({ rolAdmin, roles }) => {
                 id="combo-box-demo"
                 options={roles}
                 sx={{ width: "100%", mb: 3 }}
-                onChange={(role) => handleRole(role)}
+                onChange={(_event, newValue) => {
+                  handleRole(newValue);
+                }}
                 renderInput={(params) => <TextField {...params} label="Rol" />}
               />
             ) : null}

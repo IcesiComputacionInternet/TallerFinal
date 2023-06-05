@@ -8,6 +8,7 @@ import co.com.icesi.Eshop.repository.RoleRepository;
 import co.com.icesi.Eshop.repository.UserRepository;
 import co.com.icesi.Eshop.service.security.AuthoritiesService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final AuthoritiesService authoritiesService;
+
+    private final PasswordEncoder encoder;
     private final UserMapper userMapper;
 
 
@@ -34,6 +37,7 @@ public class UserService {
 
         userPrincipal.setRole(roleRepository.findByRoleName(userDTO.getRole()).orElseThrow(() -> new RuntimeException("Role with " + userDTO.getRole() + " does not exists")));
         userPrincipal.setUserId(UUID.randomUUID());
+        userPrincipal.setPassword(encoder.encode(userDTO.getPassword()));
         return userMapper.toUserResponseDTO(userRepository.save(userPrincipal));
     }
 

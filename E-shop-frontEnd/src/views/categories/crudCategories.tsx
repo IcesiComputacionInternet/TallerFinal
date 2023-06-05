@@ -1,51 +1,50 @@
 import { useState, useEffect } from "react";
-import RoleServices from "../../services/roleServices";
-import FormRole from "./formRole";
-import TableRoles from "./tableRoles";
+import CategoryServices from "../../services/categoryServices";
+import FormCategory from "./formCategories";
+import TableCategories from "./tableCategories";
 import Footer from "../utils/footer";
 import Header from "../utils/header";
 import { Link } from "react-router-dom";
 import { Typography } from "@mui/material";
 
-const CrudRoles = () => {
-  const [roles, setRoles] = useState<string[]>([]);
+const CrudCategory = () => {
+  const [categories, setCategories] = useState<string[]>([]);
   const [dataToEdit, setDataToEdit] = useState<any>(null);
 
   useEffect(() => {
-    RoleServices.getRoles().then((res) => {
-      setRoles(res.data);
+    CategoryServices.getCategories().then((res) => {
+      setCategories(res.data);
     });
   }, []);
 
   const createData = (data: any) => {
-    RoleServices.create(data).then((res) => {
-      console.log(res);
-      setRoles((prevRoles) => [...prevRoles, res.data]);
+    CategoryServices.create(data).then((res) => {
+      setCategories((prevCategories) => [...prevCategories, res.data]);
     });
   };
 
   const updateData = (data: any) => {
-    let updatedRole: any = null;
-    let newRoles = roles.map((el: any) => {
-      if (el.roleName === data.roleName) {
-        updatedRole = data;
+    let updatedCategory: any = null;
+    let newCategories = categories.map((el: any) => {
+      if (el.name === data.name) {
+        updatedCategory = data;
         return data;
       }
       return el;
     });
-    setRoles(newRoles);
 
-    RoleServices.update(updatedRole).then((res) => {
-      console.log(res);
-      console.log(updatedRole); // Valor actualizado
+    CategoryServices.update(updatedCategory).then((_res) => {
+      setCategories(newCategories);
     });
   };
 
   const deleteData = async (data: any) => {
     try {
-      await RoleServices.deleteRole(data);
-      const filteredRoles = roles.filter((el: any) => el.roleName !== data);
-      setRoles(filteredRoles);
+      await CategoryServices.deleteCategory(data);
+      const filteredCategories = categories.filter(
+        (el: any) => el.name !== data
+      );
+      setCategories(filteredCategories);
     } catch (error) {
       console.error(error);
     }
@@ -55,14 +54,14 @@ const CrudRoles = () => {
     <>
       <Header />
       <div className="container-add-role">
-        <FormRole
+        <FormCategory
           createData={createData}
           updateData={updateData}
           dataToEdit={dataToEdit}
           setDataToEdit={setDataToEdit}
         />
-        <TableRoles
-          data={roles}
+        <TableCategories
+          data={categories}
           setDataToEdit={setDataToEdit}
           deleteData={deleteData}
         />
@@ -75,4 +74,4 @@ const CrudRoles = () => {
   );
 };
 
-export default CrudRoles;
+export default CrudCategory;
