@@ -4,6 +4,7 @@ import Home from "../views/home/home";
 import CreateUser from "../views/user/createUser";
 import CrudRoles from "../views/roles/crudRoles";
 import CrudCategories from "../views/categories/crudCategories";
+import CrudUsers from "../views/user/crudUser";
 
 interface Props {
   children: React.ReactComponentElement<any>;
@@ -85,6 +86,14 @@ const ThemeRoutes = () => {
           element={
             <ProtectedRoutesAdmin>
               <CrudCategories />
+            </ProtectedRoutesAdmin>
+          }
+        />
+        <Route
+          path="/crud_users"
+          element={
+            <ProtectedRoutesAdmin>
+              <CrudUsers />
             </ProtectedRoutesAdmin>
           }
         />

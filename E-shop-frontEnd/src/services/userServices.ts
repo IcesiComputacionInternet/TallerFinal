@@ -20,8 +20,30 @@ const addUser = (userDTO: UserDTO) => {
   });
 };
 
+const getUsers = () => {
+  return axios.get(`${URL_API}users/all`, {
+    headers: authHeader(),
+  });
+};
+
+const update = (userDTO: UserDTO) => {
+  return axios.put(`${URL_API}users/update`, userDTO, {
+    headers: authHeader(),
+  });
+};
+
+const deleteUser = (email: any) => {
+  return axios.delete(`${URL_API}users/delete`, {
+    data: email.toString(),
+    headers: authHeader(),
+  });
+};
+
 const UserServices = {
   addUser,
+  getUsers,
+  update,
+  deleteUser,
 };
 
 export default UserServices;

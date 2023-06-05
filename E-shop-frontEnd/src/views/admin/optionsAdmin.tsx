@@ -9,6 +9,10 @@ const OptionsAdmin = () => {
     navigate("/add_user_admin", { replace: true });
   };
 
+  const handleCrudUser = () => {
+    navigate("/crud_users", { replace: true });
+  };
+
   const handleCrudRoles = () => {
     navigate("/crud_role", { replace: true });
   };
@@ -41,7 +45,7 @@ const OptionsAdmin = () => {
             Crear Usuarios
           </Button>
           <Button
-            onClick={handleCrudRoles}
+            onClick={handleCrudUser}
             variant="contained"
             sx={{
               width: "20%",
