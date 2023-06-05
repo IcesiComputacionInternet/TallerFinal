@@ -2,7 +2,7 @@ package co.com.icesi.eShopBackEnd.api;
 
 import co.com.icesi.eShopBackEnd.dto.CreateCustomerDTO;
 import co.com.icesi.eShopBackEnd.dto.response.ResponseCustomerDTO;
-import co.com.icesi.eShopBackEnd.dto.response.ResponseSalesOrderDTO;
+import co.com.icesi.eShopBackEnd.dto.response.salesOrderResponse.ResponseSalesOrderDTO;
 import co.com.icesi.eShopBackEnd.dto.response.RoleDTO;
 import org.springframework.web.bind.annotation.*;
 

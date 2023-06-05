@@ -1,4 +1,4 @@
-package co.com.icesi.eShopBackEnd.dto.response;
+package co.com.icesi.eShopBackEnd.dto.response.salesOrderResponse;
 
 import co.com.icesi.eShopBackEnd.Enum.OrderState;
 import lombok.Builder;
@@ -13,6 +13,6 @@ public class ResponseSalesOrderDTO {
     private UUID orderId;
     private OrderState status;
     private Long total;
-    private ResponseCustomerDTO customer;
-    private List<ResponseItemDTO> items;
+    private ResponseCustomerInOrderDTO customer;
+    private List<ResponseItemInOrderDTO> items;
 }

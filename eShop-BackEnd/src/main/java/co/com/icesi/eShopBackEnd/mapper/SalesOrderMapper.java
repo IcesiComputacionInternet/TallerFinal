@@ -1,7 +1,7 @@
 package co.com.icesi.eShopBackEnd.mapper;
 
 import co.com.icesi.eShopBackEnd.dto.CreateSalesOderDTO;
-import co.com.icesi.eShopBackEnd.dto.response.ResponseSalesOrderDTO;
+import co.com.icesi.eShopBackEnd.dto.response.salesOrderResponse.ResponseSalesOrderDTO;
 import co.com.icesi.eShopBackEnd.model.SalesOrder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

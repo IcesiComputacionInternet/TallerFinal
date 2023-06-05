@@ -19,8 +19,15 @@ public interface ItemRepository extends JpaRepository<Item, UUID> {
     @Query(value = "SELECT i FROM Item i where i.name = :itemName")
     Optional<Item> returnItem(String itemName);
 
+    @Query(value = "SELECT i FROM Item i where i.name = :itemName and i.stock >= :stock")
+    Optional<Item> returnItemAccordingToStock(String itemName, int stock);
+
 
     @Modifying
     @Query(value = "UPDATE Item i SET i.category = :category WHERE i.name = :itemName")
     void updateCategory(String itemName, Category category);
+
+    @Modifying
+    @Query(value = "UPDATE Item i SET i.stock = :stock WHERE i.name = :itemName")
+    void updateStock(String itemName, int stock);
 }

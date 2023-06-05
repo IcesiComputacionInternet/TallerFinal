@@ -16,6 +16,12 @@ public record CreateItemDTO(
 
         @NotBlank
         String category,
+
+        @NotBlank
+        String brand,
+
+        @Min(value = 0, message = "El stock debe ser mayor a 0")
+        int stock,
         String imageURL,
         String description
 ) {

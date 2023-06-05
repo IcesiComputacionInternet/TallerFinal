@@ -2,7 +2,7 @@ package co.com.icesi.eShopBackEnd.service;
 
 import co.com.icesi.eShopBackEnd.dto.CreateCustomerDTO;
 import co.com.icesi.eShopBackEnd.dto.response.ResponseCustomerDTO;
-import co.com.icesi.eShopBackEnd.dto.response.ResponseSalesOrderDTO;
+import co.com.icesi.eShopBackEnd.dto.response.salesOrderResponse.ResponseSalesOrderDTO;
 import co.com.icesi.eShopBackEnd.dto.response.RoleDTO;
 import co.com.icesi.eShopBackEnd.error.enums.ErrorCode;
 import co.com.icesi.eShopBackEnd.error.util.ArgumentsExceptionBuilder;

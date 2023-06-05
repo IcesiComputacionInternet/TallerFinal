@@ -4,13 +4,10 @@ import co.com.icesi.eShopBackEnd.Enum.OrderState;
 import co.com.icesi.eShopBackEnd.dto.CreateItemDTO;
 import co.com.icesi.eShopBackEnd.dto.CreateSalesOderDTO;
 import co.com.icesi.eShopBackEnd.dto.UpdateOrderStateDTO;
-import co.com.icesi.eShopBackEnd.dto.response.ResponseItemDTO;
-import co.com.icesi.eShopBackEnd.dto.response.ResponseSalesOrderDTO;
+import co.com.icesi.eShopBackEnd.dto.response.salesOrderResponse.ResponseSalesOrderDTO;
 import co.com.icesi.eShopBackEnd.error.enums.ErrorCode;
 import co.com.icesi.eShopBackEnd.error.util.ArgumentsExceptionBuilder;
 import co.com.icesi.eShopBackEnd.error.util.DetailBuilder;
-import co.com.icesi.eShopBackEnd.mapper.CustomerMapper;
-import co.com.icesi.eShopBackEnd.mapper.ItemMapper;
 import co.com.icesi.eShopBackEnd.mapper.SalesOrderMapper;
 import co.com.icesi.eShopBackEnd.model.Customer;
 import co.com.icesi.eShopBackEnd.model.Item;
@@ -22,6 +19,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,10 +30,9 @@ public class SalesOrderService {
     private final CustomerRepository customerRepository;
     private final ItemRepository itemRepository;
     private final SalesOrderMapper salesOrderMapper;
-    private final CustomerMapper customerMapper;
-    private final ItemMapper itemMapper;
 
 
+    @Transactional
     public ResponseSalesOrderDTO save(CreateSalesOderDTO createDTO){
 
         Customer customer = customerRepository.findUserByEmail(createDTO.customer()).orElseThrow(
@@ -46,19 +43,44 @@ public class SalesOrderService {
                 )
         );
 
-        List<Item> items = validateItems(createDTO.items());
+        List<Item> items = validateItemsStock(validateItemsExists(createDTO.items()),createDTO.items());
+
 
         SalesOrder newOrder = salesOrderMapper.fromCreateSalesOrderDTO(createDTO);
         newOrder.setOrderId(UUID.randomUUID());
         newOrder.setStatus(OrderState.CREATED);
-        newOrder.setTotal(calculateTotal(items));
+        newOrder.setTotal(calculateTotal(items,createDTO.items()));
         newOrder.setCustomer(customer);
         newOrder.setItems(items);
 
+        //Update the stock of each item
+        updateItemsStock(items,createDTO.items());
         return salesOrderMapper.fromSalesOrderToResponse(salesOrderRepository.save(newOrder));
     }
 
-    private List<Item> validateItems(List<CreateItemDTO> items){
+    @Transactional
+    public void updateItemsStock(List<Item> itemsBD, List<CreateItemDTO> itemsDTO){
+        itemsBD.forEach(item -> {
+
+            CreateItemDTO itemDTO = itemsDTO.stream()
+                    .filter(itemDTO1 -> itemDTO1.name().equals(item.getName()))
+                    .findFirst()
+                    .orElseThrow(
+                            ArgumentsExceptionBuilder.createArgumentsExceptionSup(
+                                    "Not existing data",
+                                    HttpStatus.BAD_REQUEST,
+                                    new DetailBuilder(ErrorCode.ERR_NOT_FOUND,"item")
+                            )
+                    );
+
+            item.setStock(item.getStock() - itemDTO.stock());
+            itemRepository.updateStock(item.getName(),item.getStock());
+
+        });
+    }
+
+    private List<Item> validateItemsExists(List<CreateItemDTO> items){
+        //Validate that the items exist
         return items.stream()
                 .map(itemDTO -> itemRepository.returnItem(itemDTO.name()).orElseThrow(
                         ArgumentsExceptionBuilder.createArgumentsExceptionSup(
@@ -68,11 +90,47 @@ public class SalesOrderService {
                         )
                 )).toList();
     }
+    private List<Item> validateItemsStock(List<Item> itemsBD, List<CreateItemDTO> itemsDTO){
+        return itemsBD.stream().peek(itemBD -> {
 
-    private Long calculateTotal(List<Item> items){
-        return items.stream()
-                .mapToLong(Item::getPrice)
-                .sum();
+            CreateItemDTO itemDTO = itemsDTO.stream()
+                    .filter(item -> item.name().equals(itemBD.getName()))
+                    .findFirst()
+                    .orElseThrow(
+                            ArgumentsExceptionBuilder.createArgumentsExceptionSup(
+                                    "Not existing data",
+                                    HttpStatus.BAD_REQUEST,
+                                    new DetailBuilder(ErrorCode.ERR_NOT_FOUND,"item")
+                            )
+                    );
+
+            if(itemBD.getStock() < itemDTO.stock()){
+                throw ArgumentsExceptionBuilder.createArgumentsException(
+                        "Not enough stock",
+                        HttpStatus.BAD_REQUEST,
+                        new DetailBuilder(ErrorCode.ERR_NOT_ENOUGH_STOCK,itemBD.getName())
+                );
+            }
+        }).toList();
+
+    }
+
+    private Long calculateTotal(List<Item> itemsBD, List<CreateItemDTO> itemsDTO){
+        //Calculate the total taking into account the quantity of each item
+        return  itemsBD.stream().reduce(0L,(total,itemBD) -> {
+            CreateItemDTO itemDTO = itemsDTO.stream()
+                    .filter(item -> item.name().equals(itemBD.getName()))
+                    .findFirst()
+                    .orElseThrow(
+                            ArgumentsExceptionBuilder.createArgumentsExceptionSup(
+                                    "Not existing data",
+                                    HttpStatus.BAD_REQUEST,
+                                    new DetailBuilder(ErrorCode.ERR_NOT_FOUND,"item")
+                            )
+                    );
+            return total + (itemBD.getPrice() * itemDTO.stock());
+        },Long::sum);
+
     }
 
     public ResponseSalesOrderDTO getSalesOrderById(String salesOrderId){

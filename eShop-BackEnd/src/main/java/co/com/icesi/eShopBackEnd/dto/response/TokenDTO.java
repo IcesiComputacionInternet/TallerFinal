@@ -1,4 +1,4 @@
-package co.com.icesi.eShopBackEnd.dto;
+package co.com.icesi.eShopBackEnd.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

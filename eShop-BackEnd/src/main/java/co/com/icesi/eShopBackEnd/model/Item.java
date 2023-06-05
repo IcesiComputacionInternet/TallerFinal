@@ -20,6 +20,8 @@ public class Item {
     private String description;
     private String name;
     private Long price;
+    private String brand;
+    private int stock;
     private String imageURL;
 
     @ManyToOne(optional = false,cascade = CascadeType.ALL)

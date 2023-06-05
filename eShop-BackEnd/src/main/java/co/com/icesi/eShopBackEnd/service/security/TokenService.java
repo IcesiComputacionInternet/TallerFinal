@@ -1,8 +1,7 @@
 package co.com.icesi.eShopBackEnd.service.security;
 
-import co.com.icesi.eShopBackEnd.dto.TokenDTO;
+import co.com.icesi.eShopBackEnd.dto.response.TokenDTO;
 import co.com.icesi.eShopBackEnd.security.CustomAuthentication;
-import co.com.icesi.eShopBackEnd.security.SecurityContext;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

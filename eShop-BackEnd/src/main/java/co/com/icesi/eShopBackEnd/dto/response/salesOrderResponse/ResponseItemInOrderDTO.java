@@ -1,6 +1,5 @@
-package co.com.icesi.eShopBackEnd.dto.response;
+package co.com.icesi.eShopBackEnd.dto.response.salesOrderResponse;
 
-import co.com.icesi.eShopBackEnd.dto.CreateCategoryDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,14 +11,9 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseItemDTO {
-
+public class ResponseItemInOrderDTO {
     private UUID itemId;
     private String name;
     private Long price;
-    private CreateCategoryDTO category;
     private String brand;
-    private int stock;
-    private String imageURL;
-    private String description;
 }

@@ -3,7 +3,7 @@ package co.com.icesi.eShopBackEnd.controller;
 import co.com.icesi.eShopBackEnd.api.SalesOrderAPI;
 import co.com.icesi.eShopBackEnd.dto.CreateSalesOderDTO;
 import co.com.icesi.eShopBackEnd.dto.UpdateOrderStateDTO;
-import co.com.icesi.eShopBackEnd.dto.response.ResponseSalesOrderDTO;
+import co.com.icesi.eShopBackEnd.dto.response.salesOrderResponse.ResponseSalesOrderDTO;
 import co.com.icesi.eShopBackEnd.service.SalesOrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
