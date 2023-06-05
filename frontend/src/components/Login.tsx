@@ -1,11 +1,10 @@
 // @ts-ignore
 import React, { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import '../style/form.css'
 // import loginImg from '../assets/loginImg.svg'
 import loginImg from '../assets/cellp.gif'
-import signUp from "./SignUp.tsx";
 
 const baseUrl = "http://localhost:8080";
 
@@ -54,9 +53,9 @@ const Login = ({ setLogin }: Props) => {
     return (
         <body>
         <div className="container">
-            <form>
+            <form className="login-form">
                 <h3>Sign in</h3>
-                <p>Welcome (nombre de la tienda)</p>
+                <p>Welcome to (nombre de la tienda)</p>
                 <div className="form-group">
                     <input
                         type="text"
@@ -87,9 +86,6 @@ const Login = ({ setLogin }: Props) => {
                 </div>
                 <button onClick={signUpPage} className="btn btn-outline-primary">
                     Sign up
-                    <div className="arrow-wrapper" >
-                        <div className="arrow"></div>
-                    </div>
                 </button>
             </form>
             <img src={loginImg} alt="Mobile Login" className="svg-image" />
