@@ -10,7 +10,6 @@ interface IProps {
 }
 
 const TableRoles: React.FC<IProps> = ({ data, setDataToEdit, deleteData }) => {
-  console.log(data);
   return (
     <TableContainer
       component={Paper}
@@ -19,15 +18,23 @@ const TableRoles: React.FC<IProps> = ({ data, setDataToEdit, deleteData }) => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow sx={{ textAlgin: "center" }}>
-            <TableCell>Nombre del rol</TableCell>
-            <TableCell align="right">Descripcion</TableCell>
-            <TableCell align="right">Opciones</TableCell>
+            <TableCell style={{ textAlign: "center" }}>
+              <b>Nombre del rol</b>
+            </TableCell>
+            <TableCell style={{ textAlign: "center" }}>
+              <b>Descripcion</b>
+            </TableCell>
+            <TableCell style={{ textAlign: "center" }}>
+              <b>Opciones</b>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.length === 0 ? (
             <TableRow sx={{ textAlgin: "center" }}>
-              <TableCell colSpan="3">Sin Datos</TableCell>
+              <TableCell scope="3" style={{ textAlign: "center" }}>
+                Sin Datos
+              </TableCell>
             </TableRow>
           ) : (
             data.map((el: any) => (
