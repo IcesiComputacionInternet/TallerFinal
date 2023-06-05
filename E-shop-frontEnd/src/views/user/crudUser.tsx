@@ -24,11 +24,29 @@ const CrudUser = () => {
   }, []);
 
   const updateData = (data: any) => {
-    console.log("Sapa");
+    console.log(data);
+    let updatedUser: any = null;
+    let newUser = roles.map((el: any) => {
+      if (el.email === data.email) {
+        updatedUser = data;
+        return data;
+      }
+      return el;
+    });
+
+    UserServices.update(updatedUser).then((_res) => {
+      setRoles(newUser);
+    });
   };
 
   const deleteData = async (data: any) => {
-    console.log("Hola");
+    try {
+      await UserServices.deleteUser(data);
+      const filteredUser = users.filter((el: any) => el.roleName !== data);
+      setRoles(filteredUser);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
