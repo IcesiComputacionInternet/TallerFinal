@@ -51,6 +51,9 @@ public class RoleService {
         );
     }
     public List<RoleDTO> getAllRoles() {
-        return roleRepository.findAll().stream().map(roleMapper::fromRoleToRoleDTO).collect(Collectors.toList());
+        return roleRepository.findAll()
+                .stream()
+                .map(roleMapper::fromRoleToRoleDTO)
+                .collect(Collectors.toList());
     }
 }
