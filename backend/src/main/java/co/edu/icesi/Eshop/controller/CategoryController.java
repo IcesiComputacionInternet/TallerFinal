@@ -21,15 +21,18 @@ public class CategoryController implements CategoryAPI {
     @Override
     public CategoryDTO getCategory(String categoryName) {
         return categoryService.getCategoryByName(categoryName);
+
     }
 
     @Override
     public List<CategoryDTO> getAllCategories() {
+
         return categoryService.getAllCategories();
     }
 
     @Override
     public CategoryDTO addCategory(CategoryDTO categoryDTO) {
+
         return categoryService.save(categoryDTO);
     }
 }
