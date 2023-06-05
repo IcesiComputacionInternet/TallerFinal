@@ -1,27 +1,30 @@
 package co.edu.icesi.Eshop.dto;
 
+import co.edu.icesi.Eshop.validation.constraint.CustomEmailConstraint;
+import co.edu.icesi.Eshop.validation.constraint.EmailOrPhoneNumberExistConstraint;
+import co.edu.icesi.Eshop.validation.constraint.PhoneNumberConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EmailOrPhoneNumberExistConstraint
 public class UserDTO {
 
-    @NotBlank(message = "is missing")
     private String firstName;
 
-    @NotBlank(message = "is missing")
     private String lastName;
 
+    @CustomEmailConstraint
     private String email;
 
+    @PhoneNumberConstraint
     private String phoneNumber;
 
     private String address;

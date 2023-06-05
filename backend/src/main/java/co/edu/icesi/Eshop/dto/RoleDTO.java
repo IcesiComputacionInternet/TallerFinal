@@ -6,8 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Data
@@ -16,11 +15,10 @@ import java.util.List;
 @NoArgsConstructor
 public class RoleDTO {
 
-    @NotNull(message = "A name is required for the role")
-    @Column(unique = true)
+    @NotBlank(message = "A name is required for the role")
     private String roleName;
 
+    @NotBlank(message = "is missing")
     private String description;
 
-    private List<User> users;
 }
