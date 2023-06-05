@@ -24,13 +24,13 @@ public class OrderService {
     public OrderResponseDTO createOrder(OrderDTO orderDTO) {
         OrderStore order = orderMapper.toOrder(orderDTO);
         order.setUserPrincipal(userRepository.findByEmail(orderDTO.getUserEmail()).orElseThrow(() -> new RuntimeException("UserPrincipal not found")));
-        order.setItems(orderDTO.getItems().stream().map(itemRepository::findByName).collect(Collectors.toList()));
+        order.setItems(orderDTO.getItems().stream().map(itemRepository::getByName).collect(Collectors.toList()));
         order.setOrderId(UUID.randomUUID());
         return orderMapper.toOrderResponseDTO(orderRepository.save(order));
     }
     public OrderResponseDTO updateOrder(OrderDTO orderDTO) {
         OrderStore order = orderRepository.findById(UUID.fromString(orderDTO.getOrderId())).orElseThrow(() -> new RuntimeException("Order not found"));
-        order.setItems(orderDTO.getItems().stream().map(itemRepository::findByName).collect(Collectors.toList()));
+        order.setItems(orderDTO.getItems().stream().map(itemRepository::getByName).collect(Collectors.toList()));
         order.setStatus(orderDTO.getStatus());
         order.setTotal(orderDTO.getTotal());
         order.setUserPrincipal(userRepository.findByEmail(orderDTO.getUserEmail()).orElseThrow(() -> new RuntimeException("UserPrincipal not found")));
