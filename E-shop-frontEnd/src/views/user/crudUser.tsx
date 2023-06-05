@@ -42,8 +42,8 @@ const CrudUser = () => {
   const deleteData = async (data: any) => {
     try {
       await UserServices.deleteUser(data);
-      const filteredUser = users.filter((el: any) => el.roleName !== data);
-      setRoles(filteredUser);
+      const filteredUser = users.filter((el: any) => el.email !== data);
+      setUsers(filteredUser);
     } catch (error) {
       console.error(error);
     }
