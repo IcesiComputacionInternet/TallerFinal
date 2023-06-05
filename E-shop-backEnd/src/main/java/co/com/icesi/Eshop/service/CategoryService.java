@@ -32,7 +32,10 @@ public class CategoryService {
     }
 
     public CategoryResponseDTO deleteCategory(String categoryName) {
-        String categoryDelete = categoryName.substring(1, categoryName.length() - 1);
+        String categoryDelete = categoryName;
+        if(categoryDelete.matches(".*\".*")){
+            categoryDelete = categoryName.substring(1, categoryName.length() - 1);
+        }
         Category category = categoryRepository.findByName(categoryDelete).orElseThrow(() -> new RuntimeException("Category not found"));
         categoryRepository.delete(category);
         return categoryMapper.toCategoryResponseDTO(category);

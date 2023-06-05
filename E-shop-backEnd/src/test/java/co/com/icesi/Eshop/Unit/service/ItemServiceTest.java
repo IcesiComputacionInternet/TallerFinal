@@ -14,7 +14,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
 public class ItemServiceTest  implements CrudTest {
-    //TODO FALTAN METODOS
+
     private ItemRepository itemRepository;
     private CategoryRepository categoryRepository;
     private ItemMapper itemMapper;
