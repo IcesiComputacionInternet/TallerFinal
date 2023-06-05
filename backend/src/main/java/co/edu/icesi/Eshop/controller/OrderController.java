@@ -1,6 +1,7 @@
 package co.edu.icesi.Eshop.controller;
 
 import co.edu.icesi.Eshop.api.OrderAPI;
+import co.edu.icesi.Eshop.dto.ChangeStatusDTO;
 import co.edu.icesi.Eshop.dto.OrderDTO;
 import co.edu.icesi.Eshop.service.OrderService;
 import lombok.AllArgsConstructor;
@@ -29,5 +30,10 @@ public class OrderController implements OrderAPI {
     @Override
     public OrderDTO addOrder(OrderDTO orderDTO) {
         return orderService.save(orderDTO);
+    }
+
+    @Override
+    public OrderDTO changeStatus(ChangeStatusDTO changeStatusDTO) {
+        return orderService.changeStatus(changeStatusDTO);
     }
 }

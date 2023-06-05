@@ -1,10 +1,13 @@
 package co.edu.icesi.Eshop.service;
 
+import co.edu.icesi.Eshop.dto.ChangeStatusDTO;
 import co.edu.icesi.Eshop.dto.OrderDTO;
 import co.edu.icesi.Eshop.error.exception.DetailBuilder;
 import co.edu.icesi.Eshop.error.exception.ErrorCode;
 import co.edu.icesi.Eshop.mapper.OrderMapper;
+import co.edu.icesi.Eshop.model.Item;
 import co.edu.icesi.Eshop.model.Order;
+import co.edu.icesi.Eshop.model.Status;
 import co.edu.icesi.Eshop.model.User;
 import co.edu.icesi.Eshop.repository.ItemRepository;
 import co.edu.icesi.Eshop.repository.OrderRepository;
@@ -60,12 +63,27 @@ public class OrderService {
                     new DetailBuilder(ErrorCode.ERR_404, "User with phone number",orderDTO.getUserPhoneNumber() )
             ));
         }
-
+        List<Item> items= orderDTO.getItems().stream().map(x-> itemRepository.findByName(x).get()).toList();
         Order order= orderMapper.fromOrderDTO(orderDTO);
         order.setOrderId(UUID.randomUUID());
         order.setUser(user);
-        order.setStatus("");
+        order.setStatus(Status.PENDING.toString());
+        order.setItems(items);
 
         return orderMapper.fromOrder(orderRepository.save(order));
+    }
+
+
+    public OrderDTO changeStatus(ChangeStatusDTO changeStatusDTO) {
+        Order order= orderRepository.findById(UUID.fromString(changeStatusDTO.getOrderId())).orElseThrow(createEShopException(
+                "Order does not exists",
+                HttpStatus.NOT_FOUND,
+                new DetailBuilder(ErrorCode.ERR_404, "Order ",changeStatusDTO.getOrderId() )
+        ));
+
+        order.setStatus(changeStatusDTO.getStatus());
+
+        orderRepository.save(order);
+        return orderMapper.fromOrder(order);
     }
 }
