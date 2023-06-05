@@ -32,7 +32,7 @@ public class TestConfigurationData {
                 .authority("/api/users/**")
                 .build();
         Authorities authorities3 = Authorities.builder()
-                .authority("/api/role/**")
+                .authority("/api/roles/**")
                 .build();
         Authorities authorities4 = Authorities.builder()
                 .authority("/api/orders/**")
@@ -68,7 +68,7 @@ public class TestConfigurationData {
 
         Role role5 = Role.builder()
                 .roleId(UUID.fromString("a351796c-ff13-11ed-be56-0242ac120009"))
-                .roleName("FOR DELETE")
+                .roleName("DELETE")
                 .description("Supervisor")
                 .authorities(new ArrayList<>(Arrays.asList(authorities3,authorities4,authorities5)))
                 .build();

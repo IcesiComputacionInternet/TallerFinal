@@ -60,7 +60,6 @@ public class RoleControllerTest {
         RoleDTO roleDTO = defaultRole();
         roleDTO.setRoleName("USER");
         roleDTO.setDescription("New description");
-        roleDTO.setRoleName("USER_PRIME");
         var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
                                 objectMapper.writeValueAsString(roleDTO)
                         )
@@ -75,7 +74,7 @@ public class RoleControllerTest {
 
     @Test
     public void testDeleteRole() throws Exception {
-        String role = "FOR DELETE";
+        String role = "\"DELETE\"";
         var  result = mockMvc.perform(MockMvcRequestBuilders.delete(URL+ CRUD.D.getAction())
                         .content(role)
                         .header("Authorization", "Bearer " + token)

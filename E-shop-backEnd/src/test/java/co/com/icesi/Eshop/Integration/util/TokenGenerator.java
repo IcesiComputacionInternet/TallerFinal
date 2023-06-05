@@ -24,6 +24,8 @@ public class TokenGenerator {
                 .andReturn();
         var response = objectMapper.readTree(login.getResponse().getContentAsString());
 
+        System.out.println(response.get("role").asText()+" este es el rol actual");
+
         return response.get("token").asText();
     }
 }

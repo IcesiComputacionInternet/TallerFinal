@@ -25,14 +25,14 @@ public class EShopApplication {
 
 
 
-	@Bean
+	//@Bean
 	CommandLineRunner commandLineRunner(UserRepository userRepository,
-										RoleRepository roleRepository,
-										OrderRepository orderRepository,
-										ItemRepository itemRepository,
-										CategoryRepository categoryRepository,
-										AuthoritiesRepository authoritiesRepository,
-										PasswordEncoder encoder) {
+												 RoleRepository roleRepository,
+												 OrderRepository orderRepository,
+												 ItemRepository itemRepository,
+												 CategoryRepository categoryRepository,
+												 AuthoritiesRepository authoritiesRepository,
+												 PasswordEncoder encoder) {
 
 		Authorities authorities1 = Authorities.builder()
 				.authority("/**")
@@ -199,6 +199,7 @@ public class EShopApplication {
 
 
 	}
+
 	
 
 }

@@ -42,7 +42,11 @@ public class RoleService {
     }
 
     public RoleResponseDTO deleteRole(String roleName) {
-        String roleNameTest = roleName.substring(1, roleName.length() - 1);
+        String roleNameTest = roleName;
+        if(roleName.matches(".*\".*")){
+             roleNameTest = roleName.substring(1, roleName.length() - 1);
+        }
+
         Role role = roleRepository.findByRoleName(roleNameTest).orElseThrow(() -> new RuntimeException("Role with " + roleName + " does not exists"));
         if(userRepository.findAll().stream().filter(user -> user.getRole().getRoleId().equals(role.getRoleId())).toList().size()>0) throw new RuntimeException("Role with " + roleName + " is in use");
         roleRepository.delete(role);
