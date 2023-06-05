@@ -38,6 +38,7 @@ public class RoleService {
     public RoleResponseDTO updateRole(RoleDTO roleDTO) {
         Role roleInDB = roleRepository.findByRoleName(roleDTO.getRoleName()).orElseThrow(() -> new RuntimeException("Role with " + roleDTO.getRoleName() + " does not exists"));
         roleInDB.setDescription(roleDTO.getDescription());
+        roleInDB.setRoleName(roleDTO.getRoleName());
         return roleMapper.toRoleResponseDTO(roleRepository.save(roleInDB));
     }
 
