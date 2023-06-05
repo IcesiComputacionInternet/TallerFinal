@@ -3,42 +3,41 @@ import authHeader from "./authHeader";
 
 const URL_API = "http://localhost:8080/api/roles/";
 
-interface roleProps{
-    roleName: string
-    description: string
+interface roleProps {
+  roleName: string;
+  description: string;
 }
 
-const create = (role:roleProps) => {
-        return axios.post(`${URL_API}create`,role,{
-            headers: authHeader()
-        })
-}
+const create = (role: roleProps) => {
+  return axios.post(`${URL_API}create`, role, {
+    headers: authHeader(),
+  });
+};
 
-const update = (role:roleProps) => {
-    return axios.put(`${URL_API}update`,role,{
-        headers: authHeader()
-    })
+const update = (role: roleProps) => {
+  return axios.put(`${URL_API}update`, role, {
+    headers: authHeader(),
+  });
+};
 
-}
-
-const deleteRole = (roleName:string) =>{
-    return axios.delete(`${URL_API}delete`,{
-        data: roleName, 
-        headers: authHeader()
-    })
-}
+const deleteRole = (role: any) => {
+  return axios.delete(`${URL_API}delete`, {
+    data: role.toString(),
+    headers: authHeader(),
+  });
+};
 
 const getRoles = () => {
-    return axios.get(`${URL_API}all`,{
-        headers: authHeader()
-    })
-}
+  return axios.get(`${URL_API}all`, {
+    headers: authHeader(),
+  });
+};
 
 const roleServices = {
-    create, 
-    update,
-    deleteRole,
-    getRoles
-}
+  create,
+  update,
+  deleteRole,
+  getRoles,
+};
 
-export default roleServices
+export default roleServices;
