@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 import static co.edu.icesi.Eshop.api.RoleAPI.BASE_ROLE_URL;
 
 @RequestMapping(BASE_ROLE_URL)
@@ -24,5 +26,10 @@ public class RoleController implements RoleAPI {
     @Override
     public RoleDTO createRole(RoleDTO roleDTO) {
         return roleService.save(roleDTO);
+    }
+
+    @Override
+    public List<RoleDTO> getAllRoles() {
+        return null;
     }
 }

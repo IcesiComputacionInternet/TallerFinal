@@ -4,6 +4,7 @@ import co.edu.icesi.Eshop.dto.ItemDTO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 public interface ItemAPI {
 
@@ -20,4 +21,7 @@ public interface ItemAPI {
 
     @PutMapping("/setPrice/{name}")
     ItemDTO setItemPrice(@PathVariable String name, Long price);
+
+    @GetMapping
+    List<ItemDTO> getAllItems();
 }

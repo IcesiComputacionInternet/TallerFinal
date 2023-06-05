@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 import static co.edu.icesi.Eshop.api.ItemAPI.BASE_ITEM_URL;
 
 @RequestMapping(BASE_ITEM_URL)
@@ -34,5 +36,10 @@ public class ItemController implements ItemAPI {
     @Override
     public ItemDTO setItemPrice(String name, Long price) {
         return itemService.setItemPrice(name, price);
+    }
+
+    @Override
+    public List<ItemDTO> getAllItems() {
+        return itemService.getAllItems();
     }
 }

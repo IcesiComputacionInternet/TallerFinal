@@ -8,6 +8,7 @@ import co.edu.icesi.Eshop.repository.RoleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -69,6 +70,18 @@ public class RoleService {
     private void verifyRoleName(String roleName){
         if (roleRepository.findByName(roleName).isPresent()){
             //Toca hacer lo del error duplicated
+        }
+    }
+
+    public List<RoleDTO> getAllRoles(){
+        adminAuthorizationOnly();
+        return roleRepository.findAll().stream().map(roleMapper::fromRole).toList();
+    }
+
+    private void adminAuthorizationOnly(){
+        //Validar que el rol es un admin
+        if (true){
+
         }
     }
 

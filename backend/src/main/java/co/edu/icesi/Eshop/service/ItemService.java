@@ -7,6 +7,7 @@ import co.edu.icesi.Eshop.repository.ItemRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -61,6 +62,18 @@ public class ItemService {
     private void verifyItemName(String itemName){
         if (itemRepository.findByName(itemName).isPresent()){
             //Toca poner la excepción de duplicado
+        }
+    }
+
+    public List<ItemDTO> getAllItems(){
+        adminAuthorizationOnly();
+        return itemRepository.findAll().stream().map(itemMapper::fromItem).toList();
+    }
+
+    private void adminAuthorizationOnly(){
+        //Validar que el rol es un admin
+        if (true){
+
         }
     }
 
