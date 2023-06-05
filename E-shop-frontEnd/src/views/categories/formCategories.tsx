@@ -1,10 +1,9 @@
 import { Box, TextField, Button, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
-import "./roles.css";
 import React from "react";
 
-const role = {
-  roleName: "",
+const category = {
+  name: "",
   description: "",
 };
 
@@ -15,42 +14,42 @@ interface IProps {
   setDataToEdit: any;
 }
 
-const AddRole: React.FC<IProps> = ({
+const AddCategory: React.FC<IProps> = ({
   createData,
   updateData,
   dataToEdit,
   setDataToEdit,
 }) => {
-  const [dataRole, setDataRole] = useState(role);
+  const [dataCategory, setDataCategory] = useState(category);
 
   useEffect(() => {
-    dataToEdit ? setDataRole(dataToEdit) : setDataRole(role);
+    dataToEdit ? setDataCategory(dataToEdit) : setDataCategory(category);
   }, [dataToEdit]);
 
-  const handleRole = (e: any) => {
+  const handleCategory = (e: any) => {
     e.preventDefault();
 
-    if (!dataRole.roleName || !dataRole.description) {
+    if (!dataCategory.name || !dataCategory.description) {
       alert("Datos incompletos");
       return;
     }
 
     if (dataToEdit === null) {
-      createData(dataRole);
+      createData(dataCategory);
     } else {
-      updateData(dataRole);
+      updateData(dataCategory);
     }
 
     handleReset();
   };
 
   const handleReset = () => {
-    setDataRole(role);
+    setDataCategory(category);
     setDataToEdit(null);
   };
 
   const handleData = (e: any) => {
-    setDataRole({ ...dataRole, [e.target.name]: e.target.value });
+    setDataCategory({ ...dataCategory, [e.target.name]: e.target.value });
   };
 
   return (
@@ -60,24 +59,24 @@ const AddRole: React.FC<IProps> = ({
         component="h4"
         sx={{ m: 3, textAlign: "center" }}
       >
-        {dataToEdit ? "Editar Rol" : "Agregar Rol"}
+        {dataToEdit ? "Editar Categoria" : "Agregar Categoria"}
       </Typography>
       <Box
         className="container-form-role"
         component="form"
-        onSubmit={handleRole}
+        onSubmit={handleCategory}
         noValidate
         sx={{ mt: 1 }}
       >
         <TextField
           color="primary"
           margin="normal"
-          id="roleName"
+          id="name"
           label="Nombre del rol"
-          name="roleName"
+          name="name"
           autoFocus
           onChange={handleData}
-          value={dataRole.roleName}
+          value={dataCategory.name}
         />
         <TextField
           color="primary"
@@ -87,7 +86,7 @@ const AddRole: React.FC<IProps> = ({
           name="description"
           autoFocus
           onChange={handleData}
-          value={dataRole.description}
+          value={dataCategory.description}
         />
         <Button
           type="submit"
@@ -105,7 +104,7 @@ const AddRole: React.FC<IProps> = ({
             },
           }}
         >
-          {dataToEdit ? "Editar Rol" : "Agregar Rol"}
+          {dataToEdit ? "Editar Categoria" : "Agregar Categoria"}
         </Button>
         {dataToEdit && (
           <Button
@@ -132,4 +131,4 @@ const AddRole: React.FC<IProps> = ({
   );
 };
 
-export default AddRole;
+export default AddCategory;

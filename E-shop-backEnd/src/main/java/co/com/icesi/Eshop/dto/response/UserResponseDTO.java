@@ -43,4 +43,8 @@ public class UserResponseDTO {
     @NotBlank
     @NotNull
     private String birthDate;
+    @NotEmpty
+    @NotBlank
+    @NotNull
+    private String role;
 }

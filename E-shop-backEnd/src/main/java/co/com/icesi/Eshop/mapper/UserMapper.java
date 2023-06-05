@@ -9,16 +9,16 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "role", expression = "java(userRepository.findRoleByName(userDTO.getRole()))")
     UserPrincipal toUser(UserDTO userDTO);
 
-    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "role", expression = "java(userRepository.findRoleByName(userResponseDTO.getRole()))")
     UserPrincipal toUser(UserResponseDTO userResponseDTO);
 
-    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "role", expression = "java(userResponseDTO.getRole().getRoleName())")
     UserDTO toUserDTO(UserPrincipal userPrincipal);
 
-    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "role", expression = "java(userResponseDTO.getRole())")
     UserDTO toUserDTO(UserResponseDTO userResponseDTO);
 
     UserResponseDTO toUserResponseDTO(UserPrincipal userPrincipal);

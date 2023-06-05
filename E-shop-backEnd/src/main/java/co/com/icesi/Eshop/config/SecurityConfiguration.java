@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authorization.AuthorityAuthorizationManager;
@@ -42,7 +43,9 @@ import java.util.stream.Stream;
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
+@DependsOn("commandLineRunner")
 @ComponentScan(basePackages = "co.com.icesi.Eshop")
+@Transactional(propagation = Propagation.REQUIRED)
 public class SecurityConfiguration {
 
     private final AuthenticatorManager icesiAuthenticatorManager;
