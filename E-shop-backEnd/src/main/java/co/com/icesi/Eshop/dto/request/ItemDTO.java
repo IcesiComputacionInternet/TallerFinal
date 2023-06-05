@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -21,7 +22,8 @@ public class ItemDTO {
     @NotBlank
     @NotNull
     private String name;
-    @NotBlank
+
+    @Min(value = 0)
     @NotNull
     private Long price;
     @NotBlank
@@ -30,8 +32,7 @@ public class ItemDTO {
     @NotBlank
     @NotNull
     private String categoryId;
-    @NotBlank
-    @NotNull
+
     private String orderId;
 
 }

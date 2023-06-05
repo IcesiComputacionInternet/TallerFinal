@@ -35,12 +35,12 @@ public class UserController implements UserApi {
     }
 
     /**
-     * @param userEmail userDTO
+     * @param email userDTO
      * @return UserResponseDTO userDTO
      */
     @Override
-    public UserResponseDTO deleteUser(String userEmail) {
-        return userService.deleteUser(userEmail);
+    public UserResponseDTO deleteUser(String email) {
+        return userService.deleteUser(email);
     }
 
     /**

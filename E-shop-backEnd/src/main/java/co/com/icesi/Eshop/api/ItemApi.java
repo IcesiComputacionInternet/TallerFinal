@@ -19,8 +19,8 @@ public interface ItemApi {
     @DeleteMapping("/delete")
     String deleteItem(@RequestBody String itemName);
 
-    @GetMapping("/find/{name}")
-    ItemResponseDTO findItem(@PathVariable String name);
+    @GetMapping("/find/{itemName}")
+    ItemResponseDTO findItem(@PathVariable String itemName);
 
     @GetMapping("/all")
     Iterable<ItemResponseDTO> allItems();

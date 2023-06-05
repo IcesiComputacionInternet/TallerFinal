@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ItemService {
     private final ItemRepository itemRepository;
-    private final OrderRepository orderRepository;
+   // private final OrderRepository orderRepository;
     private final CategoryRepository categoryRepository;
     private final ItemMapper itemMapper;
     public ItemResponseDTO createItem(ItemDTO itemDTO) {

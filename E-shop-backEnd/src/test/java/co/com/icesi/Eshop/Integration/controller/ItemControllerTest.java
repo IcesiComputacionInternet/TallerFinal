@@ -57,6 +57,7 @@ public class ItemControllerTest {
     public void testUpdateItem() throws Exception {
         ItemDTO itemDTO = defaulItem();
         //assert itemDTO != null;
+        itemDTO.setName("Item 2");
         itemDTO.setDescription("New description");
         var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
                                 objectMapper.writeValueAsString(itemDTO)
@@ -74,7 +75,7 @@ public class ItemControllerTest {
     public void testDelete() throws Exception {
         String itemName = "Item 1";
         var  result = mockMvc.perform(MockMvcRequestBuilders.delete(URL+ CRUD.D.getAction())
-                        .content(objectMapper.writeValueAsString(itemName))
+                        .content(itemName)
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -86,8 +87,8 @@ public class ItemControllerTest {
 
     @Test
     public void testGetItem() throws Exception {
-        String name = "Item 2";
-        var  result = mockMvc.perform(MockMvcRequestBuilders.get(URL+ "/find/{name}",name)
+        String itemName = "Item 2";
+        var  result = mockMvc.perform(MockMvcRequestBuilders.get(URL+ "find/{itemName}",itemName)
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -115,6 +116,7 @@ public class ItemControllerTest {
                 .description("Description test")
                 .imageUrl("https://via.placeholder.com/150")
                 .price(1000L)
+                .orderId("")
                 .categoryId("a3517ba6-ff13-11ed-be56-0242ac120004").build();
     }
 }
