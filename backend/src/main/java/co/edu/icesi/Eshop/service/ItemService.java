@@ -1,14 +1,20 @@
 package co.edu.icesi.Eshop.service;
 
 import co.edu.icesi.Eshop.dto.ItemDTO;
+import co.edu.icesi.Eshop.error.exception.DetailBuilder;
+import co.edu.icesi.Eshop.error.exception.ErrorCode;
 import co.edu.icesi.Eshop.mapper.ItemMapper;
 import co.edu.icesi.Eshop.model.Item;
 import co.edu.icesi.Eshop.repository.ItemRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+
+import static co.edu.icesi.Eshop.error.util.EShopExceptionBuilder.createEShopException;
 
 @Service
 @AllArgsConstructor
@@ -54,17 +60,40 @@ public class ItemService {
         String rule = "[A-G]";
 
         if (!levelOfEfficiency.matches(rule)){
-            //Excepcion que diga que esta mal
+            throw createEShopException(
+                    "Level of efficiency invalid",
+                    HttpStatus.BAD_REQUEST,
+                    new DetailBuilder(ErrorCode.ERR_400, "Level of efficiency "+levelOfEfficiency, "invalid")
+            ).get();
         }
     }
 
     private void verifyItemName(String itemName){
         if (itemRepository.findByName(itemName).isPresent()){
-            //Toca poner la excepción de duplicado
+            throw createEShopException(
+                    "Duplicated item name",
+                    HttpStatus.CONFLICT,
+                    new DetailBuilder(ErrorCode.ERR_DUPLICATED, "Item with name", itemName)
+            ).get();
+        }
+    }
+
+    public List<ItemDTO> getAllItems(){
+        adminAuthorizationOnly();
+        return itemRepository.findAll().stream().map(itemMapper::fromItem).toList();
+    }
+
+    private void adminAuthorizationOnly(){
+        //Validar que el rol es un admin
+        if (true){
+
         }
     }
 
     public ItemDTO getItemByName(String itemName){
-        return itemMapper.fromItem(itemRepository.findByName(itemName).orElseThrow(() -> new RuntimeException("Item not found")));
+        return itemMapper.fromItem(itemRepository.findByName(itemName).orElseThrow(createEShopException("Item not found",
+                HttpStatus.NOT_FOUND,
+                new DetailBuilder(ErrorCode.ERR_404, "Item with name",itemName)
+        )));
     }
 }
