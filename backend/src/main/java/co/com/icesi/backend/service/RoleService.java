@@ -24,23 +24,14 @@ public class RoleService {
 
     public RoleDTO saveRole(RoleDTO roleDTO){
         checkPermissions();
-        roleRepository.findByName(roleDTO.getName())
-                .orElseThrow(() -> exceptionBuilder.duplicatedValueException(
-                        "Another role already has this name.", roleDTO.getName()));
-
+        if(roleRepository.isNameInUse(roleDTO.getRoleName())){
+            throw exceptionBuilder.duplicatedValueException(
+                    "Another role already has this name.", roleDTO.getRoleName());
+        }
         Role newRole = roleMapper.fromRoleDTO(roleDTO);
         newRole.setRoleId(UUID.randomUUID());
         roleRepository.save(newRole);
         return roleMapper.fromRoleToRoleDTO(newRole);
-    }
-
-    public RoleDTO getRole(String roleName) {
-        checkPermissions();
-        return roleMapper.fromRoleToRoleDTO(
-                roleRepository.findByName(roleName).orElseThrow(
-                        () -> exceptionBuilder.notFoundException(
-                                "The role with the specified name does not exists.", roleName))
-        );
     }
 
     public void checkPermissions() {
@@ -51,6 +42,14 @@ public class RoleService {
         }
     }
 
+    public RoleDTO getRole(String roleName) {
+        checkPermissions();
+        return roleMapper.fromRoleToRoleDTO(
+                roleRepository.findByName(roleName).orElseThrow(
+                        () -> exceptionBuilder.notFoundException(
+                                "The role with the specified name does not exists.", roleName))
+        );
+    }
     public List<RoleDTO> getAllRoles() {
         return roleRepository.findAll().stream().map(roleMapper::fromRoleToRoleDTO).collect(Collectors.toList());
     }
