@@ -56,13 +56,6 @@ const UpdateUser: React.FC<IProps> = ({
     setDataUser({ ...dataUser, birthDate: newDate });
   };
 
-  const handleDateTransformFromDTO = () => {
-    const [day, month, year] = dataUser.birthDate.split("/");
-    const initialDate = new Date(`${year}-${month}-${day}`);
-    log(initialDate);
-    return initialDate;
-  };
-
   const handleData = (e: any) => {
     setDataUser({ ...dataUser, [e.target.name]: e.target.value });
   };
@@ -162,7 +155,6 @@ const UpdateUser: React.FC<IProps> = ({
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               label="Fecha de nacimiento"
-              value={(test) => handleDateTransformFromDTO()}
               sx={{ width: "20%", mt: 1 }}
               onChange={(date) => handleDate(date as Date)}
             />
