@@ -12,7 +12,6 @@ dayjs.extend(customParseFormat);
 
 const formUser = {
   email: "",
-  password: "",
   phoneNumber: "",
   firstName: "",
   lastName: "",
@@ -177,17 +176,19 @@ const UpdateUser: React.FC<IProps> = ({
               onChange={(date) => handleDate(date as Date)}
             />
           </LocalizationProvider>
-          <Autocomplete
-            disablePortal
-            id="combo-box-demo"
-            options={dataRoles}
-            sx={{ width: "20%", mt: 1 }}
-            onChange={(_event, newValue) => {
-              handleRole(newValue);
-            }}
-            value={dataUser.role}
-            renderInput={(params) => <TextField {...params} label="Rol" />}
-          />
+          {dataUser.role && (
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              options={dataRoles}
+              sx={{ width: "20%", mt: 1 }}
+              onChange={(_event, newValue) => {
+                handleRole(newValue);
+              }}
+              value={dataUser.role}
+              renderInput={(params) => <TextField {...params} label="Rol" />}
+            />
+          )}
           <Button
             type="submit"
             variant="contained"
@@ -204,7 +205,7 @@ const UpdateUser: React.FC<IProps> = ({
               },
             }}
           >
-            {dataToEdit ? "Editar Categoria" : "Agregar Categoria"}
+            {dataToEdit ? "Editar Usuario" : "Agregar Usuario"}
           </Button>
           {dataToEdit && (
             <Button

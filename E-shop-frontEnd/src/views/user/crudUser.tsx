@@ -24,18 +24,18 @@ const CrudUser = () => {
   }, []);
 
   const updateData = (data: any) => {
-    console.log(data);
-    let updatedUser: any = null;
-    let newUser = roles.map((el: any) => {
+    let updateUser: any = null;
+    let newUser = users.map((el: any) => {
       if (el.email === data.email) {
-        updatedUser = data;
+        updateUser = data;
         return data;
       }
       return el;
     });
-
-    UserServices.update(updatedUser).then((_res) => {
-      setRoles(newUser);
+    updateUser = { ...updateUser, password: "empty" };
+    console.log(updateUser);
+    UserServices.update(updateUser).then((_res) => {
+      setUsers(newUser);
     });
   };
 
