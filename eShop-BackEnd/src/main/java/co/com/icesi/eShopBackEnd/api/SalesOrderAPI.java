@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.List;
+
 import static co.com.icesi.eShopBackEnd.api.SalesOrderAPI.BASE_SALES_ORDER_URL;
 
 @RequestMapping(value = BASE_SALES_ORDER_URL)
@@ -22,4 +24,7 @@ public interface SalesOrderAPI {
 
     @PatchMapping("/updateState")
     ResponseSalesOrderDTO updateState(@Valid @RequestBody UpdateOrderStateDTO salesOrder);
+
+    @GetMapping("/all")
+    List<ResponseSalesOrderDTO> getAllOrders();
 }

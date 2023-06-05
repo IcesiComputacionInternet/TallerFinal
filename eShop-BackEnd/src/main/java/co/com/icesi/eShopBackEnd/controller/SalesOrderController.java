@@ -8,6 +8,8 @@ import co.com.icesi.eShopBackEnd.service.SalesOrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class SalesOrderController implements SalesOrderAPI {
@@ -26,5 +28,10 @@ public class SalesOrderController implements SalesOrderAPI {
     @Override
     public ResponseSalesOrderDTO updateState(UpdateOrderStateDTO salesOrder) {
         return salesOrderService.updateOrderState(salesOrder);
+    }
+
+    @Override
+    public List<ResponseSalesOrderDTO> getAllOrders() {
+        return salesOrderService.getAllOrders();
     }
 }

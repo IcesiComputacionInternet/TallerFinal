@@ -100,4 +100,9 @@ public class SalesOrderService {
         return salesOrderMapper.fromSalesOrderToResponse(order);
 
     }
+
+    public List<ResponseSalesOrderDTO> getAllOrders(){
+        List<SalesOrder> orders = salesOrderRepository.findAll();
+        return orders.stream().map(salesOrderMapper::fromSalesOrderToResponse).toList();
+    }
 }
