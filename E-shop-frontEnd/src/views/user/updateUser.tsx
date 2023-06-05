@@ -73,7 +73,6 @@ const UpdateUser: React.FC<IProps> = ({
       alert("Datos incompletos");
       return;
     }
-
     updateData(dataUser);
     handleReset();
   };
