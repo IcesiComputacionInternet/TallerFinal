@@ -5,6 +5,7 @@ import co.edu.icesi.Eshop.mapper.ItemMapper;
 import co.edu.icesi.Eshop.mapper.ItemMapperImpl;
 import co.edu.icesi.Eshop.model.Category;
 import co.edu.icesi.Eshop.model.Item;
+import co.edu.icesi.Eshop.repository.CategoryRepository;
 import co.edu.icesi.Eshop.repository.ItemRepository;
 import co.edu.icesi.Eshop.service.ItemService;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,8 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -25,13 +25,16 @@ public class ItemServiceTest {
 
     private ItemRepository itemRepository;
 
+    private CategoryRepository categoryRepository;
+
     private ItemMapper itemMapper;
 
     @BeforeEach
     private void init(){
         itemRepository = mock(ItemRepository.class);
         itemMapper = spy(ItemMapperImpl.class);
-        itemService = new ItemService(itemRepository, itemMapper);
+        categoryRepository = mock(CategoryRepository.class);
+        itemService = new ItemService(itemRepository, categoryRepository, itemMapper);
     }
 
     @Test
@@ -39,6 +42,7 @@ public class ItemServiceTest {
     public void testCreateItem(){
         var item = defaultItem();
         when(itemRepository.findByName(any())).thenReturn(Optional.empty());
+        when(categoryRepository.findByName(defaultCategory().getName())).thenReturn(Optional.of(defaultCategory()));
 
         itemService.save(itemMapper.fromItem(item));
 
@@ -144,6 +148,51 @@ public class ItemServiceTest {
         var detail = details.get(0);
         assertEquals("ERR_400", detail.getErrorCode(), "Code doesn't match");
         assertEquals("Level of efficiency "+ item.getLevelOfEfficiency() +" invalid", detail.getErrorMessage(), "Error message doesn't match");
+    }
+
+    @Test
+    @DisplayName("Item price changed")
+    public void testSetItemPrice(){
+        var item = defaultItem();
+        when(categoryRepository.findByName(defaultCategory().getName())).thenReturn(Optional.of(defaultCategory()));
+        when(itemRepository.findByName(item.getName())).thenReturn(Optional.of(item));
+
+        itemService.setItemPrice(item.getName(), 200000L);
+
+        verify(itemRepository, times(1)).save(any());
+
+        assertEquals(200000L, itemRepository.findByName(item.getName()).get().getPrice());
+    }
+
+    @Test
+    @DisplayName("Item price didn't change")
+    public void testSetItemPriceWithInvalidPrice(){
+        var item = defaultItem();
+        when(categoryRepository.findByName(defaultCategory().getName())).thenReturn(Optional.of(defaultCategory()));
+        when(itemRepository.findByName(item.getName())).thenReturn(Optional.of(item));
+
+        var exception = assertThrows(EShopException.class, () -> itemService.setItemPrice(item.getName(), -1000000L), "No exception was thrown");
+
+        var error = exception.getError();
+        var details = error.getDetails();
+        assertEquals(1, details.size());
+        var detail = details.get(0);
+        assertEquals("ERR_400", detail.getErrorCode(), "Code doesn't match");
+        assertEquals("Invalid price for Item. Can't be "+-1000000L, detail.getErrorMessage(), "Error message doesn't match");
+    }
+
+    @Test
+    @DisplayName("Item state changed")
+    public void testSetItemState(){
+        var item = defaultItem();
+        when(categoryRepository.findByName(defaultCategory().getName())).thenReturn(Optional.of(defaultCategory()));
+        when(itemRepository.findByName(item.getName())).thenReturn(Optional.of(item));
+
+        itemService.setItemState(item.getName());
+
+        verify(itemRepository, times(1)).save(any());
+
+        assertFalse(itemRepository.findByName(item.getName()).get().isAvailable());
     }
 
     private Item defaultItem(){

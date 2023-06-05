@@ -4,7 +4,9 @@ import co.edu.icesi.Eshop.dto.ItemDTO;
 import co.edu.icesi.Eshop.error.exception.DetailBuilder;
 import co.edu.icesi.Eshop.error.exception.ErrorCode;
 import co.edu.icesi.Eshop.mapper.ItemMapper;
+import co.edu.icesi.Eshop.model.Category;
 import co.edu.icesi.Eshop.model.Item;
+import co.edu.icesi.Eshop.repository.CategoryRepository;
 import co.edu.icesi.Eshop.repository.ItemRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,8 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
+    private final CategoryRepository categoryRepository;
+
     private final ItemMapper itemMapper;
 
     public ItemDTO save(ItemDTO itemDTO){
@@ -33,30 +37,32 @@ public class ItemService {
         verifyVoltage(itemDTO.getMinVoltage());
         verifyGuarantee(itemDTO.getGuarantee());
 
+        Category category = searchCategory(itemDTO.getCategory());
         Item item = itemMapper.fromItemDTO(itemDTO);
         item.setItemId(UUID.randomUUID());
+        item.setCategory(category);
 
         return itemMapper.fromItem(itemRepository.save(item));
     }
 
     public ItemDTO setItemState(String itemName){
 
-        ItemDTO item = getItemByName(itemName);
+        Item item = getItem(itemName);
         item.setAvailable(!item.isAvailable());
 
-        itemRepository.save(itemMapper.fromItemDTO(item));
+        itemRepository.save(item);
 
-        return item;
+        return itemMapper.fromItem(item);
     }
 
     public ItemDTO setItemPrice(String itemName, Long newPrice){
 
-        ItemDTO itemDTO = getItemByName(itemName);
-        itemDTO.setPrice(newPrice);
+        Item item = getItem(itemName);
+        verifyPrice(newPrice);
+        item.setPrice(newPrice);
+        itemRepository.save(item);
 
-        itemRepository.save(itemMapper.fromItemDTO(itemDTO));
-
-        return itemDTO;
+        return itemMapper.fromItem(item);
     }
 
     private void verifyLevelOfEfficiency(String levelOfEfficiency){
@@ -129,5 +135,19 @@ public class ItemService {
                 HttpStatus.NOT_FOUND,
                 new DetailBuilder(ErrorCode.ERR_404, "Item with name",itemName)
         )));
+    }
+
+    private Item getItem(String itemName){
+        return itemRepository.findByName(itemName).orElseThrow(createEShopException("Item not found",
+                HttpStatus.NOT_FOUND,
+                new DetailBuilder(ErrorCode.ERR_404, "Item with name",itemName)
+        ));
+    }
+
+    private Category searchCategory(String categoryName){
+        return categoryRepository.findByName(categoryName).orElseThrow(createEShopException("Category not found",
+                HttpStatus.NOT_FOUND,
+                new DetailBuilder(ErrorCode.ERR_404, "Category with name",categoryName)
+        ));
     }
 }
