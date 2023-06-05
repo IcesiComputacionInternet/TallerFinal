@@ -1,6 +1,5 @@
 package co.edu.icesi.Eshop.unit.service;
 
-import co.edu.icesi.Eshop.EShopApplication;
 import co.edu.icesi.Eshop.dto.ChangeStatusDTO;
 import co.edu.icesi.Eshop.dto.OrderDTO;
 import co.edu.icesi.Eshop.error.exception.EShopException;
@@ -13,7 +12,6 @@ import co.edu.icesi.Eshop.repository.UserRepository;
 import co.edu.icesi.Eshop.service.OrderService;
 import co.edu.icesi.Eshop.unit.matcher.OrderMatcher;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
