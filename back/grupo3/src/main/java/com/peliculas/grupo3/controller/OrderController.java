@@ -49,5 +49,4 @@ public class OrderController implements OrderApi {
         return orderService.changeStatus(number, status);
     }
 
-    //TODO implementar metodos de la api
 }
