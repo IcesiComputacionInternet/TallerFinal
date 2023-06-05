@@ -4,6 +4,8 @@ import FormRole from "./formRole";
 import TableRoles from "./tableRoles";
 import Footer from "../utils/footer";
 import Header from "../utils/header";
+import { Link } from "react-router-dom";
+import { Typography } from "@mui/material";
 
 const CrudRoles = () => {
   const [roles, setRoles] = useState<string[]>([]);
@@ -65,6 +67,9 @@ const CrudRoles = () => {
           deleteData={deleteData}
         />
       </div>
+      <Link to="/" style={{ textAlign: "center" }}>
+        <Typography>Volver</Typography>
+      </Link>
       <Footer />
     </>
   );
