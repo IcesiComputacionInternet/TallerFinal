@@ -13,11 +13,11 @@ public interface OrderMapper {
     OrderStore toOrder(OrderDTO orderDTO);
     @Mapping(target = "items", ignore = true)
     OrderStore toOrder(OrderResponseDTO orderResponseDTO);
-    @Mapping(target = "items", expression = "java(orderStore.getItems().stream().map(item -> item.getItemName()).toList())")
+    @Mapping(target = "items", expression = "java(orderStore.getItems().stream().map(item -> item.getName()).toList())")
     OrderDTO toOrderDTO(OrderStore orderStore);
     @Mapping(target = "items", expression = "java(orderResponseDTO.getItems())")
     OrderDTO toOrderDTO(OrderResponseDTO orderResponseDTO);
-    @Mapping(target = "items", expression = "java(orderStore.getItems().stream().map(item -> item.getItemName()).toList())")
+    @Mapping(target = "items", expression = "java(orderStore.getItems().stream().map(item -> item.getName()).toList())")
     OrderResponseDTO toOrderResponseDTO(OrderStore orderStore);
 
     OrderResponseDTO toOrderResponseDTO(OrderDTO orderDTO);
