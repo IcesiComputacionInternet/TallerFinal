@@ -6,9 +6,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum OrderStatus {
-    EN_PROCESO("EN_PROCESO"),
-    ENVIADO("ENVIADO"),
-    ENTREGADO("ENTREGADO");
+    IN_PROCESS("IN_PROCESS"),
+    SENT("SENT"),
+    DELIVERED("DELIVERED");
 
     private final String status;
 }

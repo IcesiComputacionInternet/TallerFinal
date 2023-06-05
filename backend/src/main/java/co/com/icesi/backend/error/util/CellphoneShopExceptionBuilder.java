@@ -17,20 +17,17 @@ public class CellphoneShopExceptionBuilder {
     }
 
     public CellphoneException notFoundException(String message, String field){
-        CellphoneError error = createCellphoneError(HttpStatus.NOT_FOUND, new DetailBuilder(ErrorCode.ERROR_404,
-                ErrorCode.ERROR_404.getMessage().formatted(field)));
+        CellphoneError error = createCellphoneError(HttpStatus.NOT_FOUND, new DetailBuilder(ErrorCode.ERROR_404, field));
         return new CellphoneException(message, error);
     }
 
     public CellphoneException badRequestException(String message, String field){
-        CellphoneError error = createCellphoneError(HttpStatus.BAD_REQUEST, new DetailBuilder(ErrorCode.ERROR_400,
-                ErrorCode.ERROR_400.getMessage().formatted(field)));
+        CellphoneError error = createCellphoneError(HttpStatus.BAD_REQUEST, new DetailBuilder(ErrorCode.ERROR_400, field));
         return new CellphoneException(message, error);
     }
 
     public CellphoneException duplicatedValueException(String message, String field){
-        CellphoneError error = createCellphoneError(HttpStatus.CONFLICT, new DetailBuilder(ErrorCode.ERR_DUPLICATED,
-                ErrorCode.ERR_DUPLICATED.getMessage().formatted(field)));
+        CellphoneError error = createCellphoneError(HttpStatus.CONFLICT, new DetailBuilder(ErrorCode.ERR_DUPLICATED, field));
         return new CellphoneException(message, error);
     }
 
