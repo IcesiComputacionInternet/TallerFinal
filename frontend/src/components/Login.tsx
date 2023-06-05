@@ -47,7 +47,7 @@ const Login = ({ setLogin }: Props) => {
     // };
 
     const signUpPage = () => {
-        navigation("/signUp");
+        navigation("/signup");
     }
 
     return (
@@ -57,7 +57,7 @@ const Login = ({ setLogin }: Props) => {
                 <h3>Sign in</h3>
                 <p>Welcome to (nombre de la tienda)</p>
                 <div className="form-group">
-                    <input
+                    <input required
                         type="text"
                         className="form-control"
                         placeholder="Email or Phone"
@@ -66,7 +66,7 @@ const Login = ({ setLogin }: Props) => {
                     />
                 </div>
                 <div className="form-group">
-                    <input
+                    <input required
                         type="password"
                         className="form-control"
                         placeholder="Password"

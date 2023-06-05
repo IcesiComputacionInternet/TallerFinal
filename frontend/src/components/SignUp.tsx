@@ -46,8 +46,8 @@ const SignUp = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <input
-                            type="text"
+                        <input required
+                            type="email"
                             className="form-control"
                             placeholder="Email"
                             value={email}
@@ -55,7 +55,7 @@ const SignUp = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <input
+                        <input required
                             type="text"
                             className="form-control"
                             placeholder="Phone Number"
@@ -82,7 +82,7 @@ const SignUp = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <input
+                        <input required
                             type="password"
                             className="form-control"
                             placeholder="Password"
