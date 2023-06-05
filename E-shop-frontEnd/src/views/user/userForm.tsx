@@ -72,7 +72,7 @@ const UserForm: React.FC<props> = ({ rolAdmin, roles }) => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     try {
-      const user = await UserServices.addUser(dataUser);
+      await UserServices.addUser(dataUser);
       navigate("/login", { replace: true });
     } catch (error) {
       Swal.fire({

@@ -57,6 +57,7 @@ public class CategoryControllerTest {
     @Test
     public void testUpdateCategory() throws Exception {
         CategoryDTO categoryDTO = defaultCategory();
+        categoryDTO.setName("Category 3");
         categoryDTO.setDescription("New description");
         var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
                                 objectMapper.writeValueAsString(categoryDTO)
@@ -74,7 +75,7 @@ public class CategoryControllerTest {
     public void testDeleteCategory() throws Exception {
         String category = "Category 3";
         var  result = mockMvc.perform(MockMvcRequestBuilders.delete(URL+ CRUD.D.getAction())
-                        .content(objectMapper.writeValueAsString(category))
+                        .content(category)
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))

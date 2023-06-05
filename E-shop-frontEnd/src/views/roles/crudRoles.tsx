@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
-import { Typography } from "@mui/material";
 import RoleServices from "../../services/roleServices";
-import AddRole from "./addRole";
+import FormRole from "./formRole";
 import TableRoles from "./tableRoles";
 import Footer from "../utils/footer";
 import Header from "../utils/header";
 
 const CrudRoles = () => {
-  const [roles, setRoles] = useState([]);
+  const [roles, setRoles] = useState<string[]>([]);
   const [dataToEdit, setDataToEdit] = useState<any>(null);
 
   useEffect(() => {
@@ -16,20 +15,50 @@ const CrudRoles = () => {
     });
   }, []);
 
-  const deleteData = (name: string) => {};
+  const createData = (data: any) => {
+    RoleServices.create(data).then((res) => {
+      console.log(res);
+      setRoles((prevRoles) => [...prevRoles, res.data]);
+    });
+  };
+
+  const updateData = (data: any) => {
+    let updatedRole: any = null;
+    let newRoles = roles.map((el: any) => {
+      if (el.roleName === data.roleName) {
+        updatedRole = data;
+        return data;
+      }
+      return el;
+    });
+    setRoles(newRoles);
+
+    RoleServices.update(updatedRole).then((res) => {
+      console.log(res);
+      console.log(updatedRole); // Valor actualizado
+    });
+  };
+
+  const deleteData = async (data: any) => {
+    try {
+      await RoleServices.deleteRole(data);
+      const filteredRoles = roles.filter((el: any) => el.roleName !== data);
+      setRoles(filteredRoles);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
       <Header />
       <div className="container-add-role">
-        <Typography
-          variant="h4"
-          component="h4"
-          sx={{ m: 3, textAlign: "center" }}
-        >
-          Agregar Rol
-        </Typography>
-        <AddRole />
+        <FormRole
+          createData={createData}
+          updateData={updateData}
+          dataToEdit={dataToEdit}
+          setDataToEdit={setDataToEdit}
+        />
         <TableRoles
           data={roles}
           setDataToEdit={setDataToEdit}

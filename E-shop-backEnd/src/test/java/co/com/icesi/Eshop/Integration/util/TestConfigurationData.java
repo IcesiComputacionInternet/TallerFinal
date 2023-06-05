@@ -7,14 +7,15 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
 @TestConfiguration
 public class TestConfigurationData {
+
+
     @Bean
     CommandLineRunner commandLineRunner(UserRepository userRepository,
                                         RoleRepository roleRepository,
@@ -25,35 +26,51 @@ public class TestConfigurationData {
                                         PasswordEncoder encoder) {
 
         Authorities authorities1 = Authorities.builder()
-                .authority("ADMIN")
+                .authority("/**")
                 .build();
         Authorities authorities2 = Authorities.builder()
-                .authority("USER")
+                .authority("/api/users/**")
+                .build();
+        Authorities authorities3 = Authorities.builder()
+                .authority("/api/role/**")
+                .build();
+        Authorities authorities4 = Authorities.builder()
+                .authority("/api/orders/**")
+                .build();
+        Authorities authorities5 = Authorities.builder()
+                .authority("/api/item/**")
                 .build();
         ////////////////////////////////////////
         Role role1 = Role.builder()
                 .roleId(UUID.fromString("a351796c-ff13-11ed-be56-0242ac120002"))
                 .roleName("ADMIN")
                 .description("Administrator")
-                .authorities(new ArrayList<>(Arrays.asList(authorities2)))
+                .authorities(new ArrayList<>(Collections.singletonList(authorities1)))
                 .build();
         Role role2 = Role.builder()
                 .roleId(UUID.fromString("a351796c-ff13-11ed-be56-0242ac120003"))
                 .roleName("USER")
                 .description("UserPrincipal")
-                .authorities(new ArrayList<>(Arrays.asList(authorities2)))
+                .authorities(new ArrayList<>(Collections.singletonList(authorities2)))
                 .build();
         Role role3 = Role.builder()
                 .roleId(UUID.fromString("a351796c-ff13-11ed-be56-0242ac120004"))
                 .roleName("Store")
                 .description("Store")
-                .authorities(new ArrayList<>(Arrays.asList(authorities2)))
+                .authorities(new ArrayList<>(Arrays.asList(authorities4,authorities5)))
                 .build();
         Role role4 = Role.builder()
                 .roleId(UUID.fromString("a351796c-ff13-11ed-be56-0242ac120005"))
                 .roleName("Supervisor")
                 .description("Supervisor")
-                .authorities(new ArrayList<>(Arrays.asList(authorities1, authorities2)))
+                .authorities(new ArrayList<>(Arrays.asList(authorities3,authorities4,authorities5)))
+                .build();
+
+        Role role5 = Role.builder()
+                .roleId(UUID.fromString("a351796c-ff13-11ed-be56-0242ac120009"))
+                .roleName("FOR DELETE")
+                .description("Supervisor")
+                .authorities(new ArrayList<>(Arrays.asList(authorities3,authorities4,authorities5)))
                 .build();
         ////////////////////////////////////////
 
@@ -171,7 +188,7 @@ public class TestConfigurationData {
         ////////////////////////////////////////
         return args -> {
             authoritiesRepository.saveAll(Arrays.asList(authorities1, authorities2));
-            roleRepository.saveAll(Arrays.asList(role1, role2, role3, role4));
+            roleRepository.saveAll(Arrays.asList(role1, role2, role3, role4,role5));
             categoryRepository.saveAll(Arrays.asList(category1, category2, category3, category4));
             userRepository.saveAll(Arrays.asList(user1, user2, user3));
             itemRepository.saveAll(Arrays.asList(item1, item2, item3, item4));

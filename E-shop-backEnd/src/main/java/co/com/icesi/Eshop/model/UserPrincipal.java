@@ -40,7 +40,7 @@ public class UserPrincipal {
     private Role role;
 
 
-    @OneToMany(mappedBy = "userPrincipal")
+    @OneToMany(mappedBy = "userPrincipal" , cascade = javax.persistence.CascadeType.ALL)
     private List<OrderStore> orderStores;
 
 

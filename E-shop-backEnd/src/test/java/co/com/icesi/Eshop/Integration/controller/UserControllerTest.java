@@ -57,6 +57,7 @@ public class UserControllerTest {
     @Test
     public void testUpdateUser() throws Exception {
         UserDTO updatedUser = defaultUserPrincipal();
+        updatedUser.setEmail("email2@email.com");
         updatedUser.setPhoneNumber("313856232881");
         var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
                                 objectMapper.writeValueAsString(updatedUser)

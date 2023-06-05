@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.mapstruct.Mapper;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -25,7 +26,7 @@ public class OrderDTO {
     @NotNull
     private String status;
 
-    @NotBlank
+    @Min(value = 0)
     @NotNull
     private Long total;
 

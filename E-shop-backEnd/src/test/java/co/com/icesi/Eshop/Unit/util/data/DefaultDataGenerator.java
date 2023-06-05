@@ -5,7 +5,6 @@ import co.com.icesi.Eshop.model.*;
 import co.com.icesi.Eshop.model.security.Authorities;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

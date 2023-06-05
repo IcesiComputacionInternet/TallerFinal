@@ -19,7 +19,6 @@ public class RoleService {
 
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
-
     private final RoleMapper roleMapper;
 
     public RoleResponseDTO createRole(RoleDTO roleDTO) {
@@ -43,7 +42,8 @@ public class RoleService {
     }
 
     public RoleResponseDTO deleteRole(String roleName) {
-        Role role = roleRepository.findByRoleName(roleName).orElseThrow(() -> new RuntimeException("Role with " + roleName + " does not exists"));
+        String roleNameTest = roleName.substring(1, roleName.length() - 1);
+        Role role = roleRepository.findByRoleName(roleNameTest).orElseThrow(() -> new RuntimeException("Role with " + roleName + " does not exists"));
         if(userRepository.findAll().stream().filter(user -> user.getRole().getRoleId().equals(role.getRoleId())).toList().size()>0) throw new RuntimeException("Role with " + roleName + " is in use");
         roleRepository.delete(role);
         return roleMapper.toRoleResponseDTO(role);

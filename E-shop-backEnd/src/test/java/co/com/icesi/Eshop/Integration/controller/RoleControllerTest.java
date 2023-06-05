@@ -58,7 +58,9 @@ public class RoleControllerTest {
     @Test
     public void testUpdateRole() throws Exception {
         RoleDTO roleDTO = defaultRole();
+        roleDTO.setRoleName("USER");
         roleDTO.setDescription("New description");
+        roleDTO.setRoleName("USER_PRIME");
         var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
                                 objectMapper.writeValueAsString(roleDTO)
                         )
@@ -73,9 +75,9 @@ public class RoleControllerTest {
 
     @Test
     public void testDeleteRole() throws Exception {
-        String role = "Store";
+        String role = "FOR DELETE";
         var  result = mockMvc.perform(MockMvcRequestBuilders.delete(URL+ CRUD.D.getAction())
-                        .content(objectMapper.writeValueAsString(role))
+                        .content(role)
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -100,7 +102,7 @@ public class RoleControllerTest {
 
     public RoleDTO defaultRole(){
         return RoleDTO.builder()
-                .roleName("ADMIN")
+                .roleName("TEST")
                 .description("Administrator")
                 .build();
     }
