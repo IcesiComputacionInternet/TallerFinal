@@ -18,8 +18,8 @@ public interface UserApi {
     @PutMapping("/update")
     UserResponseDTO updateUser(@RequestBody @Valid UserDTO userDTO);
 
-    @DeleteMapping("/delete/{email}")
-    UserResponseDTO deleteUser(@PathVariable String email);
+    @DeleteMapping("/delete")
+    UserResponseDTO deleteUser(@RequestBody String email);
 
     @GetMapping("/all")
     List<UserResponseDTO> getAllUsers();
