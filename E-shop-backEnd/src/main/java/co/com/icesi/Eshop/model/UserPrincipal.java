@@ -35,7 +35,7 @@ public class UserPrincipal {
     private String birthDate;
 
 
-    @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "role_role_id")
     private Role role;
 
