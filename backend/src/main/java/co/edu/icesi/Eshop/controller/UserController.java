@@ -2,6 +2,7 @@ package co.edu.icesi.Eshop.controller;
 
 import co.edu.icesi.Eshop.api.UserAPI;
 import co.edu.icesi.Eshop.dto.UserDTO;
+import co.edu.icesi.Eshop.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,18 +15,19 @@ import static co.edu.icesi.Eshop.api.UserAPI.BASE_USER_URL;
 @RequestMapping(BASE_USER_URL)
 @AllArgsConstructor
 public class UserController  implements UserAPI {
+    private final UserService userService;
     @Override
     public UserDTO getUser(String userEmail) {
-        return null;
+        return userService.getUser(userEmail);
     }
 
     @Override
     public List<UserDTO> getAllUsers() {
-        return null;
+        return userService.getAllUsers();
     }
 
     @Override
     public UserDTO addUser(UserDTO userDTO) {
-        return null;
+        return userService.save(userDTO);
     }
 }
