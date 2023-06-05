@@ -29,7 +29,7 @@ Cada una de las tiendas debe tener caracteristicas especificas y categorias acor
 Por ejemplo en un libro se esperaria que hayan categorias por tematica como: juvenil, educacion, etc.
 Asi mismo caracterisiticas especificas como: ISBN, autor, numero de publicacion, etc.
 
-- Grupo 1: Libros - Brayan Ortiz y Carlos Andrés Tafurt
+- Grupo 1: Libros - Brayan Ortiz y Carlos Andrés Tafurt, John Kennedy
 - Grupo 2: CD's - Johan Ricardo, Gabriel Suárez y Camilo Campaz
 - Grupo 3: Peliculas - Gabriel Delgado, Martin Cifuentes y Felipe Barreto
 - Grupo 4: Automoviles - Gilmar Amezquita, Jhan Carlos Carvajal y Juan Pablo Ramos
