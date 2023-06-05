@@ -2,7 +2,6 @@ package com.peliculas.grupo3.api;
 
 import com.peliculas.grupo3.dto.UserDTO;
 import com.peliculas.grupo3.dto.response.UserResponseDTO;
-import org.apache.catalina.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,5 +28,6 @@ public interface UserApi {
     @GetMapping("/findByName")
     Optional<UserResponseDTO> findByName(@RequestBody String name);
 
-
+    @GetMapping("/CurrentUser")
+    UserResponseDTO getCurrentUser();
 }
