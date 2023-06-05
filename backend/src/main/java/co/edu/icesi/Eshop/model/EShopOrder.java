@@ -27,7 +27,7 @@ public class EShopOrder {
     @JoinColumn(name="eshop_user_user_id", nullable = false)
     private EShopUser eShopUser;
 
-    @OneToMany(mappedBy = "order")
+    @ManyToMany(mappedBy = "orders")
     private List<Item> items;
 
 

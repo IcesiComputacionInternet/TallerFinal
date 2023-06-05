@@ -3,6 +3,7 @@ package co.edu.icesi.Eshop.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -43,7 +44,10 @@ public class Item {
 
     private boolean available;
 
-    @ManyToOne(optional = false,cascade= CascadeType.ALL)
-    @JoinColumn(name="eshop_order_order_id", nullable = false)
-    private EShopOrder order;
+    @ManyToMany
+    @JoinTable(
+            name = "items_orders",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private List<EShopOrder> orders;
 }
