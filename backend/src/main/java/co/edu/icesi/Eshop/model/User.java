@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,7 +31,7 @@ public class User {
 
     private String address;
 
-    private LocalDateTime birthday;
+    private LocalDate birthday;
 
     private String password;
 

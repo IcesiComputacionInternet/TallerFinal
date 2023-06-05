@@ -26,7 +26,7 @@ public class UserDTO {
 
     private String address;
 
-    private LocalDateTime birthday;
+    private String birthday;
 
     @NotBlank(message = "is missing")
     private String password;

@@ -12,6 +12,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -36,6 +38,7 @@ public class UserService {
                 new DetailBuilder(ErrorCode.ERR_404, "User role",userDTO.getRoleName())
         ));
         User user=userMapper.fromUserDTO(userDTO);
+        user.setBirthday(LocalDate.parse(userDTO.getBirthday(),DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         user.setRole(role);
         //user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setUserId(UUID.randomUUID());
@@ -69,7 +72,7 @@ public class UserService {
 
         if(userRepository.findByPhoneNumber(user.getPhoneNumber()).isPresent()){
             details.add(new DetailBuilder(ErrorCode.ERR_DUPLICATED, "Phone Number",user.getPhoneNumber()));
-            exMessage+="User email is in use.";
+            exMessage+="Phone number is in use.";
         }
 
         if(!details.isEmpty()){
