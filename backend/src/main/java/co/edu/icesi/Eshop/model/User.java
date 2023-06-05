@@ -36,7 +36,7 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    private List<Order> orders;
+    private List<EShopOrder> orders;
 
     @ManyToOne(optional = false,cascade= CascadeType.ALL)
     @JoinColumn(name="role_role_id", nullable = false)

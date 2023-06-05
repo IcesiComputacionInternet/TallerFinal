@@ -14,7 +14,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+public class EShopOrder {
 
     @Id
     private UUID orderId;

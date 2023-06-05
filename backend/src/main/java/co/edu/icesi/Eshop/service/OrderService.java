@@ -5,8 +5,8 @@ import co.edu.icesi.Eshop.dto.OrderDTO;
 import co.edu.icesi.Eshop.error.exception.DetailBuilder;
 import co.edu.icesi.Eshop.error.exception.ErrorCode;
 import co.edu.icesi.Eshop.mapper.OrderMapper;
+import co.edu.icesi.Eshop.model.EShopOrder;
 import co.edu.icesi.Eshop.model.Item;
-import co.edu.icesi.Eshop.model.Order;
 import co.edu.icesi.Eshop.model.Status;
 import co.edu.icesi.Eshop.model.User;
 import co.edu.icesi.Eshop.repository.ItemRepository;
@@ -64,7 +64,7 @@ public class OrderService {
             ));
         }
         List<Item> items= orderDTO.getItems().stream().map(x-> itemRepository.findByName(x).get()).toList();
-        Order order= orderMapper.fromOrderDTO(orderDTO);
+        EShopOrder order= orderMapper.fromOrderDTO(orderDTO);
         order.setOrderId(UUID.randomUUID());
         order.setUser(user);
         order.setStatus(Status.PENDING.toString());
@@ -75,7 +75,7 @@ public class OrderService {
 
 
     public OrderDTO changeStatus(ChangeStatusDTO changeStatusDTO) {
-        Order order= orderRepository.findById(UUID.fromString(changeStatusDTO.getOrderId())).orElseThrow(createEShopException(
+        EShopOrder order= orderRepository.findById(UUID.fromString(changeStatusDTO.getOrderId())).orElseThrow(createEShopException(
                 "Order does not exists",
                 HttpStatus.NOT_FOUND,
                 new DetailBuilder(ErrorCode.ERR_404, "Order ",changeStatusDTO.getOrderId() )
