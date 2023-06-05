@@ -1,6 +1,6 @@
 package co.edu.icesi.Eshop.dto;
 
-import co.edu.icesi.Eshop.model.User;
+import co.edu.icesi.Eshop.model.EShopUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,5 +22,5 @@ public class RoleDTO {
 
     private String description;
 
-    private List<User> users;
+    private List<EShopUser> EShopUsers;
 }

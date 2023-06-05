@@ -24,10 +24,10 @@ public class EShopOrder {
     private long total;
 
     @ManyToOne(optional = false,cascade= CascadeType.ALL)
-    @JoinColumn(name="user_user_id", nullable = false)
-    private User user;
+    @JoinColumn(name="eshop_user_user_id", nullable = false)
+    private EShopUser eShopUser;
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "order")
     private List<Item> items;
 
 

@@ -1,27 +1,27 @@
 package co.edu.icesi.Eshop.unit.matcher;
 
-import co.edu.icesi.Eshop.model.User;
+import co.edu.icesi.Eshop.model.EShopUser;
 import org.mockito.ArgumentMatcher;
 
 import java.util.Objects;
 
-public class UserMatcher implements ArgumentMatcher<User> {
+public class UserMatcher implements ArgumentMatcher<EShopUser> {
 
-    private User userLeft;
+    private EShopUser EShopUserLeft;
 
-    public UserMatcher(User userLeft) {
-        this.userLeft = userLeft;
+    public UserMatcher(EShopUser EShopUserLeft) {
+        this.EShopUserLeft = EShopUserLeft;
     }
 
     @Override
-    public boolean matches(User userRight) {
-        return userRight.getUserId()!=null &&
-                userRight.getRole()!=null &&
-                userRight.getBirthday()!=null &&
-                Objects.equals(userRight.getFirstName(),userLeft.getFirstName()) &&
-                Objects.equals(userRight.getLastName(),userLeft.getLastName()) &&
-                Objects.equals(userRight.getEmail(),userLeft.getEmail()) &&
-                Objects.equals(userRight.getPhoneNumber(),userLeft.getPhoneNumber()) &&
-                Objects.equals(userRight.getAddress(),userLeft.getAddress());
+    public boolean matches(EShopUser EShopUserRight) {
+        return EShopUserRight.getUserId()!=null &&
+                EShopUserRight.getRole()!=null &&
+                EShopUserRight.getBirthday()!=null &&
+                Objects.equals(EShopUserRight.getFirstName(), EShopUserLeft.getFirstName()) &&
+                Objects.equals(EShopUserRight.getLastName(), EShopUserLeft.getLastName()) &&
+                Objects.equals(EShopUserRight.getEmail(), EShopUserLeft.getEmail()) &&
+                Objects.equals(EShopUserRight.getPhoneNumber(), EShopUserLeft.getPhoneNumber()) &&
+                Objects.equals(EShopUserRight.getAddress(), EShopUserLeft.getAddress());
     }
 }

@@ -6,9 +6,9 @@ import co.edu.icesi.Eshop.error.exception.DetailBuilder;
 import co.edu.icesi.Eshop.error.exception.ErrorCode;
 import co.edu.icesi.Eshop.mapper.OrderMapper;
 import co.edu.icesi.Eshop.model.EShopOrder;
+import co.edu.icesi.Eshop.model.EShopUser;
 import co.edu.icesi.Eshop.model.Item;
 import co.edu.icesi.Eshop.model.Status;
-import co.edu.icesi.Eshop.model.User;
 import co.edu.icesi.Eshop.repository.ItemRepository;
 import co.edu.icesi.Eshop.repository.OrderRepository;
 import co.edu.icesi.Eshop.repository.UserRepository;
@@ -49,15 +49,15 @@ public class OrderService {
     }
 
     public OrderDTO save(OrderDTO orderDTO) {
-        User user=null;
+        EShopUser EShopUser =null;
         if(orderDTO.getUserEmail()!=null){
-             user= userRepository.findByEmail(orderDTO.getUserEmail()).orElseThrow(createEShopException(
+             EShopUser = userRepository.findByEmail(orderDTO.getUserEmail()).orElseThrow(createEShopException(
                     "User does not exists",
                     HttpStatus.NOT_FOUND,
                     new DetailBuilder(ErrorCode.ERR_404, "User with email",orderDTO.getUserEmail() )
             ));
         }else if(orderDTO.getUserPhoneNumber()!=null){
-            user= userRepository.findByPhoneNumber(orderDTO.getUserPhoneNumber()).orElseThrow(createEShopException(
+            EShopUser = userRepository.findByPhoneNumber(orderDTO.getUserPhoneNumber()).orElseThrow(createEShopException(
                     "User does not exists",
                     HttpStatus.NOT_FOUND,
                     new DetailBuilder(ErrorCode.ERR_404, "User with phone number",orderDTO.getUserPhoneNumber() )
@@ -66,7 +66,7 @@ public class OrderService {
         List<Item> items= orderDTO.getItems().stream().map(x-> itemRepository.findByName(x).get()).toList();
         EShopOrder order= orderMapper.fromOrderDTO(orderDTO);
         order.setOrderId(UUID.randomUUID());
-        order.setUser(user);
+        order.setEShopUser(EShopUser);
         order.setStatus(Status.PENDING.toString());
         order.setItems(items);
 

@@ -15,7 +15,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class EShopUser {
     @Id
     private UUID userId;
 
@@ -35,7 +35,7 @@ public class User {
 
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "eShopUser")
     private List<EShopOrder> orders;
 
     @ManyToOne(optional = false,cascade= CascadeType.ALL)
