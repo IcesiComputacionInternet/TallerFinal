@@ -65,6 +65,13 @@ public class TestConfigurationData {
                 .description("Supervisor")
                 .authorities(new ArrayList<>(Arrays.asList(authorities3,authorities4,authorities5)))
                 .build();
+
+        Role role5 = Role.builder()
+                .roleId(UUID.fromString("a351796c-ff13-11ed-be56-0242ac120009"))
+                .roleName("FOR DELETE")
+                .description("Supervisor")
+                .authorities(new ArrayList<>(Arrays.asList(authorities3,authorities4,authorities5)))
+                .build();
         ////////////////////////////////////////
 
         Category category1 = Category.builder()
@@ -181,7 +188,7 @@ public class TestConfigurationData {
         ////////////////////////////////////////
         return args -> {
             authoritiesRepository.saveAll(Arrays.asList(authorities1, authorities2));
-            roleRepository.saveAll(Arrays.asList(role1, role2, role3, role4));
+            roleRepository.saveAll(Arrays.asList(role1, role2, role3, role4,role5));
             categoryRepository.saveAll(Arrays.asList(category1, category2, category3, category4));
             userRepository.saveAll(Arrays.asList(user1, user2, user3));
             itemRepository.saveAll(Arrays.asList(item1, item2, item3, item4));

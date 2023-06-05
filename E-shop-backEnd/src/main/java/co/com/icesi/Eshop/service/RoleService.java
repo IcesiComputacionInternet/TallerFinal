@@ -5,18 +5,20 @@ import co.com.icesi.Eshop.dto.response.RoleResponseDTO;
 import co.com.icesi.Eshop.mapper.RoleMapper;
 import co.com.icesi.Eshop.model.Role;
 import co.com.icesi.Eshop.repository.RoleRepository;
+import co.com.icesi.Eshop.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class RoleService {
 
     private final RoleRepository roleRepository;
-
+    private final UserRepository userRepository;
     private final RoleMapper roleMapper;
 
     public RoleResponseDTO createRole(RoleDTO roleDTO) {
@@ -40,6 +42,7 @@ public class RoleService {
 
     public RoleResponseDTO deleteRole(String roleName) {
         Role role = roleRepository.findByRoleName(roleName).orElseThrow(() -> new RuntimeException("Role with " + roleName + " does not exists"));
+        if(userRepository.findAll().stream().filter(user -> user.getRole().getRoleId().equals(role.getRoleId())).toList().size()>0) throw new RuntimeException("Role with " + roleName + " is in use");
         roleRepository.delete(role);
         return roleMapper.toRoleResponseDTO(role);
     }

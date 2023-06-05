@@ -10,6 +10,7 @@ import co.com.icesi.Eshop.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ItemService {
     private final ItemRepository itemRepository;
-   // private final OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
     private final CategoryRepository categoryRepository;
     private final ItemMapper itemMapper;
     public ItemResponseDTO createItem(ItemDTO itemDTO) {
@@ -41,6 +42,7 @@ public class ItemService {
 
     public String deleteItem(String itemName) {
         Item item = itemRepository.findByName(itemName).orElseThrow(() -> new RuntimeException("Item not found"));
+        if(orderRepository.findAll().stream().filter(orderStore -> orderStore.getItems().contains(item)).toList().size()>0) throw new RuntimeException("Item is in an order");
         itemRepository.delete(item);
         return "Item deleted";
     }

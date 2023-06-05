@@ -10,4 +10,6 @@ import java.util.UUID;
 public interface ItemRepository extends JpaRepository<Item, UUID> {
 
     Optional<Item> findByName(String name);
+
+    Item getByName(String name);
 }
