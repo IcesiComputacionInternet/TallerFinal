@@ -58,6 +58,7 @@ public class UserService {
         UserPrincipal userPrincipalUpdated = userMapper.toUser(userDTO);
 
         userPrincipalUpdated.setUserId(userPrincipalInDB.getUserId());
+        userPrincipalUpdated.setPassword(userPrincipalInDB.getPassword());
 
         userRepository.save(userPrincipalUpdated);
 
