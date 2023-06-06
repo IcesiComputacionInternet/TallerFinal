@@ -41,7 +41,9 @@ public class UserService {
                 new DetailBuilder(ErrorCode.ERR_404, "User role",userDTO.getRoleName())
         ));
         EShopUser user =userMapper.fromUserDTO(userDTO);
-        user.setBirthday(LocalDate.parse(userDTO.getBirthday(),DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        if(userDTO.getBirthday()!=null){
+            user.setBirthday(LocalDate.parse(userDTO.getBirthday(),DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        }
         user.setRole(role);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setUserId(UUID.randomUUID());
