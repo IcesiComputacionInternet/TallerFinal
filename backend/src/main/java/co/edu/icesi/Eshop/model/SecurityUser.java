@@ -22,7 +22,10 @@ public record SecurityUser (EShopUser eShopUser) implements UserDetails {
 
     @Override
     public String getUsername() {
-        return eShopUser.getEmail();
+        if(eShopUser.getEmail()!=null){
+            return eShopUser.getEmail();
+        }
+        return eShopUser.getPhoneNumber();
     }
 
     @Override

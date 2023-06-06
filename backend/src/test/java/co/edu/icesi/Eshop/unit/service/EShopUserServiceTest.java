@@ -13,6 +13,8 @@ import co.edu.icesi.Eshop.service.UserService;
 import co.edu.icesi.Eshop.unit.matcher.UserMatcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -34,17 +36,17 @@ public class EShopUserServiceTest {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
 
-    //@Autowired
-    //private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @BeforeEach
     private void init(){
         userRepository=mock(UserRepository.class);
         userMapper=spy(UserMapperImpl.class);
         roleRepository=mock(RoleRepository.class);
-       // passwordEncoder=mock(PasswordEncoder.class);
+       passwordEncoder=mock(PasswordEncoder.class);
 
-        userService=new UserService(userRepository, userMapper, roleRepository);//,passwordEncoder);
+        userService=new UserService(userRepository, userMapper, roleRepository,passwordEncoder);
         userService=spy(userService);
     }
 
