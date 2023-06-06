@@ -21,9 +21,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.List;
+
 import static co.edu.icesi.Eshop.api.UserAPI.BASE_USER_URL;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -398,6 +399,44 @@ class UserControllerTests {
         assertEquals(1, details.size());
         var detail = details.get(0);
         assertEquals(" Email or phone number are needed!", detail.getErrorMessage());
+
+
+    }
+
+    @Order(16)
+    @Test
+    public void testRegisterUser() throws Exception {
+        UserDTO defaultUser = defaultUserDTO();
+        defaultUser.setEmail("test@email.com");
+        defaultUser.setPhoneNumber("+573186441222");
+        var result = mockMvc.perform(MockMvcRequestBuilders.post(BASE_USER_URL+"/register").content(
+                                objectMapper.writeValueAsString(defaultUser)
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        )
+                .andExpect(status().isOk())
+                .andReturn();
+        UserDTO userDTO = objectMapper.readValue(result.getResponse().getContentAsString(), UserDTO.class);
+        assertNotNull(userDTO);
+
+
+    }
+
+    @Order(17)
+    @Test
+    public void testGetAllUsers() throws Exception {
+        TokenDTO tokenDTO = tokenAdmin();
+        var result = mockMvc.perform(MockMvcRequestBuilders.get(BASE_USER_URL)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenDTO.getToken())
+                )
+                .andExpect(status().isOk())
+                .andReturn();
+        var response= result.getResponse().getContentAsString();
+
+        assertNotNull(response);
 
 
     }

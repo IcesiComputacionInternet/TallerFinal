@@ -55,7 +55,9 @@ public class UserService {
         validateEmailAndPhoneNumber(userDTO);
         Role role=roleRepository.findByName(Roles.USER.toString()).get();
         EShopUser user =userMapper.fromUserDTO(userDTO);
-        user.setBirthday(LocalDate.parse(userDTO.getBirthday(),DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        if(userDTO.getBirthday()!=null){
+            user.setBirthday(LocalDate.parse(userDTO.getBirthday(),DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        }
         user.setRole(role);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setUserId(UUID.randomUUID());
