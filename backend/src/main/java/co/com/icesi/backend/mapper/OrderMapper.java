@@ -17,4 +17,6 @@ public interface OrderMapper {
 
     @Mapping(target = "message", source = "message")
     ResponseOrderDTO fromRequestToResponseOrderDTO(Order order, String message);
+    @Mapping(target = "message", source = "message")
+    ResponseOrderDTO fromRequestToResponseOrderDTO(RequestOrderItemDTO order, String message);
 }

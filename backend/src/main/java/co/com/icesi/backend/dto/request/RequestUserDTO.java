@@ -1,5 +1,6 @@
 package co.com.icesi.backend.dto.request;
 
+import co.com.icesi.backend.constraint.EmailConstraint;
 import co.com.icesi.backend.constraint.PhoneEmailConstraint;
 import co.com.icesi.backend.constraint.PhoneNumberConstraint;
 import lombok.*;
@@ -19,7 +20,7 @@ public class RequestUserDTO {
 
     private String lastName;
 
-    @Email(message = "Invalid email address")
+    @EmailConstraint
     private String email;
 
     @NotBlank(message = "The password of a user can't be blank")

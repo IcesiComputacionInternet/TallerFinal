@@ -14,5 +14,4 @@ import java.util.UUID;
 public interface OrderRepository extends JpaRepository<Order, UUID> {
     @Query("SELECT order FROM Order order WHERE order.status = :status AND order.user.email = :userEmail")
     Optional<Order> findByStatus(@Param("status") String status, @Param("userEmail")String userEmail);
-
 }

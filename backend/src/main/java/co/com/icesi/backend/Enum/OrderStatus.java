@@ -11,4 +11,13 @@ public enum OrderStatus {
     SENT("SENT"),
     DELIVERED("DELIVERED");
     private final String status;
+
+    public static boolean isStringEqualToEnum(String input) {
+        try {
+            OrderStatus myEnumValue = OrderStatus.valueOf(input);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
 }

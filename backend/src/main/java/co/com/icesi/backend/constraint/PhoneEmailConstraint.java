@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PhoneEmailConstraint {
-    String message() default "Email and phone number are required";
+    String message() default "Email or phone number are required";
     Class<?>[] groups() default {};
     Class<? extends Payload[]>[] payload() default {};
 }

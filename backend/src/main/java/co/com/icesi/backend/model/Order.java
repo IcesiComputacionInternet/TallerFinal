@@ -3,6 +3,7 @@ package co.com.icesi.backend.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,4 +28,5 @@ public class Order {
             joinColumns = @JoinColumn(name = "order_order_id"),
             inverseJoinColumns = @JoinColumn(name = "cellphone_cellphone_id"))
     private List<Cellphone> items;
+    private HashMap<String, Integer> amounts;
 }

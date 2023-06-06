@@ -54,7 +54,7 @@ public class CellphoneService {
 
     public void checkPermissions() {
         String role = CellphoneSecurityContext.getCurrentUserRole();
-        if(role.equals(UserRole.USER)){
+        if(role.equals(UserRole.USER.getRole())){
             throw exceptionBuilder.noPermissionException(
                     "Only an ADMIN user can create new roles and visualize them."
             );

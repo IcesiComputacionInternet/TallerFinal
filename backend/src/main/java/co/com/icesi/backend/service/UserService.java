@@ -1,5 +1,6 @@
 package co.com.icesi.backend.service;
 
+import co.com.icesi.backend.Enum.UserRole;
 import co.com.icesi.backend.dto.request.RequestUserDTO;
 import co.com.icesi.backend.dto.response.ResponseUserDTO;
 import co.com.icesi.backend.error.util.CellphoneShopExceptionBuilder;
@@ -44,7 +45,9 @@ public class UserService {
     }
 
     public void checkPermissions(String roleToAssign) {
-        if((roleToAssign.equals("ADMIN") && CellphoneSecurityContext.getCurrentUserRole().equals("USER"))||(CellphoneSecurityContext.getCurrentUserRole().equals("SHOP"))){
+        String role = CellphoneSecurityContext.getCurrentUserRole();
+        if((roleToAssign.equals(UserRole.ADMIN.getRole()) && role.equals(UserRole.USER.getRole()))
+                || (role.equals(UserRole.SHOP.getRole()))){
             throw exceptionBuilder.noPermissionException(
                     "A normal user or a bank user can't create users of type ADMIN."
             );
@@ -73,6 +76,10 @@ public class UserService {
         );
     }
     public List<ResponseUserDTO> getAllUsers() {
-        return userRepository.findAll().stream().map(userMapper::fromUserToResponseUserDTO).collect(Collectors.toList());
+        return userRepository
+                .findAll()
+                .stream()
+                .map(userMapper::fromUserToResponseUserDTO)
+                .collect(Collectors.toList());
     }
 }

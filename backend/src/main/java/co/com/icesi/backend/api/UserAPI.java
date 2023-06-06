@@ -12,7 +12,8 @@ public interface UserAPI {
     String BASE_USER_URL="/users";
     @GetMapping("/{userEmail}")
     ResponseUserDTO getUser(@PathVariable("userEmail")  String userEmail);
-    List<ResponseUserDTO> getAllUsers();
     @PostMapping("/create")
     ResponseUserDTO createUser(@Valid @RequestBody RequestUserDTO requestUserDTO);
+    @GetMapping("/getUsers")
+    List<ResponseUserDTO> getAllUsers();
 }

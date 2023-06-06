@@ -13,5 +13,6 @@ public interface RoleAPI {
     RoleDTO createRole(@RequestBody @Valid RoleDTO roleDTO);
     @GetMapping("/{name}")
     RoleDTO getRole(@PathVariable("name") String roleName);
+    @GetMapping("/getRoles")
     List<RoleDTO> getAllRoles();
 }
