@@ -147,6 +147,31 @@ public class RoleControllerTest {
 
             assertEquals(403, newResult.getResponse().getStatus());
         }
+
+        @Test
+        public void testCreateRoleWithMissingName() throws Exception{
+
+            RoleDTO roleDTO = defaultRole();
+            roleDTO.setRoleName("");
+
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_ROLE_URL).content(
+                                    objectMapper.writeValueAsString(roleDTO)
+                            )
+                            .header("Authorization","Bearer "+generateAdminToken().getToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest())
+                    .andReturn();
+
+            EShopError eShopError = objectMapper.readValue(newResult.getResponse().getContentAsString(), EShopError.class);
+            assertNotNull(eShopError);
+            var details = eShopError.getDetails();
+            assertEquals(1, details.size());
+            var detail = details.get(0);
+
+            assertEquals("roleName A name is required for the role", detail.getErrorMessage());
+            assertEquals(400, newResult.getResponse().getStatus());
+        }
     }
 
     private RoleDTO defaultRole(){

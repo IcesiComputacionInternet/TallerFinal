@@ -19,9 +19,6 @@ public interface ItemAPI {
     @PutMapping("/setState/{name}")
     ItemDTO setItemState(@PathVariable String name);
 
-    @PutMapping("/setPrice/{name}")
-    ItemDTO setItemPrice(@PathVariable String name, Long price);
-
     @GetMapping
     List<ItemDTO> getAllItems();
 }

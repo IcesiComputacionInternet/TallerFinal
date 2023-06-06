@@ -20,8 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static co.edu.icesi.Eshop.api.ItemAPI.BASE_ITEM_URL;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -120,10 +119,18 @@ public class ItemControllerTest {
                             .header("Authorization", "Bearer " + generateUserToken().getToken())
                             .contentType(MediaType.APPLICATION_JSON)
                             .accept(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isForbidden())
+                    .andExpect(status().isUnauthorized())
                     .andReturn();
 
-            assertEquals(403, newResult.getResponse().getStatus());
+
+            EShopError eShopError = objectMapper.readValue(newResult.getResponse().getContentAsString(), EShopError.class);
+            assertNotNull(eShopError);
+            var details = eShopError.getDetails();
+            assertEquals(1, details.size());
+            var detail = details.get(0);
+
+            assertEquals("You are not authorized", detail.getErrorMessage());
+            assertEquals(401, newResult.getResponse().getStatus());
         }
 
         @Test
@@ -225,6 +232,156 @@ public class ItemControllerTest {
             assertEquals("levelOfEfficiency Invalid level of efficiency", detail.getErrorMessage());
             assertEquals(400, newResult.getResponse().getStatus());
         }
+
+        @Test
+        public void testCreateItemWithInvalidMinVoltage() throws Exception {
+
+            ItemDTO itemDTO = defaultItem();
+            itemDTO.setMinVoltage(-1L);
+
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_ITEM_URL).content(
+                                    objectMapper.writeValueAsString(itemDTO)
+                            )
+                            .header("Authorization", "Bearer " + generateAdminToken().getToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest())
+                    .andReturn();
+
+            EShopError eShopError = objectMapper.readValue(newResult.getResponse().getContentAsString(), EShopError.class);
+            assertNotNull(eShopError);
+            var details = eShopError.getDetails();
+            assertEquals(1, details.size());
+            var detail = details.get(0);
+
+            assertEquals("minVoltage min value is 0", detail.getErrorMessage());
+            assertEquals(400, newResult.getResponse().getStatus());
+        }
+
+        @Test
+        public void testCreateItemWithInvalidMaxVoltage() throws Exception {
+
+            ItemDTO itemDTO = defaultItem();
+            itemDTO.setMaxVoltage(-1L);
+
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_ITEM_URL).content(
+                                    objectMapper.writeValueAsString(itemDTO)
+                            )
+                            .header("Authorization", "Bearer " + generateAdminToken().getToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest())
+                    .andReturn();
+
+            EShopError eShopError = objectMapper.readValue(newResult.getResponse().getContentAsString(), EShopError.class);
+            assertNotNull(eShopError);
+            var details = eShopError.getDetails();
+            assertEquals(1, details.size());
+            var detail = details.get(0);
+
+            assertEquals("maxVoltage min value is 0", detail.getErrorMessage());
+            assertEquals(400, newResult.getResponse().getStatus());
+        }
+    }
+
+    @Nested
+    public class testsSetItemsHappyPath{
+
+        @Test
+        public void testSetItemStateFromAdmin() throws Exception {
+
+            String itemName = "Plancha 30V";
+
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.put(BASE_ITEM_URL+"/setState/"+itemName).content(
+                                    objectMapper.writeValueAsString(defaultItem())
+                            )
+                            .header("Authorization", "Bearer " + generateAdminToken().getToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andReturn();
+
+            ItemDTO newItemDTO = objectMapper.readValue(newResult.getResponse().getContentAsString(), ItemDTO.class);
+            assertNotNull(newItemDTO);
+            assertFalse(newItemDTO.isAvailable());
+        }
+    }
+
+    @Nested
+    public class testsSetItemsNotHappyPath{
+
+        @Test
+        public void testSetNotExistsItem() throws Exception {
+
+            String itemName = "Licuadora";
+
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.put(BASE_ITEM_URL+"/setState/"+itemName).content(
+                                    objectMapper.writeValueAsString(defaultItem())
+                            )
+                            .header("Authorization", "Bearer " + generateAdminToken().getToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isNotFound())
+                    .andReturn();
+
+            EShopError eShopError = objectMapper.readValue(newResult.getResponse().getContentAsString(), EShopError.class);
+            assertNotNull(eShopError);
+            var details = eShopError.getDetails();
+            assertEquals(1, details.size());
+            var detail = details.get(0);
+
+            assertEquals("Item with name Licuadora not found", detail.getErrorMessage());
+            assertEquals(404, newResult.getResponse().getStatus());
+        }
+
+        @Test
+        public void testSetItemFromShop() throws Exception {
+
+            String itemName = "Licuadora";
+
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.put(BASE_ITEM_URL+"/setState/"+itemName).content(
+                                    objectMapper.writeValueAsString(defaultItem())
+                            )
+                            .header("Authorization", "Bearer " + generateShopToken().getToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isUnauthorized())
+                    .andReturn();
+
+            EShopError eShopError = objectMapper.readValue(newResult.getResponse().getContentAsString(), EShopError.class);
+            assertNotNull(eShopError);
+            var details = eShopError.getDetails();
+            assertEquals(1, details.size());
+            var detail = details.get(0);
+
+            assertEquals("You are not authorized", detail.getErrorMessage());
+            assertEquals(401, newResult.getResponse().getStatus());
+        }
+
+        @Test
+        public void testSetItemFromUser() throws Exception {
+
+            String itemName = "Licuadora";
+
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.put(BASE_ITEM_URL+"/setState/"+itemName).content(
+                                    objectMapper.writeValueAsString(defaultItem())
+                            )
+                            .header("Authorization", "Bearer " + generateUserToken().getToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isUnauthorized())
+                    .andReturn();
+
+            EShopError eShopError = objectMapper.readValue(newResult.getResponse().getContentAsString(), EShopError.class);
+            assertNotNull(eShopError);
+            var details = eShopError.getDetails();
+            assertEquals(1, details.size());
+            var detail = details.get(0);
+
+            assertEquals("You are not authorized", detail.getErrorMessage());
+            assertEquals(401, newResult.getResponse().getStatus());
+        }
+
     }
 
     private ItemDTO defaultItem(){
