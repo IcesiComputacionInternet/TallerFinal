@@ -100,7 +100,7 @@ const OptionsAdmin = () => {
               },
             }}
           >
-            Gestionar items
+            Gestionar CD's
           </Button>
         </div>
         <div className="container-options-bottom">
