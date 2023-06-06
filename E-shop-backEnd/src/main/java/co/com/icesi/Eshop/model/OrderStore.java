@@ -30,7 +30,12 @@ public class OrderStore {
     private Long total;
 
 
-    @ManyToMany(mappedBy = "orderStores", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany()
+    @JoinTable(
+            name = "item_order_store",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id")
+    )
     private List<Item> items;
 
 }

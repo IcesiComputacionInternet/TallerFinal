@@ -34,6 +34,7 @@ public class OrderService {
         order.setItems(orderDTO.getItems().stream().map(itemRepository::findByName).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList()));
         order.setStatus(orderDTO.getStatus());
         order.setTotal(orderDTO.getTotal());
+        List<String> a = order.getItems().stream().map(item -> item.getName()).toList();
         order.setUserPrincipal(userRepository.findByEmail(orderDTO.getUserEmail()).orElseThrow(() -> new RuntimeException("UserPrincipal not found")));
         return orderMapper.toOrderResponseDTO(orderRepository.save(order));
     }
@@ -71,6 +72,9 @@ public class OrderService {
     }
     public OrderResponseDTO getOrderById(String orderId) {
         return orderMapper.toOrderResponseDTO(orderRepository.findById(UUID.fromString(orderId)).orElseThrow(() -> new RuntimeException("Order not found")));
+    }
+    public List<OrderResponseDTO> getOrderByUser(String userEmail) {
+        return orderRepository.findByUserPrincipalEmail(userEmail).stream().map(orderMapper::toOrderResponseDTO).collect(Collectors.toList());
     }
     public List<OrderResponseDTO> getAllOrders() {
         return orderRepository.findAll().stream().map(orderMapper::toOrderResponseDTO).collect(Collectors.toList());
