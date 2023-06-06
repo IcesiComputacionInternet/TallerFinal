@@ -42,7 +42,6 @@ const CrudUser = () => {
         return el;
       });
       updateUser = { ...updateUser, password: "empty" };
-      console.log(updateUser);
       UserServices.update(updateUser).then((_res) => {
         setUsers(newUser);
       });
