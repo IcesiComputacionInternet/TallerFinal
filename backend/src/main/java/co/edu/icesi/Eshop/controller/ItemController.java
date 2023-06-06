@@ -36,11 +36,6 @@ public class ItemController implements ItemAPI {
     }
 
     @Override
-    public ItemDTO setItemPrice(String name, Long price) {
-        return itemService.setItemPrice(name, price);
-    }
-
-    @Override
     public List<ItemDTO> getAllItems() {
         return itemService.getAllItems();
     }

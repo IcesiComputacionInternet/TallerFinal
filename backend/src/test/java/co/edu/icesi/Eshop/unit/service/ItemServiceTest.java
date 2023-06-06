@@ -67,20 +67,6 @@ public class ItemServiceTest {
     }
 
     @Test
-    @DisplayName("Item price changed")
-    public void testSetItemPrice(){
-        var item = defaultItem();
-        when(categoryRepository.findByName(defaultCategory().getName())).thenReturn(Optional.of(defaultCategory()));
-        when(itemRepository.findByName(item.getName())).thenReturn(Optional.of(item));
-
-        itemService.setItemPrice(item.getName(), 200000L);
-
-        verify(itemRepository, times(1)).save(any());
-
-        assertEquals(200000L, itemRepository.findByName(item.getName()).get().getPrice());
-    }
-
-    @Test
     @DisplayName("Item state changed")
     public void testSetItemState(){
         var item = defaultItem();

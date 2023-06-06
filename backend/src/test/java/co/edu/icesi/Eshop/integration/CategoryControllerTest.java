@@ -150,6 +150,31 @@ public class CategoryControllerTest {
 
             assertEquals(403, newResult.getResponse().getStatus());
         }
+
+        @Test
+        public void testCreateCategoryWithMissingName() throws Exception{
+
+            CategoryDTO categoryDTO = defaultCategory();
+            categoryDTO.setName("");
+
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_CATEGORY_URL).content(
+                                    objectMapper.writeValueAsString(categoryDTO)
+                            )
+                            .header("Authorization","Bearer "+generateAdminToken().getToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest())
+                    .andReturn();
+
+            EShopError eShopError = objectMapper.readValue(newResult.getResponse().getContentAsString(), EShopError.class);
+            assertNotNull(eShopError);
+            var details = eShopError.getDetails();
+            assertEquals(1, details.size());
+            var detail = details.get(0);
+
+            assertEquals("name is missing", detail.getErrorMessage());
+            assertEquals(400, newResult.getResponse().getStatus());
+        }
     }
 
     private CategoryDTO defaultCategory(){

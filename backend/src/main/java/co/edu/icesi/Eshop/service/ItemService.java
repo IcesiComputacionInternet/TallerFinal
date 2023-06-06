@@ -6,14 +6,15 @@ import co.edu.icesi.Eshop.error.exception.ErrorCode;
 import co.edu.icesi.Eshop.mapper.ItemMapper;
 import co.edu.icesi.Eshop.model.Category;
 import co.edu.icesi.Eshop.model.Item;
+import co.edu.icesi.Eshop.model.Roles;
 import co.edu.icesi.Eshop.repository.CategoryRepository;
 import co.edu.icesi.Eshop.repository.ItemRepository;
+import co.edu.icesi.Eshop.security.EShopSecurityContext;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 import static co.edu.icesi.Eshop.error.util.EShopExceptionBuilder.createEShopException;
@@ -30,6 +31,7 @@ public class ItemService {
 
     public ItemDTO save(ItemDTO itemDTO){
 
+        checkAuthorization();
         verifyItemName(itemDTO.getName());
 
         Category category = searchCategory(itemDTO.getCategory());
@@ -42,17 +44,9 @@ public class ItemService {
 
     public ItemDTO setItemState(String itemName){
 
+        adminAuthorizationOnly();
         Item item = getItem(itemName);
         item.setAvailable(!item.isAvailable());
-        itemRepository.save(item);
-
-        return itemMapper.fromItem(item);
-    }
-
-    public ItemDTO setItemPrice(String itemName, Long newPrice){
-
-        Item item = getItem(itemName);
-        item.setPrice(newPrice);
         itemRepository.save(item);
 
         return itemMapper.fromItem(item);
@@ -73,10 +67,27 @@ public class ItemService {
         return itemRepository.findAll().stream().map(itemMapper::fromItem).toList();
     }
 
-    private void adminAuthorizationOnly(){
-        //Validar que el rol es un admin
-        if (true){
+    private void checkAuthorization(){
+        String currentUserRole = EShopSecurityContext.getCurrentUserRole();
 
+        if (currentUserRole.equalsIgnoreCase(String.valueOf(Roles.USER))){
+            throw createEShopException(
+                    "Unauthorized",
+                    HttpStatus.UNAUTHORIZED,
+                    new DetailBuilder(ErrorCode.ERR_LOGIN,"You are not authorized")
+            ).get();
+        }
+    }
+
+    private void adminAuthorizationOnly(){
+        String currentUserRole = EShopSecurityContext.getCurrentUserRole();
+
+        if (!currentUserRole.equalsIgnoreCase(String.valueOf(Roles.ADMIN))){
+            throw createEShopException(
+                    "Unauthorized",
+                    HttpStatus.UNAUTHORIZED,
+                    new DetailBuilder(ErrorCode.ERR_LOGIN,"You are not authorized")
+            ).get();
         }
     }
 
