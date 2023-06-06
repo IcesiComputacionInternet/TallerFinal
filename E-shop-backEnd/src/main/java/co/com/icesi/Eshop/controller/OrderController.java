@@ -75,6 +75,11 @@ public class OrderController implements OrderApi {
         return orderService.receiveOrder(orderName);
     }
 
+    @Override
+    public List<OrderResponseDTO> getOrdersByUser(String userName) {
+        return orderService.getOrderByUser(userName);
+    }
+
     /**
      * @return
      */

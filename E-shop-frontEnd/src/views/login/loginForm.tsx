@@ -57,6 +57,7 @@ const LoginForm = () => {
       const user = await authServices.login({ username, password });
       localStorage.setItem("token", JSON.stringify(user.data.token));
       localStorage.setItem("role", JSON.stringify(user.data.role));
+      localStorage.setItem("username", JSON.stringify(username));
       navigate("/", { replace: true });
     } catch (error) {
       Swal.fire({

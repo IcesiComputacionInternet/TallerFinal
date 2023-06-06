@@ -34,6 +34,9 @@ public interface OrderApi {
     @PatchMapping("/receive")
     OrderResponseDTO receiveOrder(@RequestBody String orderName);
 
+    @GetMapping("/getByUser")
+    List<OrderResponseDTO> getOrdersByUser(@RequestBody String userName);
+
     @GetMapping("/all")
     List<OrderResponseDTO> getAllOrders();
 }
