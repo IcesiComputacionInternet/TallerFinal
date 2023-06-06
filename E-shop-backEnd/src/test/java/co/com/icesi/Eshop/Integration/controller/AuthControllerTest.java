@@ -34,7 +34,7 @@ public class AuthControllerTest {
     @Test
     public void testLogin() throws Exception {
         var login =   mockMvc.perform(MockMvcRequestBuilders.post(URL).content(
-                                objectMapper.writeValueAsString(LoginDTO.builder().username("email3@email.com").password("password").build())
+                                objectMapper.writeValueAsString(LoginDTO.builder().username("email1@email.com").password("password").build())
                         )
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -49,7 +49,7 @@ public class AuthControllerTest {
     @Test
     public void testLoginBadCredentials() throws Exception {
         var login =   mockMvc.perform(MockMvcRequestBuilders.post(URL).content(
-                                objectMapper.writeValueAsString(LoginDTO.builder().username("email3@email.com.es").password("assword").build())
+                                objectMapper.writeValueAsString(LoginDTO.builder().username("email1@email.com.es").password("assword").build())
                         )
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -73,7 +73,7 @@ public class AuthControllerTest {
     @Test
     public void testLoginBlankPassword() throws Exception {
         var login =   mockMvc.perform(MockMvcRequestBuilders.post(URL).content(
-                                objectMapper.writeValueAsString(LoginDTO.builder().username("email3@email.com").password("").build())
+                                objectMapper.writeValueAsString(LoginDTO.builder().username("email1@email.com").password("").build())
                         )
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))

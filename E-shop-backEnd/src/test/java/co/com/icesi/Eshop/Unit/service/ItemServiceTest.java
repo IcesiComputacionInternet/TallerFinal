@@ -64,7 +64,7 @@ public class ItemServiceTest  implements CrudTest {
         expectedResponse.setDescription(itemDTO.getDescription());
 
         when(itemMapper.toItem(itemDTO)).thenReturn(item);
-        when(categoryRepository.findById(UUID.fromString(itemDTO.getCategoryId()))).thenReturn(Optional.of(category));
+        when(categoryRepository.findByName(any())).thenReturn(Optional.of(category));
         when(itemRepository.save(item)).thenReturn(savedItem);
         when(itemMapper.toItemResponseDTO(savedItem)).thenReturn(expectedResponse);
 
@@ -73,7 +73,7 @@ public class ItemServiceTest  implements CrudTest {
 
         // Assert
         verify(itemMapper, times(1)).toItem(itemDTO);
-        verify(categoryRepository, times(1)).findById(UUID.fromString(itemDTO.getCategoryId()));
+        verify(categoryRepository, times(1)).findById(any());
         verify(itemRepository, times(1)).save(argThat(new ItemMatcher(item)));
         verify(itemMapper, times(1)).toItemResponseDTO(savedItem);
 
@@ -86,9 +86,9 @@ public class ItemServiceTest  implements CrudTest {
         ItemDTO itemDTO = new ItemDTO();
         itemDTO.setName("ItemName");
         itemDTO.setDescription("ItemDescription");
-        itemDTO.setCategoryId(UUID.randomUUID().toString());
+        itemDTO.setCategory("Any");
 
-        when(categoryRepository.findById(UUID.fromString(itemDTO.getCategoryId()))).thenReturn(Optional.empty());
+        when(categoryRepository.findByName(any())).thenReturn(Optional.empty());
 
         // Act & Assert
         assertThrows(RuntimeException.class, () -> itemService.createItem(itemDTO));
@@ -141,7 +141,7 @@ public class ItemServiceTest  implements CrudTest {
         item.setName(itemName);
 
         ItemResponseDTO expectedResponse = new ItemResponseDTO();
-        expectedResponse.setCategoryId(String.valueOf(defaultCategory().getCategoryId()));
+        expectedResponse.setCategory(defaultCategory().getName());
         expectedResponse.setName(itemName);
 
         when(itemRepository.findByName(itemName)).thenReturn(Optional.of(item));
@@ -178,12 +178,12 @@ public class ItemServiceTest  implements CrudTest {
         itemDTO.setDescription("ItemDescription");
         itemDTO.setImageUrl("ItemURL");
         itemDTO.setPrice(777L);
-        itemDTO.setCategoryId(UUID.randomUUID().toString());
+        itemDTO.setCategory(defaulItemDTO().getCategory());
 
         Item item = defaultItem();
 
         Category category = new Category();
-        category.setId(UUID.fromString(itemDTO.getCategoryId()));
+        category.setName(itemDTO.getCategory());
 
         Item updatedItem = new Item();
         updatedItem.setItemId(defaultItem().getItemId());
@@ -200,7 +200,7 @@ public class ItemServiceTest  implements CrudTest {
         expectedResponse.setPrice(itemDTO.getPrice());
 
         when(itemRepository.findByName(itemDTO.getName())).thenReturn(Optional.of(item));
-        when(categoryRepository.findById(UUID.fromString(itemDTO.getCategoryId()))).thenReturn(Optional.of(category));
+        when(categoryRepository.findByName(any())).thenReturn(Optional.of(category));
         when(itemRepository.save(updatedItem)).thenReturn(updatedItem);
         when(itemMapper.toItemResponseDTO(updatedItem)).thenReturn(expectedResponse);
 
@@ -209,7 +209,7 @@ public class ItemServiceTest  implements CrudTest {
 
         // Assert
         verify(itemRepository, times(1)).findByName(itemDTO.getName());
-        verify(categoryRepository, times(1)).findById(UUID.fromString(itemDTO.getCategoryId()));
+        verify(categoryRepository, times(1)).findByName(itemDTO.getCategory());
         verify(itemRepository, times(1)).save(argThat(new ItemMatcher(updatedItem)));
         verify(itemMapper, times(1)).toItemResponseDTO(updatedItem);
 

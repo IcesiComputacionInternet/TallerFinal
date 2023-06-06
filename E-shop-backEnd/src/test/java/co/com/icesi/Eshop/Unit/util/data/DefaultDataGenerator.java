@@ -81,7 +81,7 @@ public class DefaultDataGenerator {
                 .description("Description test")
                 .imageUrl("https://via.placeholder.com/150")
                 .price(1000L)
-                .categoryId("a3517ba6-ff13-11ed-be56-0242ac120004").build();
+                .category("Category test").build();
     }
 
     public static RoleDTO defaultRoleDTO(){

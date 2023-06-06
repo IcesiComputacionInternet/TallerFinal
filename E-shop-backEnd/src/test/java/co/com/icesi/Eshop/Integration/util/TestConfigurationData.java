@@ -32,10 +32,10 @@ public class TestConfigurationData {
                 .authority("/api/users/**")
                 .build();
         Authorities authorities3 = Authorities.builder()
-                .authority("/api/roles/**")
+                .authority("/api/role/**")
                 .build();
         Authorities authorities4 = Authorities.builder()
-                .authority("/api/orders/**")
+                .authority("/api/order/**")
                 .build();
         Authorities authorities5 = Authorities.builder()
                 .authority("/api/item/**")
@@ -62,13 +62,6 @@ public class TestConfigurationData {
         Role role4 = Role.builder()
                 .roleId(UUID.fromString("a351796c-ff13-11ed-be56-0242ac120005"))
                 .roleName("Supervisor")
-                .description("Supervisor")
-                .authorities(new ArrayList<>(Arrays.asList(authorities3,authorities4,authorities5)))
-                .build();
-
-        Role role5 = Role.builder()
-                .roleId(UUID.fromString("a351796c-ff13-11ed-be56-0242ac120009"))
-                .roleName("DELETE")
                 .description("Supervisor")
                 .authorities(new ArrayList<>(Arrays.asList(authorities3,authorities4,authorities5)))
                 .build();
@@ -188,7 +181,7 @@ public class TestConfigurationData {
         ////////////////////////////////////////
         return args -> {
             authoritiesRepository.saveAll(Arrays.asList(authorities1, authorities2));
-            roleRepository.saveAll(Arrays.asList(role1, role2, role3, role4,role5));
+            roleRepository.saveAll(Arrays.asList(role1, role2, role3, role4));
             categoryRepository.saveAll(Arrays.asList(category1, category2, category3, category4));
             userRepository.saveAll(Arrays.asList(user1, user2, user3));
             itemRepository.saveAll(Arrays.asList(item1, item2, item3, item4));

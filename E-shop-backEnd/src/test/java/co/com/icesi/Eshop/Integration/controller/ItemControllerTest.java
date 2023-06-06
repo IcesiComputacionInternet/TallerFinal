@@ -116,7 +116,7 @@ public class ItemControllerTest {
                 .description("Description test")
                 .imageUrl("https://via.placeholder.com/150")
                 .price(1000L)
-                .orderId("")
-                .categoryId("a3517ba6-ff13-11ed-be56-0242ac120004").build();
+                .orderId("a35182a4-ff13-11ed-be56-0242ac120002")
+                .category("Category 4").build();
     }
 }
