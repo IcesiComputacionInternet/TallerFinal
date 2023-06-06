@@ -1,4 +1,5 @@
 import OptionsAdmin from "../admin/optionsAdmin";
+import OptionsStore from "../store/optionStore";
 import Header from "../utils/header";
 import Footer from "../utils/footer";
 
@@ -13,7 +14,16 @@ const Home = () => {
           <OptionsAdmin />
         </>
       ) : (
-        <p>No sos Admin chota</p>
+        <></>
+      )}
+      {role === '"STORE"' ? (
+        <>
+          <OptionsStore></OptionsStore>
+        </>
+      ) : (
+        <>
+          <div>No sos ni admin ni tienda chota</div>
+        </>
       )}
       <Footer />
     </>
