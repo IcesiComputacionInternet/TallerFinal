@@ -4,7 +4,9 @@ import Register from "./Register";
 
 interface Props {
   handleLogin: () => void;
+  handleRegister?: () => void;
 }
+
 
 const MainHome = ({ handleLogin }: Props) => {
   const [isRegistering, setIsRegistering] = useState(false);
