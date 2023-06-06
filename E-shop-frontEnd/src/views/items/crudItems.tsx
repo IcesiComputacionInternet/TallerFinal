@@ -3,7 +3,7 @@ import TableItems from "./tableItems";
 import FormItems from "./formItems";
 import Header from "../utils/header";
 import Footer from "../utils/footer";
-import itemServices from "../../services/itemServices";
+import ItemServices from "../../services/itemServices";
 import CategoryServices from "../../services/categoryServices";
 
 const CrudItems = () => {
@@ -12,26 +12,48 @@ const CrudItems = () => {
   const [dataToEdit, setDataToEdit] = useState<any>(null);
 
   useEffect(() => {
-    itemServices.getItems().then((res) => {
+    ItemServices.getItems().then((res) => {
       console.log(res.data);
       setItems(res.data);
     });
     CategoryServices.getCategories().then((res) => {
-      setCategories(res.data);
+      const newCategories = res.data.map((element: any) => element.name);
+      setCategories((prevCategories) => [...prevCategories, ...newCategories]);
     });
   }, []);
 
   const createData = (data: any) => {
-    console.log(data);
+    ItemServices.createItem(data).then((res) => {
+      console.log(res);
+      setItems((prevItems) => [...prevItems, res.data]);
+    });
   };
 
   const updateData = (data: any) => {
-    console.log(data);
+    let updatedItem: any = null;
+    let newItems = items.map((el: any) => {
+      if (el.name === data.name) {
+        updatedItem = data;
+        return data;
+      }
+      return el;
+    });
+
+    CategoryServices.update(updatedItem).then((_res) => {
+      setCategories(newItems);
+    });
   };
 
   const deleteData = async (data: any) => {
-    console.log(data);
+    try {
+      await ItemServices.deleteItem(data);
+      const filteredItems = items.filter((el: any) => el.name !== data);
+      setCategories(filteredItems);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
   return (
     <>
       <Header />
@@ -44,7 +66,7 @@ const CrudItems = () => {
       />
       <TableItems
         data={items}
-        setDataToEdit={dataToEdit}
+        setDataToEdit={setDataToEdit}
         deleteData={deleteData}
       />
       <Footer />

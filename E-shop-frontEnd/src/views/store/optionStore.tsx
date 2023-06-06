@@ -1,5 +1,4 @@
 import { Button } from "@mui/material";
-import "./optionsAdm.css";
 import { useNavigate } from "react-router-dom";
 
 const OptionsStore = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Typography, Box, TextField, Button } from "@mui/material";
 import { Autocomplete } from "@mui/material";
 
@@ -7,7 +7,7 @@ const item = {
   name: "",
   description: "",
   price: "",
-  categoryId: "",
+  category: "",
   imageUrl: "",
 };
 
@@ -27,6 +27,19 @@ const FormItems: React.FC<IProps> = ({
   setDataToEdit,
 }) => {
   const [dataItem, setDataItem] = useState(item);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleClickFileChooser = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (event: any) => {
+    const file = event.target.files?.[0];
+    const path = URL.createObjectURL(file);
+    setDataItem({ ...dataItem, imageUrl: path });
+  };
 
   useEffect(() => {
     dataToEdit ? setDataItem(dataToEdit) : setDataItem(item);
@@ -38,7 +51,7 @@ const FormItems: React.FC<IProps> = ({
       !dataItem.name ||
       !dataItem.description ||
       !dataItem.price ||
-      !dataItem.categoryId ||
+      !dataItem.category ||
       !dataItem.imageUrl
     ) {
       alert("Datos incompletos");
@@ -59,7 +72,7 @@ const FormItems: React.FC<IProps> = ({
   };
 
   const handleCategories = (e: any) => {
-    setDataItem({ ...dataItem, categoryId: e });
+    setDataItem({ ...dataItem, category: e });
   };
 
   const handleReset = () => {
@@ -146,9 +159,11 @@ const FormItems: React.FC<IProps> = ({
               renderInput={(params) => (
                 <TextField {...params} label="Categorias" />
               )}
+              value={dataItem.category || null}
             />
           )}
           <Button
+            onClick={handleClickFileChooser}
             variant="contained"
             sx={{
               height: "55px",
@@ -166,6 +181,14 @@ const FormItems: React.FC<IProps> = ({
           >
             {dataToEdit ? "Editar Imagen" : "Agregar Imagen"}
           </Button>
+          <input
+            type="file"
+            accept="image/jpeg, image/png"
+            ref={fileInputRef}
+            style={{ display: "none" }}
+            onChange={handleFileChange}
+          />
+
           <Button
             type="submit"
             variant="contained"
