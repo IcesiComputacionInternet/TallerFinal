@@ -1,8 +1,8 @@
 package co.edu.icesi.Eshop.integration;
 
 import co.edu.icesi.Eshop.TestConfigurationData;
+import co.edu.icesi.Eshop.dto.CategoryDTO;
 import co.edu.icesi.Eshop.dto.LoginDTO;
-import co.edu.icesi.Eshop.dto.RoleDTO;
 import co.edu.icesi.Eshop.dto.TokenDTO;
 import co.edu.icesi.Eshop.error.exception.EShopError;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,7 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static co.edu.icesi.Eshop.api.RoleAPI.BASE_ROLE_URL;
+import static co.edu.icesi.Eshop.api.CategoryAPI.BASE_CATEGORY_URL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(TestConfigurationData.class)
 @ActiveProfiles(profiles = "test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class RoleControllerTest {
+public class CategoryControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -39,10 +39,10 @@ public class RoleControllerTest {
 
     public TokenDTO generateAdminToken() throws Exception{
         var result = mockMvc.perform(MockMvcRequestBuilders.post("/token").content(
-                        objectMapper.writeValueAsString(new LoginDTO("johndoe@email.com", "password"))
-                    )
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .accept(MediaType.APPLICATION_JSON))
+                                objectMapper.writeValueAsString(new LoginDTO("johndoe@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -74,12 +74,12 @@ public class RoleControllerTest {
     }
 
     @Nested
-    public class testsCreateRoleHappyPath{
+    public class testsCreateCategoryHappyPath{
 
         @Test
-        public void testCreateRoleFromAdmin() throws Exception{
-            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_ROLE_URL).content(
-                                    objectMapper.writeValueAsString(defaultRole())
+        public void testCreateCategoryFromAdmin() throws Exception{
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_CATEGORY_URL).content(
+                                    objectMapper.writeValueAsString(defaultCategory())
                             )
                             .header("Authorization","Bearer "+generateAdminToken().getToken())
                             .contentType(MediaType.APPLICATION_JSON)
@@ -87,22 +87,23 @@ public class RoleControllerTest {
                     .andExpect(status().isOk())
                     .andReturn();
 
-            RoleDTO role = objectMapper.readValue(newResult.getResponse().getContentAsString(), RoleDTO.class);
-            assertNotNull(role);
-            assertEquals(role.getRoleName(),"Example");
+            CategoryDTO categoryDTO = objectMapper.readValue(newResult.getResponse().getContentAsString(), CategoryDTO.class);
+            assertNotNull(categoryDTO);
+            assertEquals(categoryDTO.getName(),"Example category");
         }
     }
 
     @Nested
-    public class testsCreateRoleNotHappyPath{
+    public class testsCreateCategoryNotHappyPath{
 
         @Test
-        public void testCreateRoleWithNameThatAlreadyExists() throws Exception{
-            RoleDTO role = defaultRole();
-            role.setRoleName("ADMIN");
+        public void testCreateCategoryWithNameAlreadyExists() throws Exception{
 
-            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_ROLE_URL).content(
-                                    objectMapper.writeValueAsString(role)
+            CategoryDTO categoryDTO = defaultCategory();
+            categoryDTO.setName("Cuidado del hogar");
+
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_CATEGORY_URL).content(
+                                    objectMapper.writeValueAsString(categoryDTO)
                             )
                             .header("Authorization","Bearer "+generateAdminToken().getToken())
                             .contentType(MediaType.APPLICATION_JSON)
@@ -116,14 +117,15 @@ public class RoleControllerTest {
             assertEquals(1, details.size());
             var detail = details.get(0);
 
-            assertEquals("Role with name "+role.getRoleName()+" already exists",detail.getErrorMessage());
+            assertEquals("Category with name "+categoryDTO.getName()+" already exists",detail.getErrorMessage());
             assertEquals(409, newResult.getResponse().getStatus());
         }
 
         @Test
-        public void testCreateRoleFromShop() throws Exception{
-            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_ROLE_URL).content(
-                                    objectMapper.writeValueAsString(defaultRole())
+        public void testCreateCategoryFromShop() throws Exception{
+
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_CATEGORY_URL).content(
+                                    objectMapper.writeValueAsString(defaultCategory())
                             )
                             .header("Authorization","Bearer "+generateShopToken().getToken())
                             .contentType(MediaType.APPLICATION_JSON)
@@ -135,9 +137,10 @@ public class RoleControllerTest {
         }
 
         @Test
-        public void testCreateRoleFromUser() throws Exception{
-            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_ROLE_URL).content(
-                                    objectMapper.writeValueAsString(defaultRole())
+        public void testCreateCategoryFromUser() throws Exception{
+
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_CATEGORY_URL).content(
+                                    objectMapper.writeValueAsString(defaultCategory())
                             )
                             .header("Authorization","Bearer "+generateUserToken().getToken())
                             .contentType(MediaType.APPLICATION_JSON)
@@ -149,12 +152,10 @@ public class RoleControllerTest {
         }
     }
 
-    private RoleDTO defaultRole(){
-        return RoleDTO.builder()
-                .roleName("Example")
-                .description("Example role")
+    private CategoryDTO defaultCategory(){
+        return CategoryDTO.builder()
+                .name("Example category")
+                .description("A example category")
                 .build();
     }
-
-
 }

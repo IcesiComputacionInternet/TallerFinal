@@ -22,7 +22,7 @@ public class ItemDTO {
     @NotBlank(message = "is missing")
     private String description;
 
-    @Min(value=0, message = "min value is 0")
+    @Min(value=1L, message = "min value is 1")
     @Max(value=1000000000000L, message = "max value is 1000000000000")
     private Long price;
 
