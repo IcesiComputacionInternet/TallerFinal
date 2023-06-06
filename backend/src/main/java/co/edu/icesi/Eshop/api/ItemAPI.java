@@ -13,7 +13,7 @@ public interface ItemAPI {
     @GetMapping("/{name}")
     ItemDTO getItemByName(@PathVariable String name);
 
-    @PostMapping("/create")
+    @PostMapping
     ItemDTO createItem(@Valid @RequestBody ItemDTO itemDTO);
 
     @PutMapping("/setState/{name}")

@@ -9,6 +9,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 
 import static co.edu.icesi.Eshop.error.util.EShopExceptionBuilder.createEShopError;
 
@@ -20,13 +21,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(EShopException.getError().getStatus()).body(EShopException.getError());
     }
 
-    /*@ExceptionHandler(RuntimeException.class)
+    @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<EShopError> handleRuntimeException(RuntimeException runtimeException){
         var error = createEShopError(runtimeException.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, new DetailBuilder(ErrorCode.ERR_500));
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
-
-     */
 
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<EShopError> handleAuthenticationException(AuthenticationException authenticationException){
