@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 public interface ItemMapper {
 
     Item toItem(ItemDTO itemDTO);
-
+    @Mapping(target = "category", ignore = true)
     Item toItem(ItemResponseDTO itemResponseDTO);
 
     ItemDTO toItemDTO(Item item);
