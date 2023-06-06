@@ -5,17 +5,23 @@ import { Typography, Button } from "@mui/material";
 import BasicModal from "./modalOrder";
 import OrderServices from "../../services/orderServices";
 import ModalAlert from "../utils/modalAlert";
+import { useNavigate } from "react-router-dom";
 
 const ViewUser = () => {
   const [items, setItems] = useState<any[]>([]);
   const [itemsOrder, setItemsOrder] = useState<any[]>([]);
   const [orderActive, setOrderActive] = useState<Boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     ItemServices.getItems().then((res) => {
       setItems(res.data);
     });
   }, []);
+
+  const handleViewOrder = () => {
+    navigate("/view_orders_user", { replace: true });
+  };
 
   const handleAddItemsOrder = (item: any) => {
     setItemsOrder((prevItems) => [...prevItems, item]);
@@ -77,6 +83,7 @@ const ViewUser = () => {
       )}
       <div style={{ width: "30%", display: "flex", margin: "auto" }}>
         <Button
+          onClick={handleViewOrder}
           fullWidth
           variant="contained"
           sx={{
