@@ -19,7 +19,7 @@ const SignUp = () => {
     };
 
     const cancelSignUp = () => {
-        navigation("/login");
+        navigation("/");
     }
 
     return (

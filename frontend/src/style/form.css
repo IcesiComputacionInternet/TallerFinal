@@ -38,6 +38,12 @@ body {
     padding: 30px 30px;
 }
 
+.new-item{
+    width: 800px;
+    margin: 100px;
+    align-content: center;
+}
+
 form *{
     font-family: 'Roboto Light',sans-serif;
     color: #2C3E50;

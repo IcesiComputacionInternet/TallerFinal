@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import Login from "./components/Login";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SignUp from "./components/SignUp";
-import NotFound from "./components/NotFound";
+import CreateItem from "./components/CreateItem.tsx";
+// import Store from "./components/Store.tsx";
+// import NotFound from "./components/NotFound";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
@@ -18,14 +20,14 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/login" element={<Login setLogin={logIn} />}></Route>
-                <Route
-                    path="/signup" element={<SignUp />}
-                ></Route>
-                <Route
-                    path="/*"
-                    element={isLoggedIn ? <NotFound /> : <Navigate to="/login" />}
-                />
+                <Route path="/" element={<Login setLogin={logIn} />}></Route>
+                <Route path="/signup" element={<SignUp />}></Route>
+                {/*<Route*/}
+                {/*    path="/*"*/}
+                {/*    element={isLoggedIn ? <NotFound /> : <Navigate to="/login" />}*/}
+                {/*/>*/}
+                {/*<Route path="/store" element={<Store />}></Route>*/}
+                <Route path="/newitem" element={<CreateItem />}></Route>
             </Routes>
         </BrowserRouter>
     );
