@@ -34,7 +34,6 @@ public class OrderService {
         order.setItems(orderDTO.getItems().stream().map(itemRepository::findByName).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList()));
         order.setStatus(orderDTO.getStatus());
         order.setTotal(orderDTO.getTotal());
-        List<String> a = order.getItems().stream().map(item -> item.getName()).toList();
         order.setUserPrincipal(userRepository.findByEmail(orderDTO.getUserEmail()).orElseThrow(() -> new RuntimeException("UserPrincipal not found")));
         return orderMapper.toOrderResponseDTO(orderRepository.save(order));
     }
