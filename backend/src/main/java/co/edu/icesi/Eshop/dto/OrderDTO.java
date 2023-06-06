@@ -23,7 +23,6 @@ public class OrderDTO {
     @Null
     private String status;
 
-    @Null
     private long total;
 
 

@@ -120,7 +120,7 @@ public class TestConfigurationData {
                 .items(Stream.of(item1).collect(Collectors.toList()))
                 .build();
         EShopOrder order2 = EShopOrder.builder()
-                .orderId(UUID.randomUUID())
+                .orderId(UUID.fromString("d1e854e9-129e-4958-80b5-23599d72d42b"))
                 .status(Status.RECEIVED.toString())
                 .total(item2.getPrice())
                 .eShopUser(user3)
