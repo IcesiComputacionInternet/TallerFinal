@@ -5,7 +5,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 
 public class EShopSecurityContext {
 
-    public static String getCurrenId(){
+    public static String getCurrentUserId(){
         return ((JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication())
                 .getToken().getClaimAsString("userId");
     }

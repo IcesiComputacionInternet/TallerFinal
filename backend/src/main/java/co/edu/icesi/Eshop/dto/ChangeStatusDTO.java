@@ -18,7 +18,4 @@ public class ChangeStatusDTO {
     private String orderId;
     @NotBlank(message = "is missing")
     private String status;
-    @Null
-    private String response;
-
 }

@@ -12,6 +12,7 @@ import co.edu.icesi.Eshop.model.Status;
 import co.edu.icesi.Eshop.repository.ItemRepository;
 import co.edu.icesi.Eshop.repository.OrderRepository;
 import co.edu.icesi.Eshop.repository.UserRepository;
+import co.edu.icesi.Eshop.security.EShopSecurityContext;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,8 @@ public class OrderService {
 
     private ItemRepository itemRepository;
 
+    private EShopUser currentUser;
+
     public OrderDTO getOrder(String orderId) {
         return  orderMapper.fromOrder(orderRepository.findById(UUID.fromString(orderId)).orElseThrow(
                 createEShopException(
@@ -49,20 +52,8 @@ public class OrderService {
     }
 
     public OrderDTO save(OrderDTO orderDTO) {
-        EShopUser EShopUser =null;
-        if(orderDTO.getUserEmail()!=null){
-             EShopUser = userRepository.findByEmail(orderDTO.getUserEmail()).orElseThrow(createEShopException(
-                    "User does not exists",
-                    HttpStatus.NOT_FOUND,
-                    new DetailBuilder(ErrorCode.ERR_404, "User with email",orderDTO.getUserEmail() )
-            ));
-        }else if(orderDTO.getUserPhoneNumber()!=null){
-            EShopUser = userRepository.findByPhoneNumber(orderDTO.getUserPhoneNumber()).orElseThrow(createEShopException(
-                    "User does not exists",
-                    HttpStatus.NOT_FOUND,
-                    new DetailBuilder(ErrorCode.ERR_404, "User with phone number",orderDTO.getUserPhoneNumber() )
-            ));
-        }
+        setCurrentUser();
+
         List<Item> items= orderDTO.getItems().stream().map(x-> itemRepository.findByName(x).orElseThrow(
                 createEShopException(
                         "Item does not exists",
@@ -72,7 +63,7 @@ public class OrderService {
         )).toList();
         EShopOrder order= orderMapper.fromOrderDTO(orderDTO);
         order.setOrderId(UUID.randomUUID());
-        order.setEShopUser(EShopUser);
+        order.setEShopUser(currentUser);
         order.setStatus(Status.PENDING.toString());
         order.setItems(items);
         order.setTotal(calculateTotal(items));
@@ -84,6 +75,9 @@ public class OrderService {
         return items.stream().mapToLong(Item::getPrice).sum();
     }
 
+    public void setCurrentUser(){
+        currentUser= userRepository.findById(UUID.fromString(EShopSecurityContext.getCurrentUserId())).get();
+    }
 
     public OrderDTO changeStatus(ChangeStatusDTO changeStatusDTO) {
         EShopOrder order= orderRepository.findById(UUID.fromString(changeStatusDTO.getOrderId())).orElseThrow(createEShopException(

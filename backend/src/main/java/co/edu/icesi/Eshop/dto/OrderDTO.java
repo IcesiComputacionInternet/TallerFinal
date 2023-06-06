@@ -15,7 +15,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EmailOrPhoneNumberExistConstraint
 public class OrderDTO {
 
     @Null
@@ -27,10 +26,12 @@ public class OrderDTO {
     @Null
     private long total;
 
-    @CustomEmailConstraint
+
+    @Null
     private String userEmail;
 
-    @PhoneNumberConstraint
+
+    @Null
     private String userPhoneNumber;
 
     @NotNull
