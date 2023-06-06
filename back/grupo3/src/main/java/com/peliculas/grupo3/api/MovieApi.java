@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.peliculas.grupo3.api.MovieApi.BASE_MOVIE_URL;
 
@@ -24,5 +23,8 @@ public interface MovieApi {
     List<MovieDTO> getAllMovies();
 
     @GetMapping("/findByName")
-    Optional<MovieDTO> findByName(@RequestBody String name);
+    MovieDTO findByName(@RequestBody String name);
+
+    @GetMapping("/findByCategory")
+    List<MovieDTO> findByCategory(@RequestBody String category);
 }

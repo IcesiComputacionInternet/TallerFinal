@@ -68,8 +68,7 @@ public class UserService {
     }
 
     public UserResponseDTO getCurrentUser() {
-        System.out.println("llega al servicio");
-        System.out.println(SecurityContext.getCurrentUserId());
+
         return userResponseMapper.fromUser(userRepository.findById(UUID.fromString(SecurityContext.getCurrentUserId())).orElseThrow(
                 ()-> MovieExceptionBuilder.createMovieException("No existe un usuario con este id", HttpStatus.NOT_FOUND,"USER_NOT_FOUND")));
 

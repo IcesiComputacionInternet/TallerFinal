@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @AllArgsConstructor
@@ -27,8 +26,13 @@ public class MovieController implements MovieApi {
     }
 
     @Override
-    public Optional<MovieDTO> findByName(String name) {
+    public MovieDTO findByName(String name) {
         return movieService.findByName(name);
+    }
+
+    @Override
+    public List<MovieDTO> findByCategory(String category) {
+        return movieService.findByCategory(category);
     }
     //TODO implementar metodos de la api
 
