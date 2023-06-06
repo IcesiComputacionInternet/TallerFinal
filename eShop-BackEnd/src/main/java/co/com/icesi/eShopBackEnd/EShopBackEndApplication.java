@@ -31,7 +31,7 @@ public class EShopBackEndApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EShopBackEndApplication.class, args);
 	}
-	@Bean
+	//@Bean
 	CommandLineRunner commandLineRunner(CustomerRepository users,
 										PasswordEncoder encoder) {
 
