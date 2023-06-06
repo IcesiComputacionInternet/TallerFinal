@@ -7,7 +7,7 @@ import co.edu.icesi.Eshop.validation.constraint.EmailOrPhoneNumberExistConstrain
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class EmailOrPhoneNumberExistValidator implements ConstraintValidator<EmailOrPhoneNumberExistConstraint, Object> {
+public class EmailOrPhoneNumberExistValidator implements ConstraintValidator<EmailOrPhoneNumberExistConstraint, UserDTO> {
 
     @Override
     public void initialize(EmailOrPhoneNumberExistConstraint constraintAnnotation) {
@@ -15,14 +15,9 @@ public class EmailOrPhoneNumberExistValidator implements ConstraintValidator<Ema
     }
 
     @Override
-    public boolean isValid(Object dto, ConstraintValidatorContext constraintValidatorContext) {
-        if (dto instanceof UserDTO) {
-            return ((UserDTO) dto).getPhoneNumber() != null || ((UserDTO) dto).getEmail() != null;
-        }
-        if (dto instanceof OrderDTO) {
-            return ((OrderDTO) dto).getUserPhoneNumber() != null || ((OrderDTO) dto).getUserEmail() != null;
-        }
-        return false;
+    public boolean isValid(UserDTO userDTO, ConstraintValidatorContext constraintValidatorContext) {
+            return userDTO.getPhoneNumber() != null || userDTO.getEmail() != null;
+
     }
 
 }
