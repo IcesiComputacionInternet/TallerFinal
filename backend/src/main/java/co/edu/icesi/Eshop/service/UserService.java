@@ -6,6 +6,7 @@ import co.edu.icesi.Eshop.error.exception.ErrorCode;
 import co.edu.icesi.Eshop.mapper.UserMapper;
 import co.edu.icesi.Eshop.model.Role;
 import co.edu.icesi.Eshop.model.EShopUser;
+import co.edu.icesi.Eshop.model.Roles;
 import co.edu.icesi.Eshop.repository.RoleRepository;
 import co.edu.icesi.Eshop.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -39,6 +40,18 @@ public class UserService {
                 HttpStatus.NOT_FOUND,
                 new DetailBuilder(ErrorCode.ERR_404, "User role",userDTO.getRoleName())
         ));
+        EShopUser user =userMapper.fromUserDTO(userDTO);
+        user.setBirthday(LocalDate.parse(userDTO.getBirthday(),DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        user.setRole(role);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setUserId(UUID.randomUUID());
+        return userMapper.fromUser(userRepository.save(user));
+
+    }
+
+    public UserDTO register(UserDTO userDTO){
+        validateEmailAndPhoneNumber(userDTO);
+        Role role=roleRepository.findByName(Roles.USER.toString()).get();
         EShopUser user =userMapper.fromUserDTO(userDTO);
         user.setBirthday(LocalDate.parse(userDTO.getBirthday(),DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         user.setRole(role);

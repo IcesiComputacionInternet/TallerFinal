@@ -75,9 +75,12 @@ public class SecurityConfiguration {
             (HandlerMappingIntrospector introspector){
 
         RequestMatcher permitAll = new AndRequestMatcher(new MvcRequestMatcher(introspector, "/token"));
+        RequestMatcher permitAllRegister = new AndRequestMatcher(new MvcRequestMatcher(introspector, "/user/register"));
 
         RequestMatcherDelegatingAuthorizationManager.Builder managerBuilder =
-                RequestMatcherDelegatingAuthorizationManager.builder().add(permitAll,(context, other) -> new AuthorizationDecision(true));
+                RequestMatcherDelegatingAuthorizationManager.builder()
+                        .add(permitAll,(context, other) -> new AuthorizationDecision(true))
+                        .add(permitAllRegister,(context, other) -> new AuthorizationDecision(true));
 
         managerBuilder.add(new MvcRequestMatcher(introspector, "/admin/**"), AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 

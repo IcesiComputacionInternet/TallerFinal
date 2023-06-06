@@ -21,4 +21,7 @@ public interface UserAPI {
 
     @PostMapping
     UserDTO addUser(@Valid @RequestBody UserDTO userDTO);
+
+    @PostMapping("/register")
+    UserDTO registerUser(@Valid @RequestBody UserDTO userDTO);
 }

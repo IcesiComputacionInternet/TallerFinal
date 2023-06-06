@@ -5,10 +5,7 @@ import co.edu.icesi.Eshop.dto.OrderDTO;
 import co.edu.icesi.Eshop.error.exception.DetailBuilder;
 import co.edu.icesi.Eshop.error.exception.ErrorCode;
 import co.edu.icesi.Eshop.mapper.OrderMapper;
-import co.edu.icesi.Eshop.model.EShopOrder;
-import co.edu.icesi.Eshop.model.EShopUser;
-import co.edu.icesi.Eshop.model.Item;
-import co.edu.icesi.Eshop.model.Status;
+import co.edu.icesi.Eshop.model.*;
 import co.edu.icesi.Eshop.repository.ItemRepository;
 import co.edu.icesi.Eshop.repository.OrderRepository;
 import co.edu.icesi.Eshop.repository.UserRepository;
@@ -36,23 +33,38 @@ public class OrderService {
 
 
     public OrderDTO getOrder(String orderId) {
-        return  orderMapper.fromOrder(orderRepository.findById(UUID.fromString(orderId)).orElseThrow(
+        EShopOrder order=orderRepository.findById(UUID.fromString(orderId)).orElseThrow(
                 createEShopException(
                         "Order not found",
                         HttpStatus.NOT_FOUND,
                         new DetailBuilder(ErrorCode.ERR_404, "Order",orderId )
                 )
-        ));
+        );
+
+        if(EShopSecurityContext.getCurrentUserRole().equals(Roles.USER.toString()) && !order.getEShopUser().getUserId().toString().equals(EShopSecurityContext.getCurrentUserId())) {
+            createEShopException(
+                    "Unauthorized: This is not user's order",
+                    HttpStatus.FORBIDDEN,
+                    new DetailBuilder(ErrorCode.ERR_403, "Unauthorized: This is not user's order")
+            ).get();
+        }
+        return  orderMapper.fromOrder(order);
     }
 
     public List<OrderDTO> getAllOrders() {
-        return orderRepository.findAll().stream()
+        if(!EShopSecurityContext.getCurrentUserRole().equals(Roles.USER.toString())) {
+            return orderRepository.findAll().stream()
+                    .map(orderMapper::fromOrder)
+                    .toList();
+        }
+        EShopUser user=userRepository.findById(UUID.fromString(EShopSecurityContext.getCurrentUserId())).get();
+        return user.getOrders().stream()
                 .map(orderMapper::fromOrder)
                 .toList();
     }
 
     public OrderDTO save(OrderDTO orderDTO) {
-
+        AdminAndUserAuthorizationOnly();
         List<Item> items= orderDTO.getItems().stream().map(x-> itemRepository.findByName(x).orElseThrow(
                 createEShopException(
                         "Item does not exists",
@@ -78,7 +90,28 @@ public class OrderService {
         return userRepository.findById(UUID.fromString(EShopSecurityContext.getCurrentUserId())).get();
     }
 
+    public void AdminAndShopAuthorizationOnly(){
+        if(EShopSecurityContext.getCurrentUserRole().equals(Roles.USER.toString())){
+            throw createEShopException(
+                    "Unauthorized: Admin and Shop only",
+                    HttpStatus.FORBIDDEN,
+                    new DetailBuilder(ErrorCode.ERR_403, "Unauthorized: Admin and Shop only")
+            ).get();
+        }
+    }
+
+    public void AdminAndUserAuthorizationOnly(){
+        if(EShopSecurityContext.getCurrentUserRole().equals(Roles.SHOP.toString())){
+            throw createEShopException(
+                    "Unauthorized: Admin and User only",
+                    HttpStatus.FORBIDDEN,
+                    new DetailBuilder(ErrorCode.ERR_403, "Unauthorized: Admin and User only")
+            ).get();
+        }
+    }
+
     public OrderDTO changeStatus(ChangeStatusDTO changeStatusDTO) {
+        AdminAndShopAuthorizationOnly();
         EShopOrder order= orderRepository.findById(UUID.fromString(changeStatusDTO.getOrderId())).orElseThrow(createEShopException(
                 "Order does not exists",
                 HttpStatus.NOT_FOUND,

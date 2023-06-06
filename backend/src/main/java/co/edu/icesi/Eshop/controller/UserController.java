@@ -32,4 +32,9 @@ public class UserController  implements UserAPI {
     public UserDTO addUser(UserDTO userDTO) {
         return userService.save(userDTO);
     }
+
+    @Override
+    public UserDTO registerUser(UserDTO userDTO) {
+        return userService.register(userDTO);
+    }
 }
