@@ -18,7 +18,9 @@ public interface OrderMapper {
     @Mapping(target = "items", expression = "java(orderResponseDTO.getItems())")
     OrderDTO toOrderDTO(OrderResponseDTO orderResponseDTO);
     @Mapping(target = "items", expression = "java(orderStore.getItems().stream().map(item -> item.getName()).toList())")
+    @Mapping(target = "userEmail", expression = "java(orderStore.getUserPrincipal().getEmail())")
+    @Mapping(target = "id", expression = "java(orderStore.getOrderId().toString())")
     OrderResponseDTO toOrderResponseDTO(OrderStore orderStore);
-
+    @Mapping(target = "items", expression = "java(orderDTO.getItems())")
     OrderResponseDTO toOrderResponseDTO(OrderDTO orderDTO);
 }
