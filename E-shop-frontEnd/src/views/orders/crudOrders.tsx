@@ -62,6 +62,9 @@ const CrudOrders = () => {
   return (
     <>
       <Header />
+      <Typography variant="h4" align="center" sx={{ mt: 5 }}>
+        Gestionar Ordenes
+      </Typography>
       {dataToEdit && (
         <UpdateOrders
           updateData={updateData}
@@ -69,7 +72,7 @@ const CrudOrders = () => {
           setDataToEdit={setDataToEdit}
         />
       )}
-      <TableOrder data={orders} setDataToEdit={setDataToEdit} />
+      <TableOrder data={orders} setDataToEdit={setDataToEdit} owns={true} />
       <Link to="/" style={{ textAlign: "center" }}>
         <Typography>Volver</Typography>
       </Link>

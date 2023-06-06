@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import OrderServices from "../../services/orderServices";
 import ModalAlert from "../utils/modalAlert";
 import Header from "../utils/header";
@@ -28,7 +29,10 @@ const ViewOrders = () => {
       <Typography variant="h4" align="center" sx={{ mt: 5 }}>
         Tus ordenes
       </Typography>
-      <TableOrder data={orders} setDataToEdit={null} />
+      <TableOrder data={orders} setDataToEdit={null} owns={false} />
+      <Link to="/" style={{ textAlign: "center" }}>
+        <Typography>Volver</Typography>
+      </Link>
       <Footer />
     </>
   );

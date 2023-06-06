@@ -74,7 +74,8 @@ public class OrderService {
         return orderMapper.toOrderResponseDTO(orderRepository.findById(UUID.fromString(orderId)).orElseThrow(() -> new RuntimeException("Order not found")));
     }
     public List<OrderResponseDTO> getOrderByUser(String userEmail) {
-        return orderRepository.findByUserPrincipalEmail(userEmail).stream().map(orderMapper::toOrderResponseDTO).collect(Collectors.toList());
+        String userEmailF = userEmail.substring(1, userEmail.length()-1);
+        return orderRepository.findByUserPrincipalEmail(userEmailF).stream().map(orderMapper::toOrderResponseDTO).collect(Collectors.toList());
     }
     public List<OrderResponseDTO> getAllOrders() {
         return orderRepository.findAll().stream().map(orderMapper::toOrderResponseDTO).collect(Collectors.toList());

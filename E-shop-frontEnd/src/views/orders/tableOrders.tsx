@@ -6,9 +6,10 @@ import TableRowOrder from "./tableRowOrders";
 interface IProps {
   data: any[];
   setDataToEdit: any;
+  owns: any;
 }
 
-const TableOrder: React.FC<IProps> = ({ data, setDataToEdit }) => {
+const TableOrder: React.FC<IProps> = ({ data, setDataToEdit, owns }) => {
   return (
     <TableContainer
       component={Paper}
@@ -29,9 +30,11 @@ const TableOrder: React.FC<IProps> = ({ data, setDataToEdit }) => {
             <TableCell style={{ textAlign: "center" }}>
               <b>Items</b>
             </TableCell>
-            <TableCell style={{ textAlign: "center" }}>
-              <b>Opciones</b>
-            </TableCell>
+            {owns && (
+              <TableCell style={{ textAlign: "center" }}>
+                <b>Opciones</b>
+              </TableCell>
+            )}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -46,6 +49,7 @@ const TableOrder: React.FC<IProps> = ({ data, setDataToEdit }) => {
               <TableRowOrder
                 key={el.userEmail}
                 el={el}
+                owns={owns}
                 setDataToEdit={setDataToEdit}
               />
             ))
