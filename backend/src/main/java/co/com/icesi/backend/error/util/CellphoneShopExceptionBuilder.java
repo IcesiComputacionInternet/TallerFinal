@@ -8,6 +8,7 @@ import co.com.icesi.backend.error.exception.DetailBuilder;
 import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;
+import java.util.function.Supplier;
 
 public class CellphoneShopExceptionBuilder {
     public CellphoneException noPermissionException(String message){

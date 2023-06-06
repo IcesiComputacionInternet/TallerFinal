@@ -14,4 +14,6 @@ import java.util.UUID;
 public interface CellphoneRepository extends JpaRepository<Cellphone, UUID> {
     @Query("SELECT cellphone FROM Cellphone cellphone WHERE cellphone.name = :name")
     Optional<Cellphone> findByName(@Param("name") String name);
+
+
 }

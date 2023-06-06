@@ -16,4 +16,5 @@ public class ResponseOrderDTO {
     private String status;
     private long total;
     private List<String> items;
+    private String message;
 }
