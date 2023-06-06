@@ -38,6 +38,7 @@ public class CategoryServiceTest {
         doNothing().when(categoryService).checkPermissions();
         categoryService.save(defaultCategoryDTO());
         Category category = defaultCategory();
+
         verify(categoryRepository, times(1)).save(argThat(new CategoryMatcher(category)));
         verify(categoryMapper, times(1)).fromCategoryDTO(any());
         verify(categoryMapper, times(1)).fromCategoryToCategoryDTO(any());

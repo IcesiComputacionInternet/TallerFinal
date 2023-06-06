@@ -53,6 +53,9 @@ public class CategoryService {
     }
 
     public List<CategoryDTO> getAllCategories(){
-        return categoryRepository.findAll().stream().map(categoryMapper::fromCategoryToCategoryDTO).collect(Collectors.toList());
+        return categoryRepository.findAll()
+                .stream()
+                .map(categoryMapper::fromCategoryToCategoryDTO)
+                .collect(Collectors.toList());
     }
 }

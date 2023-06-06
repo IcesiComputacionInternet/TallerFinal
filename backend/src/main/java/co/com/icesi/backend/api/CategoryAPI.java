@@ -13,5 +13,6 @@ public interface CategoryAPI {
     CategoryDTO createCategory(@RequestBody @Valid CategoryDTO categoryDTO);
     @GetMapping("/{category}")
     CategoryDTO getCategory(@PathVariable("category") String categoryName);
+    @GetMapping("/getCategories")
     List<CategoryDTO> getAllCategories();
 }
