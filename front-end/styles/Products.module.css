@@ -46,3 +46,18 @@
     overflow-y: auto;
     height: 550px;
 }
+
+.formSection{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 95%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-radius: 15px;
+    padding: 15px;
+    background-color: #f3f5f8;
+    overflow-y: auto;
+    height: 100%;
+    box-shadow: 0 0 2px #66666e;
+}
