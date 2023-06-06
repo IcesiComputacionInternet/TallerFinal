@@ -69,6 +69,7 @@ const AddCategory: React.FC<IProps> = ({
         sx={{ mt: 1 }}
       >
         <TextField
+          disabled={dataToEdit ? true : false}
           color="primary"
           margin="normal"
           id="name"

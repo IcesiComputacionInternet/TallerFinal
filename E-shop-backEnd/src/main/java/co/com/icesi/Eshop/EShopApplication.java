@@ -129,7 +129,7 @@ public class EShopApplication {
 				.birthDate("1/1/1999")
 				.phoneNumber("3123342122")
 				.address("Calle 1 # 1-1")
-				.role(role2)
+				.role(role3)
 				.build();
 		////////////////////////////////////////
 

@@ -5,6 +5,7 @@ import CreateUser from "../views/user/createUser";
 import CrudRoles from "../views/roles/crudRoles";
 import CrudCategories from "../views/categories/crudCategories";
 import CrudUsers from "../views/user/crudUser";
+import CrudItems from "../views/items/crudItems";
 
 interface Props {
   children: React.ReactComponentElement<any>;
@@ -22,6 +23,18 @@ const ProtectedRoutesAdmin = ({ children }: Props) => {
   if (
     localStorage.getItem("token") !== null &&
     localStorage.getItem("role") === '"ADMIN"'
+  ) {
+    return children;
+  } else {
+    return <Navigate to="/" />;
+  }
+};
+
+const ProtectedRoutesAdminStore = ({ children }: Props) => {
+  if (
+    (localStorage.getItem("token") !== null &&
+      localStorage.getItem("role") === '"ADMIN"') ||
+    localStorage.getItem("role") === '"Store"'
   ) {
     return children;
   } else {
@@ -95,6 +108,14 @@ const ThemeRoutes = () => {
             <ProtectedRoutesAdmin>
               <CrudUsers />
             </ProtectedRoutesAdmin>
+          }
+        />
+        <Route
+          path="/crud_items"
+          element={
+            <ProtectedRoutesAdminStore>
+              <CrudItems />
+            </ProtectedRoutesAdminStore>
           }
         />
         <Route path="*" element={<Navigate to="/" />} />

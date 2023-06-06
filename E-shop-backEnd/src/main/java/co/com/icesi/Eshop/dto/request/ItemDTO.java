@@ -31,7 +31,7 @@ public class ItemDTO {
     private String imageUrl;
     @NotBlank
     @NotNull
-    private String categoryId;
+    private String category;
 
     private String orderId;
 

@@ -40,7 +40,7 @@ const CreateUser: React.FC<props> = ({ rolAdmin }) => {
           marginBottom: "1rem",
         }}
       >
-        ¿Ya tienes una cuenta? Inicia sesión aquí
+        {rolAdmin ? "Volver" : "¿Ya tienes una cuenta? Inicia sesión aquí"}
       </Link>
       <Footer />
     </div>

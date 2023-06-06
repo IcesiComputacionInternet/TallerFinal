@@ -25,14 +25,15 @@ public class ItemService {
     private final ItemMapper itemMapper;
     public ItemResponseDTO createItem(ItemDTO itemDTO) {
         Item item = itemMapper.toItem(itemDTO);
-        item.setCategory(categoryRepository.findById(UUID.fromString(itemDTO.getCategoryId())).orElseThrow(() -> new RuntimeException("Category not found")));
+        item.setCategory(categoryRepository.findByName(itemDTO.getCategory()).orElseThrow(() -> new RuntimeException("Category not found")));
         item.setItemId(UUID.randomUUID());
         return itemMapper.toItemResponseDTO(itemRepository.save(item));
     }
 
     public ItemResponseDTO updateItem(ItemDTO itemDTO) {
         Item item = itemRepository.findByName(itemDTO.getName()).orElseThrow(() -> new RuntimeException("Item not found"));
-        item.setCategory(categoryRepository.findById(UUID.fromString(itemDTO.getCategoryId())).orElseThrow(() -> new RuntimeException("Category not found")));
+        System.out.println(itemDTO.getCategory());
+        item.setCategory(categoryRepository.findByName(itemDTO.getCategory()).orElseThrow(() -> new RuntimeException("Category not found")));
         item.setDescription(itemDTO.getDescription());
         item.setImageUrl(itemDTO.getImageUrl());
         item.setPrice(itemDTO.getPrice());
@@ -41,7 +42,8 @@ public class ItemService {
     }
 
     public String deleteItem(String itemName) {
-        Item item = itemRepository.findByName(itemName).orElseThrow(() -> new RuntimeException("Item not found"));
+        String itemToDelete = itemName.substring(1, itemName.length() - 1);
+        Item item = itemRepository.findByName(itemToDelete).orElseThrow(() -> new RuntimeException("Item not found"));
         if(orderRepository.findAll().stream().filter(orderStore -> orderStore.getItems().contains(item)).toList().size()>0) throw new RuntimeException("Item is in an order");
         itemRepository.delete(item);
         return "Item deleted";

@@ -28,7 +28,7 @@ public class Item {
     private String imageUrl;
 
 
-    @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "category_categoryId")
     private Category category;
 
