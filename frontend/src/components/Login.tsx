@@ -37,7 +37,6 @@ const Login = ({ setLogin }: Props) =>{
           
       } catch (error) {
         alert("Invalid username or password")
-        navigation("/NotFound");
       }
     };
 

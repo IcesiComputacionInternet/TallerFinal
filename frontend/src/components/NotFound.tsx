@@ -1,7 +1,7 @@
 function NotFound() {
     return (
       <h1 style={{ textAlign: 'center', fontWeight: 'bold', color: 'red' }}>
-        Lo siento, no tienes cuenta en esta aplicación
+        404 Page not found
       </h1>
     );
   }

@@ -1,36 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import MainHome from "./MainHome";
-import Login from "./Login";
+import MainHome from "./components/MainHome";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import NotFound from "./components/NotFound";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
     () => localStorage.getItem("jwt") !== null
   );
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
+  useEffect(() => {
+    localStorage.setItem("logged_user", JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
 
-  const handleRegister = () => {
-    setIsLoggedIn(false);
-  };
+  const logIn = () => setIsLoggedIn(true);
 
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={<MainHome handleLogin={handleLogin} handleRegister={handleRegister} />}
-        />
-        <Route
-          path="/login"
-          element={
-            isLoggedIn ? <Navigate to="/" /> : <Login setLogin={handleLogin} />
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+  const registered = () => true;
+
+  return(
+      <BrowserRouter>
+          <Routes>
+              <Route path="/login" element={<Login setLogin={logIn}/>}></Route>
+              <Route
+                  path="/"
+                  element={<MainHome />}
+              ></Route>
+              <Route path="/register" element={<Register onRegistrationComplete={registered}/>}>
+              </Route>
+              <Route path="/*" element={<NotFound/>}>
+              </Route>
+          </Routes>
+      </BrowserRouter>
   );
 }
 
