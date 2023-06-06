@@ -10,8 +10,9 @@ interface IProps {
 }
 
 const order = {
+  id: "",
   userEmail: "",
-  price: "",
+  total: "",
   status: "",
 };
 
@@ -25,71 +26,19 @@ const UpdateOrders: React.FC<IProps> = ({
   useEffect(() => {
     dataToEdit ? setDataOrder(dataToEdit) : setDataOrder(order);
   }, [dataToEdit]);
-  return <div></div>;
-};
 
-export default UpdateOrders;
-
-/*
-
-const FormItems: React.FC<IProps> = ({
-  categories,
-  createData,
-  updateData,
-  dataToEdit,
-  setDataToEdit,
-}) => {
-  const [dataItem, setDataItem] = useState(item);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleClickFileChooser = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
-  const handleFileChange = (event: any) => {
-    const file = event.target.files?.[0];
-    const path = URL.createObjectURL(file);
-    setDataItem({ ...dataItem, imageUrl: path });
-  };
-
-  useEffect(() => {
-    dataToEdit ? setDataItem(dataToEdit) : setDataItem(item);
-  }, [dataToEdit]);
-
-  const handleItem = (e: any) => {
+  const handleOrder = (e: any) => {
     e.preventDefault();
-    if (
-      !dataItem.name ||
-      !dataItem.description ||
-      !dataItem.price ||
-      !dataItem.category ||
-      !dataItem.imageUrl
-    ) {
-      alert("Datos incompletos");
-      return;
-    }
-
-    if (dataToEdit === null) {
-      createData(dataItem);
-    } else {
-      updateData(dataItem);
-    }
-
+    updateData(dataOrder);
     handleReset();
   };
 
   const handleData = (e: any) => {
-    setDataItem({ ...dataItem, [e.target.name]: e.target.value });
-  };
-
-  const handleCategories = (e: any) => {
-    setDataItem({ ...dataItem, category: e });
+    setDataOrder({ ...dataOrder, status: e });
   };
 
   const handleReset = () => {
-    setDataItem(item);
+    setDataOrder(order);
     setDataToEdit(null);
   };
 
@@ -100,12 +49,12 @@ const FormItems: React.FC<IProps> = ({
         component="h4"
         sx={{ m: 3, textAlign: "center" }}
       >
-        {dataToEdit ? "Editar CD" : "Agregar CD"}
+        Cambiar estado de orden
       </Typography>
       <Box
         className="container-form-items"
         component="form"
-        onSubmit={handleItem}
+        onSubmit={handleOrder}
         noValidate
         sx={{ mt: 1 }}
       >
@@ -119,89 +68,52 @@ const FormItems: React.FC<IProps> = ({
           }}
         >
           <TextField
-            disabled={dataToEdit ? true : false}
+            disabled={true}
             color="primary"
             margin="normal"
-            id="name"
-            label="Nombre del item"
-            name="name"
+            id="userEmail"
+            label="Email del usuario"
+            name="userEmail"
             autoFocus
             onChange={handleData}
-            value={dataItem.name}
+            value={dataOrder.userEmail}
           />
           <TextField
+            disabled={true}
             color="primary"
             margin="normal"
-            id="description"
-            label="Descripción"
-            name="description"
-            autoFocus
-            onChange={handleData}
-            value={dataItem.description}
-          />
-          <TextField
-            type="number"
-            color="primary"
-            margin="normal"
-            id="price"
+            id="total"
             label="Precio"
-            name="price"
+            name="total"
             autoFocus
             onChange={handleData}
-            value={dataItem.price}
+            value={dataOrder.total}
           />
+          {dataToEdit && (
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              options={["PENDING", "PAID", "SENT", "RECEIVED"]}
+              sx={{ width: "23%", mt: 1 }}
+              onChange={(_event, newValue) => {
+                handleData(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label="Categorias" />
+              )}
+              value={dataOrder.status || null}
+            />
+          )}
         </div>
         <div
           style={{
             display: "flex",
             alignItems: "center",
             margin: "5px auto",
-            justifyContent: "space-between",
+            justifyContent: "space-around",
             width: "60%",
           }}
         >
-          {categories && (
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={categories}
-              sx={{ width: "23%", mt: 2 }}
-              onChange={(_event, newValue) => {
-                handleCategories(newValue);
-              }}
-              renderInput={(params) => (
-                <TextField {...params} label="Categorias" />
-              )}
-              value={dataItem.category || null}
-            />
-          )}
-          <Button
-            onClick={handleClickFileChooser}
-            variant="contained"
-            sx={{
-              height: "55px",
-              mt: 2,
-              mb: 2,
-              width: "23%",
-              bgcolor: "#D3D3D3",
-              color: "black",
-              "&:hover": {
-                bgcolor: "black",
-                color: "white",
-                transition: "0.5s",
-              },
-            }}
-          >
-            {dataToEdit ? "Editar Imagen" : "Agregar Imagen"}
-          </Button>
-          <input
-            type="file"
-            accept="image/jpeg, image/png"
-            ref={fileInputRef}
-            style={{ display: "none" }}
-            onChange={handleFileChange}
-          />
-
           <Button
             type="submit"
             variant="contained"
@@ -219,7 +131,7 @@ const FormItems: React.FC<IProps> = ({
               },
             }}
           >
-            {dataToEdit ? "Editar CD" : "Agregar CD"}
+            Cambiar estado
           </Button>
           {dataToEdit && (
             <Button
@@ -227,6 +139,7 @@ const FormItems: React.FC<IProps> = ({
               variant="contained"
               sx={{
                 height: "55px",
+                width: "23%",
                 mt: 2,
                 mb: 2,
                 bgcolor: "#D3D3D3",
@@ -247,5 +160,4 @@ const FormItems: React.FC<IProps> = ({
   );
 };
 
-export default FormItems;
-*/
+export default UpdateOrders;
