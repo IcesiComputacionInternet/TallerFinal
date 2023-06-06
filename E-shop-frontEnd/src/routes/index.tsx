@@ -7,6 +7,7 @@ import CrudCategories from "../views/categories/crudCategories";
 import CrudUsers from "../views/user/crudUser";
 import CrudItems from "../views/items/crudItems";
 import CrudOrders from "../views/orders/crudOrders";
+import ViewOrdersUser from "../views/home/viewOrders";
 
 interface Props {
   children: React.ReactComponentElement<any>;
@@ -127,7 +128,7 @@ const ThemeRoutes = () => {
             </ProtectedRoutesAdminStore>
           }
         />
-        <Route path="/view_orders_user" />
+        <Route path="/view_orders_user" element={<ViewOrdersUser />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
