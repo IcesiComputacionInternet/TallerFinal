@@ -13,3 +13,49 @@
     height: 100%;
     background-color: white;
 }
+
+.topBar{
+    display: flex;
+    padding-left: 30px;
+    align-items: center;
+    border-bottom: 1px solid #66666e;
+    width: 100%;
+}
+
+.itemsSection{
+    padding-left: 30px;
+    width: 100%;
+    display: flex;
+    flex-grow: 1;
+    align-content: left;
+    
+}
+
+.itemsList{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 100%;
+    border: 5px solid black;
+    margin-right: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-radius: 15px;
+    padding: 15px;
+    background-color: #f3f5f8;
+    overflow-y: auto;
+    height: 550px;
+}
+
+.itemDiv{
+        display:flex;
+        flex-direction:row;
+        border-radius: 10px;
+        background-color:#ffffff;
+        box-shadow: 1px 1px 5px #000000;
+        margin-bottom:15px;
+        height:60px;
+        padding-left:20px;
+        padding-right:20px;
+}
+
