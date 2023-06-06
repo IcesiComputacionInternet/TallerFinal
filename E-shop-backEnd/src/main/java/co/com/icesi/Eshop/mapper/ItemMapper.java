@@ -8,11 +8,11 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ItemMapper {
-
+    @Mapping(target = "category", ignore = true)
     Item toItem(ItemDTO itemDTO);
     @Mapping(target = "category", ignore = true)
     Item toItem(ItemResponseDTO itemResponseDTO);
-
+    @Mapping(target = "category", expression = "java(item.getCategory().getName())")
     ItemDTO toItemDTO(Item item);
 
     ItemDTO toItemDTO(ItemResponseDTO itemResponseDTO);
