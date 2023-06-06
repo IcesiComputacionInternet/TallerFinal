@@ -85,15 +85,19 @@ public class OrderService {
 
     public void finalizePurchase(){
         Optional<Order> order = orderRepository.findByStatus("CREATING", CellphoneSecurityContext.getCurrentUserEmail());
-
+        if(order.isPresent()){
+            Order currentOrder = order.get();
+            currentOrder.getItems().forEach(item -> item.setStock(item.getStock() - 1));
+            currentOrder.setStatus(OrderStatus.IN_PROCESS.getStatus());
+        }
     }
 
     public void getTotalPrice(){
-
+        Optional<Order> order = orderRepository.findByStatus("CREATING", CellphoneSecurityContext.getCurrentUserEmail());
+        if(order.isPresent()){
+            Order currentOrder = order.get();
+            long totalPrice = currentOrder.getItems().stream().mapToLong(Cellphone::getPrice).sum();
+            currentOrder.setTotal(totalPrice);
+        }
     }
-
-    public void updateItemStock(){
-
-    }
-
 }
