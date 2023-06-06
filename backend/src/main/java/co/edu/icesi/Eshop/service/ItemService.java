@@ -67,7 +67,7 @@ public class ItemService {
         return itemRepository.findAll().stream().map(itemMapper::fromItem).toList();
     }
 
-    private void checkAuthorization(){
+    public void checkAuthorization(){
         String currentUserRole = EShopSecurityContext.getCurrentUserRole();
 
         if (currentUserRole.equalsIgnoreCase(String.valueOf(Roles.USER))){
@@ -79,7 +79,7 @@ public class ItemService {
         }
     }
 
-    private void adminAuthorizationOnly(){
+    public void adminAuthorizationOnly(){
         String currentUserRole = EShopSecurityContext.getCurrentUserRole();
 
         if (!currentUserRole.equalsIgnoreCase(String.valueOf(Roles.ADMIN))){

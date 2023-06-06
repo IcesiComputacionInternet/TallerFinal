@@ -35,6 +35,7 @@ public class ItemServiceTest {
         itemMapper = spy(ItemMapperImpl.class);
         categoryRepository = mock(CategoryRepository.class);
         itemService = new ItemService(itemRepository, categoryRepository, itemMapper);
+        itemService = spy(itemService);
     }
 
     @Test
@@ -42,6 +43,7 @@ public class ItemServiceTest {
     public void testCreateItem(){
         var item = defaultItem();
         when(itemRepository.findByName(any())).thenReturn(Optional.empty());
+        doNothing().when(itemService).checkAuthorization();
         when(categoryRepository.findByName(defaultCategory().getName())).thenReturn(Optional.of(defaultCategory()));
 
         itemService.save(itemMapper.fromItem(item));
@@ -55,6 +57,7 @@ public class ItemServiceTest {
     public void testCreateItemWithNameThatAlreadyExists(){
         var item = defaultItem();
         when(itemRepository.findByName(item.getName())).thenReturn(Optional.of(item));
+        doNothing().when(itemService).checkAuthorization();
 
         var exception = assertThrows(EShopException.class, () -> itemService.save(itemMapper.fromItem(item)), "No exception was thrown");
 
@@ -71,6 +74,7 @@ public class ItemServiceTest {
     public void testSetItemState(){
         var item = defaultItem();
         when(categoryRepository.findByName(defaultCategory().getName())).thenReturn(Optional.of(defaultCategory()));
+        doNothing().when(itemService).adminAuthorizationOnly();
         when(itemRepository.findByName(item.getName())).thenReturn(Optional.of(item));
 
         itemService.setItemState(item.getName());

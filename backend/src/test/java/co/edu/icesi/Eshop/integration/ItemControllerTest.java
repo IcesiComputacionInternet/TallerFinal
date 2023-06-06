@@ -234,6 +234,156 @@ public class ItemControllerTest {
         }
 
         @Test
+        public void testCreateItemWithMissingCategory() throws Exception {
+
+            ItemDTO itemDTO = defaultItem();
+            itemDTO.setCategory("");
+
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_ITEM_URL).content(
+                                    objectMapper.writeValueAsString(itemDTO)
+                            )
+                            .header("Authorization", "Bearer " + generateAdminToken().getToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest())
+                    .andReturn();
+
+            EShopError eShopError = objectMapper.readValue(newResult.getResponse().getContentAsString(), EShopError.class);
+            assertNotNull(eShopError);
+            var details = eShopError.getDetails();
+            assertEquals(1, details.size());
+            var detail = details.get(0);
+
+            assertEquals("category is missing", detail.getErrorMessage());
+            assertEquals(400, newResult.getResponse().getStatus());
+        }
+
+        @Test
+        public void testCreateItemWithMissingSourceEnergy() throws Exception {
+
+            ItemDTO itemDTO = defaultItem();
+            itemDTO.setSourceOfEnergy("");
+
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_ITEM_URL).content(
+                                    objectMapper.writeValueAsString(itemDTO)
+                            )
+                            .header("Authorization", "Bearer " + generateAdminToken().getToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest())
+                    .andReturn();
+
+            EShopError eShopError = objectMapper.readValue(newResult.getResponse().getContentAsString(), EShopError.class);
+            assertNotNull(eShopError);
+            var details = eShopError.getDetails();
+            assertEquals(1, details.size());
+            var detail = details.get(0);
+
+            assertEquals("sourceOfEnergy is missing", detail.getErrorMessage());
+            assertEquals(400, newResult.getResponse().getStatus());
+        }
+
+        @Test
+        public void testCreateItemWithMissingDescription() throws Exception {
+
+            ItemDTO itemDTO = defaultItem();
+            itemDTO.setDescription("");
+
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_ITEM_URL).content(
+                                    objectMapper.writeValueAsString(itemDTO)
+                            )
+                            .header("Authorization", "Bearer " + generateAdminToken().getToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest())
+                    .andReturn();
+
+            EShopError eShopError = objectMapper.readValue(newResult.getResponse().getContentAsString(), EShopError.class);
+            assertNotNull(eShopError);
+            var details = eShopError.getDetails();
+            assertEquals(1, details.size());
+            var detail = details.get(0);
+
+            assertEquals("description is missing", detail.getErrorMessage());
+            assertEquals(400, newResult.getResponse().getStatus());
+        }
+
+        @Test
+        public void testCreateItemWithMissingMarca() throws Exception {
+
+            ItemDTO itemDTO = defaultItem();
+            itemDTO.setMarca("");
+
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_ITEM_URL).content(
+                                    objectMapper.writeValueAsString(itemDTO)
+                            )
+                            .header("Authorization", "Bearer " + generateAdminToken().getToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest())
+                    .andReturn();
+
+            EShopError eShopError = objectMapper.readValue(newResult.getResponse().getContentAsString(), EShopError.class);
+            assertNotNull(eShopError);
+            var details = eShopError.getDetails();
+            assertEquals(1, details.size());
+            var detail = details.get(0);
+
+            assertEquals("marca is missing", detail.getErrorMessage());
+            assertEquals(400, newResult.getResponse().getStatus());
+        }
+
+        @Test
+        public void testCreateItemWithMissingModel() throws Exception {
+
+            ItemDTO itemDTO = defaultItem();
+            itemDTO.setModel("");
+
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_ITEM_URL).content(
+                                    objectMapper.writeValueAsString(itemDTO)
+                            )
+                            .header("Authorization", "Bearer " + generateAdminToken().getToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest())
+                    .andReturn();
+
+            EShopError eShopError = objectMapper.readValue(newResult.getResponse().getContentAsString(), EShopError.class);
+            assertNotNull(eShopError);
+            var details = eShopError.getDetails();
+            assertEquals(1, details.size());
+            var detail = details.get(0);
+
+            assertEquals("model is missing", detail.getErrorMessage());
+            assertEquals(400, newResult.getResponse().getStatus());
+        }
+
+        @Test
+        public void testCreateItemWithMissingImage() throws Exception {
+
+            ItemDTO itemDTO = defaultItem();
+            itemDTO.setImageUrl("");
+
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_ITEM_URL).content(
+                                    objectMapper.writeValueAsString(itemDTO)
+                            )
+                            .header("Authorization", "Bearer " + generateAdminToken().getToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest())
+                    .andReturn();
+
+            EShopError eShopError = objectMapper.readValue(newResult.getResponse().getContentAsString(), EShopError.class);
+            assertNotNull(eShopError);
+            var details = eShopError.getDetails();
+            assertEquals(1, details.size());
+            var detail = details.get(0);
+
+            assertEquals("imageUrl is missing", detail.getErrorMessage());
+            assertEquals(400, newResult.getResponse().getStatus());
+        }
+
+        @Test
         public void testCreateItemWithInvalidMinVoltage() throws Exception {
 
             ItemDTO itemDTO = defaultItem();
