@@ -8,6 +8,10 @@ const OptionsStore = () => {
     navigate("/crud_items", { replace: true });
   };
 
+  const handleCrudOrders = () => {
+    navigate("/crud_orders", { replace: true });
+  };
+
   return (
     <>
       <div className="container-options">
@@ -29,6 +33,24 @@ const OptionsStore = () => {
             }}
           >
             Gestionar CD's
+          </Button>
+          <Button
+            onClick={handleCrudOrders}
+            variant="contained"
+            sx={{
+              width: "20%",
+              mt: 3,
+              mb: 2,
+              bgcolor: "#D3D3D3",
+              color: "black",
+              "&:hover": {
+                bgcolor: "black",
+                color: "white",
+                transition: "0.5s",
+              },
+            }}
+          >
+            Gestionar Ordenes
           </Button>
         </div>
       </div>
