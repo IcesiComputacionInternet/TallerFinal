@@ -5,6 +5,7 @@ import CreateUser from "../views/user/createUser";
 import CrudRoles from "../views/roles/crudRoles";
 import CrudCategories from "../views/categories/crudCategories";
 import CrudUsers from "../views/user/crudUser";
+import CrudItems from "../views/items/crudItems";
 
 interface Props {
   children: React.ReactComponentElement<any>;
@@ -94,6 +95,14 @@ const ThemeRoutes = () => {
           element={
             <ProtectedRoutesAdmin>
               <CrudUsers />
+            </ProtectedRoutesAdmin>
+          }
+        />
+        <Route
+          path="/crud_items"
+          element={
+            <ProtectedRoutesAdmin>
+              <CrudItems />
             </ProtectedRoutesAdmin>
           }
         />
