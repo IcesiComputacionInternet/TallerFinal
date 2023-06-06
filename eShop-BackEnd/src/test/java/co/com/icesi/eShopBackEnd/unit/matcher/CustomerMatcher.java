@@ -17,12 +17,15 @@ public class CustomerMatcher implements ArgumentMatcher<Customer> {
 
     @Override
     public boolean matches(Customer customerOne) {
-        
+
         return customerOne.getCustomerId() != null &&
                 Objects.equals(customerOne.getFirstName(), customer.getFirstName()) &&
                 Objects.equals(customerOne.getLastName(), customer.getLastName()) &&
-                Objects.equals(customerOne.getPhoneNumber(), customer.getPhoneNumber()) &&
+                Objects.equals(customerOne.getEmail(), customer.getEmail()) &&
                 Objects.equals(customerOne.getPassword(), customer.getPassword()) &&
+                Objects.equals(customerOne.getPhoneNumber(), customer.getPhoneNumber()) &&
+                Objects.equals(customerOne.getAddress(), customer.getAddress()) &&
+                Objects.equals(customerOne.getBirthday(), customer.getBirthday()) &&
                 Objects.equals(customerOne.getRole(), customer.getRole());
 
     }
