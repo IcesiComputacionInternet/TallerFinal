@@ -21,11 +21,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(EShopException.getError().getStatus()).body(EShopException.getError());
     }
 
+    /*
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<EShopError> handleRuntimeException(RuntimeException runtimeException){
         var error = createEShopError(runtimeException.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, new DetailBuilder(ErrorCode.ERR_500));
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
+
+     */
 
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<EShopError> handleAuthenticationException(AuthenticationException authenticationException){
