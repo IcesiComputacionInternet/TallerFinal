@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ItemServices from "../../services/itemServices";
 import CardItem from "./card";
-import { Typography } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import BasicModal from "./modalOrder";
 import OrderServices from "../../services/orderServices";
 import ModalAlert from "../utils/modalAlert";
@@ -75,6 +75,25 @@ const ViewUser = () => {
           addOrder={addOrder}
         />
       )}
+      <div style={{ width: "30%", display: "flex", margin: "auto" }}>
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{
+            mt: 3,
+            mb: 5,
+            bgcolor: "#D3D3D3",
+            color: "black",
+            "&:hover": {
+              bgcolor: "black",
+              color: "white",
+              transition: "0.5s",
+            },
+          }}
+        >
+          Ver Ordenes activas
+        </Button>
+      </div>
     </>
   );
 };

@@ -127,6 +127,7 @@ const ThemeRoutes = () => {
             </ProtectedRoutesAdminStore>
           }
         />
+        <Route path="/view_orders_user" />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
