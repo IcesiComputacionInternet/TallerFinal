@@ -14,6 +14,7 @@ import co.edu.icesi.Eshop.repository.OrderRepository;
 import co.edu.icesi.Eshop.repository.UserRepository;
 import co.edu.icesi.Eshop.security.EShopSecurityContext;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,6 @@ public class OrderService {
 
     private ItemRepository itemRepository;
 
-    private EShopUser currentUser;
 
     public OrderDTO getOrder(String orderId) {
         return  orderMapper.fromOrder(orderRepository.findById(UUID.fromString(orderId)).orElseThrow(
@@ -52,7 +52,6 @@ public class OrderService {
     }
 
     public OrderDTO save(OrderDTO orderDTO) {
-        setCurrentUser();
 
         List<Item> items= orderDTO.getItems().stream().map(x-> itemRepository.findByName(x).orElseThrow(
                 createEShopException(
@@ -63,7 +62,7 @@ public class OrderService {
         )).toList();
         EShopOrder order= orderMapper.fromOrderDTO(orderDTO);
         order.setOrderId(UUID.randomUUID());
-        order.setEShopUser(currentUser);
+        order.setEShopUser(getCurrentUser());
         order.setStatus(Status.PENDING.toString());
         order.setItems(items);
         order.setTotal(calculateTotal(items));
@@ -75,8 +74,8 @@ public class OrderService {
         return items.stream().mapToLong(Item::getPrice).sum();
     }
 
-    public void setCurrentUser(){
-        currentUser= userRepository.findById(UUID.fromString(EShopSecurityContext.getCurrentUserId())).get();
+  public EShopUser getCurrentUser(){
+        return userRepository.findById(UUID.fromString(EShopSecurityContext.getCurrentUserId())).get();
     }
 
     public OrderDTO changeStatus(ChangeStatusDTO changeStatusDTO) {

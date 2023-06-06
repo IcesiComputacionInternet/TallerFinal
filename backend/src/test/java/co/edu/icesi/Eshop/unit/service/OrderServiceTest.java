@@ -40,24 +40,20 @@ public class OrderServiceTest {
     private ItemRepository itemRepository;
 
 
-    private EShopUser currentUser;
-
-
     @BeforeEach
     private void init(){
         orderRepository=mock(OrderRepository.class);
         orderMapper=spy(OrderMapperImpl.class);
         userRepository=mock(UserRepository.class);
         itemRepository=mock(ItemRepository.class);
-        currentUser=mock(EShopUser.class);
-        orderService=new OrderService(orderRepository,orderMapper,userRepository,itemRepository,currentUser);
+        orderService=new OrderService(orderRepository,orderMapper,userRepository,itemRepository);
         orderService=spy(orderService);
 
     }
 
     @Test
     public void testCreateOrder(){
-       doNothing().when(orderService).setCurrentUser();
+      doReturn(defaultUser()).when(orderService).getCurrentUser();
         when(itemRepository.findByName(any())).thenReturn(Optional.of(defaultItem()));
 
         orderService.save(defaultOrderDTO());
@@ -70,7 +66,7 @@ public class OrderServiceTest {
 
     @Test
     public void testCreateOrderWithMoreThanOneItem(){
-        doNothing().when(orderService).setCurrentUser();
+        doReturn(defaultUser()).when(orderService).getCurrentUser();
         when(itemRepository.findByName("Licuadora 200X")).thenReturn(Optional.of(defaultItem()));
         when(itemRepository.findByName("Digital Air Fryer 3.7 L")).thenReturn(Optional.of(defaultItem2()));
 
@@ -86,7 +82,6 @@ public class OrderServiceTest {
 
     @Test
     public void testCreateOrderWhenItemDoesNotExist(){
-        doNothing().when(orderService).setCurrentUser();
 
         try {
             orderService.save(defaultOrderDTO());
