@@ -32,12 +32,7 @@ public class Item {
     @JoinColumn(name = "category_categoryId")
     private Category category;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "item_order_store",
-            joinColumns = @JoinColumn(name = "item_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id")
-    )
+    @ManyToMany(mappedBy = "items")
     private List<OrderStore> orderStores;
 
 
