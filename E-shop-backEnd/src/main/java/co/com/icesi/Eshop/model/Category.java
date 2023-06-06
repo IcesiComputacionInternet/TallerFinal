@@ -26,7 +26,7 @@ public class Category {
     private String description;
 
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category")
     private List<Item> items;
 
 
