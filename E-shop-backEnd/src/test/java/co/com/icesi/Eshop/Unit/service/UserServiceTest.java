@@ -20,7 +20,7 @@ public class UserServiceTest implements CrudTest {
     private  RoleRepository roleRepository;
     private AuthoritiesService authoritiesService;
     private UserMapper userMapper;
-    /*
+
     @BeforeEach
     public void init(){
         userRepository = mock(UserRepository.class);
@@ -54,5 +54,5 @@ public class UserServiceTest implements CrudTest {
 
     }
 
-     */
+
 }

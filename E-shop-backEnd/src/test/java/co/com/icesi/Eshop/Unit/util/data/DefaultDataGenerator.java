@@ -48,6 +48,7 @@ public class DefaultDataGenerator {
 
     public static Category defaultCategory() {
         return Category.builder()
+                .categoryId(UUID.fromString("a3517ba6-ff13-11ed-be56-0242ac120005"))
                 .name("Category 1")
                 .description("Description 1")
                 .build();

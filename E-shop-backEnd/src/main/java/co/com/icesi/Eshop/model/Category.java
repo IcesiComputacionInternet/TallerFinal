@@ -30,4 +30,6 @@ public class Category {
     private List<Item> items;
 
 
+    public void setId(UUID uuid) {
+    }
 }
