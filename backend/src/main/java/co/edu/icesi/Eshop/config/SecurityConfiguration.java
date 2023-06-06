@@ -81,9 +81,9 @@ public class SecurityConfiguration {
 
         managerBuilder.add(new MvcRequestMatcher(introspector, "/admin/**"), AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 
-        managerBuilder.add(new MvcRequestMatcher(introspector, "/items/**"), AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_SHOP"));
+        managerBuilder.add(new MvcRequestMatcher(introspector, "/items/**"), AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_SHOP","SCOPE_USER"));
 
-        managerBuilder.add(new MvcRequestMatcher(introspector, "/orders/**"), AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_SHOP"));
+        managerBuilder.add(new MvcRequestMatcher(introspector, "/orders/**"), AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_SHOP","SCOPE_USER"));
 
         managerBuilder.add(new MvcRequestMatcher(introspector, "/users/**"), AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 
