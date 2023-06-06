@@ -3,6 +3,7 @@ import Login from "./components/Login";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SignUp from "./components/SignUp";
 import CreateItem from "./components/CreateItem.tsx";
+import Orders from "./components/Orders.tsx";
 // import Store from "./components/Store.tsx";
 // import NotFound from "./components/NotFound";
 
@@ -28,6 +29,7 @@ function App() {
                 {/*/>*/}
                 {/*<Route path="/store" element={<Store />}></Route>*/}
                 <Route path="/newitem" element={<CreateItem />}></Route>
+                <Route path="/orders" element={<Orders />}></Route>
             </Routes>
         </BrowserRouter>
     );

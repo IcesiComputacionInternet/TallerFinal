@@ -127,7 +127,7 @@ const CreateItem = () => {
                         onChange={(event) => setStock(event.target.value)}
                     />
                 </div>
-                <div className="col-12">
+                <div className="col-md-6">
                     <input
                         type="text"
                         className="form-control"
@@ -142,8 +142,8 @@ const CreateItem = () => {
                         <option>...</option>
                     </select>
                 </div>
-                <div className="button-container">
-                    <button className="btn btn-primary">Sign Up</button>
+                <div className="button-cont-item">
+                    <button className="btn btn-primary">Done</button>
                     <button className="btn btn-outline-danger" onClick={cancelNewItem}>Cancel</button>
                 </div>
                 </div>
