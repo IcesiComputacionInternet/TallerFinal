@@ -30,6 +30,18 @@ const ProtectedRoutesAdmin = ({ children }: Props) => {
   }
 };
 
+const ProtectedRoutesAdminStore = ({ children }: Props) => {
+  if (
+    (localStorage.getItem("token") !== null &&
+      localStorage.getItem("role") === '"ADMIN"') ||
+    localStorage.getItem("role") === '"Store"'
+  ) {
+    return children;
+  } else {
+    return <Navigate to="/" />;
+  }
+};
+
 const IsNotLoggedRoutes = ({ children }: Props) => {
   if (localStorage.getItem("token") === null) {
     return children;
@@ -101,9 +113,9 @@ const ThemeRoutes = () => {
         <Route
           path="/crud_items"
           element={
-            <ProtectedRoutesAdmin>
+            <ProtectedRoutesAdminStore>
               <CrudItems />
-            </ProtectedRoutesAdmin>
+            </ProtectedRoutesAdminStore>
           }
         />
         <Route path="*" element={<Navigate to="/" />} />

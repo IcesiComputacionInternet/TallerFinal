@@ -5,6 +5,8 @@ const OptionsStore = () => {
   const navigate = useNavigate();
 
   const handleCrudItems = () => {
+    console.log("Hola?");
+
     navigate("/crud_items", { replace: true });
   };
 

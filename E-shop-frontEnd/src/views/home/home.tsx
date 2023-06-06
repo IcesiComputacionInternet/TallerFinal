@@ -16,7 +16,7 @@ const Home = () => {
       ) : (
         <></>
       )}
-      {role === '"STORE"' ? (
+      {role === '"Store"' ? (
         <>
           <OptionsStore></OptionsStore>
         </>
