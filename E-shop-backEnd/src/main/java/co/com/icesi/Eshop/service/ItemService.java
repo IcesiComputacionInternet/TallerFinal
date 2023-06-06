@@ -32,6 +32,7 @@ public class ItemService {
 
     public ItemResponseDTO updateItem(ItemDTO itemDTO) {
         Item item = itemRepository.findByName(itemDTO.getName()).orElseThrow(() -> new RuntimeException("Item not found"));
+        System.out.println(itemDTO.getCategory());
         item.setCategory(categoryRepository.findByName(itemDTO.getCategory()).orElseThrow(() -> new RuntimeException("Category not found")));
         item.setDescription(itemDTO.getDescription());
         item.setImageUrl(itemDTO.getImageUrl());

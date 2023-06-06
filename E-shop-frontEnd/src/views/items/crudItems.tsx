@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Typography } from "@mui/material";
 import TableItems from "./tableItems";
 import FormItems from "./formItems";
 import Header from "../utils/header";
@@ -39,8 +41,8 @@ const CrudItems = () => {
       return el;
     });
 
-    CategoryServices.update(updatedItem).then((_res) => {
-      setCategories(newItems);
+    ItemServices.updateItem(updatedItem).then((_res) => {
+      setItems(newItems);
     });
   };
 
@@ -48,7 +50,7 @@ const CrudItems = () => {
     try {
       await ItemServices.deleteItem(data);
       const filteredItems = items.filter((el: any) => el.name !== data);
-      setCategories(filteredItems);
+      setItems(filteredItems);
     } catch (error) {
       console.error(error);
     }
@@ -69,6 +71,9 @@ const CrudItems = () => {
         setDataToEdit={setDataToEdit}
         deleteData={deleteData}
       />
+      <Link to="/" style={{ textAlign: "center" }}>
+        <Typography>Volver</Typography>
+      </Link>
       <Footer />
     </>
   );
