@@ -15,6 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderResponseDTO {
+    @NotNull
+    private String id;
     @NotBlank
     @NotEmpty
     @NotNull
