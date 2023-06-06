@@ -53,7 +53,7 @@ public class OrderServiceTest {
 
     @Test
     public void testCreateOrder(){
-        when(userRepository.findByEmail(any())).thenReturn(Optional.of(defaultUser()));
+      doReturn(defaultUser()).when(orderService).getCurrentUser();
         when(itemRepository.findByName(any())).thenReturn(Optional.of(defaultItem()));
 
         orderService.save(defaultOrderDTO());
@@ -66,7 +66,7 @@ public class OrderServiceTest {
 
     @Test
     public void testCreateOrderWithMoreThanOneItem(){
-        when(userRepository.findByEmail(any())).thenReturn(Optional.of(defaultUser()));
+        doReturn(defaultUser()).when(orderService).getCurrentUser();
         when(itemRepository.findByName("Licuadora 200X")).thenReturn(Optional.of(defaultItem()));
         when(itemRepository.findByName("Digital Air Fryer 3.7 L")).thenReturn(Optional.of(defaultItem2()));
 
@@ -80,34 +80,8 @@ public class OrderServiceTest {
     }
 
 
-
-    @Test
-    public void testCreateOrderWhenUserDoesNotExist(){
-
-        try {
-            orderService.save(defaultOrderDTO());
-            fail();
-        }catch(EShopException exception){
-            String message= exception.getMessage();
-            assertEquals("User does not exists",message);
-            var error = exception.getError();
-            var details = error.getDetails();
-            assertEquals(1, details.size());
-            var detail = details.get(0);
-            assertEquals("ERR_404", detail.getErrorCode(), "Code doesn't match");
-            assertEquals("User with email julietav@example.com not found", detail.getErrorMessage(), "Error message doesn't match");
-
-
-            verify(orderMapper,never()).fromOrderDTO(any());
-            verify(orderRepository,never()).findById(any());
-            verify(orderRepository,never()).save(any());
-            verify(orderMapper,never()).fromOrder(any());
-        }
-    }
-
     @Test
     public void testCreateOrderWhenItemDoesNotExist(){
-        when(userRepository.findByEmail(any())).thenReturn(Optional.of(defaultUser()));
 
         try {
             orderService.save(defaultOrderDTO());

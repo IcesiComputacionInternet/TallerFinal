@@ -26,18 +26,18 @@ public class TestConfigurationData {
 
         Role role1 = Role.builder()
                 .roleId(UUID.randomUUID())
-                .roleName("ADMIN")
-                .description("A admin role")
+                .roleName(Roles.ADMIN.toString())
+                .description("An admin role")
                 .build();
         Role role2 = Role.builder()
                 .roleId(UUID.randomUUID())
-                .roleName("SHOP")
+                .roleName(Roles.SHOP.toString())
                 .description("A shop role")
                 .build();
         Role role3 = Role.builder()
                 .roleId(UUID.randomUUID())
-                .roleName("USER")
-                .description("A user role")
+                .roleName(Roles.USER.toString())
+                .description("An user role")
                 .build();
 
         Category category1 = Category.builder()
@@ -124,7 +124,7 @@ public class TestConfigurationData {
                 .status(Status.RECEIVED.toString())
                 .total(item2.getPrice())
                 .eShopUser(user3)
-                .items(Stream.of(item2).collect(Collectors.toList()))
+                .items(Stream.of(item1,item2).collect(Collectors.toList()))
                 .build();
 
         return args -> {

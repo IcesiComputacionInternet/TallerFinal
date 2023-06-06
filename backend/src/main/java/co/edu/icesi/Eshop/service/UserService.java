@@ -10,6 +10,7 @@ import co.edu.icesi.Eshop.repository.RoleRepository;
 import co.edu.icesi.Eshop.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -29,6 +30,7 @@ public class UserService {
 
     private RoleRepository roleRepository;
 
+    private final PasswordEncoder passwordEncoder;
 
     public UserDTO save(UserDTO userDTO){
         validateEmailAndPhoneNumber(userDTO);
@@ -37,12 +39,12 @@ public class UserService {
                 HttpStatus.NOT_FOUND,
                 new DetailBuilder(ErrorCode.ERR_404, "User role",userDTO.getRoleName())
         ));
-        EShopUser EShopUser =userMapper.fromUserDTO(userDTO);
-        EShopUser.setBirthday(LocalDate.parse(userDTO.getBirthday(),DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        EShopUser.setRole(role);
-        //user.setPassword(passwordEncoder.encode(user.getPassword()));
-        EShopUser.setUserId(UUID.randomUUID());
-        return userMapper.fromUser(userRepository.save(EShopUser));
+        EShopUser user =userMapper.fromUserDTO(userDTO);
+        user.setBirthday(LocalDate.parse(userDTO.getBirthday(),DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        user.setRole(role);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setUserId(UUID.randomUUID());
+        return userMapper.fromUser(userRepository.save(user));
 
     }
     public UserDTO getUser(String userEmail) {

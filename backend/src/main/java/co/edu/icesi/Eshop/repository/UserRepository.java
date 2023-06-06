@@ -17,4 +17,7 @@ public interface UserRepository extends JpaRepository<EShopUser, UUID> {
     @Query("SELECT user FROM EShopUser user WHERE  user.phoneNumber= :phoneNumber")
     Optional<EShopUser> findByPhoneNumber(String phoneNumber);
 
+    @Query("SELECT user FROM EShopUser user WHERE user.email = :username OR user.phoneNumber = :username")
+    Optional<EShopUser> findByEmailOrPhoneNumber(String username);
+
 }
