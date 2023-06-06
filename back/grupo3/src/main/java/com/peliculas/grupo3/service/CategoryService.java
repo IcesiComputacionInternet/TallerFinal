@@ -20,7 +20,7 @@ public class CategoryService {
 
     public CategoryDTO save(CategoryDTO categoryDTO) {
         if(categoryRepository.findByName(categoryDTO.getName()).isPresent()){
-            throw new RuntimeException("Category already exists");
+            throw new RuntimeException("La categoria ya existe");
         }
 
         Category category = categoryMapper.fromCategoryDTO(categoryDTO);

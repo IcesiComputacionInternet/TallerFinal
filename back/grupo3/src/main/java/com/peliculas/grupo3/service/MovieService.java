@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -33,10 +32,12 @@ public class MovieService {
         );
 
         String pgRating= movieDTO.getPgRating();
-
-        if(pgRating.equals("G") || pgRating.equals("PG") || pgRating.equals("PG-13") || pgRating.equals("R") || pgRating.equals("NC-17")){
-            throw new RuntimeException("Category already exists");
+        boolean correctRating = pgRating.equals("G") || pgRating.equals("PG") || pgRating.equals("PG-13") || pgRating.equals("R") || pgRating.equals("NC-17");
+        if(!correctRating){
+            throw new RuntimeException("El rating no es valido");
         }
+
+
 
         if(movieDTO.getPrice()<=0){
             throw new RuntimeException("El precio debe ser mayor a 0");
@@ -53,7 +54,18 @@ public class MovieService {
         return movieRepository.findAll().stream().map(movieMapper::fromMovie).toList();
     }
 
-    public Optional<MovieDTO> findByName(String name){
-        return movieRepository.findByName(name).map(movieMapper::fromMovie);
+    public MovieDTO findByName(String name){
+        System.out.println(name);
+        System.out.println(movieRepository.findByName("Fast X").isPresent());
+        return movieRepository.findByName(name).map(movieMapper::fromMovie).orElseThrow(
+                ()-> new RuntimeException("La pelicula no existe"));
+    }
+
+    public List<MovieDTO> findByCategory(String name){
+        Category category = categoryRepository.findByName(name).orElseThrow(
+                ()-> new RuntimeException("La categoria no existe")
+        );
+
+        return movieRepository.findByCategory(category).stream().map(movieMapper::fromMovie).toList();
     }
 }

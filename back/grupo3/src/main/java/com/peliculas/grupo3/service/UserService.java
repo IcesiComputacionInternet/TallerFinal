@@ -9,6 +9,7 @@ import com.peliculas.grupo3.model.Role;
 import com.peliculas.grupo3.repository.RoleRepository;
 import com.peliculas.grupo3.repository.UserRepository;
 import com.peliculas.grupo3.error.util.MovieExceptionBuilder;
+import com.peliculas.grupo3.security.SecurityContext;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class UserService {
     private final RoleRepository roleRepository;
 
     private final UserResponseMapper userResponseMapper;
+
 
     public UserDTO save(UserDTO userDTO) {
         if(userRepository.findByEmail(userDTO.getEmail()).isPresent()){
@@ -63,5 +65,12 @@ public class UserService {
 
     public Optional<UserResponseDTO> findByName(String name) {
         return userRepository.findByFirstName(name).map(userResponseMapper::fromUser);
+    }
+
+    public UserResponseDTO getCurrentUser() {
+
+        return userResponseMapper.fromUser(userRepository.findById(UUID.fromString(SecurityContext.getCurrentUserId())).orElseThrow(
+                ()-> MovieExceptionBuilder.createMovieException("No existe un usuario con este id", HttpStatus.NOT_FOUND,"USER_NOT_FOUND")));
+
     }
 }

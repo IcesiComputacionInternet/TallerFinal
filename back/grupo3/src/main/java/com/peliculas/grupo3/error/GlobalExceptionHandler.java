@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MovieException.class)
-    public ResponseEntity<MovieError> handleIcesiException(MovieException icesiException){
+    public ResponseEntity<MovieError> handleException(MovieException icesiException){
         return ResponseEntity.status(icesiException.getError().getStatus()).body(icesiException.getError());
     }
+
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<MovieError> handleRuntimeException(RuntimeException runtimeException){

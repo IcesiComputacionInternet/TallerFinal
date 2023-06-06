@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +28,7 @@ public class MovieUser {
     private String address;
 
     private String birthDate;
+
     private String phone;
 
     private String password;

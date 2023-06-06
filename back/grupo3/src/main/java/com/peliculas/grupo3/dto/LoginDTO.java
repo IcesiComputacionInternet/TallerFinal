@@ -3,6 +3,7 @@ package com.peliculas.grupo3.dto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+
 public record LoginDTO(
 
         @NotNull

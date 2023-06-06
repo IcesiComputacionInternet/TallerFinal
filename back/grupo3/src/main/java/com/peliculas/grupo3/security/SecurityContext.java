@@ -6,7 +6,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 public class SecurityContext {
     public static String getCurrentUserId(){
         return ((JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication())
-                .getToken().getClaimAsString("icesiUserId");
+                .getToken().getClaimAsString("UserId");
     }
     public static String getCurrentUserRole(){
         return ((JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication())

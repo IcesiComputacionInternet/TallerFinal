@@ -33,5 +33,10 @@ public class UserController implements UserApi {
         return userService.findByName(name);
     }
 
+    @Override
+    public UserResponseDTO getCurrentUser() {
+        return userService.getCurrentUser();
+    }
+
 
 }
