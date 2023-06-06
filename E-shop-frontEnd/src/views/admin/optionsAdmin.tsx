@@ -21,6 +21,10 @@ const OptionsAdmin = () => {
     navigate("/crud_categories", { replace: true });
   };
 
+  const handleCrudItems = () => {
+    navigate("/crud_items", { replace: true });
+  };
+
   return (
     <>
       <div className="container-options">
@@ -81,6 +85,7 @@ const OptionsAdmin = () => {
             Gestionar Roles
           </Button>
           <Button
+            onClick={handleCrudItems}
             variant="contained"
             sx={{
               width: "20%",
