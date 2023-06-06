@@ -34,7 +34,7 @@ public class TokenSercive {
                 .expiresAt(now.plus(1, ChronoUnit.HOURS))
                 .subject(authentication.getName())
                 .claim("scope", scope)
-                .claim("icesiUserId", customAuthentication.getUserId())
+                .claim("UserId", customAuthentication.getUserId())
                 .build();
         var encoderParameters = JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS256).build(), claims);
         return new TokenDTO(this.encoder.encode(encoderParameters).getTokenValue());
