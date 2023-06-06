@@ -33,7 +33,7 @@ public class ItemResponseDTO {
     @NotBlank
     @NotEmpty
     @NotNull
-    private String categoryId;
+    private String category;
     @NotBlank
     @NotEmpty
     @NotNull
