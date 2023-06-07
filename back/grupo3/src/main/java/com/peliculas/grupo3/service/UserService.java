@@ -15,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -37,6 +36,7 @@ public class UserService {
         }
 
         if(userDTO.getRoleName().isEmpty()){
+            System.out.println("El rol del usuario es: "+userDTO.getRoleName());
             throw new RuntimeException("El usuario no tiene rol");
         }
 
@@ -63,8 +63,9 @@ public class UserService {
         return userRepository.findAll().stream().map(userResponseMapper::fromUser).toList();
     }
 
-    public Optional<UserResponseDTO> findByName(String name) {
-        return userRepository.findByFirstName(name).map(userResponseMapper::fromUser);
+    public UserResponseDTO findByName(String name) {
+        return userRepository.findByFirstName(name).map(userResponseMapper::fromUser).orElseThrow(
+                ()-> MovieExceptionBuilder.createMovieException("No existe un usuario con este nombre", HttpStatus.NOT_FOUND,"USER_NOT_FOUND"));
     }
 
     public UserResponseDTO getCurrentUser() {

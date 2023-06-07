@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
@@ -29,7 +28,7 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public Optional<UserResponseDTO> findByName(String name) {
+    public UserResponseDTO findByName(String name) {
         return userService.findByName(name);
     }
 

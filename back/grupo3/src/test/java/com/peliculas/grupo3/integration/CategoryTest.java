@@ -35,7 +35,7 @@ public class CategoryTest {
     @Test
     public void getAllCategories() throws Exception {
         String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
-                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                                objectMapper.writeValueAsString(new LoginDTO("chillguy@email.com", "password"))
                         )
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -100,6 +100,28 @@ public class CategoryTest {
         MovieError movieError = objectMapper.readValue(result.andReturn().getResponse().getContentAsString(), MovieError.class);
         assertNotNull(movieError);
         assertEquals("La categoria ya existe", movieError.getDetails());
+    }
+
+    @Test
+    public void createCategoryForbiden() throws Exception {
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("chillguy@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        mocMvc.perform(MockMvcRequestBuilders.post("/categories/").content(
+                                objectMapper.writeValueAsString(new CategoryDTO(
+                                        "TEST",
+                                        "categoria de prueba"
+
+                                )))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().isForbidden());
     }
 
 }

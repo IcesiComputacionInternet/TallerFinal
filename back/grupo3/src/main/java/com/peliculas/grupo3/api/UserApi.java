@@ -4,9 +4,8 @@ import com.peliculas.grupo3.dto.UserDTO;
 import com.peliculas.grupo3.dto.response.UserResponseDTO;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
-
 import static com.peliculas.grupo3.api.UserApi.BASE_USER_URL;
 
 @RequestMapping(value = BASE_USER_URL)
@@ -17,13 +16,13 @@ public interface UserApi {
 
 
     @PostMapping("/")
-    UserDTO createUser(@RequestBody UserDTO userDTO);
+    UserDTO createUser(@Valid @RequestBody UserDTO userDTO);
 
     @GetMapping("/all")
     List<UserResponseDTO> getAllUser();
 
     @GetMapping("/findByName")
-    Optional<UserResponseDTO> findByName(@RequestBody String name);
+    UserResponseDTO findByName(@RequestBody String name);
 
     @CrossOrigin
     @GetMapping("/CurrentUser")
