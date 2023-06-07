@@ -61,6 +61,7 @@ const ShopHome = () => {
           >
             <h3>{item.name}</h3>
             <img src={item.imageUrl} alt={item.name} />
+            <p className="description">{item.description}</p>
           </div>
         ))}
       </div>
@@ -71,6 +72,11 @@ const ShopHome = () => {
             <Modal.Title>{selectedItem.name}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            <img
+              src={selectedItem.imageUrl}
+              alt={selectedItem.name}
+              className="modal-image"
+            />
             <p>Description: {selectedItem.description}</p>
             <p>Price: ${selectedItem.price}</p>
             <p>Min Voltage: {selectedItem.minVoltage}</p>
