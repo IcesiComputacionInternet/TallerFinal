@@ -42,34 +42,38 @@ const Roles = () => {
     // };
 
     return (
-        <body>
-        <div className="container">
-            <form className="login-form">
+        <div className="signUp-container">
+            <form className="signup-form" style={{marginTop: "100PX"}}>
                 <h3>New role</h3>
-                <div className="form-group">
+                <div className="input-container" >
                     <input required
                            type="text"
-                           className="form-control"
+                           className="input-field"
                            placeholder="Name"
                            value={roleName}
                            onChange={(event) => setRoleName(event.target.value)}
                     />
+                    <label htmlFor="input-field" className="input-label">Name</label>
+                    <span className="input-highlight"></span>
                 </div>
-                <div className="form-group">
+
+                <div className="input-container">
                     <textarea required
-                           className="form-control"
-                           placeholder="Description"
-                           value={roleDescription}
-                           onChange={(event) => setRoleDescription(event.target.value)}
+                           className="input-field"
+                              placeholder="Description"
+                              value={roleDescription}
+                              onChange={(event) => setRoleDescription(event.target.value)}
                     />
+                    <label htmlFor="input-field" className="input-label">Description</label>
+                    <span className="input-highlight"></span>
                 </div>
+
                 <div className="button-container">
                     <button className="btn btn-primary">Done</button>
                     <button className="btn btn-outline-danger" >Cancel</button>
                 </div>
             </form>
         </div>
-        </body>
     );
 };
 
