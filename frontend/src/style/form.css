@@ -46,13 +46,13 @@ body {
     left: 50%;
 }
 
-.row * {
-    flex-shrink: 0;
-    width: 50%;
-    padding-right: 2px;
-    padding-left: 2px;
-    margin-top: 10px;
-}
+/*.row * {*/
+/*    flex-shrink: 0;*/
+/*    width: 50%;*/
+/*    padding-right: 2px;*/
+/*    padding-left: 2px;*/
+/*    margin-top: 10px;*/
+/*}*/
 
 form *{
     font-family: 'Roboto Light',sans-serif;
