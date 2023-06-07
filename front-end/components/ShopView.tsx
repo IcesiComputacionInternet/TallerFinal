@@ -1,18 +1,13 @@
-import { NextPage } from "next";
-import styles from "../styles/Admin.module.css";
-import Sidebar from "../components/Sidebar"
+import styles from '../styles/Admin.module.css'
 
-
-const AdminView : NextPage = () => {
+export default function Index() {
     return (
         <div className={styles.maxContainer}>
             <div className={styles.insideHomeContainer}>
                 <div className={styles.buttonsContainer}>
-
+                    <h1>Shop</h1>
                 </div>
             </div>
         </div>
     );
 }
-
-export default AdminView;

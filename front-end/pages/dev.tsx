@@ -13,12 +13,17 @@ export default function Dev() {
         localStorage.clear();
         window.location.href = '/';
     }
+    const handleShop = () => {
+        localStorage.setItem('role', 'shop');
+        window.location.href = '/home';
+    }
     return (
         <div>
         <h1>Dev</h1>
         <button onClick={handleAdmin}>Admin</button>
         <button onClick={handleUser}>User</button>
         <button onClick={handleClean}>Clean</button>
+        <button onClick={handleShop}>Shop</button>
         </div>
     );
 }

@@ -1,6 +1,7 @@
 import { use, useEffect,useState } from "react";
 import styles from '../styles/Home.module.css'
 import AdminView from '../components/AdminView'
+import ShopView from '../components/ShopView'
 export default function Home() {
     const [role, setRole] = useState<String | null>('none');
     useEffect(() => {
@@ -21,6 +22,10 @@ export default function Home() {
             <div>
                 <h1>User</h1>
             </div>
+            )
+    }else if(role === 'shop') {
+        return (
+            <ShopView/>
             )
     }else{
         return (

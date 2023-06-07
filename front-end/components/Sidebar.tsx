@@ -11,6 +11,10 @@ import ListAltIcon from '@mui/icons-material/ListAlt';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Router from "next/router";
 
+interface SideBarProps {
+    role:String | null;
+}
+
 const items  = [
     {
         name:"Home",
@@ -27,6 +31,14 @@ const items  = [
         onClick:() => {
             Router.push("/products");
         }
+    }
+    ,{
+        name:"Orders",
+        path:"/orders",
+        icon:<ListAltIcon sx={{color:"#e6e6e9"}}/>,
+        onClick:() => {
+            Router.push("/orders");
+        }
     },
     {
         name:"Users",
@@ -36,14 +48,7 @@ const items  = [
             Router.push("/users");
         }
     },
-    {
-        name:"Orders",
-        path:"/orders",
-        icon:<ListAltIcon sx={{color:"#e6e6e9"}}/>,
-        onClick:() => {
-            Router.push("/orders");
-        }
-    },
+    
     {
         name:"Categories",
         path:"/categories",
@@ -54,10 +59,14 @@ const items  = [
     }];
 
 
-const Sidebar : NextPage = () => {
+export default function Sidebar({role}:SideBarProps) {
     const handleLogout = () => {
         localStorage.clear();
         window.location.href = "/";
+    }
+
+    if(role === 'shop') {
+        items.splice(3,2)
     }
 
     return (
@@ -81,4 +90,3 @@ const Sidebar : NextPage = () => {
     );
 }
 
-export default Sidebar;

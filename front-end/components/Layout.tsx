@@ -16,16 +16,22 @@ function Layout({children}:any){
     if(role === 'admin') {
         return (
         <div className={styles.layout}>
-            <Sidebar/>
+            <Sidebar role="admin"/>
             {children}
         </div>
     )}else if(role === 'user') {
         return (
             <div className={styles.layout}>
-                <Sidebar/>
                 {children}
             </div>
             )
+    }else if(role === 'shop') {
+        return (
+            <div className={styles.layout}>
+                <Sidebar role="shop"/>
+                {children}
+            </div>
+        )
     }else{
         return (
         <div className={styles.layout}>

@@ -72,6 +72,7 @@ const Home: NextPage = () => {
             color="secondary"
             onClick={handleRegister}>Register</Button>
         </div>
+        <button onClick={() => window.location.href = "/dev"}>dev</button>
       </div>
       <div className={styles.section2}>
         <div className={styles.logo}>
