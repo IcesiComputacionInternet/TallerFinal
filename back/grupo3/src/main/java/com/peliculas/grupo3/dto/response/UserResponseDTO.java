@@ -29,5 +29,5 @@ public class UserResponseDTO {
     private String phone;
 
     @NotBlank
-    private String role;
+    private RoleResponseDTO role;
 }

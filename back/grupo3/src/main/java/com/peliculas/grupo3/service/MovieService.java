@@ -55,8 +55,7 @@ public class MovieService {
     }
 
     public MovieDTO findByName(String name){
-        System.out.println(name);
-        System.out.println(movieRepository.findByName("Fast X").isPresent());
+
         return movieRepository.findByName(name).map(movieMapper::fromMovie).orElseThrow(
                 ()-> new RuntimeException("La pelicula no existe"));
     }

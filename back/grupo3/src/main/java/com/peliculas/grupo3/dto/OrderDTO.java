@@ -1,6 +1,7 @@
 package com.peliculas.grupo3.dto;
 
 
+import com.peliculas.grupo3.dto.response.UserResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class OrderDTO {
 
     private long total;
 
-    private UserDTO user;
+    private UserResponseDTO user;
 
     private String orderNumber;
 

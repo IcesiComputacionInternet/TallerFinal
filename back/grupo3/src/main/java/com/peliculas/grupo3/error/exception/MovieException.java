@@ -3,6 +3,7 @@ package com.peliculas.grupo3.error.exception;
 import lombok.Getter;
 
 
+
 @Getter
 public class MovieException extends RuntimeException {
 
