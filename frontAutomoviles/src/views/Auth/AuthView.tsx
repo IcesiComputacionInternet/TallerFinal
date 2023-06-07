@@ -26,31 +26,31 @@ function AuthView ({setLogin}: Props) {
                 </div>
             </header>
             <div className="container d-flex align-items-center">
-                <div className="row justify-content-center w-100" style={{height:'78vh'}}>
+                <div className="row justify-content-center w-100">
                     {viewLogin ? (
-                        <>
-                            <div className="col-md-6 container d-flex align-items-center">
-                                <LoginForm setLogin={setLogin} />
+                            <div className="row" style={{height:'78vh'}}>
+                                <div className="col-md-6 container d-flex">
+                                    <LoginForm setLogin={setLogin} />
+                                </div>
+                                <p className="text-center">
+                                    ¿No tienes una cuenta?{' '}
+                                    <button className="btn btn-link" onClick={toggleView}>
+                                        Regístrate
+                                    </button>
+                                </p>
                             </div>
-                            <p className="text-center">
-                                ¿No tienes una cuenta?{' '}
-                                <button className="btn btn-link" onClick={toggleView}>
-                                    Regístrate
-                                </button>
-                            </p>
-                        </>
                     ) : (
-                        <>
-                            <div className="col-md-6 container d-flex align-items-center">
+                        <div className="py-4">
+                            <div className="col-md-6 container d-flex">
                                 <RegisterForm />
                             </div>
-                            <p className="text-center mt-3">
+                            <p className="text-center">
                                 ¿Ya tienes una cuenta?{' '}
                                 <button className="btn btn-link" onClick={toggleView}>
                                     Inicia sesión
                                 </button>
                             </p>
-                        </>
+                        </div>
                     )}
                 </div>
             </div>

@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import { NavigateFunction, useNavigate} from "react-router-dom";
 
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 interface Props {
     setLogin: () => void;
 }
@@ -24,29 +28,43 @@ const Login = ({setLogin}: Props) => {
                     <div className='card-body text-center'>
                         <h3 className='card-title'>Login</h3>
                         <form onSubmit={handleSubmit}>
-                            <div className='form-group my-2 form-floating'>
-                                <input 
-                                    type="email"
-                                    className='form-control'
-                                    placeholder='Email'
-                                    value={emailPhone}
-                                    onChange={(event) => setEmailPhone(event.target.value)} 
-                                />
-                                <label>Email</label>
-                            </div>
-                            <div className='form-group my-2 form-floating'>
-                                <input
-                                    type="password"
-                                    className='form-control'
-                                    placeholder='Password'
-                                    value={password}
-                                    onChange={(event) => setPassword(event.target.value)}
-                                />
-                                <label>Password</label>
-                            </div>
+                            <ul className="list-inline d-flex align-items-center">
+                                <li className="list-inline-item">
+                                    <FontAwesomeIcon icon={faUser} size='2x'/>
+                                </li>
+                                <li className="list-inline-item w-100">
+                                    <div className='form-group form-floating'>
+                                        <input 
+                                            type="email"
+                                            className='form-control'
+                                            placeholder='Email or Phone'
+                                            value={emailPhone}
+                                            onChange={(event) => setEmailPhone(event.target.value)} 
+                                        />
+                                        <label>Email or Phone</label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul className="list-inline d-flex align-items-center">
+                                <li className="list-inline-item">
+                                    <FontAwesomeIcon icon={faLock} size='2x'/>
+                                </li>
+                                <li className="list-inline-item w-100">
+                                    <div className='form-group form-floating'>
+                                        <input
+                                            type="password"
+                                            className='form-control'
+                                            placeholder='Password'
+                                            value={password}
+                                            onChange={(event) => setPassword(event.target.value)}
+                                        />
+                                        <label>Password</label>
+                                    </div>
+                                </li>
+                            </ul>
                             <button 
                                 type='submit'
-                                className='btn btn-primary btn-block my-2'
+                                className='btn btn-primary btn-block'
                             >
                                 Login
                             </button>
