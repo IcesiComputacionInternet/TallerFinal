@@ -3,6 +3,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-top: 70px;
   }
   
   .item-grid {
@@ -58,6 +59,36 @@
     margin-left: auto;
     margin-right: auto;
   }
+
+  .availability.available {
+    color: green;
+  }
+  
+  .availability.unavailable {
+    color: red;
+  }  
+
+  .navbar .ml-auto {
+    display: flex;
+    align-items: center;
+    margin-right: 20px; /* Ajusta el margen derecho según sea necesario */
+    cursor: pointer;
+    color: white;
+  }
+  
+  .navbar .ml-auto:hover {
+    color: #ccc;
+  }
+
+  .title-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    padding: 0 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }  
+  
   
   
   

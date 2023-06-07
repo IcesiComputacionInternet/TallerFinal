@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Navbar } from "react-bootstrap";
+import { BsCartFill } from "react-icons/bs";
 import "../ShopHome.css";
 
 interface Item {
@@ -51,19 +52,30 @@ const ShopHome = () => {
   };
 
   return (
-    <div className="shop-home-container">
-      <div className="item-grid">
-        {items.map((item) => (
-          <div
-            key={item.itemId}
-            className={`item ${selectedItem === item ? "selected" : ""}`}
-            onClick={() => handleItemClick(item)}
-          >
-            <h3>{item.name}</h3>
-            <img src={item.imageUrl} alt={item.name} />
-            <p className="description">{item.description}</p>
-          </div>
-        ))}
+    <div>
+      <Navbar bg="dark" variant="dark" fixed="top">
+        <Navbar.Brand href="#home">Mi Tienda</Navbar.Brand>
+        <div className="ml-auto">
+          <BsCartFill size={24} />
+        </div>
+      </Navbar>
+      <div className="title-container">
+        <h1 className="mx-auto">Productos de la tienda</h1>
+      </div>
+      <div className="shop-home-container">
+        <div className="item-grid">
+          {items.map((item) => (
+            <div
+              key={item.itemId}
+              className={`item ${selectedItem === item ? "selected" : ""}`}
+              onClick={() => handleItemClick(item)}
+            >
+              <h3>{item.name}</h3>
+              <img src={item.imageUrl} alt={item.name} />
+              <p className="description">{item.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {selectedItem && (
@@ -77,16 +89,18 @@ const ShopHome = () => {
               alt={selectedItem.name}
               className="modal-image"
             />
-            <p>Description: {selectedItem.description}</p>
-            <p>Price: ${selectedItem.price}</p>
-            <p>Min Voltage: {selectedItem.minVoltage}</p>
-            <p>Max Voltage: {selectedItem.maxVoltage}</p>
-            <p>Source of Energy: {selectedItem.sourceOfEnergy}</p>
-            <p>Level of Efficiency: {selectedItem.levelOfEfficiency}</p>
-            <p>Marca: {selectedItem.marca}</p>
-            <p>Model: {selectedItem.model}</p>
-            <p>Guarantee: {selectedItem.guarantee}</p>
-            <p>Available: {selectedItem.available ? "Yes" : "No"}</p>
+            <p><strong>Descripción:</strong> {selectedItem.description}</p>
+            <p><strong>Precio:</strong> ${selectedItem.price}</p>
+            <p><strong>Voltaje Mínimo:</strong> {selectedItem.minVoltage}</p>
+            <p><strong>Voltaje Máximo:</strong> {selectedItem.maxVoltage}</p>
+            <p><strong>Fuente de Energía:</strong> {selectedItem.sourceOfEnergy}</p>
+            <p><strong>Nivel de Eficiencia:</strong> {selectedItem.levelOfEfficiency}</p>
+            <p><strong>Marca:</strong> {selectedItem.marca}</p>
+            <p><strong>Modelo:</strong> {selectedItem.model}</p>
+            <p><strong>Garantía:</strong> {selectedItem.guarantee}</p>
+            <p className={`availability ${selectedItem.available ? 'available' : 'unavailable'}`}>
+              <strong>Disponible:</strong> {selectedItem.available ? 'Sí' : 'No'}
+            </p>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseModal}>
