@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Modal, Button, Navbar } from "react-bootstrap";
 import { BsCartFill } from "react-icons/bs";
+import Logout from "./Logout";
 import "../ShopHome.css";
 
 interface Item {
@@ -56,6 +57,7 @@ const ShopHome = () => {
       <Navbar bg="dark" variant="dark" fixed="top">
         <Navbar.Brand href="#home">Mi Tienda</Navbar.Brand>
         <div className="ml-auto">
+          <Logout />
           <BsCartFill size={24} />
         </div>
       </Navbar>
