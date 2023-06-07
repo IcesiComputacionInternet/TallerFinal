@@ -4,9 +4,15 @@ import styles from '../styles/Home.module.css'
 import Navigation from '../components/Navigation'
 import Carousel from '../components/Carousel'
 import { Container, TextField, Button } from '@mui/material';
-import { useState } from 'react'
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import axios from "axios";
 
 export default function Login() {
+
+  const baseURL = "http://localhost:8080";
+
+  const router = useRouter();
 
   const [loginData, setLoginData] = useState({
     username: '',
@@ -21,8 +27,30 @@ export default function Login() {
     }));
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     console.log(loginData)
+    const username = loginData.username
+    const password = loginData.password
+    const {data} = await axios.post(
+      baseURL+"/token", 
+      {
+        username, password
+      },
+      {
+          headers: {
+              "Access-Control-Allow-Origin": baseURL,
+          }
+      }
+    );
+      if(data.token){
+          localStorage.setItem("jwt", data.token);
+          
+          //setLogin(true);
+          router.push("/Home");
+      }else{
+          console.log(data);
+          alert("invalid credentials");
+      }
   }
 
   return (
