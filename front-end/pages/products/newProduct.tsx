@@ -1,4 +1,4 @@
-import styles from "../styles/Products.module.css";
+import styles from "../../styles/Products.module.css";
 import { Button, Divider } from "@mui/material";
 import {TextField} from "@mui/material";
 import Autocomplete from '@mui/material/Autocomplete';

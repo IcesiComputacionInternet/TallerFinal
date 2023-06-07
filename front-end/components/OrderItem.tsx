@@ -3,23 +3,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import styles from "../styles/Admin.module.css";
+import React from "react";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
-import React from "react";
 
-interface UserItemProps {
-    firstName: String;
-    lastName: String;
-    email: String;
-    phone: String;
-    address: String;
-    birthday: String;
-    orders: any;
-    id: any;
+interface OrderItemProps {
+    orderId: String;
+    state: String;
+    total: Number;
+    date: String;
 }
 
 const theme = createTheme({
@@ -33,42 +29,32 @@ const theme = createTheme({
     },
 });
 
-export default function UserItem(props: UserItemProps) {
+
+
+export default function OrderItem(props: OrderItemProps){
     const [open, setOpen] = React.useState(false);
     const handleOnClick = () => {
-        window.location.href = "/users/" + props.id;
+        window.location.href = "/orders/" + props.orderId;
     }
 
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const handleDelete = () => {
-        setOpen(true);
-    };
-
-    const handleAgree = () => {
-        //deleteUser
-    }
-
-    const handleDisagree = () => {
-        setOpen(false);
-    }
 
     return(
         <div className={styles.itemDiv}>
             <div style={{flexGrow:2,borderRight:"1px solid black"}}>
-                <h3 style={{fontWeight:"normal",marginLeft:5}}>{props.firstName}</h3>
+                <h3 style={{fontWeight:"normal",marginLeft:5}}>{props.orderId}</h3>
             </div>
             <div style={{flexGrow:2,borderRight:"1px solid black",paddingLeft:10}}>
-                <h3 style={{fontWeight:"normal"}}>{props.lastName}</h3>
+                <h3 style={{fontWeight:"normal"}}>{props.state}</h3>
+            </div>
+            <div style={{flexGrow:2,borderRight:"1px solid black",paddingLeft:10}}>
+                <h3 style={{fontWeight:"normal"}}>{props.total+"$"}</h3>
             </div>
             <div style={{flexGrow:2,paddingLeft:10}}>
-                <h3 style={{fontWeight:"normal"}}>{props.email}</h3>
+                <h3 style={{fontWeight:"normal"}}>{props.date}</h3>
             </div>
             <div style={{flexGrow:1,display:"flex",justifyContent:"flex-end"}}>
                 <ThemeProvider theme={theme}>
-                <IconButton onClick={handleDelete}>
+                <IconButton onClick={() => console.log("")}>
                     <DeleteIcon color="secondary"/>
                 </IconButton>
                 <IconButton onClick={handleOnClick}>
@@ -78,7 +64,7 @@ export default function UserItem(props: UserItemProps) {
             </div>
                 <Dialog
                 open={open}
-                onClose={handleClose}
+                onClose={() => console.log("")}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 >
@@ -91,8 +77,8 @@ export default function UserItem(props: UserItemProps) {
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                <Button onClick={handleDisagree}>Disagree</Button>
-                <Button onClick={handleClose} autoFocus>
+                <Button onClick={() => console.log("")}>Disagree</Button>
+                <Button onClick={() => console.log("")} autoFocus>
                     Agree
                 </Button>
                 </DialogActions>

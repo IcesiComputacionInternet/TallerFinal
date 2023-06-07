@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
-import styles from "../styles/Products.module.css";
+import styles from "../../styles/Products.module.css";
 import AddIcon from '@mui/icons-material/Add';
-import ProductItem from "../components/ProductItem";
+import ProductItem from "../../components/ProductItem";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -17,7 +17,7 @@ const theme = createTheme({
 
 export default function Producst(){
     const handleAddProduct = () => {
-        window.location.href = "/newProduct";
+        window.location.href = "/products/newProduct";
     }
     return(
         <div className={styles.maxContainer} >

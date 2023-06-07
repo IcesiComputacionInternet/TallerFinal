@@ -1,5 +1,5 @@
-import styles from "../styles/Admin.module.css";
-import UserItem from "../components/UserItem";
+import styles from "../../styles/Admin.module.css";
+import UserItem from "../../components/UserItem";
 
 export default function Users(){
     return(
@@ -10,7 +10,7 @@ export default function Users(){
                 </div>
                 <div className={styles.itemsSection}>
                     <div className={styles.itemsList}>
-                        <UserItem firstName="User 1" lastName="Last Name 1" email="example@email.com" phone="123" birthday="" orders="" address=""/>	
+                        <UserItem id="1" firstName="User 1" lastName="Last Name 1" email="example@email.com" phone="123" birthday="" orders="" address=""/>	
 
                     </div>
                 </div>
