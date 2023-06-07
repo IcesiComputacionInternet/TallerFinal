@@ -8,7 +8,7 @@ import NotFound from './views/NotFound/NotFound';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
-    () => localStorage.getItem('jwt') === null
+    () => localStorage.getItem('jwt') !== null
   );
 
   useEffect(() => {
@@ -37,6 +37,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
+
       <FooterInfo />
     </>
   )
