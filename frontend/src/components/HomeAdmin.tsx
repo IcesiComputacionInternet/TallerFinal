@@ -8,33 +8,36 @@ function HomeAdmin (){
 
     return (
         <>
-          <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{backgroundColor: "#e3f2fd"}}>
-            <div className="container-fluid">
-                <a className="navbar-brand" href="/">E-Shop</a>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li className="nav-item">
-                    <a className="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li className="nav-item">
-                    <a className="nav-link active" aria-current="page" href="#">Users</a>
-                    </li>
-                    <li className="nav-item">
-                    <a className="nav-link" href="#">Items</a>
-                    </li>
-                    <li className="nav-item">
-                    <a className="nav-link" href="#">Orders</a>
-                    </li>
-                </ul>
-                <Logout />
-                </div>
-            </div>
-          </nav>
-          <p className="h4">Users registers</p>
-          <table className="table-responsive">
+          <div className="container-fluid">
+            <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{backgroundColor: "#FAD011"}}>
+              <div className="container-fluid">
+                  <a className="navbar-brand" href="/HomeAdmin">
+                    <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22currentColor%22%20class%3D%22bi%20bi-bag%22%20viewBox%3D%220%200%2016%2016%22%3E%0A%20%20%3Cpath%20d%3D%22M8%201a2.5%202.5%200%200%201%202.5%202.5V4h-5v-.5A2.5%202.5%200%200%201%208%201zm3.5%203v-.5a3.5%203.5%200%201%200-7%200V4H1v10a2%202%200%200%200%202%202h10a2%202%200%200%200%202-2V4h-3.5zM2%205h12v9a1%201%200%200%201-1%201H3a1%201%200%200%201-1-1V5z%22%2F%3E%0A%3C%2Fsvg%3E" alt="Logo" width="25" height="25" className="d-inline-block align-text-top" />
+                    EShop
+                  </a>
+                  <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul className="navbar-nav me-auto mb-2 mb-lg-0" style={{fontSize: "1.25rem"}}>
+                      <li className="nav-item">
+                      <a className="nav-link active" aria-current="page" href="#">Users</a>
+                      </li>
+                      <li className="nav-item">
+                      <a className="nav-link active" aria-current="page" href="#">Items</a>
+                      </li>
+                      <li className="nav-item">
+                      <a className="nav-link active" aria-current="page" href="#">Orders</a>
+                      </li>
+                      <li className="nav-item">
+                      <a className="nav-link active" aria-current="page" href="/About">About</a>
+                      </li>
+                  </ul>
+                  <Logout />
+                  </div>
+              </div>
+            </nav>
+          </div>
+         <br />
+          <p className="h4" style={{textAlign:"start"}}>Users registers</p>
+          <table className="table table-striped-columns">
             <thead>
                 <tr>
                 <th scope="col">First Name</th>
@@ -55,7 +58,7 @@ function HomeAdmin (){
           </table>
 
           <p className="h4">Items Availables</p>
-          <table className="table-responsive">
+          <table className="table table-striped">
             <thead>
                 <tr>
                 <th scope="col">Name</th>
@@ -76,7 +79,7 @@ function HomeAdmin (){
           </table>
 
           <p className="h4">Orders</p>
-          <table className="table-responsive">
+          <table className="table table-striped">
             <thead>
                 <tr>
                 <th scope="col">Status</th>

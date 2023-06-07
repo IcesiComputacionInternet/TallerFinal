@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainHome from "./components/MainHome";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import NotFound from "./components/NotFound";
+import HomeAdmin from "./components/HomeAdmin";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
@@ -30,6 +31,7 @@ function App() {
               </Route>
               <Route path="/*" element={<NotFound/>}>
               </Route>
+              <Route path="/homeAdmin" element={<HomeAdmin/>}></Route>
           </Routes>
       </BrowserRouter>
   );
