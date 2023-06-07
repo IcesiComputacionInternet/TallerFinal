@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-const baseUrl = "http://localhost:8080";
+const baseUrl = "http://localhost:8091";
 
 interface Props {
-  onRegistrationComplete: (isRegistered: boolean) => void;
+  onRegistrationComplete: () => void;
 }
 
 const Register = ({ onRegistrationComplete }: Props) => {
@@ -14,6 +14,7 @@ const Register = ({ onRegistrationComplete }: Props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [birthdate, setBirthdate] = useState("");
+  const [role, setRole] = useState("");
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -27,10 +28,11 @@ const Register = ({ onRegistrationComplete }: Props) => {
         firstName,
         lastName,
         birthdate,
+        role,
       });
 
       if (response.data.success) {
-        onRegistrationComplete(true); // Llamar a la función onRegistrationComplete si el registro es exitoso
+        onRegistrationComplete();
         console.log("Registration successful!", response.data);
       }
     } catch (error) {
@@ -47,75 +49,86 @@ const Register = ({ onRegistrationComplete }: Props) => {
               <h3 className="card-title text-center">Registro</h3>
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label>Nombre:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={firstName}
-                      onChange={(event) => setFirstName(event.target.value)}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Apellido:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={lastName}
-                      onChange={(event) => setLastName(event.target.value)}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Email:</label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      value={email}
-                      onChange={(event) => setEmail(event.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Teléfono:</label>
-                    <input
-                      type="tel"
-                      className="form-control"
-                      value={phone}
-                      onChange={(event) => setPhone(event.target.value)}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Password:</label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      value={password}
-                      onChange={(event) => setPassword(event.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Dirección:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={address}
-                      onChange={(event) => setAddress(event.target.value)}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Fecha de Nacimiento:</label>
-                    <input
-                      type="date"
-                      className="form-control"
-                      value={birthdate}
-                      onChange={(event) => setBirthdate(event.target.value)}
-                    />
-                  </div>
-                  <div className="d-flex justify-content-center">
-                    <button type="submit" className="btn btn-primary">
-                      Registrarse
-                    </button>
-                  </div>
+                  <label>Email:</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Teléfono:</label>
+                  <input
+                    type="tel"
+                    className="form-control"
+                    value={phone}
+                    onChange={(event) => setPhone(event.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Password:</label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Dirección:</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={address}
+                    onChange={(event) => setAddress(event.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Nombres:</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={firstName}
+                    onChange={(event) => setFirstName(event.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Apellidos:</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={lastName}
+                    onChange={(event) => setLastName(event.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Fecha de Nacimiento:</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={birthdate}
+                    onChange={(event) => setBirthdate(event.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Rol:</label>
+                  <select
+                    className="form-control"
+                    value={role}
+                    onChange={(event) => setRole(event.target.value)}
+                  >
+                    <option value="">Seleccione un rol</option>
+                    <option value="ADMIN">Administrador</option>
+                    <option value="SHOP">Tienda</option>
+                    <option value="USER">Usuario</option>
+                  </select>
+                </div>
+                <div className="d-flex justify-content-center">
+                  <button type="submit" className="btn btn-primary">
+                    Registrarse
+                  </button>
+                </div>
               </form>
             </div>
           </div>

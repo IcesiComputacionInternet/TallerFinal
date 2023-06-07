@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "./ShopHome.css";
+import "../ShopHome.css";
 
 interface Item {
   itemId: string;
@@ -25,7 +25,7 @@ const ShopHome = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/items", {
+        const response = await axios.get("http://localhost:8091/items", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwt")}`,
           },
