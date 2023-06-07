@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Modal, Button } from "react-bootstrap";
 import "../ShopHome.css";
 
 interface Item {
@@ -21,6 +22,7 @@ interface Item {
 const ShopHome = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -41,6 +43,11 @@ const ShopHome = () => {
 
   const handleItemClick = (item: Item) => {
     setSelectedItem(item);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -57,21 +64,30 @@ const ShopHome = () => {
           </div>
         ))}
       </div>
+
       {selectedItem && (
-        <div className="selected-item-container">
-          <h2>Selected Item</h2>
-          <p>Name: {selectedItem.name}</p>
-          <p>Description: {selectedItem.description}</p>
-          <p>Price: ${selectedItem.price}</p>
-          <p>Min Voltage: {selectedItem.minVoltage}</p>
-          <p>Max Voltage: {selectedItem.maxVoltage}</p>
-          <p>Source of Energy: {selectedItem.sourceOfEnergy}</p>
-          <p>Level of Efficiency: {selectedItem.levelOfEfficiency}</p>
-          <p>Marca: {selectedItem.marca}</p>
-          <p>Model: {selectedItem.model}</p>
-          <p>Guarantee: {selectedItem.guarantee}</p>
-          <p>Available: {selectedItem.available ? "Yes" : "No"}</p>
-        </div>
+        <Modal show={showModal} onHide={handleCloseModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>{selectedItem.name}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Description: {selectedItem.description}</p>
+            <p>Price: ${selectedItem.price}</p>
+            <p>Min Voltage: {selectedItem.minVoltage}</p>
+            <p>Max Voltage: {selectedItem.maxVoltage}</p>
+            <p>Source of Energy: {selectedItem.sourceOfEnergy}</p>
+            <p>Level of Efficiency: {selectedItem.levelOfEfficiency}</p>
+            <p>Marca: {selectedItem.marca}</p>
+            <p>Model: {selectedItem.model}</p>
+            <p>Guarantee: {selectedItem.guarantee}</p>
+            <p>Available: {selectedItem.available ? "Yes" : "No"}</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
     </div>
   );
