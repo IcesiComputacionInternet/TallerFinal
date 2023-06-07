@@ -14,7 +14,6 @@ const Register = ({ onRegistrationComplete }: Props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [birthdate, setBirthdate] = useState("");
-  const [role, setRole] = useState("");
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -28,7 +27,7 @@ const Register = ({ onRegistrationComplete }: Props) => {
         firstName,
         lastName,
         birthdate,
-        role,
+        role: "USER", // Establecer el valor de role como "USER"
       });
 
       if (response.data.success) {
@@ -110,19 +109,6 @@ const Register = ({ onRegistrationComplete }: Props) => {
                     value={birthdate}
                     onChange={(event) => setBirthdate(event.target.value)}
                   />
-                </div>
-                <div className="form-group">
-                  <label>Rol:</label>
-                  <select
-                    className="form-control"
-                    value={role}
-                    onChange={(event) => setRole(event.target.value)}
-                  >
-                    <option value="">Seleccione un rol</option>
-                    <option value="ADMIN">Administrador</option>
-                    <option value="SHOP">Tienda</option>
-                    <option value="USER">Usuario</option>
-                  </select>
                 </div>
                 <div className="d-flex justify-content-center">
                   <button type="submit" className="btn btn-primary">
