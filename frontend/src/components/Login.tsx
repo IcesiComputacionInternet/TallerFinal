@@ -76,9 +76,6 @@ const Login = ({ setLogin }: Props) => {
                 </div>
                 <button className="btn btn-primary">
                     Log In
-                    <div className="arrow-wrapper" >
-                        <div className="arrow"></div>
-                    </div>
                 </button>
 
                 <div className="divider">

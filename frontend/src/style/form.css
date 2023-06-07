@@ -41,18 +41,17 @@ body {
 .new-item{
     width: 800px;
     margin-left: 300px;
-    margin-top: 90px;
+    margin-top: 50px;
     top: 80%;
     left: 50%;
 }
 
-.row > * {
+.row * {
     flex-shrink: 0;
-    width: 90%;
-    max-width: 100%;
-    padding-right: calc(var(--bs-gutter-x) * 0.5);
-    padding-left: calc(var(--bs-gutter-x) * 0.5);
-    margin-top: var(--bs-gutter-y);
+    width: 50%;
+    padding-right: 2px;
+    padding-left: 2px;
+    margin-top: 10px;
 }
 
 form *{
@@ -67,7 +66,7 @@ form h3{
     line-height: 52px;
     text-align: -webkit-left;
     margin-top: 5px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .form-group {
@@ -130,8 +129,9 @@ button{
 }
 
 .button-cont-item{
+    margin-top: 25px;
     display: flex;
-    width: 50%;
+    width: 93%;
     gap: 15px;
 }
 

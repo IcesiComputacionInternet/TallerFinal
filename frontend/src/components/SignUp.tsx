@@ -56,7 +56,7 @@ const SignUp = () => {
                     </div>
                     <div className="form-group">
                         <input required
-                            type="number"
+                            type="tel"
                             className="form-control"
                             placeholder="Phone Number"
                             value={phoneNumber}

@@ -28,7 +28,7 @@ function Orders(){
                     </h1>
                     {orders.length > 0 ? (
                         <div className="table-responsive">
-                            <table className="table table-bordered mx-auto mt-3 table-hover" style={{ width: "80%" }}>
+                            <table className="table table-bordered mx-auto mt-3 table-striped" style={{ width: "80%" }}>
                                 <thead >
                                 <tr>
                                     <th>User</th>
