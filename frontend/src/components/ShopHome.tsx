@@ -1,0 +1,80 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+import "./ShopHome.css";
+
+interface Item {
+  itemId: string;
+  description: string;
+  name: string;
+  price: number;
+  imageUrl: string;
+  minVoltage: number;
+  maxVoltage: number;
+  sourceOfEnergy: string;
+  levelOfEfficiency: string;
+  marca: string;
+  model: string;
+  guarantee: number;
+  available: boolean;
+}
+
+const ShopHome = () => {
+  const [items, setItems] = useState<Item[]>([]);
+  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/items", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
+        });
+        setItems(response.data);
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      }
+    };
+
+    fetchItems();
+  }, []);
+
+  const handleItemClick = (item: Item) => {
+    setSelectedItem(item);
+  };
+
+  return (
+    <div className="shop-home-container">
+      <div className="item-grid">
+        {items.map((item) => (
+          <div
+            key={item.itemId}
+            className={`item ${selectedItem === item ? "selected" : ""}`}
+            onClick={() => handleItemClick(item)}
+          >
+            <h3>{item.name}</h3>
+            <img src={item.imageUrl} alt={item.name} />
+          </div>
+        ))}
+      </div>
+      {selectedItem && (
+        <div className="selected-item-container">
+          <h2>Selected Item</h2>
+          <p>Name: {selectedItem.name}</p>
+          <p>Description: {selectedItem.description}</p>
+          <p>Price: ${selectedItem.price}</p>
+          <p>Min Voltage: {selectedItem.minVoltage}</p>
+          <p>Max Voltage: {selectedItem.maxVoltage}</p>
+          <p>Source of Energy: {selectedItem.sourceOfEnergy}</p>
+          <p>Level of Efficiency: {selectedItem.levelOfEfficiency}</p>
+          <p>Marca: {selectedItem.marca}</p>
+          <p>Model: {selectedItem.model}</p>
+          <p>Guarantee: {selectedItem.guarantee}</p>
+          <p>Available: {selectedItem.available ? "Yes" : "No"}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ShopHome;

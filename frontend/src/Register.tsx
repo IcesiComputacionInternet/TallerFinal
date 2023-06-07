@@ -114,7 +114,7 @@ const Register = ({ onRegistrationComplete }: Props) => {
                 <div className="form-group">
                   <label>Rol:</label>
                   <select
-                    className="form-select"
+                    className="form-control"
                     value={role}
                     onChange={(event) => setRole(event.target.value)}
                   >
