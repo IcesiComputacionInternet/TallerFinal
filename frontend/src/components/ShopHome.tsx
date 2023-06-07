@@ -57,18 +57,6 @@ const ShopHome = () => {
 
   const addItemToOrders = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:8091/orders",
-        {
-          itemId: selectedItem?.itemId,
-          quantity: 1, // Assuming quantity is 1 for now
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-          },
-        }
-      );
       // Handle success response if needed
       setCartItemCount((prevCount) => prevCount + 1); // Incrementar la cantidad de productos en el carrito
       setShowModal(false); // Cerrar el modal después de agregar el producto al carrito
