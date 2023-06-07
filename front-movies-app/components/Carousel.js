@@ -11,7 +11,7 @@ function Carousel() {
   useEffect( () => {
     axios.get("https://imdb-api.com/en/API/Top250Movies/k_quwg0qhg").then(response => {
       setMovies((response.data))
-      console.log(movies)
+      //console.log(movies)
     }).catch(err => console.error(err))
   }, [])
 
