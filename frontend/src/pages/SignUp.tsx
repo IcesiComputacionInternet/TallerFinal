@@ -23,72 +23,93 @@ const SignUp = () => {
     }
 
     return (
-        <div className="container">
+        <div className="signUp-container">
             <form onSubmit={handleSubmit} className='signup-form'>
                 <h3>Sign Up</h3>
-                <div className="form-group">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Name"
-                        value={name}
-                        onChange={(event) => setName(event.target.value)}
+                <div className="input-container">
+                    <input required
+                           type="text"
+                           className="input-field"
+                           placeholder="Name"
+                           value={name}
+                           onChange={(event) => setName(event.target.value)}
                     />
-                    </div>
-                    <div className="form-group">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Last Name"
-                            value={lastName}
-                            onChange={(event) => setLastName(event.target.value)}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input required
-                            type="email"
-                            className="form-control"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(event) => setEmail(event.target.value)}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input required
-                            type="tel"
-                            className="form-control"
-                            placeholder="Phone Number"
-                            value={phoneNumber}
-                            onChange={(event) => setPhoneNumber(event.target.value)}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input
-                            type="date"
-                            className="form-control"
-                            placeholder="Birthdate"
-                            value={birthday}
-                            onChange={(event) => setBirthday(event.target.value)}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Address"
-                            value={address}
-                            onChange={(event) => setAddress(event.target.value)}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input required
-                            type="password"
-                            className="form-control"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(event) => setPassword(event.target.value)}
-                        />
-                    </div>
+                    <label htmlFor="input-field" className="input-label">Name</label>
+                    <span className="input-highlight"></span>
+                </div>
+
+                <div className="input-container">
+                    <input required
+                           type="text"
+                           className="input-field"
+                           placeholder="Last Name"
+                           value={lastName}
+                           onChange={(event) => setLastName(event.target.value)}
+                    />
+                    <label htmlFor="input-field" className="input-label">Last Name</label>
+                    <span className="input-highlight"></span>
+                </div>
+
+                <div className="input-container">
+                    <input required
+                           type="email"
+                           className="input-field"
+                           placeholder="Email"
+                           value={email}
+                           onChange={(event) => setEmail(event.target.value)}
+                    />
+                    <label htmlFor="input-field" className="input-label">Email</label>
+                    <span className="input-highlight"></span>
+                </div>
+
+                <div className="input-container">
+                    <input required
+                           type="tel"
+                           className="input-field"
+                           placeholder="Phone Number"
+                           value={phoneNumber}
+                           onChange={(event) => setPhoneNumber(event.target.value)}
+                    />
+                    <label htmlFor="input-field" className="input-label">Phone Number</label>
+                    <span className="input-highlight"></span>
+                </div>
+
+                <div className="input-container">
+                    <input required
+                           type="date"
+                           className="input-field"
+                           placeholder="Birthdate"
+                           value={birthday}
+                           onChange={(event) => setBirthday(event.target.value)}
+                    />
+                    <label htmlFor="input-field" className="input-label">Birth Date</label>
+                    <span className="input-highlight"></span>
+                </div>
+
+                <div className="input-container">
+                    <input required
+                           type="text"
+                           className="input-field"
+                           placeholder="Address"
+                           value={address}
+                           onChange={(event) => setAddress(event.target.value)}
+                    />
+                    <label htmlFor="input-field" className="input-label">Address</label>
+                    <span className="input-highlight"></span>
+                </div>
+
+                <div className="input-container">
+                    <input required
+                           type="password"
+                           className="input-field"
+                           placeholder="Password"
+                           value={password}
+                           onChange={(event) => setPassword(event.target.value)}
+                    />
+                    <label htmlFor="input-field" className="input-label">Password</label>
+                    <span className="input-highlight"></span>
+                </div>
+
                     <div className="button-container">
                         <button className="btn btn-primary">Sign Up</button>
                         <button className="btn btn-outline-danger" onClick={cancelSignUp}>Cancel</button>
