@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import storeItems from "../testData/items.json"
 import { NavigateFunction, useNavigate } from "react-router-dom";
 
 const baseUrl = "http://localhost:8080";
@@ -26,24 +27,24 @@ function Orders(){
                     <h1>
                         Orders
                     </h1>
-                    {orders.length > 0 ? (
+                    {storeItems.length > 0 ? (
                         <div className="table-responsive">
                             <table className="table table-bordered mx-auto mt-3 table-striped" style={{ width: "80%" }}>
                                 <thead >
                                 <tr>
                                     <th>User</th>
                                     <th>Status</th>
-                                    <th>Total</th>
-                                    <th>Items</th>
+                                    {/*<th>Total</th>*/}
+                                    {/*<th>Items</th>*/}
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {orders && orders.map((order: any, index) => (
+                                {storeItems && storeItems.map((item: any, index) => (
                                     <tr key={index}>
-                                        <td>{order.users}</td>
-                                        <td>{order.status}</td>
-                                        <td>{order.total}</td>
-                                        <td>{order.items}</td>
+                                        <td>{item.id}</td>
+                                        <td>{item.name}</td>
+                                        {/*<td>{order.total}</td>*/}
+                                        {/*<td>{order.items}</td>*/}
                                     </tr>
                                 ))}
                                 </tbody>

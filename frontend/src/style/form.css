@@ -95,10 +95,11 @@
 
 
 .new-item{
+    height: 300px;
     width: 800px;
-    margin-left: 300px;
-    margin-top: 50px;
-    top: 80%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 25%;
     left: 50%;
 }
 
@@ -165,7 +166,8 @@ button{
 }
 
 .button-cont-item{
-    margin-top: 25px;
+    /*margin-top: 25px;*/
+    /*margin-bottom: 25px;*/
     display: flex;
     width: 93%;
     gap: 15px;
