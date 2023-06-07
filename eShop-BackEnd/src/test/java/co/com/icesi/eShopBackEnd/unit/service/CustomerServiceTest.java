@@ -8,9 +8,11 @@ import co.com.icesi.eShopBackEnd.mapper.SalesOrderMapper;
 import co.com.icesi.eShopBackEnd.mapper.CustomerMapperImpl;
 import co.com.icesi.eShopBackEnd.mapper.SalesOrderMapperImpl;
 import co.com.icesi.eShopBackEnd.model.Category;
+import co.com.icesi.eShopBackEnd.model.Customer;
 import co.com.icesi.eShopBackEnd.model.Role;
 import co.com.icesi.eShopBackEnd.repository.CustomerRepository;
 import co.com.icesi.eShopBackEnd.repository.RoleRepository;
+import co.com.icesi.eShopBackEnd.security.SecurityContext;
 import co.com.icesi.eShopBackEnd.service.CustomerService;
 import co.com.icesi.eShopBackEnd.service.RoleService;
 import co.com.icesi.eShopBackEnd.unit.matcher.CustomerMatcher;
@@ -19,6 +21,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,36 +31,63 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
 public class CustomerServiceTest {
+
+    private CustomerService customerService;
     private  CustomerRepository customerRepository;
     private  RoleRepository roleRepository;
     private  CustomerMapper customerMapper;
     private  SalesOrderMapper salesOrderMapper;
     private  PasswordEncoder encoder;
-    private CustomerService customerService;
+
     @BeforeEach
     public void init(){
         customerRepository = mock(CustomerRepository.class);
         roleRepository = mock(RoleRepository.class);
+
         encoder = mock(PasswordEncoder.class);
         customerMapper = spy(CustomerMapperImpl.class);
         salesOrderMapper = spy(SalesOrderMapperImpl.class);
-        customerService = new CustomerService(customerRepository,roleRepository,customerMapper,salesOrderMapper,encoder);
+        SecurityContext context = mock(SecurityContext.class);
+        customerService = new CustomerService(customerRepository,roleRepository,customerMapper,salesOrderMapper,encoder,context);
+        when(context.getCurrentUserRole()).thenReturn("ADMIN");
     }
     @Test
     public void testCreateResponseCustomer(){
-        Role role = role();
-        when(roleRepository.findByRoleName(any())).thenReturn(Optional.of(role));
-        ResponseCustomerDTO customerDTO= customerService.save(createCustomerDTO());
-        assertEquals("call 65 Nº 32", customerDTO.getAddress());
-        assertEquals("johndoe@email.com", customerDTO.getEmail());
-
+        when(customerRepository.findByEmail(any())).thenReturn(false);
+        when(customerRepository.findByPhoneNumber(any())).thenReturn(false);
+        when(roleRepository.findByRoleName(any())).thenReturn(Optional.of(defaultRole()));
+        when(customerRepository.save(any())).thenReturn(defaultCustomer());
+        when(customerMapper.fromUserToResponseUserDTO(any())).thenReturn(defaultResponseCustomerDTO());
+        customerService.save(createCustomerDTO());
+        assertEquals("call 65 Nº 32",defaultResponseCustomerDTO().getAddress());
+        assertEquals("lucho@email.com",defaultResponseCustomerDTO().getEmail());
+        verify(customerRepository,times(1)).save(any());
 
     }
 
-    private Role role() {
+    private Role defaultRole() {
     return Role.builder()
             .roleName("USER")
+            .description("Is a teacher the university Icesi")
+            .build();
+    }
+    public CreateRoleDTO createRoleDTO(){
+        return CreateRoleDTO.builder()
+                .roleName("USER")
                 .description("Is a teacher the university Icesi")
+                .build();
+    }
+
+    private Customer defaultCustomer(){
+        return Customer.builder()
+                .firstName("luis")
+                .lastName("andres")
+                .email("lucho@email.com")
+                .password("password")
+                .phoneNumber("332036584")
+                .address("call 65 Nº 32")
+                .birthday(LocalDate.parse("2003-06-06"))
+                .role(defaultRole())
                 .build();
     }
 
@@ -72,10 +102,20 @@ public class CustomerServiceTest {
                 .password("password")
                 .build();
     }
-    public CreateRoleDTO roleDTO(){
-        return CreateRoleDTO.builder()
-                .roleName("USER")
-                .description("Is a teacher the university Icesi")
+
+    private ResponseCustomerDTO defaultResponseCustomerDTO(){
+        return ResponseCustomerDTO.builder()
+                .firstName("luis")
+                .lastName("andres")
+                .email("lucho@email.com")
+                .password("password")
+                .phoneNumber("332036584")
+                .address("call 65 Nº 32")
+                .birthday(LocalDate.parse("2003-06-06"))
+                .role(createRoleDTO())
                 .build();
     }
+
+
+
 }

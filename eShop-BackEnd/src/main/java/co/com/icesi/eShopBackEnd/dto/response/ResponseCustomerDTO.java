@@ -12,7 +12,7 @@ import java.util.UUID;
 @Data
 @Builder
 public class ResponseCustomerDTO {
-    private UUID userId;
+    private UUID customerId;
     private String firstName;
     private String lastName;
     private String email;

@@ -31,6 +31,7 @@ public class CustomerService {
     private final CustomerMapper customerMapper;
     private final SalesOrderMapper salesOrderMapper;
     private final PasswordEncoder encoder;
+    private final SecurityContext context;
 
     public ResponseCustomerDTO save(CreateCustomerDTO user) {
         validateEmailAndPhone(user.email(), user.phoneNumber());
@@ -47,7 +48,7 @@ public class CustomerService {
         newCustomer.setCustomerId(UUID.randomUUID());
         newCustomer.setPassword(encoder.encode(user.password()));
         ResponseCustomerDTO userResponse = customerMapper.fromUserToResponseUserDTO(customerRepository.save(newCustomer));
-        userResponse.setUserId(newCustomer.getCustomerId());
+        userResponse.setCustomerId(newCustomer.getCustomerId());
 
         return userResponse;
     }
@@ -97,7 +98,7 @@ public class CustomerService {
     }
 
     public RoleDTO getRoleOfUser(){
-        SecurityContext context = new SecurityContext();
+
         Customer customer = customerRepository.getCustomerById(UUID.fromString(context.getCurrentUserId()))
                 .orElseThrow(
                         ArgumentsExceptionBuilder.createArgumentsExceptionSup(
