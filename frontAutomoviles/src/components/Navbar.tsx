@@ -54,8 +54,6 @@ const Cart = () => {
     )
 }
 
-
-
 function Navbar() {
     return (
         <header>
