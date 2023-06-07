@@ -3,6 +3,7 @@ import axios from "axios";
 import { Modal, Button, Navbar } from "react-bootstrap";
 import { BsCartFill } from "react-icons/bs";
 import Logout from "./Logout";
+import Purchases from "./Purchases";
 import "../ShopHome.css";
 
 interface Item {
@@ -25,6 +26,8 @@ const ShopHome = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [showPurchasesModal, setShowPurchasesModal] = useState(false);
+  const [cartItemCount, setCartItemCount] = useState(0); // Estado para la cantidad de productos en el carrito
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -52,13 +55,39 @@ const ShopHome = () => {
     setShowModal(false);
   };
 
+  const addItemToOrders = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8091/orders",
+        {
+          itemId: selectedItem?.itemId,
+          quantity: 1, // Assuming quantity is 1 for now
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
+        }
+      );
+      // Handle success response if needed
+      setCartItemCount((prevCount) => prevCount + 1); // Incrementar la cantidad de productos en el carrito
+      setShowModal(false); // Cerrar el modal después de agregar el producto al carrito
+      alert("Compra agregada exitosamente"); // Mostrar mensaje de éxito
+    } catch (error) {
+      console.error("Error adding item to orders:", error);
+    }
+  };
+
   return (
     <div>
       <Navbar bg="dark" variant="dark" fixed="top">
         <Navbar.Brand href="#home">Mi Tienda</Navbar.Brand>
         <div className="ml-auto">
           <Logout />
-          <BsCartFill size={24} />
+          <div className="cart-icon-container">
+            <BsCartFill size={24} />
+            <span className="cart-item-count">{cartItemCount}</span> {/* Mostrar la cantidad de productos en el carrito */}
+          </div>
         </div>
       </Navbar>
       <div className="title-container">
@@ -105,12 +134,14 @@ const ShopHome = () => {
             </p>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>
-              Close
+            <Button variant="primary" onClick={addItemToOrders}>
+              Comprar
             </Button>
           </Modal.Footer>
         </Modal>
       )}
+
+      <Purchases show={showPurchasesModal} onHide={() => setShowPurchasesModal(false)} />
     </div>
   );
 };
