@@ -5,6 +5,7 @@ import FooterInfo from './components/FooterInfo';
 import AuthView from './views/Auth/AuthView';
 import Home from './views/Home/Home';
 import NotFound from './views/NotFound/NotFound';
+import Navbar from './components/Navbar';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
@@ -21,6 +22,7 @@ function App() {
 
   return (
     <>
+      {isLoggedIn ? <Navbar />  : <></>}
       <BrowserRouter>
         <Routes>
           <Route

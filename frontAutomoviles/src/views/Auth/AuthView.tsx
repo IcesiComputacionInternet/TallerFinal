@@ -1,6 +1,8 @@
 import { useState } from "react";
+
 import { faCarSide} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 
@@ -44,7 +46,7 @@ function AuthView ({setLogin}: Props) {
                             <div className="col-md-6 container d-flex">
                                 <RegisterForm />
                             </div>
-                            <p className="text-center">
+                            <p className="text-center py-3">
                                 ¿Ya tienes una cuenta?{' '}
                                 <button className="btn btn-link" onClick={toggleView}>
                                     Inicia sesión

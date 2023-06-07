@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { NavigateFunction, useNavigate} from "react-router-dom";
 
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { faLock } from '@fortawesome/free-solid-svg-icons';
+import { faUser,
+        faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface Props {

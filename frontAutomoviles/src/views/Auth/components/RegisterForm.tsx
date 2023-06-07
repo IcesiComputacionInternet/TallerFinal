@@ -3,8 +3,9 @@ import { useState } from 'react';
 import {faEnvelope,
         faPhone,
         faLock,
-        faUser } from '@fortawesome/free-solid-svg-icons';
-import { faAddressCard } from '@fortawesome/free-solid-svg-icons';
+        faLocationDot,
+        faCalendar,
+        faAddressCard } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Register = () => {
@@ -29,6 +30,74 @@ const Register = () => {
                     <div className='card-body text-center'>
                         <h3 className='card-title'>Register</h3>
                         <form onSubmit={handleSubmit}>
+                            <ul className="list-inline d-flex align-items-center">
+                                <li className="list-inline-item">
+                                    <FontAwesomeIcon icon={faAddressCard} size='2x'/>
+                                </li>
+                                <li className="list-inline-item w-100">
+                                    <div className='form-group form-floating'>
+                                        <input
+                                            type="text"
+                                            className='form-control'
+                                            placeholder='First Name'
+                                            value={firstName}
+                                            onChange={(event) => setFirstName(event.target.value)}
+                                        />
+                                        <label>First Name</label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul className="list-inline d-flex align-items-center">
+                                <li className="list-inline-item">
+                                    <FontAwesomeIcon icon={faAddressCard} size='2x'/>
+                                </li>
+                                <li className="list-inline-item w-100">
+                                    <div className='form-group form-floating'>
+                                        <input
+                                            type="text"
+                                            className='form-control'
+                                            placeholder='Last Name'
+                                            value={lastName}
+                                            onChange={(event) => setLastName(event.target.value)}
+                                        />
+                                        <label>Last Name</label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul className="list-inline d-flex align-items-center">
+                                <li className="list-inline-item">
+                                    <FontAwesomeIcon icon={faLocationDot} size='2x'/>
+                                </li>
+                                <li className="list-inline-item w-100">
+                                    <div className='form-group form-floating'>
+                                        <input
+                                            type="text"
+                                            className='form-control'
+                                            placeholder='Address'
+                                            value={address}
+                                            onChange={(event) => setAddress(event.target.value)}
+                                        />
+                                        <label>Address</label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul className="list-inline d-flex align-items-center">
+                                <li className="list-inline-item">
+                                    <FontAwesomeIcon icon={faCalendar} size='2x'/>
+                                </li>
+                                <li className="list-inline-item w-100">
+                                    <div className='form-group form-floating'>
+                                        <input
+                                            type="text"
+                                            className='form-control picker__input'
+                                            placeholder='Birth Date'
+                                            value={birthDate}
+                                            onChange={(event) => setBirthDate(event.target.value)}
+                                        />
+                                        <label>Birth Date</label>
+                                    </div>
+                                </li>
+                            </ul>
                             <ul className="list-inline d-flex align-items-center">
                                 <li className="list-inline-item">
                                     <FontAwesomeIcon icon={faEnvelope} size='2x'/>
@@ -94,23 +163,6 @@ const Register = () => {
                                             onChange={(event) => setConfirmPassword(event.target.value)}
                                         />
                                         <label>Confirm Password</label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <ul className="list-inline d-flex align-items-center">
-                                <li className="list-inline-item">
-                                    <FontAwesomeIcon icon={faAddressCard} size='2x'/>
-                                </li>
-                                <li className="list-inline-item w-100">
-                                    <div className='form-group form-floating'>
-                                        <input
-                                            type="text"
-                                            className='form-control'
-                                            placeholder='First Name'
-                                            value={firstName}
-                                            onChange={(event) => setFirstName(event.target.value)}
-                                        />
-                                        <label>First Name</label>
                                     </div>
                                 </li>
                             </ul>
