@@ -23,18 +23,17 @@ const SignUp = () => {
     }
 
     return (
-        <body>
         <div className="container">
-                <form onSubmit={handleSubmit} className='signup-form'>
-                    <h3>Sign Up</h3>
-                    <div className="form-group">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Name"
-                            value={name}
-                            onChange={(event) => setName(event.target.value)}
-                        />
+            <form onSubmit={handleSubmit} className='signup-form'>
+                <h3>Sign Up</h3>
+                <div className="form-group">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Name"
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
+                    />
                     </div>
                     <div className="form-group">
                         <input
@@ -94,9 +93,8 @@ const SignUp = () => {
                         <button className="btn btn-primary">Sign Up</button>
                         <button className="btn btn-outline-danger" onClick={cancelSignUp}>Cancel</button>
                     </div>
-                </form>
-            </div>
-        </body>
+            </form>
+        </div>
     );
 };
 export default SignUp;

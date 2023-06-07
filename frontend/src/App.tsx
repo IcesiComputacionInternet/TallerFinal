@@ -6,7 +6,7 @@ import CreateItem from "./pages/CreateItem.tsx";
 import Orders from "./pages/Orders.tsx";
 import Roles from "./pages/Roles.tsx";
 import { Store }  from "./pages/Store.tsx";
-import {Container, Navbar} from "react-bootstrap";
+// import {Container, Navbar} from "react-bootstrap";
 import {ShoppingCartProvider} from "./methods/ShoppingCartCtx.tsx";
 // import NotFound from "./components/NotFound";
 
@@ -23,7 +23,6 @@ function App() {
 
     return (
         <ShoppingCartProvider>
-            <Container  className="p-0">
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<Login setLogin={logIn} />}></Route>
@@ -38,7 +37,6 @@ function App() {
                         <Route path="/roles" element={<Roles />}></Route>
                     </Routes>
                 </BrowserRouter>
-            </Container>
         </ShoppingCartProvider>
 
     );
