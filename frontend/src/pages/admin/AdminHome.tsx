@@ -1,77 +1,210 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import AdminNavbar from "../../components/AdminNavbar";
+
+const baseUrl = "http://localhost:8091";
 
 function HomeAdmin (){
 
+  const navigation : NavigateFunction = useNavigate();
+
+  const [orders, setOrders] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    async function getData() {
+
+      const resultUsers = await getUsers();
+      setUsers(resultUsers);
+
+      const resultItems = await getItems();
+      setItems(resultItems);
+
+      const resultOrders = await getOrders();
+      setOrders(resultOrders);
+    }
+
+    getData();
+  }, []);
+
+  const handleClickMoreUsers = async (event: any) => {
+    event.preventDefault();
+    navigation("/admin/users");
+  };
+
+  const handleClickMoreItems = async (event: any) => {
+    event.preventDefault();
+    navigation("/admin/items");
+  };
+
+
+  const handleClickMoreOrders = async (event: any) => {
+    event.preventDefault();
+    navigation("/admin/orders");
+  };
+
   return (
     <>
-     <AdminNavbar />          
-     <div className="container mt-4">
-      <p className="h4">Usuarios registrados</p>
-      <br />
-        <table className="table table-striped-columns" table-layout="fixed">
-          <thead>
-              <tr>
-              <th scope="col">Nombre </th>
-              <th scope="col">Apellido</th>
-              <th scope="col">Correo</th>
-              <th scope="col">Número de teléfono</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>320</td>
-              </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div className="container">
-        <p className="h4">Items Disponibles</p>
-       <br />
-        <table className="table table-striped-columns" table-layout="fixed">
-          <thead>
-              <tr>
-              <th scope="col">Nombre</th>
-              <th scope="col">Marca</th>
-              <th scope="col">Precio</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>320</td>
-              </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div className="container">
-        <p className="h4">Ordenes pendientes</p>
-       <br />
-       <div className="table-responsive">
-        <table className="table table-striped-columns" table-layout="fixed">
+     <AdminNavbar />
+     {users.length > 0 ?(
+        <div className="container mt-4">
+        <p className="h4">Usuarios registrados</p>
+        <br />
+          <table className="table table-striped-columns" style={{tableLayout:"fixed"}}>
             <thead>
                 <tr>
-                <th scope="col">Usuario (Email o celular)</th>
-                <th scope="col">Total</th>
+                <th scope="col">Nombre </th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Número de teléfono</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                <td>Mark</td>
-                <td>320</td>
+              {users.map((user, index) => (
+                <tr key={index}>
+                  <td>{user.firstName}</td>
+                  <td>{user.lastName}</td>
+                  <td>{user.email}</td>
+                  <td>{user.phoneNumber}</td>
                 </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="d-flex justify-content-end">
+            <button type="button" className="btn btn-link" onClick={handleClickMoreUsers}>Ver más usuarios</button>
+          </div>
+        </div>
+
+     ) : (
+        <div className="container">
+          <p className="h4">No hay usuarios registrados</p>
+        </div>
+     )}    
+
+     <br />
+     {items.length > 0 ?(
+        <div className="container">
+          <p className="h4">Items registrados</p>
+        <br />
+          <table className="table table-striped-columns" style={{tableLayout:"fixed"}}>
+            <thead>
+                <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Categoria</th>
+                </tr>
+            </thead>
+            <tbody>
+              {items.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.name}</td>
+                    <td>{item.marca}</td>
+                    <td>${item.price}</td>
+                    <td>{item.category}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+          <div className="d-flex justify-content-end">
+            <button type="button" className="btn btn-link" onClick={handleClickMoreItems}>Ver más items</button>
+          </div>
+        </div>
+      ) : (
+        <div className="container">
+          <p className="h4">No hay items registrados</p>
+        </div>
+      )}   
+
+    <br />
+     {orders.length > 0 ?(
+      <div className="container">
+        <p className="h4">Ordenes registradas</p>
+       <br />
+       <div className="table-responsive">
+        <table className="table table-striped-columns" style={{tableLayout:"fixed"}}>
+            <thead>
+                <tr>
+                <th scope="col">Email del usuario</th>
+                <th scope="col">Celular del usuario</th>
+                <th scope="col">Total</th>
+                <th scope="col">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+            {orders.map((order, index) => (
+                <tr key={index}>
+                  <td>{order.userEmail}</td>
+                  <td>{order.userPhoneNumber}</td>
+                  <td>${order.total}</td>
+                  <td>{order.status}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
        </div>
+       <div className="d-flex justify-content-end">
+         <button type="button" className="btn btn-link" onClick={handleClickMoreOrders}>Ver más ordenes </button>
       </div>
+      </div>
+      ) : (
+        <div className="container">
+          <p className="h4">No hay ordenes registradas</p>
+        </div>
+      )} 
     </>
   );
       
+}
+
+async function getUsers(){
+
+  const users = await axios.get(
+    baseUrl+"/users",
+    {
+      headers:{
+        "Access-Control-Allow-Origin": baseUrl,
+        "MediaType" : "application/json",
+        "Authorization":"Bearer "+localStorage.getItem('jwt')
+      }
+    }
+  )
+
+  return users.data.slice(0,5);
+}
+
+async function getItems(){
+
+  const items = await axios.get(
+    baseUrl+"/items",
+    {
+      headers:{
+        "Access-Control-Allow-Origin": baseUrl,
+        "MediaType" : "application/json",
+        "Authorization":"Bearer "+localStorage.getItem('jwt')
+      }
+    }
+  )
+
+  return items.data.slice(0,5);
+}
+
+async function getOrders(){
+
+  const orders = await axios.get(
+    baseUrl+"/orders",
+    {
+      headers:{
+        "Access-Control-Allow-Origin": baseUrl,
+        "MediaType" : "application/json",
+        "Authorization":"Bearer "+localStorage.getItem('jwt')
+      }
+    }
+  )
+
+  return orders.data.slice(0,5);
 }
 
     

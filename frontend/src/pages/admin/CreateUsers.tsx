@@ -4,22 +4,18 @@ import axios from "axios";
 
 const baseUrl = "http://localhost:8091";
 
-interface Props {
-  onRegistrationComplete: () => void;
-}
-
 interface UserData {
-  email: string;
-  phoneNumber: string;
-  password: string;
-  address?: string;
-  firstName?: string;
-  lastName?: string;
-  roleName: string;
-  birthday?: string;
-}
+    email: string;
+    phoneNumber: string;
+    password: string;
+    address?: string;
+    firstName?: string;
+    lastName?: string;
+    roleName: string;
+    birthday?: string;
+  }
 
-const Register = ({ onRegistrationComplete }: Props) => {
+function CreateUser() {
 
   const navigation : NavigateFunction = useNavigate();
 
@@ -30,39 +26,48 @@ const Register = ({ onRegistrationComplete }: Props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [birthday, setBirthday] = useState("");
+  const [roleName, setRoleName] = useState("");
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    try {
-      const requestData:UserData = {
-          email,
-          phoneNumber,
-          password,
-          roleName:"USER",
-        };
-        
-        if (firstName) {
-          requestData.firstName = firstName;
-        }
-        if (lastName) {
-          requestData.lastName = lastName;
-        }
-        if (address) {
-          requestData.address = address;
-        }
-        if (birthday) {
-          requestData.birthday = birthday;
-        }
 
-        const response = await axios.post(baseUrl + "/users/register", requestData);
+    try {
+        const requestData:UserData = {
+            email,
+            phoneNumber,
+            password,
+            roleName,
+          };
+          
+          if (firstName) {
+            requestData.firstName = firstName;
+          }
+          if (lastName) {
+            requestData.lastName = lastName;
+          }
+          if (address) {
+            requestData.address = address;
+          }
+          if (birthday) {
+            requestData.birthday = birthday;
+          }
+          
+          const response = await axios.post(baseUrl + "/users", requestData,
+            {
+                headers:{
+                    "Access-Control-Allow-Origin": baseUrl,
+                    "MediaType" : "application/json",
+                    "Authorization":"Bearer "+localStorage.getItem('jwt')
+                }
+            }
+          );
       
-      if (response.status == 200) {
-        onRegistrationComplete();
-        alert("Registration successful!");
-        navigation("/login");
+        if (response.status == 200) {
+            alert("Creation successful!");
+            navigation("/admin/home");
       }
     } catch (error) {
-        alert("Registration failed! "+error.response.data.details[0].errorMessage);
+      alert("Creation failed! "+error.response.data.details[0].errorMessage);
     }
   };
 
@@ -72,7 +77,7 @@ const Register = ({ onRegistrationComplete }: Props) => {
         <div className="col-md-6">
           <div className="card">
             <div className="card-body">
-              <h3 className="card-title text-center">Registro</h3>
+              <h3 className="card-title text-center">Agregar usuario</h3>
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
                 <div className="form-group">
@@ -141,9 +146,30 @@ const Register = ({ onRegistrationComplete }: Props) => {
                     required
                   />
                 </div>
+                <label>Rol del usuario:</label>
+                <br />
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="ADMIN" 
+                    onChange={(event) => setRoleName(event.target.value)}
+                    required/>
+                    <label className="form-check-label" htmlFor="inlineRadio1">Admin</label>
+                </div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="SHOP"
+                    onChange={(event) => setRoleName(event.target.value)}
+                    />
+                    <label className="form-check-label" htmlFor="inlineRadio2">Shop</label>
+                </div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="USER"
+                    onChange={(event) => setRoleName(event.target.value)}
+                    />
+                    <label className="form-check-label" htmlFor="inlineRadio3">User</label>
+                </div>
+                <br />
                 <div className="d-flex justify-content-center">
                   <button type="submit" className="btn btn-primary">
-                    Registrarse
+                    Agregar usuario
                   </button>
                 </div>
               </form>
@@ -153,6 +179,6 @@ const Register = ({ onRegistrationComplete }: Props) => {
       </div>
     </div>
   );
-};
+}
 
-export default Register;
+export default CreateUser;
