@@ -27,9 +27,8 @@ public class CategoryServiceTest {
     @BeforeEach
     private void init(){
         categoryRepository = mock(CategoryRepository.class);
-        exceptionBuilder = spy(CellphoneShopExceptionBuilder.class);
         categoryMapper = spy(CategoryMapperImpl.class);
-        categoryService = new CategoryService(categoryRepository, categoryMapper, exceptionBuilder);
+        categoryService = new CategoryService(categoryRepository, categoryMapper);
         categoryService = spy(categoryService);
     }
     
