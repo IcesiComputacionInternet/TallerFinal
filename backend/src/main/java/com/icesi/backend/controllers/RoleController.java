@@ -4,6 +4,7 @@ import com.icesi.backend.DTO.RoleCreateDTO;
 import com.icesi.backend.models.Role;
 import com.icesi.backend.service.RoleService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,7 @@ public class RoleController {
     }
 
     @PostMapping("/create")
-    public Role createRole(RoleCreateDTO roleCreateDTO){
+    public Role createRole(@RequestBody RoleCreateDTO roleCreateDTO){
         return roleService.createRole(roleCreateDTO).get();
     }
 }

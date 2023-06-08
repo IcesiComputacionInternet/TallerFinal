@@ -21,7 +21,7 @@ public class RoleService {
     private RoleMapper roleMapper;
 
     public Optional<Role> createRole(RoleCreateDTO roleCreateDTO){
-        Optional<String> role = Optional.of(roleCreateDTO.getRoleName());
+        Optional<String> role = Optional.ofNullable(roleCreateDTO.getRoleName());
 
         if(role.isPresent()){
             Optional<Role> existingRole = roleRepository.findByName(role.get());
@@ -32,9 +32,9 @@ public class RoleService {
 
             Role newRole = roleMapper.fromRoleCreateDTO(roleCreateDTO);
             return Optional.of(roleRepository.save(newRole));
+        } else {
+            throw new IllegalArgumentException("There are not name of role");
         }
-
-        return Optional.empty();
     }
 
 

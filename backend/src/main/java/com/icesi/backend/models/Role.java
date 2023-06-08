@@ -1,12 +1,12 @@
 package com.icesi.backend.models;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.UUID;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Builder
 @Data
@@ -16,6 +16,7 @@ public class Role {
     @Column(nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID roleId;
+    @Column(nullable = false, unique = true)
     private String roleName;
     private String description;
 }
