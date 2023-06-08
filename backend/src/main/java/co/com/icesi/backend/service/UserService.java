@@ -34,7 +34,7 @@ public class UserService {
         validateIfEmailIsDuplicated(requestUserDTO.getEmail());
         validateIfPhoneIsDuplicated(requestUserDTO.getPhoneNumber());
 
-        checkPermissions(requestUserDTO.getRole());
+        checkPermissionsToAssignRole(requestUserDTO.getRole());
         ShopUser shopUser = userMapper.fromUserDTO(requestUserDTO);
         shopUser.setUserId(UUID.randomUUID());
         shopUser.setRole(role);
@@ -44,7 +44,7 @@ public class UserService {
         return responseUserDTO;
     }
 
-    public void checkPermissions(String roleToAssign) {
+    public void checkPermissionsToAssignRole(String roleToAssign) {
         String role = CellphoneSecurityContext.getCurrentUserRole();
         if((roleToAssign.equals(UserRole.ADMIN.getRole()) && role.equals(UserRole.USER.getRole()))
                 || (role.equals(UserRole.SHOP.getRole()))){

@@ -31,8 +31,7 @@ public class RoleServiceTest {
     private void init(){
         roleRepository = mock(RoleRepository.class);
         roleMapper = spy(RoleMapperImpl.class);
-        exceptionBuilder = spy(CellphoneShopExceptionBuilder.class);
-        roleService = new RoleService(roleRepository, roleMapper, exceptionBuilder);
+        roleService = new RoleService(roleRepository, roleMapper);
         roleService = spy(roleService);
     }
 

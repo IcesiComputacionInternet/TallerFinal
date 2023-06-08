@@ -39,8 +39,7 @@ public class ShopUserServiceTest {
         roleRepository = mock(RoleRepository.class);
         userMapper = spy(UserMapperImpl.class);
         roleMapper = spy(RoleMapper.class);
-        exceptionBuilder = spy(CellphoneShopExceptionBuilder.class);
-        userService = new UserService(userRepository, roleRepository, userMapper,roleMapper,exceptionBuilder);
+        userService = new UserService(userRepository, roleRepository, userMapper,roleMapper);
         userService=spy(userService);
     }
 
@@ -50,7 +49,7 @@ public class ShopUserServiceTest {
         var userDTO = defaultUserDTO();
         var icesiRole= defaultIcesiRole();
         when(roleRepository.findByName(any())).thenReturn(Optional.of(icesiRole));
-        doNothing().when(userService).checkPermissions(any());
+        doNothing().when(userService).checkPermissionsToAssignRole(any());
         // Act
         userService.saveUser(userDTO);
         // Assert

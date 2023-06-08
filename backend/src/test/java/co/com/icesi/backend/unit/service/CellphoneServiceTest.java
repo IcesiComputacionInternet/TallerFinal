@@ -33,9 +33,8 @@ public class CellphoneServiceTest {
     private void init(){
         cellphoneRepository = mock(CellphoneRepository.class);
         categoryRepository = mock(CategoryRepository.class);
-        exceptionBuilder = spy(CellphoneShopExceptionBuilder.class);
         cellphoneMapper = spy(CellphoneMapperImpl.class);
-        cellphoneService = new CellphoneService(cellphoneRepository, cellphoneMapper, categoryRepository, exceptionBuilder);
+        cellphoneService = new CellphoneService(cellphoneRepository, cellphoneMapper, categoryRepository);
         cellphoneService = spy(cellphoneService);
     }
 
