@@ -12,14 +12,16 @@ interface Props {
 }
 
 const Login = ({setLogin}: Props) => {
-    const [emailPhone, setEmailPhone] = useState("");
+    const [emailOrPhone, setEmailOrPhone] = useState("");
     const [password, setPassword] = useState("");
+    const [emailOrPhoneError, setEmailOrPhoneError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
 
     const navigation: NavigateFunction = useNavigate();
     
     const handleSubmit = async (event: any) => {
         event.preventDefault();
-        await login(emailPhone, password).then((result) => {
+        await login(emailOrPhone, password).then((result) => {
             if(result){
                 setLogin();
                 navigation("/home");
@@ -27,12 +29,36 @@ const Login = ({setLogin}: Props) => {
         });
     };
 
+    const handleEmailOrPhoneChange = (event: any) => {
+        setEmailOrPhone(event.target.value);
+    };
+
+    const handlePasswordChange = (event: any) => {
+        setPassword(event.target.value);
+    };
+        
+    const handleEmailOrPhoneBlur = () => {
+        if (emailOrPhone === "") {
+            setEmailOrPhoneError(true);
+        } else {
+            setEmailOrPhoneError(false);
+        }
+    };
+
+    const handlePasswordBlur = () => {
+        if (password === "") {
+            setPasswordError(true);
+        } else {
+            setPasswordError(false);
+        }
+    };
+
     return (
         <div className='container d-flex align-items-center'>
             <div className='row justify-content-center w-100'>
                 <div className='card'>
                     <div className='card-body text-center'>
-                        <h3 className='card-title'>Login</h3>
+                        <h2 className='card-title'>Login</h2>
                         <form onSubmit={handleSubmit}>
                             <ul className="list-inline d-flex align-items-center">
                                 <li className="list-inline-item">
@@ -41,11 +67,12 @@ const Login = ({setLogin}: Props) => {
                                 <li className="list-inline-item w-100">
                                     <div className='form-group form-floating'>
                                         <input 
-                                            type="email"
-                                            className='form-control'
+                                            type="text"
+                                            className={`form-control ${emailOrPhoneError ? 'is-invalid' : ''}`}
                                             placeholder='Email or Phone'
-                                            value={emailPhone}
-                                            onChange={(event) => setEmailPhone(event.target.value)} 
+                                            value={emailOrPhone}
+                                            onChange={handleEmailOrPhoneChange} 
+                                            onBlur={handleEmailOrPhoneBlur}
                                         />
                                         <label>Email or Phone</label>
                                     </div>
@@ -59,10 +86,11 @@ const Login = ({setLogin}: Props) => {
                                     <div className='form-group form-floating'>
                                         <input
                                             type="password"
-                                            className='form-control'
+                                            className={`form-control ${passwordError ? 'is-invalid' : ''}`}
                                             placeholder='Password'
                                             value={password}
-                                            onChange={(event) => setPassword(event.target.value)}
+                                            onChange={handlePasswordChange}
+                                            onBlur={handlePasswordBlur}
                                         />
                                         <label>Password</label>
                                     </div>
