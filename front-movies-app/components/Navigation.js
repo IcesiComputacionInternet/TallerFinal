@@ -2,7 +2,9 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-function Navigation() {
+function Navigation({categories}) {
+
+
 
     return (
         <div>
@@ -15,19 +17,16 @@ function Navigation() {
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="#">Home</a>
-                            </li>
-                            <li className="nav-item">
-                            <a className="nav-link" href="#">Features</a>
+                            <a className="nav-link active" aria-current="page" href="/Home">Home</a>
                             </li>
                             <li className="nav-item dropdown" >
                                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Dropdown link
+                                    Categories
                                 </a>
                                 <ul className="dropdown-menu">
-                                    <li><a className="dropdown-item" href="#">Category 1</a></li>
-                                    <li><a className="dropdown-item" href="#">Category 2</a></li>
-                                    <li><a className="dropdown-item" href="#">Category 3</a></li>
+                                    {typeof categories === 'undefined' ? (categories.data.map((category) => (
+                                        <li><a className="dropdown-item" href="#">{category.name}</a></li>
+                                    ))):(<li><a className="dropdown-item" href="#">Category 1</a></li>)}
                                 </ul>
                             </li>
                         </ul>
