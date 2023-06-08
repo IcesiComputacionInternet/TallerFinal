@@ -7,7 +7,7 @@ import co.com.icesi.backend.error.util.CellphoneShopExceptionBuilder;
 import co.com.icesi.backend.mapper.RoleMapper;
 import co.com.icesi.backend.mapper.UserMapper;
 import co.com.icesi.backend.model.Role;
-import co.com.icesi.backend.model.User;
+import co.com.icesi.backend.model.ShopUser;
 import co.com.icesi.backend.repository.RoleRepository;
 import co.com.icesi.backend.repository.UserRepository;
 import co.com.icesi.backend.security.CellphoneSecurityContext;
@@ -35,11 +35,11 @@ public class UserService {
         validateIfPhoneIsDuplicated(requestUserDTO.getPhoneNumber());
 
         checkPermissions(requestUserDTO.getRole());
-        User user = userMapper.fromUserDTO(requestUserDTO);
-        user.setUserId(UUID.randomUUID());
-        user.setRole(role);
-        userRepository.save(user);
-        ResponseUserDTO responseUserDTO = userMapper.fromUserToResponseUserDTO(user);
+        ShopUser shopUser = userMapper.fromUserDTO(requestUserDTO);
+        shopUser.setUserId(UUID.randomUUID());
+        shopUser.setRole(role);
+        userRepository.save(shopUser);
+        ResponseUserDTO responseUserDTO = userMapper.fromUserToResponseUserDTO(shopUser);
         responseUserDTO.setRole(roleMapper.fromRoleToRoleDTO(role));
         return responseUserDTO;
     }

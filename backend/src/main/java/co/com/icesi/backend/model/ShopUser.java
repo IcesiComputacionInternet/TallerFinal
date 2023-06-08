@@ -12,7 +12,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class ShopUser {
     @Id
     private UUID userId;
     private String firstName;
@@ -27,6 +27,6 @@ public class User {
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_role_id", nullable = false)
     private Role role;
-    @OneToMany(mappedBy = "user")
-    private List<Order> orders;
+    @OneToMany(mappedBy = "shopUser")
+    private List<ShopOrder> shopOrders;
 }

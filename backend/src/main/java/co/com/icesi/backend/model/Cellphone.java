@@ -31,5 +31,5 @@ public class Cellphone {
     @JoinColumn(name = "category_category_id", nullable = false)
     private Category category;
     @ManyToMany(mappedBy = "items")
-    private List<Order> orders;
+    private List<ShopOrder> shopOrders;
 }

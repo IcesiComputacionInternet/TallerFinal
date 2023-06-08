@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 public class ResponseOrderDTO {
     private CategoryDTO category;
-    private String user;
+    private String shopUser;
     private String status;
     private long total;
     private List<ResponseCellphoneDTO> items;

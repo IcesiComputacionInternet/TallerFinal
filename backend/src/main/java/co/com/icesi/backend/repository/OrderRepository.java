@@ -1,7 +1,6 @@
 package co.com.icesi.backend.repository;
 
-import co.com.icesi.backend.model.Cellphone;
-import co.com.icesi.backend.model.Order;
+import co.com.icesi.backend.model.ShopOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order, UUID> {
-    @Query("SELECT order FROM Order order WHERE order.status = :status AND order.user.email = :userEmail")
-    Optional<Order> findByStatus(@Param("status") String status, @Param("userEmail")String userEmail);
+public interface OrderRepository extends JpaRepository<ShopOrder, UUID> {
+    @Query("SELECT order FROM ShopOrder order WHERE order.status = :status AND order.shopUser.email = :userEmail")
+    Optional<ShopOrder> findByStatus(@Param("status") String status, @Param("userEmail")String userEmail);
 }
