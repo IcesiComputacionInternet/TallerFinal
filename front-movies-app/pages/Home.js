@@ -12,10 +12,12 @@ function Home () {
 
 
   const [movies, setMovies] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getMovies()
+    getCategories()
     console.log(movies)
   }, [])
 
@@ -39,9 +41,28 @@ function Home () {
     } catch (err) {
       console.error("Error fetching movies:", err);
     }
-    
-    
-    
+  }
+
+  async function getCategories() {
+    try {
+      const {data} = await axios.get("http://localhost:8080/categories/all",
+      {
+          headers: {
+              "Access-Control-Allow-Origin": "http://localhost:8080",
+              "MediaType": "application/json",
+              "Authorization": "Bearer " + localStorage.getItem('jwt')
+          }
+  
+      })
+
+      let res = {data}
+      console.log(res)
+      setCategories(res)
+      setIsLoading(false)
+
+    } catch (err) {
+      console.error("Error fetching movies:", err);
+    }
   }
 
   
@@ -54,11 +75,21 @@ function Home () {
         
       </Head>
       
-      <Navigation/>
+      <Navigation categories={categories}/>
       <Carousel/>
 
       {isLoading ? (
-        <p>Loading...</p>
+        <div class="text-center">
+        <div class="spinner-grow spinner-grow-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="spinner-grow spinner-grow-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="spinner-grow spinner-grow-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
       ) : (
         <MoviesList movies={movies} />
       )}
