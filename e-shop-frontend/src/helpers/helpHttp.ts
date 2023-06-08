@@ -29,7 +29,7 @@ export const helpHttp = () => {
     //Si despues de tres segundos no hay respuesta aborta
     setTimeout(() => controller.abort(), 3000);
 
-    return fetch(endpoint, options)
+    return fetch(`${baseUrl}${endpoint}`, options)
       .then((res) =>
         res.ok
           ? res.json()

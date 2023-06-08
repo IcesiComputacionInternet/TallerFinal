@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import helpHttp from "../helpers/helpHttp.js";
-const baseUrl = "http://localhost:8080";
+
 interface Props {
   setLogin: (value: boolean) => void;
 }
@@ -19,7 +19,7 @@ const Login = ({ setLogin }: Props) => {
       body: data,
     };
     const api = helpHttp();
-    api.post(`${baseUrl}/token`, options).then((res: { token: string }) => {
+    api.post(`/token`, options).then((res: { token: string }) => {
       console.log(options);
       console.log(res);
       if (res.token) {
