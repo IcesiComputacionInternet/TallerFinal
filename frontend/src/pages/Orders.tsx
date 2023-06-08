@@ -35,6 +35,7 @@ function Orders(){
                                     <th>User</th>
                                     <th>Status</th>
                                     <th>Items</th>
+                                    <th>Address</th>
                                     <th>Total</th>
                                 </tr>
                                 </thead>
@@ -44,7 +45,7 @@ function Orders(){
                                         <td>{item.id}</td>
                                         <td>
                                             <select className="form-select" style={{width:"50%"}}>
-                                                <option value="IN_PROCESS">IN_PROCESS</option>
+                                                <option value="IN_PROCESS">IN PROCESS</option>
                                                 <option value="SENT">SENT</option>
                                                 <option value="DELIVERED">DELIVERED</option>
                                             </select>

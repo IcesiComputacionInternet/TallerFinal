@@ -194,9 +194,9 @@ const CreateItem = () => {
 
                 <div className="col-md-5">
                     <select id="inputState" className="form-select" style={{marginTop:"40px"}} >
-                        <option value="HIGH_RANGE">HIGH_RANGE</option>
-                        <option value="MID_RANGE">MID_RANGE</option>
-                        <option value="LOW_RANGE">LOW_RANGE</option>
+                        <option value="HIGH_RANGE">HIGH RANGE</option>
+                        <option value="MID_RANGE">MID RANGE</option>
+                        <option value="LOW_RANGE">LOW RANGE</option>
                     </select>
                 </div>
                 </div>
