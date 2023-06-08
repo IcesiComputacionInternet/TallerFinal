@@ -88,15 +88,13 @@ public class SecurityConfiguration {
                 RequestMatcherDelegatingAuthorizationManager.builder()
                         .add(permitAll,(context,other)->new AuthorizationDecision(true));
 
-        MvcRequestMatcher tempMvcRequestMatcher;
+        MvcRequestMatcher rolesEndpoints = new MvcRequestMatcher(introspector, RoleAPI.ROOT_PATH);
+        rolesEndpoints.setMethod(HttpMethod.POST);
+        managerBuilder.add(rolesEndpoints, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 
-        tempMvcRequestMatcher = new MvcRequestMatcher(introspector, RoleAPI.ROOT_PATH);
-        tempMvcRequestMatcher.setMethod(HttpMethod.POST);
-        managerBuilder.add(tempMvcRequestMatcher, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
-
-        tempMvcRequestMatcher = new MvcRequestMatcher(introspector, EShopUserAPI.ROOT_PATH+"/{eShopUserId}/role/{roleName}");
-        tempMvcRequestMatcher.setMethod(HttpMethod.PATCH);
-        managerBuilder.add(tempMvcRequestMatcher, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
+        MvcRequestMatcher assignRole = new MvcRequestMatcher(introspector, EShopUserAPI.ROOT_PATH+"/{eShopUserId}/role/{roleName}");
+        assignRole.setMethod(HttpMethod.PATCH);
+        managerBuilder.add(assignRole, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 
         AuthorizationManager<HttpServletRequest> manager = managerBuilder.build();
         return (authentication, object) -> manager.check(authentication,object.getRequest());

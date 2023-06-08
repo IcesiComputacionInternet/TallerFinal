@@ -22,7 +22,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class EShopUserMapperService {
+public class EShopUserService {
     private final EShopUserRepository EShopUserRepository;
     private final RoleRepository roleRepository;
     private final EShopUserMapper EShopUserMapper;
