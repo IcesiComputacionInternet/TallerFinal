@@ -80,12 +80,18 @@ public class SecurityConfiguration {
     public AuthorizationManager<RequestAuthorizationContext> requestMatcherAuthorizationManager
             (HandlerMappingIntrospector introspector){
 
+        MvcRequestMatcher login = new MvcRequestMatcher(introspector,"/token");
+
         MvcRequestMatcher registerEShopUser = new MvcRequestMatcher(introspector, EShopUserAPI.ROOT_PATH);
         registerEShopUser.setMethod(HttpMethod.POST);
 
-        MvcRequestMatcher login = new MvcRequestMatcher(introspector,"/token");
+        MvcRequestMatcher getItemById = new MvcRequestMatcher(introspector, ItemAPI.ROOT_PATH+"/{itemId}");
+        getItemById.setMethod(HttpMethod.GET);
 
-        RequestMatcher permitAll = new AndRequestMatcher(login, registerEShopUser);
+        MvcRequestMatcher getAllItems = new MvcRequestMatcher(introspector, ItemAPI.ROOT_PATH);
+        getAllItems.setMethod(HttpMethod.GET);
+
+        RequestMatcher permitAll = new AndRequestMatcher(login, registerEShopUser, getItemById, getAllItems);
         RequestMatcherDelegatingAuthorizationManager.Builder managerBuilder =
                 RequestMatcherDelegatingAuthorizationManager.builder()
                         .add(permitAll,(context,other)->new AuthorizationDecision(true));
@@ -100,8 +106,17 @@ public class SecurityConfiguration {
         MvcRequestMatcher categoryEndpoints = new MvcRequestMatcher(introspector, CategoryAPI.ROOT_PATH);
         managerBuilder.add(categoryEndpoints, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 
-        MvcRequestMatcher itemsEndpoints = new MvcRequestMatcher(introspector, ItemAPI.ROOT_PATH);
-        managerBuilder.add(itemsEndpoints, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_SHOP"));
+        MvcRequestMatcher createItem = new MvcRequestMatcher(introspector, ItemAPI.ROOT_PATH);
+        createItem.setMethod(HttpMethod.POST);
+        managerBuilder.add(createItem, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_SHOP"));
+
+        MvcRequestMatcher updateItem = new MvcRequestMatcher(introspector, ItemAPI.ROOT_PATH+"/{itemId}");
+        updateItem.setMethod(HttpMethod.PATCH);
+        managerBuilder.add(updateItem, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_SHOP"));
+
+        MvcRequestMatcher deleteItem = new MvcRequestMatcher(introspector, ItemAPI.ROOT_PATH+"/{itemId}");
+        deleteItem.setMethod(HttpMethod.DELETE);
+        managerBuilder.add(deleteItem, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_SHOP"));
 
         AuthorizationManager<HttpServletRequest> manager = managerBuilder.build();
         return (authentication, object) -> manager.check(authentication,object.getRequest());
