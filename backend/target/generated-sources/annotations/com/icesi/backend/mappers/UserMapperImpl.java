@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-08T17:46:54-0500",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Amazon.com Inc.)"
+    date = "2023-06-08T18:32:13-0500",
+    comments = "version: 1.5.3.Final, compiler: Eclipse JDT (IDE) 3.34.0.v20230413-0857, environment: Java 17.0.7 (Eclipse Adoptium)"
 )
 @Component
 public class UserMapperImpl implements UserMapper {
@@ -37,14 +37,14 @@ public class UserMapperImpl implements UserMapper {
 
         ShopUser.ShopUserBuilder shopUser = ShopUser.builder();
 
-        shopUser.userId( userUpdateDTO.getUserId() );
-        shopUser.password( userUpdateDTO.getPassword() );
-        shopUser.firstName( userUpdateDTO.getFirstName() );
-        shopUser.lastName( userUpdateDTO.getLastName() );
-        shopUser.email( userUpdateDTO.getEmail() );
-        shopUser.phoneNumber( userUpdateDTO.getPhoneNumber() );
         shopUser.address( userUpdateDTO.getAddress() );
         shopUser.birthday( userUpdateDTO.getBirthday() );
+        shopUser.email( userUpdateDTO.getEmail() );
+        shopUser.firstName( userUpdateDTO.getFirstName() );
+        shopUser.lastName( userUpdateDTO.getLastName() );
+        shopUser.password( userUpdateDTO.getPassword() );
+        shopUser.phoneNumber( userUpdateDTO.getPhoneNumber() );
+        shopUser.userId( userUpdateDTO.getUserId() );
 
         return shopUser.build();
     }
