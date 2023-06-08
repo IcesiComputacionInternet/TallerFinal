@@ -2,6 +2,7 @@ package co.icesi.automoviles.api;
 
 import co.icesi.automoviles.dto.ItemCreateDTO;
 import co.icesi.automoviles.dto.ItemShowDTO;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,5 +22,5 @@ public interface ItemAPI {
     public ItemShowDTO getItemById(@PathVariable("itemId") String itemId);
 
     @GetMapping
-    public List<ItemShowDTO> getItems();
+    public Page<ItemShowDTO> getItems();
 }

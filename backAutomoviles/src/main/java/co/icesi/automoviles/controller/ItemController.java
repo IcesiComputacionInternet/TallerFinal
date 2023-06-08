@@ -5,6 +5,7 @@ import co.icesi.automoviles.dto.ItemCreateDTO;
 import co.icesi.automoviles.dto.ItemShowDTO;
 import co.icesi.automoviles.service.ItemService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,11 +26,11 @@ public class ItemController implements ItemAPI {
 
     @Override
     public ItemShowDTO getItemById(String itemId) {
-        return null;
+        return itemService.getItemById(itemId);
     }
 
     @Override
-    public List<ItemShowDTO> getItems() {
+    public Page<ItemShowDTO> getItems() {
         return null;
     }
 }

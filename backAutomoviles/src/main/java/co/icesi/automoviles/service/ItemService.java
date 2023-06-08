@@ -57,7 +57,15 @@ public class ItemService {
         );
     }
 
-    public Item getItem(String itemUUID){
+    public ItemShowDTO getItemById(String itemUUID){
+        Item item = getItem(itemUUID);
+        CategoryShowDTOForItem category = categoryMapper.fromCategoryToCategoryShowDTOFromItem(item.getCategory());
+        ItemShowDTO itemShowDTO = itemMapper.fromItemToItemShowDTO(item);
+        itemShowDTO.setCategory(category);
+        return  itemShowDTO;
+    }
+
+    private Item getItem(String itemUUID){
         return itemRepository.findById(UUID.fromString(itemUUID)).orElseThrow(
                 ShopExceptionBuilder.createShopException(
                         "item with the id: " + itemUUID + " not found",
