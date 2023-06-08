@@ -3,7 +3,6 @@ import axios from "axios";
 import { Modal, Button, Navbar } from "react-bootstrap";
 import { BsCartFill } from "react-icons/bs";
 import Logout from "./Logout";
-import Purchases from "./Purchases";
 import "../ShopHome.css";
 
 interface Item {
@@ -26,7 +25,6 @@ const ShopHome = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const [showPurchasesModal, setShowPurchasesModal] = useState(false);
   const [cartItemCount, setCartItemCount] = useState(0); // Estado para la cantidad de productos en el carrito
 
   useEffect(() => {
@@ -57,10 +55,9 @@ const ShopHome = () => {
 
   const addItemToOrders = async () => {
     try {
-      // Handle success response if needed
       setCartItemCount((prevCount) => prevCount + 1); // Incrementar la cantidad de productos en el carrito
       setShowModal(false); // Cerrar el modal después de agregar el producto al carrito
-      alert("Compra agregada exitosamente"); // Mostrar mensaje de éxito
+      alert("Compra agregada exitosamente al carrito"); // Mostrar mensaje de éxito
     } catch (error) {
       console.error("Error adding item to orders:", error);
     }
@@ -68,18 +65,18 @@ const ShopHome = () => {
 
   return (
     <div>
-      <Navbar bg="dark" variant="dark" fixed="top">
+      <Navbar bg="dark" variant="dark" fixed="top" className="justify-content-between">
         <Navbar.Brand href="#home">Mi Tienda</Navbar.Brand>
-        <div className="ml-auto">
-          <Logout />
-          <div className="cart-icon-container">
+        <div className="d-flex align-items-center ml-auto">
+          <div className="cart-icon-container mr-3">
             <BsCartFill size={24} />
-            <span className="cart-item-count">{cartItemCount}</span> {/* Mostrar la cantidad de productos en el carrito */}
+            <span className="cart-item-count">{cartItemCount}</span>
           </div>
+          <Logout />
         </div>
       </Navbar>
       <div className="title-container">
-        <h1 className="mx-auto">Productos de la tienda</h1>
+        <h2 className="mx-auto">Productos de la tienda</h2>
       </div>
       <div className="shop-home-container">
         <div className="item-grid">
@@ -122,14 +119,14 @@ const ShopHome = () => {
             </p>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" onClick={addItemToOrders}>
-              Comprar
-            </Button>
+            <div className="text-center"> {/* Contenedor para centrar el botón */}
+              <Button variant="primary" onClick={addItemToOrders}>
+                Comprar
+              </Button>
+            </div>
           </Modal.Footer>
         </Modal>
       )}
-
-      <Purchases show={showPurchasesModal} onHide={() => setShowPurchasesModal(false)} />
     </div>
   );
 };
