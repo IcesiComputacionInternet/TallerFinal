@@ -8,11 +8,11 @@ import java.util.List;
 
 @RequestMapping(CategoryAPI.BASE_CATEGORY_URL)
 public interface CategoryAPI {
-    String BASE_CATEGORY_URL = "/category";
+    String BASE_CATEGORY_URL = "/categories";
     @PostMapping("/create")
     CategoryDTO createCategory(@RequestBody @Valid CategoryDTO categoryDTO);
-    @GetMapping("/{category}")
-    CategoryDTO getCategory(@PathVariable("category") String categoryName);
+    @GetMapping("/{name}")
+    CategoryDTO getCategory(@PathVariable("name") String categoryName);
     @GetMapping("/getCategories")
     List<CategoryDTO> getAllCategories();
 }
