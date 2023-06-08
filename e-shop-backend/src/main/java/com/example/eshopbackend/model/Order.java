@@ -1,5 +1,6 @@
 package com.example.eshopbackend.model;
 
+import com.example.eshopbackend.enums.OrderStatus;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,7 +21,7 @@ public class Order {
     @JoinColumn(name="userId", nullable=false)
     private User user;
 
-    private String status;
+    private OrderStatus status;
 
     private long total;
 
