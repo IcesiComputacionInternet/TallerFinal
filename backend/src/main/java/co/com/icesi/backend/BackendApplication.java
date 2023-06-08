@@ -14,6 +14,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -25,9 +26,9 @@ public class BackendApplication {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 	
-	@Bean
+//	@Bean
 
-	CommandLineRunner commandLineRunner(UserRepository userRepository, RoleRepository roleRepository, CategoryRepository categoryRepository, CellphoneRepository cellphoneRepository) {
+	CommandLineRunner commandLineRunner(UserRepository userRepository, RoleRepository roleRepository, CategoryRepository categoryRepository, CellphoneRepository cellphoneRepository, PasswordEncoder encoder) {
 
 		Role adminRole = Role.builder()
 				.roleId(UUID.randomUUID())
@@ -52,7 +53,7 @@ public class BackendApplication {
 				.firstName("Laura Daniela")
 				.lastName("Martinez Ortiz")
 				.email("lauramartinez@gmail.com")
-				.password("password")
+				.password(encoder.encode("password"))
 				.phoneNumber("+57317599839")
 				.address("Cra 98 #325")
 				.birthday(LocalDateTime.of(2002, 6, 14, 0, 0))
@@ -64,7 +65,7 @@ public class BackendApplication {
 				.firstName("Luis Miguel")
 				.lastName("Ossa Arias")
 				.email("luismiguel@gmail.com")
-				.password("password")
+				.password(encoder.encode("password"))
 				.phoneNumber("+573175933339")
 				.address("Cra 7 #69-64")
 				.birthday(LocalDateTime.of(2002, 7, 5, 0, 0))
@@ -76,7 +77,7 @@ public class BackendApplication {
 				.firstName("Keren López")
 				.lastName("Córdoba")
 				.email("kerenlopez@gmail.com")
-				.password("password")
+				.password(encoder.encode("password"))
 				.phoneNumber("+573166633339")
 				.address("Cra 7 #69-64")
 				.birthday(LocalDateTime.of(2003, 12, 8, 0, 0))

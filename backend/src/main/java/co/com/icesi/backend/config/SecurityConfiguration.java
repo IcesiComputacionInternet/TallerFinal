@@ -42,6 +42,8 @@ public class SecurityConfiguration {
         return new ProviderManager(authenticationManager);
     }
 
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthorizationManager<RequestAuthorizationContext> access) throws Exception {
         return http
                 .cors().and()
