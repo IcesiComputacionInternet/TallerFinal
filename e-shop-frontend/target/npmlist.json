@@ -1,0 +1,1 @@
+{"version":"0.0.0","name":"e-shop-frontend","dependencies":{"bootstrap":{"version":"5.3.0"},"localforage":{"version":"1.10.0"},"match-sorter":{"version":"6.3.1"},"react-dom":{"version":"18.2.0"},"react-router-dom":{"version":"6.12.1"},"react":{"version":"18.2.0"},"sort-by":{"version":"1.2.0"}}}
