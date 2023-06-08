@@ -1,10 +1,10 @@
 package com.icesi.backend.service;
 
 
-import icesi.VirtualStore.dto.LoginDTO;
-import icesi.VirtualStore.dto.TokenDTO;
-import icesi.VirtualStore.model.Permission;
+import com.icesi.backend.DTO.LoginDTO;
+import com.icesi.backend.DTO.TokenDTO;
 
+import java.security.Permission;
 import java.util.List;
 import java.util.UUID;
 

@@ -1,6 +1,6 @@
 package com.icesi.backend.DTO;
 
-import icesi.VirtualStore.validation.CustomAnnotations.*;
+import com.icesi.backend.validation.CustomAnnotations;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,11 +13,11 @@ import javax.validation.constraints.NotNull;
 public class LoginDTO {
 
     @NotNull(message = "The username cannot be null")
-    @ValidUsername
+    @CustomAnnotations.ValidUsername
     private String username;
 
     @NotNull(message = "The password cannot be null")
-    @ValidPassword
+    @CustomAnnotations.ValidPassword
     private String password;
 
 }

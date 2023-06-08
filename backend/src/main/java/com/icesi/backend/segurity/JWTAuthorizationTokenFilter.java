@@ -1,34 +1,13 @@
-/*
- * BrightInsight CONFIDENTIAL
-
- * Copyright (c) 2019-2021 BrightInsight, All Rights Reserved.
- * NOTICE: These materials, together with all information, code, and other content contained herein (all of the
- * foregoing, collectively, this “Content”) is, and remains the property of BrightInsight, Inc. (“BrightInsight”), and
- * BrightInsight reserves all rights in and related to this Content. This Content is confidential and proprietary to
- * BrightInsight and may be covered by U.S. and/or foreign registered intellectual property or proprietary rights and/or
- * laws, including without limitation trade secret and copyright laws. Dissemination or reproduction of or access to
- * this Content, in whole or in part, is strictly forbidden unless prior written permission is obtained from
- * BrightInsight. The copyright notice above does not evidence any actual or intended publication or disclosure of this
- * Content, and this Content may be a trade secret of BrightInsight.
-
- * ANY USE, REPRODUCTION, MODIFICATION, DISTRIBUTION, PUBLIC PERFORMANCE, OR PUBLIC DISPLAY OF THIS CONTENT OR THROUGH
- * USE OF ANY SOFTWARE THAT IS PART OF THIS CONTENT (REGARDLESS OF WHETHER IN SOURCE OR OBJECT CODE), IN WHOLE OR IN
- * PART, IS STRICTLY PROHIBITED OTHER THAN AS EXPRESSLY AUTHORIZED BY BRIGHTINSIGHT IN WRITING, AND MAY BE IN VIOLATION
- * OF APPLICABLE LAWS AND INTERNATIONAL TREATIES. THE RECEIPT OR POSSESSION OF THIS CONTENT AND/OR RELATED INFORMATION
- * DOES NOT CONVEY OR IMPLY ANY RIGHT TO REPRODUCE, DISCLOSE, DISTRIBUTE OR OTHERWISE USE IT, OR TO MANUFACTURE, USE, OR
- * SELL ANYTHING THAT IT MAY DESCRIBE, IN WHOLE OR IN PART.
- */
 
 package com.icesi.backend.segurity;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import icesi.VirtualStore.constant.VirtualStoreErrorCode;
-import icesi.VirtualStore.error.exception.VirtualStoreError;
-import icesi.VirtualStore.error.exception.VirtualStoreException;
-import icesi.VirtualStore.model.Permission;
-import icesi.VirtualStore.service.LoginService;
-import icesi.VirtualStore.utils.JWTParser;
+import com.icesi.backend.error.exception.E_SHOP_Error;
+import com.icesi.backend.error.exception.E_SHOP_Exception;
+import com.icesi.backend.errorConstants.BackendApplicationErrors;
+import com.icesi.backend.service.LoginService;
+import com.icesi.backend.service.TOken_Parser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -47,6 +26,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Permission;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -79,17 +59,17 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
         try {
             if (containsToken(request)) {
                 String jwtToken = request.getHeader(AUTHORIZATION_HEADER).replace(TOKEN_PREFIX, StringUtils.EMPTY);
-                Claims claims = JWTParser.decodeJWT(jwtToken);
+                Claims claims = TOken_Parser.decodeJWT(jwtToken);
                 SecurityContext context = parseClaims(jwtToken, claims);
                 SecurityContextHolder.setUserContext(context);
                 roleFilter(context, request, response);
                 filterChain.doFilter(request, response);
             } else {
-                createUnauthorizedFilter(new VirtualStoreException(HttpStatus.UNAUTHORIZED, new VirtualStoreError(VirtualStoreErrorCode.CODE_L_03, VirtualStoreErrorCode.CODE_L_03.getMessage())), response);
+                createUnauthorizedFilter(new E_SHOP_Exception(HttpStatus.UNAUTHORIZED, new E_SHOP_Error(BackendApplicationErrors.CODE_L_03, BackendApplicationErrors.CODE_L_03.getMessage())), response);
             }
         } catch (JwtException e) {
             System.out.println("Error verifying JWT token: " + e.getMessage());
-            createUnauthorizedFilter(new VirtualStoreException(HttpStatus.UNAUTHORIZED, new VirtualStoreError(VirtualStoreErrorCode.CODE_L_03, VirtualStoreErrorCode.CODE_L_03.getMessage())), response);
+            createUnauthorizedFilter(new E_SHOP_Exception(HttpStatus.UNAUTHORIZED, new E_SHOP_Error(BackendApplicationErrors.CODE_L_03, BackendApplicationErrors.CODE_L_03.getMessage())), response);
         } finally {
             SecurityContextHolder.clearContext();
         }
@@ -109,7 +89,7 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
         }
 
         if (!isValid) {
-            createUnauthorizedFilter(new VirtualStoreException(HttpStatus.UNAUTHORIZED, new VirtualStoreError(VirtualStoreErrorCode.CODE_L_03, VirtualStoreErrorCode.CODE_L_03.getMessage())), response);
+            createUnauthorizedFilter(new E_SHOP_Exception(HttpStatus.UNAUTHORIZED, new E_SHOP_Error(BackendApplicationErrors.CODE_L_03, BackendApplicationErrors.CODE_L_03.getMessage())), response);
         }
     }
 
@@ -145,17 +125,18 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
     }
 
     @SneakyThrows
-    private void createUnauthorizedFilter(VirtualStoreException virtualStoreException, HttpServletResponse response) {
+    private void createUnauthorizedFilter(E_SHOP_Exception ESHOP_Exception, HttpServletResponse response) {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        VirtualStoreError virtualStoreError = virtualStoreException.getError();
+        E_SHOP_Error ESHOP_Error = ESHOP_Exception.getError();
 
-        String message = objectMapper.writeValueAsString(virtualStoreError);
+        String message = objectMapper.writeValueAsString(ESHOP_Error);
 
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON_VALUE);
         response.getWriter().write(message);
         response.getWriter().flush();
     }
+
 }
