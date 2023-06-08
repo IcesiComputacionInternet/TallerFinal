@@ -34,10 +34,8 @@ public class OrderDTO {
     private String userPhoneNumber;
 
     @NotNull
-    private List<String> items;
+    private List<ItemDTO> items;
 
-    @Null
-    private String response;
 
 
 }

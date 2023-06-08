@@ -65,7 +65,7 @@ public class OrderService {
 
     public OrderDTO save(OrderDTO orderDTO) {
         AdminAndUserAuthorizationOnly();
-        List<Item> items= orderDTO.getItems().stream().map(x-> itemRepository.findByName(x).orElseThrow(
+        List<Item> items= orderDTO.getItems().stream().map(x-> itemRepository.findByName(x.getName()).orElseThrow(
                 createEShopException(
                         "Item does not exists",
                         HttpStatus.NOT_FOUND,
