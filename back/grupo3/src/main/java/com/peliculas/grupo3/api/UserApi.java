@@ -21,8 +21,8 @@ public interface UserApi {
     @GetMapping("/all")
     List<UserResponseDTO> getAllUser();
 
-    @GetMapping("/findByName")
-    UserResponseDTO findByName(@RequestBody String name);
+    @GetMapping("/findByName/{name}")
+    UserResponseDTO findByName(@PathVariable String name);
 
     @CrossOrigin
     @GetMapping("/CurrentUser")

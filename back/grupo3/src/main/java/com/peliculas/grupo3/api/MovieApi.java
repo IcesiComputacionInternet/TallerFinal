@@ -22,6 +22,6 @@ public interface MovieApi {
     @GetMapping("/{movie}")
     MovieDTO findByName(@PathVariable String movie);
 
-    @GetMapping("/findByCategory")
-    List<MovieDTO> findByCategory(@RequestBody String category);
+    @GetMapping("/findByCategory/{category}")
+    List<MovieDTO> findByCategory(@PathVariable String category);
 }

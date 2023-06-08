@@ -195,8 +195,8 @@ public class UserTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
-        var result = mocMvc.perform(MockMvcRequestBuilders.get("/users/findByName")
-                        .content("he who")
+        String name="he who";
+        var result = mocMvc.perform(MockMvcRequestBuilders.get("/users/findByName/"+name)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
@@ -218,8 +218,8 @@ public class UserTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
-        var result = mocMvc.perform(MockMvcRequestBuilders.get("/users/findByName")
-                        .content("not a user")
+        String name= "not a user";
+        var result = mocMvc.perform(MockMvcRequestBuilders.get("/users/findByName/"+name)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))

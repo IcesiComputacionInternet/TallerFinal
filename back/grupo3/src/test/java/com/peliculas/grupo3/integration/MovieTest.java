@@ -63,8 +63,8 @@ class MovieTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
-        var result = mocMvc.perform(MockMvcRequestBuilders.get("/movies/findByName")
-                        .content("Fast X")
+        String name= "Fast X";
+        var result = mocMvc.perform(MockMvcRequestBuilders.get("/movies/"+name)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
@@ -85,8 +85,8 @@ class MovieTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
-        var result = mocMvc.perform(MockMvcRequestBuilders.get("/movies/findByName")
-                        .content("Fast 10")
+        String name = "fast 10";
+        var result = mocMvc.perform(MockMvcRequestBuilders.get("/movies/"+name)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
@@ -260,8 +260,8 @@ class MovieTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
-        var result = mocMvc.perform(MockMvcRequestBuilders.get("/movies/findByCategory")
-                        .content("Accion")
+        String name="Accion";
+        var result = mocMvc.perform(MockMvcRequestBuilders.get("/movies/findByCategory/"+name)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
@@ -280,8 +280,8 @@ class MovieTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
-        var result = mocMvc.perform(MockMvcRequestBuilders.get("/movies/findByCategory")
-                        .content("a")
+        String name="a";
+        var result = mocMvc.perform(MockMvcRequestBuilders.get("/movies/findByCategory/"+name)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
