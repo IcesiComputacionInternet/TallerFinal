@@ -77,20 +77,20 @@ public class SecurityConfiguration {
     @Bean
     public AuthorizationManager<RequestAuthorizationContext> requestMatcherAuthorizationManager
             (HandlerMappingIntrospector introspector){
-        MvcRequestMatcher tempMvcRequestMatcher;
-        RequestMatcher permitAll = new AndRequestMatcher(new MvcRequestMatcher(introspector,"/token"));
+
+        MvcRequestMatcher registerEShopUser = new MvcRequestMatcher(introspector, EShopUserAPI.ROOT_PATH);
+        registerEShopUser.setMethod(HttpMethod.POST);
+
+        MvcRequestMatcher login = new MvcRequestMatcher(introspector,"/token");
+
+        RequestMatcher permitAll = new AndRequestMatcher(login, registerEShopUser);
         RequestMatcherDelegatingAuthorizationManager.Builder managerBuilder =
                 RequestMatcherDelegatingAuthorizationManager.builder()
                         .add(permitAll,(context,other)->new AuthorizationDecision(true));
 
-        managerBuilder.add(new MvcRequestMatcher(introspector, EShopUserAPI.ROOT_PATH+"/**"),
-                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_USER"));
+        MvcRequestMatcher tempMvcRequestMatcher;
 
         tempMvcRequestMatcher = new MvcRequestMatcher(introspector, RoleAPI.ROOT_PATH);
-        tempMvcRequestMatcher.setMethod(HttpMethod.POST);
-        managerBuilder.add(tempMvcRequestMatcher, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
-
-        tempMvcRequestMatcher = new MvcRequestMatcher(introspector, EShopUserAPI.ROOT_PATH);
         tempMvcRequestMatcher.setMethod(HttpMethod.POST);
         managerBuilder.add(tempMvcRequestMatcher, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 

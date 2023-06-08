@@ -28,7 +28,7 @@ public class EShopUserMapperService {
     private final EShopUserMapper EShopUserMapper;
     private final PasswordEncoder passwordEncoder;
 
-    public EShopUserShowDTO registerEShopUser(EShopUserCreateDTO EShopUserCreateDTO, String eShopUserRole) {
+    public EShopUserShowDTO registerEShopUser(EShopUserCreateDTO EShopUserCreateDTO) {
         ArrayList<String> errors = new ArrayList<>();
 
         if(!emailAvailable(EShopUserCreateDTO.getEmail())){

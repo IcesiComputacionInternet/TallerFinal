@@ -19,8 +19,7 @@ public class EShopUserController implements EShopUserAPI {
 
     @Override
     public EShopUserShowDTO registerEShopUser(@Valid EShopUserCreateDTO EShopUserCreateDTO) {
-        String role = ShopSecurityContext.getCurrentUserRole();
-        return EShopUserMapperService.registerEShopUser(EShopUserCreateDTO, role);
+        return EShopUserMapperService.registerEShopUser(EShopUserCreateDTO);
     }
 
     @Override
