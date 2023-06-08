@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { NavigateFunction, useNavigate} from "react-router-dom";
 
+import { login } from '../../../services/login';
+
 import { faUser,
         faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,8 +19,12 @@ const Login = ({setLogin}: Props) => {
     
     const handleSubmit = async (event: any) => {
         event.preventDefault();
-        setLogin();
-        navigation("/home");
+        await login(emailPhone, password).then((result) => {
+            if(result){
+                setLogin();
+                navigation("/home");
+            }
+        });
     };
 
     return (
