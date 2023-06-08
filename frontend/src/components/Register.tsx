@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import axios from "axios";
+
 const baseUrl = "http://localhost:8091";
 
 interface Props {
@@ -7,32 +9,36 @@ interface Props {
 }
 
 const Register = ({ onRegistrationComplete }: Props) => {
+
+  const navigation : NavigateFunction = useNavigate();
+
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [birthdate, setBirthdate] = useState("");
+  const [birthday, setBirthday] = useState("");
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     try {
-      const response = await axios.post(baseUrl + "/register", {
+      const response = await axios.post(baseUrl + "/users/register", {
         email,
-        phone,
+        phoneNumber,
         password,
         address,
         firstName,
         lastName,
-        birthdate,
-        role: "USER", // Establecer el valor de role como "USER"
+        birthday,
+        roleName: "USER", // Establecer el valor de role como "USER"
       });
-
-      if (response.data.success) {
+      
+      if (response.status == 200) {
         onRegistrationComplete();
-        console.log("Registration successful!", response.data);
+        alert("Registration successful!");
+        navigation("/login");
       }
     } catch (error) {
       console.error("Registration failed!", error);
@@ -54,6 +60,7 @@ const Register = ({ onRegistrationComplete }: Props) => {
                     className="form-control"
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
+                    required
                   />
                 </div>
                 <div className="form-group">
@@ -61,8 +68,10 @@ const Register = ({ onRegistrationComplete }: Props) => {
                   <input
                     type="tel"
                     className="form-control"
-                    value={phone}
-                    onChange={(event) => setPhone(event.target.value)}
+                    placeholder="+573100000000"
+                    value={phoneNumber}
+                    onChange={(event) => setPhoneNumber(event.target.value)}
+                    required
                   />
                 </div>
                 <div className="form-group">
@@ -72,6 +81,7 @@ const Register = ({ onRegistrationComplete }: Props) => {
                     className="form-control"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
+                    required
                   />
                 </div>
                 <div className="form-group">
@@ -106,8 +116,8 @@ const Register = ({ onRegistrationComplete }: Props) => {
                   <input
                     type="date"
                     className="form-control"
-                    value={birthdate}
-                    onChange={(event) => setBirthdate(event.target.value)}
+                    value={birthday}
+                    onChange={(event) => setBirthday(event.target.value)}
                   />
                 </div>
                 <div className="d-flex justify-content-center">
