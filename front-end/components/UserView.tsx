@@ -1,11 +1,9 @@
-import { NextPage } from "next";
+import styles from "../styles/User.module.css";
 
-const UserView: NextPage = () => {
+export default function UserView() {
     return (
-        <div>
+        <div className={styles.maxContainer}>
             <h1>User View</h1>
         </div>
     );
 }
-
-export default UserView;

@@ -1,5 +1,6 @@
 import styles from '../styles/Layout.module.css'
 import Sidebar from '../components/Sidebar'
+import Topbar from '../components/Topbar'
 import { useState,useEffect } from 'react';
 
 function Layout({children}:any){
@@ -21,7 +22,8 @@ function Layout({children}:any){
         </div>
     )}else if(role === 'user') {
         return (
-            <div className={styles.layout}>
+            <div className={styles.userLayout}>
+                <Topbar />
                 {children}
             </div>
             )
