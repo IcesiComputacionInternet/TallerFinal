@@ -24,7 +24,6 @@ public class CategoryController implements CategoryAPI {
     public ResponseItemDTO assignCategory(AssignCategoryDTO assignCategoryDTO) {
         return categoryService.assignCategory(assignCategoryDTO);
     }
-
     @Override
     public List<ResponseItemDTO> getItemsByCategory(String categoryName) {
         return categoryService.getItemsByCategory(categoryName);

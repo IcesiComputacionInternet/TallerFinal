@@ -19,7 +19,7 @@ public interface CategoryAPI {
     @PostMapping
     CreateCategoryDTO createCategory(@Valid @RequestBody CreateCategoryDTO categoryDTO);
 
-    @PatchMapping("/assignCategory")
+    @PatchMapping("/assignCategory/")
     ResponseItemDTO assignCategory(@Valid @RequestBody AssignCategoryDTO assignCategoryDTO);
 
     @GetMapping("/itemsByCategory/{categoryName}")

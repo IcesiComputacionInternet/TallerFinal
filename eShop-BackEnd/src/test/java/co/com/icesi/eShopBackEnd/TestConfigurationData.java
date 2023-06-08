@@ -1,12 +1,15 @@
 package co.com.icesi.eShopBackEnd;
 
 
+import co.com.icesi.eShopBackEnd.dto.AssignCategoryDTO;
 import co.com.icesi.eShopBackEnd.dto.CreateCategoryDTO;
 import co.com.icesi.eShopBackEnd.model.Category;
 import co.com.icesi.eShopBackEnd.model.Customer;
+import co.com.icesi.eShopBackEnd.model.Item;
 import co.com.icesi.eShopBackEnd.model.Role;
 import co.com.icesi.eShopBackEnd.repository.CategoryRepository;
 import co.com.icesi.eShopBackEnd.repository.CustomerRepository;
+import co.com.icesi.eShopBackEnd.repository.ItemRepository;
 import co.com.icesi.eShopBackEnd.service.CategoryService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -21,7 +24,7 @@ import java.util.UUID;
 public class TestConfigurationData {
     @Bean
     CommandLineRunner commandLineRunner(CustomerRepository users,
-                                        PasswordEncoder encoder, CategoryService categoryRepository) {
+                                        PasswordEncoder encoder, CategoryRepository categoryRepository, ItemRepository itemRepository) {
 
         Role admin = Role.builder()
                 .roleId(UUID.randomUUID())
@@ -99,18 +102,26 @@ public class TestConfigurationData {
                 .role(shop)
                 .build();
 
-        CreateCategoryDTO categoryDTO= CreateCategoryDTO.builder()
+        Category assignCategory = Category.builder()
                 .name("Television")
+                .categoryId(UUID.randomUUID())
+                .description("Teacher")
+                .build();
+        Item item=  Item.builder()
+                .name("itemValid")
+                .itemId(UUID.randomUUID())
+                .category(assignCategory)
                 .description("Is a teacher the university Icesi")
                 .build();
-
 
         return args -> {
 
             users.save(adminCustomer);
             users.save(normalCustomer);
             users.save(shopCustomer);
-            categoryRepository.save(categoryDTO);
+            categoryRepository.save(assignCategory);
+            itemRepository.save(item);
+
         };
 
     }
