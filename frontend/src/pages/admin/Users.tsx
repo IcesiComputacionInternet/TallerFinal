@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import AdminNavbar from "../../components/AdminNavbar";
 
 const baseUrl = "http://localhost:8091";
 
 function Users (){
+
+  const navigation : NavigateFunction = useNavigate();
 
   const [users, setUsers] = useState([]);
 
@@ -17,14 +20,19 @@ function Users (){
     getData();
   }, []);
 
+  const handleClick = async (event: any) => {
+    event.preventDefault();
+    navigation("/admin/users/create");
+  };
+
   return (
     <>
      <AdminNavbar />
      <br />
      {users.length > 0 ?(
         <div className="container mt-4">
-        <p className="h4">Usuarios registrados</p>
-        <br />
+          <p className="h4">Usuarios registrados</p>
+          <br />
           <table className="table table-striped-columns" style={{tableLayout:"fixed"}}>
             <thead>
                 <tr>
@@ -51,8 +59,11 @@ function Users (){
               ))}
             </tbody>
           </table>
+          <div className="d-flex justify-content-end">
+            <button type="button" className="btn btn-primary" onClick={handleClick}>Agregar usuario</button>
+          </div>
         </div>
-
+        
      ) : (
         <div className="container">
           <p className="h4">No hay usuarios registrados</p>

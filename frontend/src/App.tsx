@@ -7,9 +7,9 @@ import ShopHome from "./components/ShopHome";
 import NotFound from "./components/NotFound";
 import HomeAdmin from "./pages/admin/AdminHome";
 import Users from "./pages/admin/Users";
+import CreateUsers from "./pages/admin/CreateUsers";
 import Items from "./pages/admin/Items";
 import Orders from "./pages/admin/Orders";
-import Order from "./components/Orders";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
@@ -39,9 +39,9 @@ function App() {
               </Route>
               <Route path="/admin/home" element={<HomeAdmin/>}></Route>
               <Route path="/admin/users" element={<Users/>}></Route>
+              <Route path="/admin/users/create" element={<CreateUsers/>}></Route>
               <Route path="/admin/items" element={<Items/>}></Route>
               <Route path="/admin/orders" element={<Orders/>}></Route>
-              <Route path="/orders" element={<Order/>}></Route>
           </Routes>
       </BrowserRouter>
   );
