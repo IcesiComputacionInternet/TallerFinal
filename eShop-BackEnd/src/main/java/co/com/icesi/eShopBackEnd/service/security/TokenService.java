@@ -1,6 +1,8 @@
 package co.com.icesi.eShopBackEnd.service.security;
 
 import co.com.icesi.eShopBackEnd.dto.response.TokenDTO;
+import co.com.icesi.eShopBackEnd.model.Customer;
+import co.com.icesi.eShopBackEnd.repository.CustomerRepository;
 import co.com.icesi.eShopBackEnd.security.CustomAuthentication;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,6 +25,7 @@ import java.util.stream.Collectors;
 public class TokenService {
 
     private final JwtEncoder encoder;
+    private final CustomerRepository customerRepository;
 
 
 
@@ -41,8 +46,12 @@ public class TokenService {
                 .claim("customerId",customAuthentication.getName())
                 .build();
         var encoderParameters = JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS256).build(),claims);
+        var token = this.encoder.encode(encoderParameters).getTokenValue();
+        Optional<Customer> customer = customerRepository.getCustomerById(UUID.fromString(customAuthentication.getName()));
+        var role = customer.isPresent() ? customer.get().getRole().toString() :"NONE";
         return TokenDTO.builder()
-                .token(this.encoder.encode(encoderParameters).getTokenValue())
+                .token(token)
+                .role(role)
                 .build();
     }
 

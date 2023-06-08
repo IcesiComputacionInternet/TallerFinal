@@ -19,7 +19,7 @@ public interface SalesOrderAPI {
     @PostMapping
     ResponseSalesOrderDTO createSalesOrder(@Valid @RequestBody CreateSalesOderDTO salesOrder);
 
-    @GetMapping("/{salesOrderId}")
+    @GetMapping("/getOrder/{salesOrderId}")
     ResponseSalesOrderDTO getSalesOrderById(@PathVariable String salesOrderId);
 
     @PatchMapping("/updateState")

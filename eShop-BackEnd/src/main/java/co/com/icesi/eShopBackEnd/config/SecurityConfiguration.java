@@ -77,11 +77,52 @@ public class SecurityConfiguration {
                 = RequestMatcherDelegatingAuthorizationManager.builder()
                 .add(permitAll,(context,other)-> new AuthorizationDecision(true));
 
-/*
-        managerBuilder.add(new MvcRequestMatcher(introspector,"/admin/**"),
+        //Category
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/category/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_SHOP","SCOPE_ADMIN"));
+
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/category/itemsByCategory/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_SHOP"));
+
+        //Customer
+
+        //Para que el usuario se pueda registrar
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/user"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_ADMIN"));
+
+        //Porque el usuario debería poder ver sus ordenes
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/user/order/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER"));
+
+
+        //Item
+
+        //Para que el usuario pueda ver los items y todos los items
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/item/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_SHOP"));
+
+        //Role
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/role"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 
- */
+        //SalesOrder
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/salesOrder/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_ADMIN"));
+
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/salesOrder/getOrder/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_ADMIN","SCOPE_SHOP"));
+
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/salesOrder/updateState"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_SHOP","SCOPE_ADMIN"));
+
+        //ADMIN
+
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
+
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/user/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
+
 
         AuthorizationManager<HttpServletRequest> manager = managerBuilder.build();
         return (authentication, object) -> manager.check(authentication,object.getRequest());
