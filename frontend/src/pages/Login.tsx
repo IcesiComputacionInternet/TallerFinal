@@ -1,5 +1,6 @@
 // @ts-ignore
 import React, { useState } from "react";
+import {Col, Container, Row} from "react-bootstrap"
 // import axios from "axios";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import '../style/form.css'
@@ -51,46 +52,45 @@ const Login = ({ setLogin }: Props) => {
     }
 
     return (
-        <body>
-        <div className="container">
+        <div className="login-container">
             <form className="login-form">
                 <h3>Sign in</h3>
                 <p>Welcome to (nombre de la tienda)</p>
-                <div className="form-group">
+                <div className="input-container">
                     <input required
-                        type="text"
-                        className="form-control"
-                        placeholder="Email or Phone"
-                        value={username}
-                        onChange={(event) => setUsername(event.target.value)}
+                           type="text"
+                           className="input-field"
+                           placeholder="Email or Phone"
+                           value={username}
+                           onChange={(event) => setUsername(event.target.value)}
                     />
+                        <label htmlFor="input-field" className="input-label">Email or Phone</label>
+                        <span className="input-highlight"></span>
                 </div>
-                <div className="form-group">
+                <div className="input-container">
                     <input required
-                        type="password"
-                        className="form-control"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
+                           type="password"
+                           className="input-field"
+                           placeholder="Password"
+                           value={password}
+                           onChange={(event) => setPassword(event.target.value)}
                     />
+                    <label htmlFor="input-field" className="input-label">Password</label>
+                    <span className="input-highlight"></span>
                 </div>
-                <button className="btn btn-primary">
+                <button className="btn btn-primary form-button">
                     Log In
-                    <div className="arrow-wrapper" >
-                        <div className="arrow"></div>
-                    </div>
                 </button>
 
                 <div className="divider">
                     <span>Or</span>
                 </div>
-                <button onClick={signUpPage} className="btn btn-outline-primary">
+                <button onClick={signUpPage} className="btn btn-outline-primary form-button">
                     Sign up
                 </button>
             </form>
             <img src={loginImg} alt="Mobile Login" className="svg-image" />
         </div>
-        </body>
     );
 };
 
