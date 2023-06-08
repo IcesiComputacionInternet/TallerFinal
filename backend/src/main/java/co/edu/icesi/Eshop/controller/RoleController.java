@@ -32,6 +32,6 @@ public class RoleController implements RoleAPI {
 
     @Override
     public List<RoleDTO> getAllRoles() {
-        return null;
+        return roleService.getAllRoles();
     }
 }

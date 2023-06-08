@@ -55,7 +55,7 @@ public class OrderServiceTest {
     @Test
     public void testCreateOrder(){
         doNothing().when(orderService).AdminAndUserAuthorizationOnly();
-      doReturn(defaultUser()).when(orderService).getCurrentUser();
+        doReturn(defaultUser()).when(orderService).getCurrentUser();
         when(itemRepository.findByName(any())).thenReturn(Optional.of(defaultItem()));
 
         orderService.save(defaultOrderDTO());

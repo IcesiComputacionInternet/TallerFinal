@@ -7,6 +7,7 @@ import co.edu.icesi.Eshop.mapper.RoleMapper;
 import co.edu.icesi.Eshop.model.Role;
 import co.edu.icesi.Eshop.model.Roles;
 import co.edu.icesi.Eshop.repository.RoleRepository;
+import co.edu.icesi.Eshop.security.EShopSecurityContext;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -73,8 +74,8 @@ public class RoleService {
     }
 
     private void verifyRoleName(String roleName){
-
-        if (roleRepository.findByName(roleName).isPresent()){
+        String name = roleName.toUpperCase();
+        if (roleRepository.findByName(name).isPresent()){
             throw createEShopException(
                     "Duplicated role name",
                     HttpStatus.CONFLICT,
@@ -89,9 +90,14 @@ public class RoleService {
     }
 
     private void adminAuthorizationOnly(){
-        //Validar que el rol es un admin
-        if (true){
+        String currentUserRole = EShopSecurityContext.getCurrentUserRole();
 
+        if (!currentUserRole.equalsIgnoreCase(String.valueOf(Roles.ADMIN))){
+            throw createEShopException(
+                    "Unauthorized",
+                    HttpStatus.UNAUTHORIZED,
+                    new DetailBuilder(ErrorCode.ERR_LOGIN,"You are not authorized")
+            ).get();
         }
     }
 
