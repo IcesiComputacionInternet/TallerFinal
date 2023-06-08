@@ -1,5 +1,6 @@
 package co.icesi.automoviles.config;
 
+import co.icesi.automoviles.api.CategoryAPI;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 
 import co.icesi.automoviles.api.EShopUserAPI;
@@ -89,12 +90,14 @@ public class SecurityConfiguration {
                         .add(permitAll,(context,other)->new AuthorizationDecision(true));
 
         MvcRequestMatcher rolesEndpoints = new MvcRequestMatcher(introspector, RoleAPI.ROOT_PATH);
-        rolesEndpoints.setMethod(HttpMethod.POST);
         managerBuilder.add(rolesEndpoints, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 
         MvcRequestMatcher assignRole = new MvcRequestMatcher(introspector, EShopUserAPI.ROOT_PATH+"/{eShopUserId}/role/{roleName}");
         assignRole.setMethod(HttpMethod.PATCH);
         managerBuilder.add(assignRole, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
+
+        MvcRequestMatcher categoryEndpoints = new MvcRequestMatcher(introspector, CategoryAPI.ROOT_PATH);
+        managerBuilder.add(categoryEndpoints, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 
         AuthorizationManager<HttpServletRequest> manager = managerBuilder.build();
         return (authentication, object) -> manager.check(authentication,object.getRequest());

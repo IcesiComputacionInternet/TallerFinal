@@ -18,5 +18,10 @@ public class CategoryController implements CategoryAPI {
     public CategoryShowDTO registerCategory(CategoryCreateDTO categoryCreateDTO) {
         return categoryService.registerCategory(categoryCreateDTO);
     }
-    
+
+    @Override
+    public CategoryShowDTO updateCategory(String categoryId, CategoryCreateDTO categoryCreateDTO) {
+        return categoryService.updateCategory(categoryId, categoryCreateDTO);
+    }
+
 }

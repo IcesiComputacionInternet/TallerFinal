@@ -2,9 +2,7 @@ package co.icesi.automoviles.api;
 
 import javax.validation.Valid;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import co.icesi.automoviles.dto.CategoryCreateDTO;
 import co.icesi.automoviles.dto.CategoryShowDTO;
@@ -16,5 +14,8 @@ public interface CategoryAPI {
 
     @PostMapping
     public CategoryShowDTO registerCategory(@Valid @RequestBody CategoryCreateDTO categoryCreateDTO);
+
+    @PatchMapping("{categoryId}")
+    public CategoryShowDTO updateCategory(@PathVariable("categoryId") String categoryId, CategoryCreateDTO categoryCreateDTO);
 
 }
