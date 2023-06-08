@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -28,8 +29,6 @@ public class ShopUser {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
-    /*
     @OneToMany()
     private List<Order> orders;
-*/
 }
