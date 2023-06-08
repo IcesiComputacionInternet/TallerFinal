@@ -24,7 +24,7 @@ public class CellphoneService {
     private final CellphoneRepository cellphoneRepository;
     private final CellphoneMapper cellphoneMapper;
     private final CategoryRepository categoryRepository;
-    private final CellphoneShopExceptionBuilder exceptionBuilder;
+    private final CellphoneShopExceptionBuilder exceptionBuilder = new CellphoneShopExceptionBuilder();
 
     public ResponseCellphoneDTO save(RequestCellphoneDTO cellphoneDTO){
         checkPermissions();

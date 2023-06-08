@@ -20,7 +20,7 @@ public class RoleService {
 
     private final RoleRepository roleRepository;
     private final RoleMapper roleMapper;
-    private final CellphoneShopExceptionBuilder exceptionBuilder;
+    private final CellphoneShopExceptionBuilder exceptionBuilder = new CellphoneShopExceptionBuilder();
 
     public RoleDTO saveRole(RoleDTO roleDTO){
         checkPermissions();
