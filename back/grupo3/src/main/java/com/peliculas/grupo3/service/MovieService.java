@@ -9,6 +9,8 @@ import com.peliculas.grupo3.repository.MovieRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,14 +56,30 @@ public class MovieService {
         return movieRepository.findAll().stream().map(movieMapper::fromMovie).toList();
     }
 
-    public MovieDTO findByName(String name){
+    public MovieDTO findByName(String name) {
 
-        return movieRepository.findByName(name).map(movieMapper::fromMovie).orElseThrow(
-                ()-> new RuntimeException("La pelicula no existe"));
+
+        String decodedName;
+        try {
+            decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            throw new RuntimeException("Hubo un problema al transoformar");
+        }
+
+
+        return movieRepository.findByName(decodedName).map(movieMapper::fromMovie).orElseThrow(
+                () -> new RuntimeException("La pelicula no existe"));
     }
 
     public List<MovieDTO> findByCategory(String name){
-        Category category = categoryRepository.findByName(name).orElseThrow(
+        String decodedName;
+        try {
+            decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            throw new RuntimeException("Hubo un problema al transoformar");
+        }
+
+        Category category = categoryRepository.findByName(decodedName).orElseThrow(
                 ()-> new RuntimeException("La categoria no existe")
         );
 

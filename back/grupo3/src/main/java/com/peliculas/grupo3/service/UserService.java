@@ -14,6 +14,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
 
@@ -64,7 +66,13 @@ public class UserService {
     }
 
     public UserResponseDTO findByName(String name) {
-        return userRepository.findByFirstName(name).map(userResponseMapper::fromUser).orElseThrow(
+        String decodedName;
+        try {
+            decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            throw new RuntimeException("Hubo un problema al transoformar");
+        }
+        return userRepository.findByFirstName(decodedName).map(userResponseMapper::fromUser).orElseThrow(
                 ()-> MovieExceptionBuilder.createMovieException("No existe un usuario con este nombre", HttpStatus.NOT_FOUND,"USER_NOT_FOUND"));
     }
 
