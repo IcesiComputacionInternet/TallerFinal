@@ -110,6 +110,17 @@ const SignUp = () => {
                     <span className="input-highlight"></span>
                 </div>
 
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                           value="SHOP"/>
+                        <label className="form-check-label" htmlFor="inlineRadio1">Seller</label>
+                </div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                           value="USER"/>
+                        <label className="form-check-label" htmlFor="inlineRadio2">Buyer</label>
+                </div>
+
                     <div className="button-container">
                         <button className="btn btn-primary form-button">Sign Up</button>
                         <button className="btn btn-outline-danger form-button" onClick={cancelSignUp}>Cancel</button>

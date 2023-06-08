@@ -1,6 +1,4 @@
-// @ts-ignore
 import React, { useState } from "react";
-import {Col, Container, Row} from "react-bootstrap"
 import axios from "axios";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import '../style/form.css'
