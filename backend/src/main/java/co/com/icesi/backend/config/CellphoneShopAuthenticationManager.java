@@ -22,6 +22,6 @@ public class CellphoneShopAuthenticationManager extends DaoAuthenticationProvide
                 (UsernamePasswordAuthenticationToken) super.createSuccessAuthentication(principal, authentication, user);
         SecurityUser securityUser = (SecurityUser) user;
         return new CustomAuthentication(successAuthentication,
-                securityUser.user().getUserId().toString());
+                securityUser.shopUser().getUserId().toString());
     }
 }

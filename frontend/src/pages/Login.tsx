@@ -76,7 +76,7 @@ const Login = ({ setLogin }: Props) => {
                     <label htmlFor="input-field" className="input-label">Password</label>
                     <span className="input-highlight"></span>
                 </div>
-                <button className="btn btn-primary form-button">
+                <button className="btn btn-primary form-button" onClick={handleSubmit}>
                     Log In
                 </button>
 

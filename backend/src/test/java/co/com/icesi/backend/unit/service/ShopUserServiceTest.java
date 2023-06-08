@@ -7,7 +7,7 @@ import co.com.icesi.backend.mapper.RoleMapper;
 import co.com.icesi.backend.mapper.UserMapper;
 import co.com.icesi.backend.mapper.UserMapperImpl;
 import co.com.icesi.backend.model.Role;
-import co.com.icesi.backend.model.User;
+import co.com.icesi.backend.model.ShopUser;
 import co.com.icesi.backend.repository.RoleRepository;
 import co.com.icesi.backend.repository.UserRepository;
 import co.com.icesi.backend.service.UserService;
@@ -25,7 +25,7 @@ import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 
-public class UserServiceTest {
+public class ShopUserServiceTest {
     private UserService userService;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
@@ -54,7 +54,7 @@ public class UserServiceTest {
         // Act
         userService.saveUser(userDTO);
         // Assert
-        User newIcesiUser = User.builder()
+        ShopUser newIcesiShopUser = ShopUser.builder()
                 .role(defaultIcesiRole())
                 .firstName("Damiano")
                 .lastName("David")
@@ -65,7 +65,7 @@ public class UserServiceTest {
         verify(userRepository, times(1)).findByEmail(any());
         verify(userRepository, times(1)).findByPhoneNumber(any());
         verify(roleRepository, times(1)).findByName(any());
-        verify(userRepository,times( 1)).save(argThat(new UserMatcher(newIcesiUser)));
+        verify(userRepository,times( 1)).save(argThat(new UserMatcher(newIcesiShopUser)));
         verify(userMapper, times(1)).fromUserDTO(any());
         verify(userMapper, times(1)).fromUserToResponseUserDTO(any());
     }
@@ -184,8 +184,8 @@ public class UserServiceTest {
                 .build();
     }
 
-    private User defaultIcesiUser(){
-        return User.builder()
+    private ShopUser defaultIcesiUser(){
+        return ShopUser.builder()
                 .userId(UUID.randomUUID())
                 .role(defaultIcesiRole())
                 .firstName("Damiano")

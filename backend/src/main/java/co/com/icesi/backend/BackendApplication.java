@@ -5,7 +5,7 @@ import co.com.icesi.backend.Enum.UserRole;
 import co.com.icesi.backend.model.Category;
 import co.com.icesi.backend.model.Cellphone;
 import co.com.icesi.backend.model.Role;
-import co.com.icesi.backend.model.User;
+import co.com.icesi.backend.model.ShopUser;
 import co.com.icesi.backend.repository.CategoryRepository;
 import co.com.icesi.backend.repository.CellphoneRepository;
 import co.com.icesi.backend.repository.RoleRepository;
@@ -14,7 +14,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -26,7 +25,7 @@ public class BackendApplication {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 
-	//@Bean
+	@Bean
 	CommandLineRunner commandLineRunner(UserRepository userRepository, RoleRepository roleRepository, CategoryRepository categoryRepository, CellphoneRepository cellphoneRepository) {
 
 		Role adminRole = Role.builder()
@@ -47,7 +46,7 @@ public class BackendApplication {
 				.description("Shop role")
 				.build();
 
-		User adminUser = User.builder()
+		ShopUser adminShopUser = ShopUser.builder()
 				.userId(UUID.randomUUID())
 				.firstName("Laura Daniela")
 				.lastName("Martinez Ortiz")
@@ -59,7 +58,7 @@ public class BackendApplication {
 				.role(adminRole)
 				.build();
 
-		User user = User.builder()
+		ShopUser user = ShopUser.builder()
 				.userId(UUID.randomUUID())
 				.firstName("Luis Miguel")
 				.lastName("Ossa Arias")
@@ -71,7 +70,7 @@ public class BackendApplication {
 				.role(userRole)
 				.build();
 
-		User shopUser = User.builder()
+		ShopUser shopUser = ShopUser.builder()
 				.userId(UUID.randomUUID())
 				.firstName("Keren López")
 				.lastName("Córdoba")
@@ -222,7 +221,7 @@ public class BackendApplication {
 			roleRepository.save(userRole);
 			roleRepository.save(shopRole);
 
-			userRepository.save(adminUser);
+			userRepository.save(adminShopUser);
 			userRepository.save(user);
 			userRepository.save(shopUser);
 

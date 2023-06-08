@@ -11,8 +11,8 @@ import co.com.icesi.backend.error.util.CellphoneShopExceptionBuilder;
 import co.com.icesi.backend.mapper.CellphoneMapper;
 import co.com.icesi.backend.mapper.OrderMapper;
 import co.com.icesi.backend.model.Cellphone;
-import co.com.icesi.backend.model.Order;
-import co.com.icesi.backend.model.User;
+import co.com.icesi.backend.model.ShopOrder;
+import co.com.icesi.backend.model.ShopUser;
 import co.com.icesi.backend.repository.CellphoneRepository;
 import co.com.icesi.backend.repository.OrderRepository;
 import co.com.icesi.backend.repository.UserRepository;
@@ -38,7 +38,7 @@ public class OrderService {
     private ResponseOrderDTO saveOrder(RequestNewOrderDTO requestOrderDTO) {
         checkPermissionsToCreate();
         var userEmail = CellphoneSecurityContext.getCurrentUserEmail();
-        User user =  userRepository.findByEmail(userEmail).orElseThrow(
+        ShopUser shopUser =  userRepository.findByEmail(userEmail).orElseThrow(
                 () -> exceptionBuilder.notFoundException(
                         "The user with the specified email does not exists.", userEmail));
         List<Cellphone> items = requestOrderDTO.getItems()
@@ -52,14 +52,14 @@ public class OrderService {
                 .stream()
                 .map(RequestOrderItemDTO::getQuantity)
                 .collect(Collectors.toSet());
-        Order order = orderMapper.fromRequestOrderDTO(requestOrderDTO);
-        order.setUser(user);
-        order.setOrderId(UUID.randomUUID());
-        order.setStatus(OrderStatus.IN_PROCESS);
-        order.setItems(items);
-        order.setQuantities(quantities);
-        orderRepository.save(order);
-        ResponseOrderDTO responseOrderDTO =orderMapper.fromOrderToResponseOrderDTO(order);
+        ShopOrder shopOrder = orderMapper.fromRequestOrderDTO(requestOrderDTO);
+        shopOrder.setShopUser(shopUser);
+        shopOrder.setOrderId(UUID.randomUUID());
+        shopOrder.setStatus(OrderStatus.IN_PROCESS);
+        shopOrder.setItems(items);
+        shopOrder.setQuantities(quantities);
+        orderRepository.save(shopOrder);
+        ResponseOrderDTO responseOrderDTO =orderMapper.fromOrderToResponseOrderDTO(shopOrder);
         responseOrderDTO.setItems(cellphones);
         responseOrderDTO.setMessage("Order successfully created");
         return responseOrderDTO;
@@ -73,7 +73,7 @@ public class OrderService {
 
     public ResponseOrderDTO changeOrderStatus(RequestChangeOrderDTO requestChangeOrderDTO){
         checkPermissionToChangeStatus();
-        Order order = orderRepository.findById(requestChangeOrderDTO.getOrderId()).orElseThrow(
+        ShopOrder shopOrder = orderRepository.findById(requestChangeOrderDTO.getOrderId()).orElseThrow(
                 () -> exceptionBuilder.notFoundException(
                         "The order with the specified ID does not exists.", requestChangeOrderDTO.getOrderId().toString()
                 )
@@ -81,9 +81,9 @@ public class OrderService {
         if(!OrderStatus.isStringEqualToEnum(requestChangeOrderDTO.getNewStatus())){
             throw exceptionBuilder.notFoundException("The status is not valid", requestChangeOrderDTO.getNewStatus());
         }
-        order.setStatus(OrderStatus.valueOf(requestChangeOrderDTO.getNewStatus()));
-        orderRepository.save(order);
-        return orderMapper.fromRequestChangeToResponseOrderDTO(order, "Status successfully updated");
+        shopOrder.setStatus(OrderStatus.valueOf(requestChangeOrderDTO.getNewStatus()));
+        orderRepository.save(shopOrder);
+        return orderMapper.fromRequestChangeToResponseOrderDTO(shopOrder, "Status successfully updated");
     }
 
     private void checkPermissionToChangeStatus() {
