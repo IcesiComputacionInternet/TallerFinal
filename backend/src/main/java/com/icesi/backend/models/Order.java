@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -23,8 +24,7 @@ public class Order {
     private ShopUser shopUser;
     private String status;
     private Long total;
-    /*
     @OneToMany()
     private List<Item> itemList;
-     */
+
 }
