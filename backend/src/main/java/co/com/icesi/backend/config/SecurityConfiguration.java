@@ -14,7 +14,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
@@ -24,6 +27,7 @@ import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 
 @Configuration
@@ -51,6 +55,14 @@ public class SecurityConfiguration {
     }
 
     @Bean
+    public JwtDecoder jwtDecoder(){
+        byte[] bytes = secret.getBytes();
+        SecretKeySpec key = new SecretKeySpec(bytes,0, bytes.length, "RSA");
+        return NimbusJwtDecoder.withSecretKey(key).macAlgorithm(MacAlgorithm.HS256).build();
+
+    }
+
+    @Bean
     public JwtEncoder jwtEncoder(){
         return new NimbusJwtEncoder(new ImmutableSecret<>(secret.getBytes()));
     }
@@ -64,14 +76,14 @@ public class SecurityConfiguration {
             RequestMatcherDelegatingAuthorizationManager.builder()
                     .add(permitAll, (context, other) -> new AuthorizationDecision(true));
 
-//        managerBuilder.add(new MvcRequestMatcher(introspection, "/roles/**"),
-//                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
-//
-//        managerBuilder.add(new MvcRequestMatcher(introspection, "/newitem/**"),
-//                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN","SCOPE_SHOP"));
-//
-//        managerBuilder.add(new MvcRequestMatcher(introspection, "/store/**"),
-//                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN","SCOPE_SHOP","SCOPE_USER"));
+        managerBuilder.add(new MvcRequestMatcher(introspection, "/roles/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
+
+        managerBuilder.add(new MvcRequestMatcher(introspection, "/newitem/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN","SCOPE_SHOP"));
+
+        managerBuilder.add(new MvcRequestMatcher(introspection, "/store/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN","SCOPE_SHOP","SCOPE_USER"));
 
 
 

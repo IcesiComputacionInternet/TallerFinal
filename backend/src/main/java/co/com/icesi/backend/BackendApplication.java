@@ -25,7 +25,7 @@ public class BackendApplication {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 
-	@Bean
+//	@Bean
 	CommandLineRunner commandLineRunner(UserRepository userRepository, RoleRepository roleRepository, CategoryRepository categoryRepository, CellphoneRepository cellphoneRepository) {
 
 		Role adminRole = Role.builder()
