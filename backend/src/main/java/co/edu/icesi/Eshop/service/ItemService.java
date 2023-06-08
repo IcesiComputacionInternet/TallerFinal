@@ -63,7 +63,6 @@ public class ItemService {
     }
 
     public List<ItemDTO> getAllItems(){
-        adminAuthorizationOnly();
         return itemRepository.findAll().stream().map(itemMapper::fromItem).toList();
     }
 

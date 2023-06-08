@@ -6,6 +6,7 @@ import Register from "./components/Register";
 import ShopHome from "./components/ShopHome";
 import NotFound from "./components/NotFound";
 import HomeAdmin from "./components/HomeAdmin";
+import Orders from "./components/orders";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
@@ -34,6 +35,7 @@ function App() {
               <Route path="/*" element={<NotFound/>}>
               </Route>
               <Route path="/homeAdmin" element={<HomeAdmin/>}></Route>
+              <Route path="/orders" element={<Orders/>}></Route>
           </Routes>
       </BrowserRouter>
   );

@@ -44,10 +44,6 @@ public class Item {
 
     private boolean available;
 
-    @ManyToMany
-    @JoinTable(
-            name = "items_orders",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "item_id"))
+    @ManyToMany(mappedBy = "items")
     private List<EShopOrder> orders;
 }
