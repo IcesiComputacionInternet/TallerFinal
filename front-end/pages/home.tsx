@@ -2,6 +2,7 @@ import { use, useEffect,useState } from "react";
 import styles from '../styles/Home.module.css'
 import AdminView from '../components/AdminView'
 import ShopView from '../components/ShopView'
+import UserView from "../components/UserView";
 export default function Home() {
     const [role, setRole] = useState<String | null>('none');
     useEffect(() => {
@@ -19,9 +20,7 @@ export default function Home() {
         )
     }else if(role === 'user') {
         return (
-            <div>
-                <h1>User</h1>
-            </div>
+            <UserView/>
             )
     }else if(role === 'shop') {
         return (

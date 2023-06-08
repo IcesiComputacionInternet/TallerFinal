@@ -1,0 +1,37 @@
+.bar{
+    display: flex;
+    height: 90px;
+    width: 100%;
+    background-color: #1A5E63;
+    border-radius: 15px 15px 0px 0px;
+    padding-left: 25px;
+}
+
+.buttonsSection{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    
+}
+
+.logoSection{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.userButtons{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 25px;
+}
