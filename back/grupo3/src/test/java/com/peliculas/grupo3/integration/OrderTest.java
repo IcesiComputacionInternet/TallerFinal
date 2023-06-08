@@ -107,8 +107,8 @@ public class OrderTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
-        var result = mocMvc.perform(MockMvcRequestBuilders.get("/orders/findByNumber")
-                        .content("1")
+        String number="1";
+        var result = mocMvc.perform(MockMvcRequestBuilders.get("/orders/findByNumber/"+number)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
@@ -130,8 +130,8 @@ public class OrderTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
-        var result = mocMvc.perform(MockMvcRequestBuilders.get("/orders/findByNumber")
-                        .content("3")
+        String number="3";
+        var result = mocMvc.perform(MockMvcRequestBuilders.get("/orders/findByNumber/"+number)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))

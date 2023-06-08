@@ -12,6 +12,8 @@ import com.peliculas.grupo3.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
 
@@ -84,7 +86,13 @@ public class OrderService {
     }
 
     public OrderDTO findByOrderNumber(String orderNumber) {
-        return orderMapper.fromOrder(orderRepository.findByOrderNumber(orderNumber).orElseThrow(
+        String decodedName;
+        try {
+            decodedName = URLDecoder.decode(orderNumber, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            throw new RuntimeException("Hubo un problema al transoformar");
+        }
+        return orderMapper.fromOrder(orderRepository.findByOrderNumber(decodedName).orElseThrow(
                 ()-> new RuntimeException("No existe una orden con este numero") ));
     }
 

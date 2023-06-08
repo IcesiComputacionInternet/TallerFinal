@@ -1,10 +1,7 @@
 package com.peliculas.grupo3.api;
 
 import com.peliculas.grupo3.dto.OrderDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,8 +19,8 @@ public interface OrderApi {
     @GetMapping("/all")
     List<OrderDTO> getAllOrder();
 
-    @GetMapping("/findByNumber")
-    OrderDTO findByNumber(@RequestBody String number);
+    @GetMapping("/findByNumber/{number}")
+    OrderDTO findByNumber(@PathVariable String number);
 
     @PostMapping("/addMovie")
     OrderDTO addMovie(@RequestBody String number , String movieName);
