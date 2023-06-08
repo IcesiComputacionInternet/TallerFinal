@@ -237,5 +237,5 @@ public class BackendApplication {
 			cellphoneRepository.save(item5);
 			cellphoneRepository.save(item6);
 		};
-	}*/
+	}
 }

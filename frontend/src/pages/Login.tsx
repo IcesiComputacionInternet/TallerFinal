@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import '../style/form.css'
-// import loginImg from '../assets/loginImg.svg'
 import loginImg from '../assets/cellp.gif'
 
 const baseUrl = "http://localhost:8080";
@@ -36,11 +35,11 @@ const Login = ({ setLogin }: Props) => {
                 localStorage.setItem("jwt", data.token);
                 localStorage.setItem("userEmail", username);
                 setLogin();
-                navigation("/");
+                navigation("/store");
             }
         } catch (error) {
             alert("Invalid username or password")
-            navigation("/*");
+            window.location.reload();
         }
 
     };
