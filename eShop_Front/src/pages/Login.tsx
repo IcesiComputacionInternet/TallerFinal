@@ -1,29 +1,59 @@
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import HomeIcon from '@mui/icons-material/Home';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import HomeIcon from "@mui/icons-material/Home";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate, NavigateFunction } from "react-router-dom";
+
 
 const theme = createTheme();
 
-export default function Login() {
+const baseUrl = "http://localhost:8080";
 
-  
-  const navigate = useNavigate();
+interface Props {
+  setLogin: (isLogged: boolean) => void;
+}
 
+const Login = ({ setLogin }: Props) => {
+  localStorage.clear();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigation: NavigateFunction = useNavigate();
 
-  const[username, setUsername] = useState("");
-  const[password, setPassword] = useState("");
+  const handleSubmit = async (event: any) => {
+    console.log(username, password);
+    event.preventDefault();
 
-  
+    const { data } = await axios.post(
+      baseUrl + "/auth",
+      {
+        username,
+        password,
+      },
+      {
+        headers: {
+          "Access-Control-Allow-Origin": baseUrl,
+        },
+      }
+    );
+
+    if (data.token) {
+      localStorage.setItem("jwt", data.token);
+      setLogin(true);
+      navigation("/home");
+      console.log(data.token)
+    } else {
+      alert("Invalid username or password");
+    }
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -32,13 +62,13 @@ export default function Login() {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <HomeIcon/>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <HomeIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
@@ -53,7 +83,7 @@ export default function Login() {
               name="username"
               autoComplete="username"
               autoFocus
-              onChange={(event)=> setUsername(event.target.value)}
+              onChange={(event) => setUsername(event.target.value)}
             />
             <TextField
               margin="normal"
@@ -64,14 +94,15 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={(event)=> setPassword(event.target.value)}
+              onChange={(event) => setPassword(event.target.value)}
             />
-          
+
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={handleSubmit}
             >
               Sign In
             </Button>
@@ -87,4 +118,6 @@ export default function Login() {
       </Container>
     </ThemeProvider>
   );
-}
+};
+
+export default Login;
