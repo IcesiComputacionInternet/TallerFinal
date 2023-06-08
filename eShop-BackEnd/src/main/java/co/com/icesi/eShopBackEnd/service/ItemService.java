@@ -60,6 +60,17 @@ public class ItemService {
 
     }
 
+    public ResponseItemDTO getItemById(String itemId){
+        Item item = itemRepository.returnItemById(UUID.fromString(itemId)).orElseThrow(
+                ArgumentsExceptionBuilder.createArgumentsExceptionSup(
+                        "Not existing data",
+                        HttpStatus.BAD_REQUEST,
+                        new DetailBuilder(ErrorCode.ERR_NOT_FOUND,"item")
+                )
+        );
+        return itemMapper.fromItemToResponseItemDTO(item);
+
+    }
 
 
     public List<ResponseItemDTO> getAllItems(){

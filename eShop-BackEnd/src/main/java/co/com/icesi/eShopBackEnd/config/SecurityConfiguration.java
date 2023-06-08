@@ -71,7 +71,7 @@ public class SecurityConfiguration {
 
     @Bean
     public AuthorizationManager<RequestAuthorizationContext> requestMatcherAuthenticationManager(HandlerMappingIntrospector introspector){
-        RequestMatcher permitAll = new AndRequestMatcher(new MvcRequestMatcher(introspector,"/login"));
+        RequestMatcher permitAll = new AndRequestMatcher(new MvcRequestMatcher(introspector,"/login"), new MvcRequestMatcher(introspector,"/user"));
 
         RequestMatcherDelegatingAuthorizationManager.Builder managerBuilder
                 = RequestMatcherDelegatingAuthorizationManager.builder()
@@ -82,24 +82,20 @@ public class SecurityConfiguration {
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_SHOP","SCOPE_ADMIN"));
 
         managerBuilder.add(new MvcRequestMatcher(introspector,"/category/itemsByCategory/**"),
-                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_SHOP"));
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_SHOP","SCOPE_ADMIN"));
 
         //Customer
 
-        //Para que el usuario se pueda registrar
-        managerBuilder.add(new MvcRequestMatcher(introspector,"/user"),
-                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_ADMIN"));
-
         //Porque el usuario debería poder ver sus ordenes
         managerBuilder.add(new MvcRequestMatcher(introspector,"/user/order/**"),
-                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER"));
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_ADMIN"));
 
 
         //Item
 
         //Para que el usuario pueda ver los items y todos los items
         managerBuilder.add(new MvcRequestMatcher(introspector,"/item/**"),
-                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_SHOP"));
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_SHOP","SCOPE_ADMIN"));
 
         //Role
         managerBuilder.add(new MvcRequestMatcher(introspector,"/role"),
@@ -117,11 +113,18 @@ public class SecurityConfiguration {
 
         //ADMIN
 
+        /*
         managerBuilder.add(new MvcRequestMatcher(introspector,"/**"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 
+
+
         managerBuilder.add(new MvcRequestMatcher(introspector,"/user/**"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
+
+
+         */
+
 
 
         AuthorizationManager<HttpServletRequest> manager = managerBuilder.build();

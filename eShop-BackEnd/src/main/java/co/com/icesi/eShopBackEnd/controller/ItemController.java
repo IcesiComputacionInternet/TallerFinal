@@ -26,6 +26,11 @@ public class ItemController implements ItemAPI {
     }
 
     @Override
+    public ResponseItemDTO getItemById(String itemId) {
+        return itemService.getItemById(itemId);
+    }
+
+    @Override
     public List<ResponseItemDTO> getAllItems() {
         return itemService.getAllItems();
     }

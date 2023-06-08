@@ -98,20 +98,5 @@ public class CustomerService {
         return orders.stream().map(salesOrderMapper::fromSalesOrderToResponse).toList();
     }
 
-    public RoleDTO getRoleOfUser(){
-
-        Customer customer = customerRepository.getCustomerById(UUID.fromString(context.getCurrentUserId()))
-                .orElseThrow(
-                        ArgumentsExceptionBuilder.createArgumentsExceptionSup(
-                                "Not existing data",
-                                HttpStatus.BAD_REQUEST,
-                                new DetailBuilder(ErrorCode.ERR_NOT_FOUND,"customer")
-                        )
-
-        );
-        return RoleDTO.builder()
-                .role(customer.getRole().getRoleName())
-                .build();
-    }
 
 }

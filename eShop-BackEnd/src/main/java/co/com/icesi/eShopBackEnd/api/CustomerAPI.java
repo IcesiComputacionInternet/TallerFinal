@@ -22,7 +22,4 @@ public interface CustomerAPI {
 
     @GetMapping("/order/{userEmail}")
     List<ResponseSalesOrderDTO> getOrdersByUserEmail(@PathVariable String userEmail);
-
-    @GetMapping("/role")
-    RoleDTO getRoleOfUser();
 }

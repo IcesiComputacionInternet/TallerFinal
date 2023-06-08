@@ -18,8 +18,11 @@ public interface ItemAPI {
     @PostMapping
     ResponseItemDTO createItem(@Valid @RequestBody CreateItemDTO itemDTO);
 
-    @GetMapping("/{itemName}")
+    @GetMapping("/name/{itemName}")
     ResponseItemDTO getItemByName(@PathVariable String itemName);
+
+    @GetMapping("/itemId/{itemId}")
+    ResponseItemDTO getItemById(@PathVariable String itemId);
 
     @GetMapping("/all")
     List<ResponseItemDTO> getAllItems();

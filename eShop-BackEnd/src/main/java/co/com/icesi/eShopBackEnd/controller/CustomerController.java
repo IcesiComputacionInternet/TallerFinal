@@ -25,9 +25,4 @@ public class CustomerController implements CustomerAPI {
     public List<ResponseSalesOrderDTO> getOrdersByUserEmail(String userEmail) {
         return customerService.getOrdersByUserEmail(userEmail);
     }
-
-    @Override
-    public RoleDTO getRoleOfUser() {
-        return customerService.getRoleOfUser();
-    }
 }
