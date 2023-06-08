@@ -66,7 +66,7 @@ const ShopHome = () => {
   return (
     <div>
       <Navbar bg="dark" variant="dark" fixed="top" className="justify-content-between">
-        <Navbar.Brand href="#home">Mi Tienda</Navbar.Brand>
+        <Navbar.Brand href="/home-shope">Mi Tienda</Navbar.Brand>
         <div className="d-flex align-items-center ml-auto">
           <div className="cart-icon-container mr-3">
             <BsCartFill size={24} />

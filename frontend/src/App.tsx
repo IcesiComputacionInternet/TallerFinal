@@ -5,8 +5,10 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import ShopHome from "./components/ShopHome";
 import NotFound from "./components/NotFound";
-import HomeAdmin from "./components/HomeAdmin";
-import Orders from "./components/orders";
+import HomeAdmin from "./pages/admin/AdminHome";
+import Users from "./pages/admin/Users";
+import Items from "./pages/admin/Items";
+import Orders from "./pages/admin/Orders";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
@@ -34,8 +36,10 @@ function App() {
               <Route path="/home-shop" element={isLoggedIn ? <ShopHome /> : <Navigate to="/login" />} />
               <Route path="/*" element={<NotFound/>}>
               </Route>
-              <Route path="/homeAdmin" element={<HomeAdmin/>}></Route>
-              <Route path="/orders" element={<Orders/>}></Route>
+              <Route path="/admin/home" element={<HomeAdmin/>}></Route>
+              <Route path="/admin/users" element={<Users/>}></Route>
+              <Route path="/admin/items" element={<Items/>}></Route>
+              <Route path="/admin/orders" element={<Orders/>}></Route>
           </Routes>
       </BrowserRouter>
   );
