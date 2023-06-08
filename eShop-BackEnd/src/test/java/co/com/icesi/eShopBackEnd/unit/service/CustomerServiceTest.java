@@ -64,6 +64,57 @@ public class CustomerServiceTest {
         verify(customerRepository,times(1)).save(any());
 
     }
+    @Test
+    public void testCreateResponseCustomerWentEmailAlreadyExist(){
+
+
+        try {
+            when(customerRepository.findByEmail(any())).thenReturn(true);
+            when(customerRepository.findByPhoneNumber(any())).thenReturn(false);
+            when(roleRepository.findByRoleName(any())).thenReturn(Optional.of(defaultRole()));
+            when(customerRepository.save(any())).thenReturn(defaultCustomer());
+            when(customerMapper.fromUserToResponseUserDTO(any())).thenReturn(defaultResponseCustomerDTO());
+            customerService.save(createCustomerDTO());
+        }catch (RuntimeException exception){
+            assertEquals("Existing data", exception.getMessage());
+        }
+
+    }
+    @Test
+    public void testCreateResponseCustomerWentPhoneNumberAlreadyExist(){
+        try {
+        when(customerRepository.findByPhoneNumber(any())).thenReturn(true);
+        when(customerRepository.findByEmail(any())).thenReturn(false);
+        when(roleRepository.findByRoleName(any())).thenReturn(Optional.of(defaultRole()));
+        when(customerRepository.save(any())).thenReturn(defaultCustomer());
+        when(customerMapper.fromUserToResponseUserDTO(any())).thenReturn(defaultResponseCustomerDTO());
+        customerService.save(createCustomerDTO());
+
+
+    }catch (RuntimeException exception){
+
+        assertEquals("Existing data", exception.getMessage());
+    }
+
+
+    }
+    @Test
+    public void testCreateResponseCustomerWentThereIsNoRole(){
+        try {
+            when(customerRepository.findByPhoneNumber(any())).thenReturn(false);
+            when(customerRepository.findByEmail(any())).thenReturn(false);
+           // when(roleRepository.findByRoleName(any())).thenReturn(Optional.of(defaultRole()));
+            when(customerRepository.save(any())).thenReturn(defaultCustomer());
+            when(customerMapper.fromUserToResponseUserDTO(any())).thenReturn(defaultResponseCustomerDTO());
+            customerService.save(createCustomerDTO());
+        }catch (RuntimeException exception){
+            assertEquals("Not existing data", exception.getMessage());
+
+
+        }
+
+
+    }
 
     private Role defaultRole() {
     return Role.builder()
