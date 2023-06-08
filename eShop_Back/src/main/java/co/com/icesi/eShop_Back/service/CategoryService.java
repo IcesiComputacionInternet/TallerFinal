@@ -2,6 +2,7 @@ package co.com.icesi.eShop_Back.service;
 
 import co.com.icesi.eShop_Back.dto.request.RequestCategoryDTO;
 import co.com.icesi.eShop_Back.dto.response.ResponseCategoryDTO;
+import co.com.icesi.eShop_Back.error.exception.CustomException;
 import co.com.icesi.eShop_Back.mapper.CategoryMapper;
 import co.com.icesi.eShop_Back.mapper.ItemMapper;
 import co.com.icesi.eShop_Back.repository.CategoryRepository;
@@ -21,6 +22,9 @@ public class CategoryService {
 
     //create crud
     public void create(RequestCategoryDTO requestCategoryDTO) {
+        boolean exists = categoryRepository.existsByName(requestCategoryDTO.name());
+        if (exists) {throw new CustomException("Category already exists");}
+
         var category = categoryMapper.fromCategoryDTO(requestCategoryDTO);
         category.setCategoryId(UUID.randomUUID());
         categoryRepository.save(category);
@@ -30,12 +34,14 @@ public class CategoryService {
         categoryRepository.deleteById(id);
     }
 
-    public void update(RequestCategoryDTO requestCategoryDTO) {
-        //TODO
+    public void update(RequestCategoryDTO requestCategoryDTO, UUID id) {
+        var newCategory = categoryMapper.fromCategoryDTO(requestCategoryDTO);
+        newCategory.setCategoryId(id);
+        categoryRepository.save(newCategory);
     }
 
     public ResponseCategoryDTO get(UUID id) {
-        var category = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
+        var category = categoryRepository.findById(id).orElseThrow(() -> new CustomException("Category not found"));
         var responseCategoryDTO = categoryMapper.fromCategory(category);
         var items = category.getItems().stream().map(itemMapper::fromItem).toList();
         responseCategoryDTO.setId(category.getCategoryId());

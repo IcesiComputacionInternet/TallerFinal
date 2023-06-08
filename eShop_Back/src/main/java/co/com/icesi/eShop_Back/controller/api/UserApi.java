@@ -7,14 +7,17 @@ import javax.validation.Valid;
 
 @RequestMapping(UserApi.USER_BASE_URL)
 public interface UserApi {
-    String USER_BASE_URL = "/api/v1/users";
+    String USER_BASE_URL = "/api/users";
 
     @PostMapping
-    void saveUser(@RequestBody @Valid RequestUserDTO userDTO);
+    void save(@RequestBody @Valid RequestUserDTO userDTO);
+
+    @PostMapping("/add")
+    void saveClient (@RequestBody @Valid RequestUserDTO userDTO);
 
     @GetMapping("/get/id/{id}")
-    RequestUserDTO getUserById(@PathVariable("id") String id);
+    RequestUserDTO getById(@PathVariable("id") String id);
 
     @DeleteMapping("/delete/id/{id}")
-    void deleteUserById(@PathVariable("id") String id);
+    void deleteById(@PathVariable("id") String id);
 }

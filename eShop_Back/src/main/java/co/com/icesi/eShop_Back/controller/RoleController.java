@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class RoleController implements RoleApi {
     private final RoleService roleService;
     @Override
-    public void saveRole(RoleDTO roleDTO) {
+    public void save(RoleDTO roleDTO) {
         roleService.create(roleDTO);
     }
 }

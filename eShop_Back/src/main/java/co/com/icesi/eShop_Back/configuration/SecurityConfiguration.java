@@ -90,8 +90,13 @@ public class SecurityConfiguration {
 
         System.out.println(roleMap);
 
-        RequestMatcher permitAll = new AndRequestMatcher(new MvcRequestMatcher(introspector, "/auth"));
+        RequestMatcher permitAll = new AndRequestMatcher(
+                new MvcRequestMatcher(introspector, "/auth"),
+                new MvcRequestMatcher(introspector, "/api/users/add")
+        );
+
         System.out.println(permitAll);
+
         RequestMatcherDelegatingAuthorizationManager.Builder managerBuilder = RequestMatcherDelegatingAuthorizationManager.builder()
                 .add(permitAll, (context, other) -> new AuthorizationDecision(true));
 

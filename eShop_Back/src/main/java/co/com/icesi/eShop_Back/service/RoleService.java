@@ -1,6 +1,7 @@
 package co.com.icesi.eShop_Back.service;
 
 import co.com.icesi.eShop_Back.dto.request.RoleDTO;
+import co.com.icesi.eShop_Back.error.exception.CustomException;
 import co.com.icesi.eShop_Back.mapper.RoleMapper;
 import co.com.icesi.eShop_Back.model.Role;
 import co.com.icesi.eShop_Back.repository.RoleRepository;
@@ -22,7 +23,7 @@ public class RoleService {
 
         boolean nameExists = roleRepository.existsByName(roleDTO.name());
 
-        if (nameExists){ throw new RuntimeException("Name already exists");}
+        if (nameExists){ throw new CustomException("Name already exists");}
 
         Role role = roleMapper.fromRoleDTO(roleDTO);
         role.setRoleId(UUID.randomUUID());

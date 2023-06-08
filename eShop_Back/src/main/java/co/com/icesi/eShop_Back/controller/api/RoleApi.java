@@ -9,8 +9,8 @@ import javax.validation.Valid;
 
 @RequestMapping(RoleApi.ROLE_BASE_URL)
 public interface RoleApi {
-    String ROLE_BASE_URL = "/api/v1/roles";
+    String ROLE_BASE_URL = "/api/roles";
 
     @PostMapping
-    void saveRole(@RequestBody @Valid RoleDTO roleDTO);
+    void save(@RequestBody @Valid RoleDTO roleDTO);
 }

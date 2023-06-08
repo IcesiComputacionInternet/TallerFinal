@@ -27,8 +27,9 @@ public class EShopBackApplication {
 			UserRepository userRepository,
 			PasswordEncoder encoder
 	) {
-		String BASE_URL = "/api/v1";
+		String BASE_URL = "/api";
 
+		////////////////////////////////////////
 		Role ADMIN = Role.builder()
 				.roleId(UUID.randomUUID())
 				.name("ADMIN")
@@ -46,14 +47,32 @@ public class EShopBackApplication {
 				.name("CLIENT")
 				.description("Client")
 				.build();
-
-		UserPermission test = UserPermission.builder()
+		////////////////////////////////////////
+		UserPermission all = UserPermission.builder()
 				.permissionId(UUID.randomUUID())
-				.key("ADD_ITEMS")
-				.path(BASE_URL + "/*0")
+				.key("ALL")
+				.path(BASE_URL + "/**")
 				.roles(List.of(ADMIN))
 				.build();
-
+		UserPermission orders = UserPermission.builder()
+				.permissionId(UUID.randomUUID())
+				.key("ORDERS")
+				.path(BASE_URL + "/orders/**")
+				.roles(List.of(SHOP, CLIENT))
+				.build();
+		UserPermission items = UserPermission.builder()
+				.permissionId(UUID.randomUUID())
+				.key("ADD_ITEMS")
+				.path(BASE_URL + "/items/**")
+				.roles(List.of(SHOP))
+				.build();
+		UserPermission getItems = UserPermission.builder()
+				.permissionId(UUID.randomUUID())
+				.key("GET_ITEMS")
+				.path(BASE_URL + "/items/get/**")
+				.roles(List.of(CLIENT))
+				.build();
+		////////////////////////////////////////
 		User admin = User.builder()
 				.userId(UUID.randomUUID())
 				.email("admin@gmail.com")
@@ -66,8 +85,11 @@ public class EShopBackApplication {
 				.password(encoder.encode("123"))
 				.role(SHOP)
 				.build();
-
-		permissionRepository.save(test);
+		////////////////////////////////////////
+		permissionRepository.save(all);
+		permissionRepository.save(orders);
+		permissionRepository.save(items);
+		permissionRepository.save(getItems);
 		userRepository.save(admin);
 		userRepository.save(shop);
 
