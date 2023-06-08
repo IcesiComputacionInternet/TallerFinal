@@ -58,19 +58,19 @@ public class EShopBackApplication {
 				.permissionId(UUID.randomUUID())
 				.key("ORDERS")
 				.path(BASE_URL + "/orders/**")
-				.roles(List.of(SHOP, CLIENT))
+				.roles(List.of(ADMIN, SHOP, CLIENT))
 				.build();
 		UserPermission items = UserPermission.builder()
 				.permissionId(UUID.randomUUID())
 				.key("ADD_ITEMS")
 				.path(BASE_URL + "/items/**")
-				.roles(List.of(SHOP))
+				.roles(List.of(ADMIN, SHOP))
 				.build();
 		UserPermission getItems = UserPermission.builder()
 				.permissionId(UUID.randomUUID())
 				.key("GET_ITEMS")
 				.path(BASE_URL + "/items/get/**")
-				.roles(List.of(CLIENT))
+				.roles(List.of(ADMIN, CLIENT))
 				.build();
 		////////////////////////////////////////
 		User admin = User.builder()
