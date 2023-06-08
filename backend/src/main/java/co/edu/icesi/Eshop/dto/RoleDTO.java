@@ -1,6 +1,5 @@
 package co.edu.icesi.Eshop.dto;
 
-import co.edu.icesi.Eshop.model.EShopUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,5 +20,4 @@ public class RoleDTO {
     @NotBlank(message = "is missing")
     private String description;
 
-    private List<EShopUser> EShopUsers;
 }

@@ -123,13 +123,13 @@ class OrderControllerTests {
 
     private OrderDTO defaultOrderDTO(){
         return OrderDTO.builder()
-                .items(Stream.of("Plancha 30V").collect(Collectors.toList()))
+                .items(Stream.of(defaultItem2()).collect(Collectors.toList()))
                 .build();
     }
 
     private OrderDTO defaultOrderDTO2(){
         return OrderDTO.builder()
-                .items(Stream.of("Nevera 250L","Plancha 30V").collect(Collectors.toList()))
+                .items(Stream.of(defaultItem(),defaultItem2()).collect(Collectors.toList()))
                 .build();
     }
 
@@ -137,6 +137,40 @@ class OrderControllerTests {
         return ChangeStatusDTO.builder()
                 .orderId("d1e854e9-129e-4958-80b5-23599d72d42b")
                 .status(Status.SHIPPED.toString())
+                .build();
+    }
+
+    private ItemDTO defaultItem(){
+        return ItemDTO.builder()
+                .name("Nevera 250L")
+                .description("Aspiradora Xiaomi para la casa")
+                .category("Cuidado del hogar")
+                .imageUrl("https://www.alkosto.com/medias/6934177747205-001-750Wx750H?context=bWFzdGVyfGltYWdlc3w2NzgzN3xpbWFnZS9qcGVnfGltYWdlcy9oNTUvaDYwLzExNzQxODYyODg3NDU0LmpwZ3xkOTRiMDdlODllYTI0Y2ZjMDYwN2JmYzAzNDFiZTA3M2E0YzRhZTU5NTFjZjkyMDFmNjJkMmZhNjZhNGQwMjI5")
+                .price(26000000L)
+                .minVoltage(1.5)
+                .maxVoltage(5.0)
+                .sourceOfEnergy("Energía por bateria")
+                .levelOfEfficiency("C")
+                .marca("Xiaomi")
+                .model("2024")
+                .guarantee(24)
+                .build();
+    }
+
+    private ItemDTO defaultItem2(){
+        return ItemDTO.builder()
+                .name("Plancha 30V")
+                .description("Hidrolavadora Kalley")
+                .category("Cuidado del hogar")
+                .imageUrl("https://www.alkosto.com/medias/7705946475709-001-750Wx750H?context=bWFzdGVyfGltYWdlc3w5MDU3NXxpbWFnZS9qcGVnfGltYWdlcy9oYjEvaGEyLzEwNjc2NTA3NzM4MTQyLmpwZ3wxMzNjODgwZGE4ZGQwNjdhYzY1ZmUxZTcwNWM1YWRlOWQxNTI5YmNhNjUxMDM3YmQyNTVhNmM3ZTk0NmVmYWMx")
+                .price(180000L)
+                .minVoltage(1.1)
+                .maxVoltage(3.3)
+                .sourceOfEnergy("Energía por cable")
+                .levelOfEfficiency("B")
+                .marca("Kalley")
+                .model("2022")
+                .guarantee(12)
                 .build();
     }
 }

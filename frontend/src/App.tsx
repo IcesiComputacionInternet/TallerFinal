@@ -6,10 +6,12 @@ import Register from "./components/Register";
 import ShopHome from "./components/ShopHome";
 import NotFound from "./components/NotFound";
 import HomeAdmin from "./pages/admin/AdminHome";
-import Users from "./pages/admin/Users";
+import AdminUsers from "./pages/admin/Users";
 import CreateUsers from "./pages/admin/CreateUsers";
-import Items from "./pages/admin/Items";
-import Orders from "./pages/admin/Orders";
+import AdminItems from "./pages/admin/Items";
+import AdminOrders from "./pages/admin/Orders";
+import CreateRoles from "./pages/admin/CreateRole";
+import AdminRoles from "./pages/admin/Roles";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
@@ -38,10 +40,12 @@ function App() {
               <Route path="/*" element={<NotFound/>}>
               </Route>
               <Route path="/admin/home" element={<HomeAdmin/>}></Route>
-              <Route path="/admin/users" element={<Users/>}></Route>
+              <Route path="/admin/users" element={<AdminUsers/>}></Route>
+              <Route path="/admin/items" element={<AdminItems/>}></Route>
+              <Route path="/admin/orders" element={<AdminOrders/>}></Route>
+              <Route path="/admin/roles" element={<AdminRoles/>}></Route>
               <Route path="/admin/users/create" element={<CreateUsers/>}></Route>
-              <Route path="/admin/items" element={<Items/>}></Route>
-              <Route path="/admin/orders" element={<Orders/>}></Route>
+              <Route path="/admin/roles/create" element={<CreateRoles/>}></Route>
           </Routes>
       </BrowserRouter>
   );
