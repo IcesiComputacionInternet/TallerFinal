@@ -10,7 +10,7 @@ import lombok.Data;
 @Builder
 public class PurchaseOrderShowDTO {
     private UUID purchaseOrderId;
-    private CustomerShowDTO customer;
+    private EShopUserShowDTO eShopUser;
     private String status;
     private long total;
     private List<ItemShowDTO> items;

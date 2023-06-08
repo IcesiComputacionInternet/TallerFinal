@@ -7,17 +7,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import co.icesi.automoviles.model.SecurityCustomer;
-import co.icesi.automoviles.repository.CustomerRepository;
+import co.icesi.automoviles.model.SecurityEShopUser;
+import co.icesi.automoviles.repository.EShopUserRepository;
 
 
 @Service
 @AllArgsConstructor
-public class CustomerManagementService implements UserDetailsService {
+public class EShopUserManagementService implements UserDetailsService {
 
-    private final CustomerRepository repository;
+    private final EShopUserRepository repository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findByEmail(username).map(SecurityCustomer::new).orElseThrow(() -> new UsernameNotFoundException("username not found " + username));
+        return repository.findByEmail(username).map(SecurityEShopUser::new).orElseThrow(() -> new UsernameNotFoundException("username not found " + username));
     }
 }

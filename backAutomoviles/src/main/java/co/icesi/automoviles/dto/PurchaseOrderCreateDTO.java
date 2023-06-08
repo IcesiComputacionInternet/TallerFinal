@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Builder
 public class PurchaseOrderCreateDTO {
-    private CustomerCreateDTO customer;
+    private EShopUserCreateDTO eShopUser;
     private String status;
     private long total;
     private List<ItemCreateDTO> items;

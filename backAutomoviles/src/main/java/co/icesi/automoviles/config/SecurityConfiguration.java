@@ -2,7 +2,7 @@ package co.icesi.automoviles.config;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 
-import co.icesi.automoviles.api.CustomerAPI;
+import co.icesi.automoviles.api.EShopUserAPI;
 import co.icesi.automoviles.api.RoleAPI;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -42,12 +42,12 @@ import java.util.List;
 @AllArgsConstructor
 public class SecurityConfiguration {
 
-    private final ShopAuthenticatorManager customerAuthenticatorManager;
+    private final ShopAuthenticatorManager eShopUserAuthenticatorManager;
     private final String secret = "longenoughsecrettotestjwtencrypt";
 
     @Bean
     public AuthenticationManager authenticationManagerBean(){
-        return new ProviderManager(customerAuthenticatorManager);
+        return new ProviderManager(eShopUserAuthenticatorManager);
     }
 
     @Bean
@@ -83,18 +83,18 @@ public class SecurityConfiguration {
                 RequestMatcherDelegatingAuthorizationManager.builder()
                         .add(permitAll,(context,other)->new AuthorizationDecision(true));
 
-        managerBuilder.add(new MvcRequestMatcher(introspector, CustomerAPI.ROOT_PATH+"/**"),
+        managerBuilder.add(new MvcRequestMatcher(introspector, EShopUserAPI.ROOT_PATH+"/**"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_USER"));
 
         tempMvcRequestMatcher = new MvcRequestMatcher(introspector, RoleAPI.ROOT_PATH);
         tempMvcRequestMatcher.setMethod(HttpMethod.POST);
         managerBuilder.add(tempMvcRequestMatcher, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 
-        tempMvcRequestMatcher = new MvcRequestMatcher(introspector, CustomerAPI.ROOT_PATH);
+        tempMvcRequestMatcher = new MvcRequestMatcher(introspector, EShopUserAPI.ROOT_PATH);
         tempMvcRequestMatcher.setMethod(HttpMethod.POST);
         managerBuilder.add(tempMvcRequestMatcher, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 
-        tempMvcRequestMatcher = new MvcRequestMatcher(introspector, CustomerAPI.ROOT_PATH+"/{customerId}/role/{roleName}");
+        tempMvcRequestMatcher = new MvcRequestMatcher(introspector, EShopUserAPI.ROOT_PATH+"/{eShopUserId}/role/{roleName}");
         tempMvcRequestMatcher.setMethod(HttpMethod.PATCH);
         managerBuilder.add(tempMvcRequestMatcher, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 

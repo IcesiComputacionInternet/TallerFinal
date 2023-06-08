@@ -12,5 +12,5 @@ public class RoleShowDTO {
     private UUID roleId;
     private String roleName;
     private String description;
-    private List<CustomerShowDTO> customers;
+    private List<EShopUserShowDTO> eShopUsers;
 }

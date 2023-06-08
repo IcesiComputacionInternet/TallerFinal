@@ -26,8 +26,8 @@ public class PurchaseOrder {
     private UUID purchaseOrderId;
 
     @ManyToOne
-    @JoinColumn(name = "customer_customerId", nullable = false)
-    private Customer customer;
+    @JoinColumn(name = "eShopUser_eShopUserId", nullable = false)
+    private EShopUser eShopUser;
 
     private String status;
     private long total;

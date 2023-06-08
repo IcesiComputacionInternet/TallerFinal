@@ -7,15 +7,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import co.icesi.automoviles.model.SecurityCustomer;
+import co.icesi.automoviles.model.SecurityEShopUser;
 import co.icesi.automoviles.security.CustomAuthentication;
-import co.icesi.automoviles.service.CustomerManagementService;
+import co.icesi.automoviles.service.EShopUserManagementService;
 
 
 @Component
 public class ShopAuthenticatorManager extends DaoAuthenticationProvider {
-    public ShopAuthenticatorManager(CustomerManagementService userManagementService,
-                                     PasswordEncoder passwordEncoder){
+    public ShopAuthenticatorManager(EShopUserManagementService userManagementService,
+                                    PasswordEncoder passwordEncoder){
         this.setUserDetailsService(userManagementService);
         this.setPasswordEncoder(passwordEncoder);
     }
@@ -25,9 +25,9 @@ public class ShopAuthenticatorManager extends DaoAuthenticationProvider {
         UsernamePasswordAuthenticationToken successAuthentication =
                 (UsernamePasswordAuthenticationToken) super.createSuccessAuthentication(principal,
                         authentication, user);
-        SecurityCustomer securityCustomer = (SecurityCustomer) user;
+        SecurityEShopUser securityEShopUser = (SecurityEShopUser) user;
         return new CustomAuthentication(successAuthentication,
-                securityCustomer.customer().getCustomerId().toString());
+                securityEShopUser.eShopUser().getEShopUserId().toString());
     }
     
 }

@@ -23,7 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 public class EShopUser {
     @Id
-    private UUID customerId;
+    private UUID eShopUserId;
     private String firstName;
     private String lastName;
     private String email;
@@ -36,6 +36,6 @@ public class EShopUser {
     @JoinColumn(name = "role_roleId", nullable = false)
     private Role role;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "eShopUser")
     private List<PurchaseOrder> orders;
 }
