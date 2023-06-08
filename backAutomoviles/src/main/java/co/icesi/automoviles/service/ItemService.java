@@ -12,7 +12,10 @@ import co.icesi.automoviles.model.Category;
 import co.icesi.automoviles.model.Item;
 import co.icesi.automoviles.repository.CategoryRepository;
 import co.icesi.automoviles.repository.ItemRepository;
+import co.icesi.automoviles.service.utils.SortUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +62,10 @@ public class ItemService {
 
     public ItemShowDTO getItemById(String itemUUID){
         Item item = getItem(itemUUID);
+        return fromItemToShowDTO(item);
+    }
+
+    private ItemShowDTO fromItemToShowDTO(Item item){
         CategoryShowDTOForItem category = categoryMapper.fromCategoryToCategoryShowDTOFromItem(item.getCategory());
         ItemShowDTO itemShowDTO = itemMapper.fromItemToItemShowDTO(item);
         itemShowDTO.setCategory(category);
@@ -72,5 +79,14 @@ public class ItemService {
                         HttpStatus.NOT_FOUND,
                         new DetailBuilder(ErrorCode.ERR_404, "category", "id", itemUUID))
         );
+    }
+
+    public Page<ItemShowDTO> getAllItems(int perPage, String sortBy, String sortDir){
+        Pageable pageable = SortUtil.sort(perPage, perPage, sortBy, sortDir);
+        Page<Item> items = itemRepository.getAllItems(pageable);
+        Page<ItemShowDTO> itemShowDTOS = items.map(entity -> {
+           return fromItemToShowDTO(entity);
+        });
+        return itemShowDTOS;
     }
 }

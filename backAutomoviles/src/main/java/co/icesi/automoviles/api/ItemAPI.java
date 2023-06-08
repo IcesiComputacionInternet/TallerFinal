@@ -2,7 +2,9 @@ package co.icesi.automoviles.api;
 
 import co.icesi.automoviles.dto.ItemCreateDTO;
 import co.icesi.automoviles.dto.ItemShowDTO;
+import co.icesi.automoviles.dto.PageResponse;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,5 +24,10 @@ public interface ItemAPI {
     public ItemShowDTO getItemById(@PathVariable("itemId") String itemId);
 
     @GetMapping
-    public Page<ItemShowDTO> getItems();
+    public ResponseEntity<PageResponse<ItemShowDTO>> getItems(
+            @RequestParam(name = "page", defaultValue = "1") Integer page,
+            @RequestParam(name = "per_page", defaultValue = "5") Integer perPage,
+            @RequestParam(name = "sort", defaultValue = "name") String sortBy,
+            @RequestParam(name = "sort_dir", defaultValue = "asc") String sortDirection
+    );
 }

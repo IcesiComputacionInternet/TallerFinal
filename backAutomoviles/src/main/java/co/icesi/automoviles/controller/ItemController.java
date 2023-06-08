@@ -3,9 +3,13 @@ package co.icesi.automoviles.controller;
 import co.icesi.automoviles.api.ItemAPI;
 import co.icesi.automoviles.dto.ItemCreateDTO;
 import co.icesi.automoviles.dto.ItemShowDTO;
+import co.icesi.automoviles.dto.PageResponse;
+import co.icesi.automoviles.model.Item;
 import co.icesi.automoviles.service.ItemService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -30,7 +34,10 @@ public class ItemController implements ItemAPI {
     }
 
     @Override
-    public Page<ItemShowDTO> getItems() {
-        return null;
+    public ResponseEntity<PageResponse<ItemShowDTO>> getItems(Integer page, Integer perPage, String sortBy, String sortDirection) {
+        Page<ItemShowDTO> items;
+        items = itemService.getAllItems(perPage, sortBy, sortDirection);
+        PageResponse<ItemShowDTO> response = new PageResponse<>(items, new ItemShowDTO[0]);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
