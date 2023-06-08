@@ -15,6 +15,7 @@ public class ResponseOrderDTO {
     private String user;
     private String status;
     private long total;
-    private List<String> items;
+    private List<ResponseCellphoneDTO> items;
+    private List<Integer> quantities;
     private String message;
 }

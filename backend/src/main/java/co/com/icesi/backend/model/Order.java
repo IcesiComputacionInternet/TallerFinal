@@ -1,5 +1,6 @@
 package co.com.icesi.backend.model;
 
+import co.com.icesi.backend.Enum.OrderStatus;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,7 +21,7 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_user_id", nullable = false)
     private User user;
-    private String status;
+    private OrderStatus status;
     private long total;
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -28,5 +29,5 @@ public class Order {
             joinColumns = @JoinColumn(name = "order_order_id"),
             inverseJoinColumns = @JoinColumn(name = "cellphone_cellphone_id"))
     private List<Cellphone> items;
-    private HashMap<String, Integer> amounts;
+    private List<Integer> quantities;
 }
