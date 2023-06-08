@@ -11,9 +11,10 @@ const movie = (props) => {
     useEffect(() => {
 
         if(router.query.movie) {
-            console.log(router.query.movie)
-            var res = router.query.movie.replace("%", " "); 
-            getData(res)
+            let encodedMovie = encodeURIComponent(router.query.movie)
+            getData(encodedMovie)
+
+            console.log(movie)
         }
         
     }, [router.query.movie])
@@ -21,14 +22,16 @@ const movie = (props) => {
     const [movie, setMovie] = useState({
         name: "",
         description: "",
-        imageURL: "",
-        pgRating: "",
         price: 0,
-        categoryName: ""
+        imageURL: "",
+        categoryName: "",
+        pgRating: ""
+        
+        
     });
 
     async function getData(name) {
-        const res = await axios.get("http://localhost:8080/" + name, {
+        const {data} = await axios.get("http://localhost:8080/movies/" + name, {
 
             headers: {
                 "Access-Control-Allow-Origin": "http://localhost:8080",
@@ -36,8 +39,16 @@ const movie = (props) => {
                 "Authorization": "Bearer " + localStorage.getItem('jwt')
             }
         });
-        const data = await res.json()
-        setMovie({name: data.username, pass: data.userpass, picture: data.picture, topsong: data.topsong, desc: data.description, mail: data.mail})
+        console.log({data})
+        console.log(data)
+        setMovie({
+            name: data.name,
+            description: data.description,
+            imageURL: data.imageURL,
+            pgRating: data.pgRating,
+            price: data.price,
+            categoryName: data.categoryName
+          });
         console.log(movie)
     }
 
