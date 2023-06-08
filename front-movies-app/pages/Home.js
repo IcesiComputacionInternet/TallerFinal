@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Card from '../components/Card';
 import { useState, useEffect } from 'react';
 import axios from "axios";
+import MoviesList from '../components/MoviesList';
 
 function Home () {
 
@@ -27,8 +28,11 @@ function Home () {
         }
 
     })
+    
     let res = {data}
-    setMovies(res)
+    console.log(res)
+    //setMovies(res)
+    return res;
   }
 
   
@@ -43,11 +47,19 @@ function Home () {
       
       <Navigation/>
       <Carousel/>
-      <Card/>
+
+      <MoviesList movies = {movies}/>
+      
+      
+      
       
       
     </div>
     )
 }
+
+/*
+
+*/
 
 export default Home;
