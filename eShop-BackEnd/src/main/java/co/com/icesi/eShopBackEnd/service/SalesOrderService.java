@@ -55,7 +55,6 @@ public class SalesOrderService {
 
         //Update the stock of each item
         updateItemsStock(items,createDTO.items());
-        System.out.println(salesOrderRepository.save(newOrder).getTotal() + "asdasd");
         return salesOrderMapper.fromSalesOrderToResponse(salesOrderRepository.save(newOrder));
     }
 
