@@ -111,8 +111,8 @@ const SignUp = () => {
                 </div>
 
                     <div className="button-container">
-                        <button className="btn btn-primary">Sign Up</button>
-                        <button className="btn btn-outline-danger" onClick={cancelSignUp}>Cancel</button>
+                        <button className="btn btn-primary form-button">Sign Up</button>
+                        <button className="btn btn-outline-danger form-button" onClick={cancelSignUp}>Cancel</button>
                     </div>
             </form>
         </div>

@@ -200,8 +200,8 @@ const CreateItem = () => {
                 </div>
                 </div>
             <div className="button-cont-item">
-                <button className="btn btn-primary">Done</button>
-                <button className="btn btn-outline-danger" onClick={cancelNewItem}>Cancel</button>
+                <button className="btn btn-primary form-button">Done</button>
+                <button className="btn btn-outline-danger form-button" onClick={cancelNewItem}>Cancel</button>
         </div>
         </form>
     );

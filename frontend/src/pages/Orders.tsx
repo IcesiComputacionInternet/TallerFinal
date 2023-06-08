@@ -34,17 +34,25 @@ function Orders(){
                                 <tr>
                                     <th>User</th>
                                     <th>Status</th>
-                                    {/*<th>Total</th>*/}
-                                    {/*<th>Items</th>*/}
+                                    <th>Items</th>
+                                    <th>Total</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {storeItems && storeItems.map((item: any, index) => (
                                     <tr key={index}>
                                         <td>{item.id}</td>
-                                        <td>{item.name}</td>
-                                        {/*<td>{order.total}</td>*/}
+                                        <td>
+                                            <select className="form-select" style={{width:"50%"}}>
+                                                <option value="option1">Option 1</option>
+                                                <option value="option2">Option 2</option>
+                                                <option value="option3">Option 3</option>
+                                            </select>
+                                        </td>
+                                        {/*<td>{item.name}</td>*/}
                                         {/*<td>{order.items}</td>*/}
+                                        {/*<td>{order.total}</td>*/}
+
                                     </tr>
                                 ))}
                                 </tbody>

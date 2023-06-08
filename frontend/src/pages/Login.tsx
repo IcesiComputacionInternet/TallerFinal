@@ -78,14 +78,14 @@ const Login = ({ setLogin }: Props) => {
                     <label htmlFor="input-field" className="input-label">Password</label>
                     <span className="input-highlight"></span>
                 </div>
-                <button className="btn btn-primary">
+                <button className="btn btn-primary form-button">
                     Log In
                 </button>
 
                 <div className="divider">
                     <span>Or</span>
                 </div>
-                <button onClick={signUpPage} className="btn btn-outline-primary">
+                <button onClick={signUpPage} className="btn btn-outline-primary form-button">
                     Sign up
                 </button>
             </form>
