@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,13 +55,25 @@ public class OrderService {
     public List<OrderDTO> getAllOrders() {
         if(!EShopSecurityContext.getCurrentUserRole().equals(Roles.USER.toString())) {
             return orderRepository.findAll().stream()
+                    .sorted(Comparator.comparingInt(this::getStatusPriority))
                     .map(orderMapper::fromOrder)
                     .toList();
         }
         EShopUser user=userRepository.findById(UUID.fromString(EShopSecurityContext.getCurrentUserId())).get();
         return user.getOrders().stream()
+                .sorted(Comparator.comparingInt(this::getStatusPriority))
                 .map(orderMapper::fromOrder)
                 .toList();
+    }
+
+    private int getStatusPriority(EShopOrder order) {
+        String status = order.getStatus();
+        return switch (status) {
+            case "PENDING" -> 0;
+            case "SHIPPED" -> 1;
+            case "RECEIVED" -> 2;
+            default -> 3;
+        };
     }
 
     public OrderDTO save(OrderDTO orderDTO) {
@@ -69,7 +82,7 @@ public class OrderService {
                 createEShopException(
                         "Item does not exists",
                         HttpStatus.NOT_FOUND,
-                        new DetailBuilder(ErrorCode.ERR_404, "Item",x )
+                        new DetailBuilder(ErrorCode.ERR_404, "Item",x.getName() )
                 )
         )).toList();
         EShopOrder order= orderMapper.fromOrderDTO(orderDTO);

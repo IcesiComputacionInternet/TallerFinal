@@ -9,6 +9,7 @@ import HomeAdmin from "./pages/admin/AdminHome";
 import Users from "./pages/admin/Users";
 import Items from "./pages/admin/Items";
 import Orders from "./pages/admin/Orders";
+import CreateItems from "./components/CreateItems";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
@@ -40,6 +41,7 @@ function App() {
               <Route path="/admin/users" element={<Users/>}></Route>
               <Route path="/admin/items" element={<Items/>}></Route>
               <Route path="/admin/orders" element={<Orders/>}></Route>
+              <Route path="/createitems" element={<CreateItems/>}></Route>
           </Routes>
       </BrowserRouter>
   );

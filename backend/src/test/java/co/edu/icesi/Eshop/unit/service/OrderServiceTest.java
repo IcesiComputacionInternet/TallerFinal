@@ -1,6 +1,7 @@
 package co.edu.icesi.Eshop.unit.service;
 
 import co.edu.icesi.Eshop.dto.ChangeStatusDTO;
+import co.edu.icesi.Eshop.dto.ItemDTO;
 import co.edu.icesi.Eshop.dto.OrderDTO;
 import co.edu.icesi.Eshop.error.exception.EShopException;
 import co.edu.icesi.Eshop.mapper.OrderMapper;
@@ -182,7 +183,7 @@ public class OrderServiceTest {
         return OrderDTO.builder()
                 .userEmail("julietav@example.com")
                 .userPhoneNumber("3184441232")
-                .items(Stream.of("Licuadora 200X").collect(Collectors.toList()))
+                .items(Stream.of(defaultItemDTO()).collect(Collectors.toList()))
                 .build();
     }
 
@@ -200,7 +201,7 @@ public class OrderServiceTest {
         return OrderDTO.builder()
                 .userEmail("julietav@example.com")
                 .userPhoneNumber("3184441232")
-                .items(Stream.of("Licuadora 200X","Digital Air Fryer 3.7 L").collect(Collectors.toList()))
+                .items(Stream.of(defaultItemDTO(),defaultItemDTO2()).collect(Collectors.toList()))
                 .build();
     }
 
@@ -219,6 +220,42 @@ public class OrderServiceTest {
                 .marca("IMUSA")
                 .model("200X")
                 .guarantee(24)
+                .available(true)
+                .build();
+    }
+
+    private ItemDTO defaultItemDTO(){
+        return ItemDTO.builder()
+                .name("Licuadora 200X")
+                .description("Licuadora modelo 200X")
+                .category("Cuidado del hogar")
+                .imageUrl("")
+                .price(250000L)
+                .minVoltage(1.2)
+                .maxVoltage(1.7)
+                .sourceOfEnergy("Energía por cable")
+                .levelOfEfficiency("A")
+                .marca("IMUSA")
+                .model("200X")
+                .guarantee(24)
+                .available(true)
+                .build();
+    }
+
+    private ItemDTO defaultItemDTO2(){
+        return ItemDTO.builder()
+                .name("Digital Air Fryer 3.7 L")
+                .description("Freidora De Aire Digital Air Fryer 3.7 L")
+                .category("Cuidado del hogar")
+                .imageUrl("")
+                .price(100000L)
+                .minVoltage(1.2)
+                .maxVoltage(1.7)
+                .sourceOfEnergy("Energía por cable")
+                .levelOfEfficiency("B")
+                .marca("IMUSA")
+                .model("300X")
+                .guarantee(5)
                 .available(true)
                 .build();
     }
