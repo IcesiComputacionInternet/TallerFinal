@@ -23,6 +23,9 @@ public class Item {
 
     private long price;
 
+
+    private int warranty;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "categoryId",nullable = false)
     private Category category;
