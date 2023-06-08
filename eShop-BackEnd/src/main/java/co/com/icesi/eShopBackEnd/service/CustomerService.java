@@ -45,6 +45,7 @@ public class CustomerService {
                         new DetailBuilder(ErrorCode.ERR_NOT_FOUND,"role")
                 )
         ));
+
         newCustomer.setCustomerId(UUID.randomUUID());
         newCustomer.setPassword(encoder.encode(user.password()));
         ResponseCustomerDTO userResponse = customerMapper.fromUserToResponseUserDTO(customerRepository.save(newCustomer));

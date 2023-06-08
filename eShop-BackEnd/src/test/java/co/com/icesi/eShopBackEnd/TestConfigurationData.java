@@ -3,6 +3,7 @@ package co.com.icesi.eShopBackEnd;
 
 import co.com.icesi.eShopBackEnd.dto.AssignCategoryDTO;
 import co.com.icesi.eShopBackEnd.dto.CreateCategoryDTO;
+import co.com.icesi.eShopBackEnd.dto.CreateCustomerDTO;
 import co.com.icesi.eShopBackEnd.model.Category;
 import co.com.icesi.eShopBackEnd.model.Customer;
 import co.com.icesi.eShopBackEnd.model.Item;
@@ -24,7 +25,7 @@ import java.util.UUID;
 public class TestConfigurationData {
     @Bean
     CommandLineRunner commandLineRunner(CustomerRepository users,
-                                        PasswordEncoder encoder, CategoryRepository categoryRepository, ItemRepository itemRepository) {
+                                        PasswordEncoder encoder, CategoryRepository categoryRepository, ItemRepository itemRepository,CustomerRepository customerRepository) {
 
         Role admin = Role.builder()
                 .roleId(UUID.randomUUID())
@@ -113,6 +114,7 @@ public class TestConfigurationData {
                 .category(assignCategory)
                 .description("Is a teacher the university Icesi")
                 .build();
+
 
         return args -> {
 

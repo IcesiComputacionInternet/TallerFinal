@@ -51,7 +51,6 @@ public class CategoryControllerTest {
         var newResult = mockMvc.perform(MockMvcRequestBuilders.post("/category").content(
                                 objectMapper.writeValueAsString(defaultCategoryDTO())
                         )
-
                         .header("Authorization","Bearer "+generateAdminToken().getToken())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
