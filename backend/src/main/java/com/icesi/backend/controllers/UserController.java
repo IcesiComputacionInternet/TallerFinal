@@ -2,12 +2,12 @@ package com.icesi.backend.controllers;
 
 import com.icesi.backend.DTO.UserCreateDTO;
 import com.icesi.backend.models.ShopUser;
-import com.icesi.backend.service.UserService;
+import com.icesi.backend.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {

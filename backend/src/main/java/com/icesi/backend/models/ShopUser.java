@@ -1,7 +1,9 @@
 package com.icesi.backend.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +12,8 @@ import java.util.UUID;
 @Entity
 @Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ShopUser {
     @Id
     @Column(nullable = false, unique = true)

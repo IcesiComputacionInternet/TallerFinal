@@ -1,7 +1,9 @@
 package com.icesi.backend.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -9,6 +11,8 @@ import java.util.UUID;
 @Entity
 @Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "orders")
 public class Order {
     @Id

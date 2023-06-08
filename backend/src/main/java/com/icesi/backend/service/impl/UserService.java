@@ -1,4 +1,4 @@
-package com.icesi.backend.service;
+package com.icesi.backend.service.impl;
 
 import com.icesi.backend.DTO.UserCreateDTO;
 import com.icesi.backend.mappers.UserMapper;

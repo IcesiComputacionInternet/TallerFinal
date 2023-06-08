@@ -1,8 +1,6 @@
 package com.icesi.backend.models;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -11,6 +9,8 @@ import java.util.UUID;
 @Builder
 @Data
 @Table(name = "item")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Item {
     @Id
     @Column(nullable = false, unique = true)
@@ -22,4 +22,6 @@ public class Item {
     private String imgUrl;
     @ManyToOne
     private Category category;
+
+
 }
