@@ -2,8 +2,6 @@ package co.com.icesi.eShop_Back.validation.phone_number;
 
 
 
-import co.com.icesi.eShop_Back.validation.phone_number.interfaces.ColombianNumber;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 

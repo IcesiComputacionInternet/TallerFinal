@@ -1,5 +1,6 @@
 package co.com.icesi.eShop_Back.repository;
 
+import co.com.icesi.eShop_Back.model.Category;
 import co.com.icesi.eShop_Back.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,11 +11,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, UUID> {
+public interface CategoryRepository extends JpaRepository<Category, UUID> {
 
-    @Query("SELECT CASE WHEN (COUNT(u) > 0) THEN true ELSE false END FROM Role u WHERE u.name = :name")
-    boolean existsByName(@Param("name") String name);
-
-    @Query("SELECT r FROM Role r WHERE r.name = :name")
-    Optional<Role> findByName(@Param("name") String name);
+    @Query("SELECT r FROM Category r WHERE r.name = :name")
+    Optional<Category> findByName(@Param("name") String name);
 }

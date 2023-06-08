@@ -1,18 +1,20 @@
 package co.com.icesi.eShop_Back.controller.api;
 
-import co.com.icesi.eShop_Back.dto.RequestUserDTO;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import co.com.icesi.eShop_Back.dto.request.RequestUserDTO;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static co.com.icesi.eShop_Back.controller.api.UserApi.BASE_URL;
-
-@RequestMapping(BASE_URL)
+@RequestMapping(UserApi.USER_BASE_URL)
 public interface UserApi {
-    String BASE_URL = "/api/v1/users";
+    String USER_BASE_URL = "/api/v1/users";
 
     @PostMapping
-    void add(@Valid @RequestBody RequestUserDTO user);
+    void saveUser(@RequestBody @Valid RequestUserDTO userDTO);
+
+    @GetMapping("/get/id/{id}")
+    RequestUserDTO getUserById(@PathVariable("id") String id);
+
+    @DeleteMapping("/delete/id/{id}")
+    void deleteUserById(@PathVariable("id") String id);
 }
