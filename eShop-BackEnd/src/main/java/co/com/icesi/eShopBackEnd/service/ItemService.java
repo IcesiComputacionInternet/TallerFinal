@@ -42,7 +42,6 @@ public class ItemService {
                         new DetailBuilder(ErrorCode.ERR_NOT_FOUND,"category")
                 )
         ));
-
         item.setItemId(UUID.randomUUID());
         ResponseItemDTO responseDTO =itemMapper.fromItemToResponseItemDTO(itemRepository.save(item));
         responseDTO.setItemId(item.getItemId());

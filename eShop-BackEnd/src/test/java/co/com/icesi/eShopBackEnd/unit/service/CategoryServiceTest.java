@@ -1,5 +1,6 @@
 package co.com.icesi.eShopBackEnd.unit.service;
 
+
 import co.com.icesi.eShopBackEnd.dto.AssignCategoryDTO;
 import co.com.icesi.eShopBackEnd.dto.CreateCategoryDTO;
 import co.com.icesi.eShopBackEnd.mapper.CategoryMapper;
@@ -60,7 +61,7 @@ public class CategoryServiceTest {
     @Test
     public void testAssignCategoryNoExistCategory(){
         try{
-        categoryService.assignCategory(assignCategoryNoExistDTO());
+            categoryService.assignCategory(assignCategoryNoExistDTO());
         }catch (RuntimeException exception) {
             assertEquals("Category not found", exception.getMessage());
         }
@@ -86,12 +87,12 @@ public class CategoryServiceTest {
         categoryService.save(categoryDTO());
         Category category = category();
         Item item = item();
-            when(categoryRepository.returnCategory(any())).thenReturn(Optional.of(category));
-            when(itemRepository.returnItem(any())).thenReturn(Optional.of(item));
-            categoryService.assignCategory(AssignCategoryDTO.builder()
-                    .itemName("item")
-                    .category("Teacher")
-                    .build());
+        when(categoryRepository.returnCategory(any())).thenReturn(Optional.of(category));
+        when(itemRepository.returnItem(any())).thenReturn(Optional.of(item));
+        categoryService.assignCategory(AssignCategoryDTO.builder()
+                .itemName("item")
+                .category("Teacher")
+                .build());
 
     }
 
