@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
-    private final CellphoneShopExceptionBuilder exceptionBuilder;
+    private final CellphoneShopExceptionBuilder exceptionBuilder = new CellphoneShopExceptionBuilder();
 
     public CategoryDTO save(CategoryDTO categoryDTO){
         checkPermissions();

@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,7 @@ public class OrderService {
     private final CellphoneRepository cellphoneRepository;
     private final OrderMapper orderMapper;
     private final CellphoneMapper cellphoneMapper;
-    private final CellphoneShopExceptionBuilder exceptionBuilder;
+    private final CellphoneShopExceptionBuilder exceptionBuilder = new CellphoneShopExceptionBuilder();
 
     private ResponseOrderDTO saveOrder(RequestNewOrderDTO requestOrderDTO) {
         checkPermissionsToCreate();
@@ -42,15 +43,15 @@ public class OrderService {
                         "The user with the specified email does not exists.", userEmail));
         List<Cellphone> items = requestOrderDTO.getItems()
                 .stream()
-                .map(item -> checkIfItemExists(item))
+                .map(this::checkIfItemExists)
                 .collect(Collectors.toList());
         List<ResponseCellphoneDTO> cellphones = items.stream()
-                .map(item -> cellphoneMapper.fromCellphoneToResponseCellphoneDTO(item))
+                .map(cellphoneMapper::fromCellphoneToResponseCellphoneDTO)
                 .collect(Collectors.toList());
-        List<Integer> quantities = requestOrderDTO.getItems()
+        Set<Integer> quantities = requestOrderDTO.getItems()
                 .stream()
-                .map(item -> item.getQuantity())
-                .collect(Collectors.toList());
+                .map(RequestOrderItemDTO::getQuantity)
+                .collect(Collectors.toSet());
         Order order = orderMapper.fromRequestOrderDTO(requestOrderDTO);
         order.setUser(user);
         order.setOrderId(UUID.randomUUID());

@@ -5,6 +5,7 @@ import co.com.icesi.backend.error.exception.CellphoneError;
 import co.com.icesi.backend.error.exception.CellphoneErrorDetail;
 import co.com.icesi.backend.error.exception.CellphoneException;
 import co.com.icesi.backend.error.exception.DetailBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;

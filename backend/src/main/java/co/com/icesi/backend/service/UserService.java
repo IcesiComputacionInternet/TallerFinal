@@ -25,7 +25,7 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
     private final RoleMapper roleMapper;
-    private final CellphoneShopExceptionBuilder exceptionBuilder;
+    private final CellphoneShopExceptionBuilder exceptionBuilder = new CellphoneShopExceptionBuilder();
 
     public ResponseUserDTO saveUser(RequestUserDTO requestUserDTO) {
         Role role = roleRepository.findByName(requestUserDTO.getRole()).orElseThrow(

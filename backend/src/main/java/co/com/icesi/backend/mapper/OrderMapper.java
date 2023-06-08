@@ -8,11 +8,12 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
-    @Mapping(target = "items", source = "items",ignore=true)
+    @Mapping(target = "items", source = "items", ignore=true)
     Order fromRequestOrderDTO(RequestNewOrderDTO requestOrderDTO);
-    @Mapping(target = "user", source = "user",ignore=true)
-    @Mapping(target = "items", source = "items",ignore=true)
+    @Mapping(target = "user", source = "user", ignore=true)
+    @Mapping(target = "items", source = "items", ignore=true)
     ResponseOrderDTO fromOrderToResponseOrderDTO(Order order);
+    @Mapping(target = "user", ignore=true)
     @Mapping(target = "message", source = "message")
     ResponseOrderDTO fromRequestChangeToResponseOrderDTO(Order order, String message);
 }

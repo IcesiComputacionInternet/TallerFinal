@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -29,5 +30,8 @@ public class Order {
             joinColumns = @JoinColumn(name = "order_order_id"),
             inverseJoinColumns = @JoinColumn(name = "cellphone_cellphone_id"))
     private List<Cellphone> items;
-    private List<Integer> quantities;
+
+    @ElementCollection
+    @Column(name = "quantities")
+    private Set<Integer> quantities;
 }
