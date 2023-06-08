@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,10 +19,21 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private UserMapper userMapper;
+
+    public List<ShopUser> getUsers(){
+        return userRepository.findAll();
+    }
     public Optional<ShopUser> createUser(UserCreateDTO user){
         Optional<String> email = Optional.ofNullable(user.getEmail());
         Optional<String> numberPhone = Optional.ofNullable(user.getPhoneNumber());
 
+        if(numberPhone.isPresent() && email.isPresent()){
+            Optional<ShopUser> existingUserByEmail = userRepository.findByEmail(user.getEmail());
+            Optional<ShopUser> existingUserByPhone = userRepository.findByPhoneNumber(user.getPhoneNumber());
+            if(existingUserByPhone.isPresent() || existingUserByEmail.isPresent()){
+                throw new DuplicateKeyException("Email or Number Phone already exist");
+            }
+        }
         if(email.isPresent()){
             Optional<ShopUser> existingUserByEmail = userRepository.findByEmail(user.getEmail());
 
@@ -30,7 +42,8 @@ public class UserService {
             }
             ShopUser newShopUser = userMapper.fromUserCreateDTO(user);
             return Optional.of(userRepository.save(newShopUser));
-        } else if(numberPhone.isPresent()) {
+        }
+        if(numberPhone.isPresent()) {
             Optional<ShopUser> existingUserByPhone = userRepository.findByPhoneNumber(user.getPhoneNumber());
 
             if(existingUserByPhone.isPresent()){
@@ -39,7 +52,10 @@ public class UserService {
             ShopUser newShopUser = userMapper.fromUserCreateDTO(user);
             return Optional.of(userRepository.save(newShopUser));
         }
-
         return Optional.empty();
+    }
+
+    public Optional<ShopUser> updateUser(UserCreateDTO userCreateDTO){
+        return Optional.of(userRepository.save(userMapper.fromUserCreateDTO(userCreateDTO)));
     }
 }

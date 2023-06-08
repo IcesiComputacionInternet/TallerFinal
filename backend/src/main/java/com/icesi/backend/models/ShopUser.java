@@ -15,6 +15,8 @@ public class ShopUser {
     @Column(nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID userId;
+    @Column(nullable = false)
+    private String password;
     private String firstName;
     private String lastName;
     @Column(unique = true)

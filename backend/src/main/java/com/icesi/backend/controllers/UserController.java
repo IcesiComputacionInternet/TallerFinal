@@ -4,12 +4,12 @@ import com.icesi.backend.DTO.UserCreateDTO;
 import com.icesi.backend.models.ShopUser;
 import com.icesi.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 @RestController
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
@@ -19,8 +19,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/users")
-    public Optional<ShopUser> createUser(@RequestBody UserCreateDTO userCreateDTO){
-        return userService.createUser(userCreateDTO);
+    @GetMapping()
+    public List<ShopUser> getUsers(){
+        return userService.getUsers();
+    }
+    @PostMapping("/create")
+    public ShopUser createUser(@RequestBody UserCreateDTO userCreateDTO){
+        return userService.createUser(userCreateDTO).get();
+    }
+
+    @PostMapping("/update")
+    public ShopUser updateUser(@RequestBody UserCreateDTO userCreateDTO){
+        return userService.updateUser(userCreateDTO).get();
     }
 }
