@@ -21,7 +21,7 @@ function Orders(){
     // }
 
     return (
-        <div className="container">
+        <div className="login-container">
             <div className="container mt-4">
                 <div className="row justify-content-center">
                     <h1>
@@ -44,9 +44,9 @@ function Orders(){
                                         <td>{item.id}</td>
                                         <td>
                                             <select className="form-select" style={{width:"50%"}}>
-                                                <option value="option1">Option 1</option>
-                                                <option value="option2">Option 2</option>
-                                                <option value="option3">Option 3</option>
+                                                <option value="IN_PROCESS">IN_PROCESS</option>
+                                                <option value="SENT">SENT</option>
+                                                <option value="DELIVERED">DELIVERED</option>
                                             </select>
                                         </td>
                                         {/*<td>{item.name}</td>*/}

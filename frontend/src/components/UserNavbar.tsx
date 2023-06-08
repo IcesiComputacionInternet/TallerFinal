@@ -1,19 +1,30 @@
 import {Button, Container, Nav, Navbar as NavbarBs} from "react-bootstrap"
 // import { NavLink } from "react-router-dom"
 import {useShoppingCart} from "../methods/ShoppingCartCtx.tsx";
-// import { useShoppingCart } from "../context/ShoppingCartContext"
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
-export function Navbar() {
+export function UserNavbar() {
     const { openCart, cartQuantity } = useShoppingCart()
-    return (
+    const navigation : NavigateFunction = useNavigate();
+
+    const handleLogOut = () => {
+        localStorage.removeItem("jwt");
+        localStorage.removeItem("userEmail");
+        localStorage.setItem("logged_user", JSON.stringify(false));
+        navigation("/");
+    }
+
+
+return (
         <NavbarBs sticky="top" className="bg-white shadow-sm mb-3">
             <Container>
                 <Nav className="me-auto">
-                    <h3>Store</h3>
+                    <h3>Welcome</h3>
                     {/*<Nav.Link to="/" as={NavLink}>*/}
                     {/*    Home*/}
                     {/*</Nav.Link>*/}
                 </Nav>
+                <button className="btn btn-outline-danger" type="button" onClick={handleLogOut} style={{marginRight: "3%"}}>Log out</button>
                 {cartQuantity > 0 && (
                     <Button
                         onClick={openCart}

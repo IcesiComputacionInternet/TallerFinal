@@ -1,7 +1,7 @@
 // @ts-ignore
 import React, { useState } from "react";
 import {Col, Container, Row} from "react-bootstrap"
-// import axios from "axios";
+import axios from "axios";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import '../style/form.css'
 // import loginImg from '../assets/loginImg.svg'
@@ -18,34 +18,34 @@ const Login = ({ setLogin }: Props) => {
     const [password, setPassword] = useState("");
     const navigation : NavigateFunction = useNavigate();
 
-    // const handleSubmit = async (event: any) => {
-    //     event.preventDefault();
-    //
-    //     try {
-    //         const { data } = await axios.post(
-    //             baseUrl + "/token",
-    //             {
-    //                 username,
-    //                 password,
-    //             },
-    //             {
-    //                 headers: {
-    //                     "Access-Control-Allow-Origin": baseUrl,
-    //                 },
-    //             }
-    //         );
-    //         if (data.token) {
-    //             localStorage.setItem("jwt", data.token);
-    //             localStorage.setItem("userEmail", username);
-    //             setLogin();
-    //             navigation("/");
-    //         }
-    //     } catch (error) {
-    //         alert("Invalid username or password")
-    //         navigation("/*");
-    //     }
-    //
-    // };
+    const handleSubmit = async (event: any) => {
+        event.preventDefault();
+
+        try {
+            const { data } = await axios.post(
+                baseUrl + "/token",
+                {
+                    username,
+                    password,
+                },
+                {
+                    headers: {
+                        "Access-Control-Allow-Origin": baseUrl,
+                    },
+                }
+            );
+            if (data.token) {
+                localStorage.setItem("jwt", data.token);
+                localStorage.setItem("userEmail", username);
+                setLogin();
+                navigation("/");
+            }
+        } catch (error) {
+            alert("Invalid username or password")
+            navigation("/*");
+        }
+
+    };
 
     const signUpPage = () => {
         navigation("/signup");
