@@ -38,7 +38,7 @@ public class ItemControllerTest {
         token = TokenGenerator.getToken(mockMvc,objectMapper,"email1@email.com");
     }
 
-    //HAPPY PATH FOR CRUD
+
     @Test
     public void testCreateItem() throws Exception {
         var  result = mockMvc.perform(MockMvcRequestBuilders.post(URL+ CRUD.C.getAction()).content(
@@ -48,6 +48,71 @@ public class ItemControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testCreateItem_blankName() throws Exception {
+        var item = defaulItem();
+        item.setName("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.post(URL+ CRUD.C.getAction()).content(
+                                objectMapper.writeValueAsString(item)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+
+    @Test
+    public void testCreateItem_blankDescription() throws Exception {
+        var item = defaulItem();
+        item.setDescription("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.post(URL+ CRUD.C.getAction()).content(
+                                objectMapper.writeValueAsString(item)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testCreateItem_LessThanZeroPrice() throws Exception {
+        var item = defaulItem();
+        item.setPrice(-1L);
+        var  result = mockMvc.perform(MockMvcRequestBuilders.post(URL+ CRUD.C.getAction()).content(
+                                objectMapper.writeValueAsString(item)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testCreateItem_BlankCategory() throws Exception {
+        var item = defaulItem();
+        item.setCategory("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.post(URL+ CRUD.C.getAction()).content(
+                                objectMapper.writeValueAsString(item)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
                 .andReturn();
 
         System.out.println(result.getResponse().getContentAsString());
@@ -71,9 +136,76 @@ public class ItemControllerTest {
         System.out.println(result.getResponse().getContentAsString());
     }
 
+
+
+    @Test
+    public void testUpdateItem_blankName() throws Exception {
+        var item = defaulItem();
+        item.setName("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
+                                objectMapper.writeValueAsString(item)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+
+    @Test
+    public void testUpdateItem_blankDescription() throws Exception {
+        var item = defaulItem();
+        item.setDescription("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
+                                objectMapper.writeValueAsString(item)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testUpdateItem_LessThanZeroPrice() throws Exception {
+        var item = defaulItem();
+        item.setPrice(-1L);
+        var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
+                                objectMapper.writeValueAsString(item)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testUpdateItem_BlankCategory() throws Exception {
+        var item = defaulItem();
+        item.setCategory("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
+                                objectMapper.writeValueAsString(item)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
     @Test
     public void testDelete() throws Exception {
-        String itemName = "Item 1";
+        String itemName = "Item 5";
         var  result = mockMvc.perform(MockMvcRequestBuilders.delete(URL+ CRUD.D.getAction())
                         .content(itemName)
                         .header("Authorization", "Bearer " + token)

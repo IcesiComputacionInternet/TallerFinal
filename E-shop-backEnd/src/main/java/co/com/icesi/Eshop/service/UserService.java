@@ -67,7 +67,10 @@ public class UserService {
     }
 
     public UserResponseDTO deleteUser(String userEmail) {
-        String userEmailToDelete = userEmail.substring(1, userEmail.length() - 1);
+        String userEmailToDelete = userEmail;
+        if(userEmailToDelete.matches(".*\".*")){
+            userEmailToDelete = userEmail.substring(1, userEmail.length() - 1);
+        }
         Optional<UserPrincipal> user = Optional.ofNullable(userRepository.findByEmail(userEmailToDelete).orElseThrow(() -> new RuntimeException("UserPrincipal with " + userEmail + " does not exists")));
         return user.map(value -> {
             userRepository.delete(value);

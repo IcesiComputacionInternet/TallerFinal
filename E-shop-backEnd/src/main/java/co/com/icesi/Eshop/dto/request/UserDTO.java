@@ -17,25 +17,21 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class UserDTO {
 
-    @NotNull
+    @NotBlank
     @Email
     private String email;
 
     @NotBlank
-    @NotNull
     private String password;
 
     @NotBlank
-    @NotNull
     private String phoneNumber;
 
 
     @NotBlank
-    @NotNull
     private String firstName;
 
     @NotBlank
-    @NotNull
     private String lastName;
 
 

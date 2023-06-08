@@ -42,9 +42,15 @@ public class ItemService {
     }
 
     public String deleteItem(String itemName) {
-        String itemToDelete = itemName.substring(1, itemName.length() - 1);
+        String itemToDelete = itemName;
+        if(itemToDelete.matches(".*\".*")){
+            itemToDelete = itemName.substring(1, itemName.length() - 1);
+        }
         Item item = itemRepository.findByName(itemToDelete).orElseThrow(() -> new RuntimeException("Item not found"));
-        if(orderRepository.findAll().stream().filter(orderStore -> orderStore.getItems().contains(item)).toList().size()>0) throw new RuntimeException("Item is in an order");
+        if(orderRepository.findAll().stream().filter(orderStore -> orderStore.getItems().contains(item)).toList().size()>0){
+            throw new RuntimeException("Item is in an order");
+        }
+
         itemRepository.delete(item);
         return "Item deleted";
     }

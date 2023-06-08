@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Import(TestConfigurationData.class )
 @ActiveProfiles(profiles = "test")
+@Transactional
 public class CategoryControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -32,7 +34,7 @@ public class CategoryControllerTest {
     private String token = "";
 
 
-    //Happy path for CRUD
+
     private final String URL = "/api/categories/";
 
     @BeforeEach
@@ -55,6 +57,38 @@ public class CategoryControllerTest {
     }
 
     @Test
+    public void testCreateCategory_blankName() throws Exception {
+        var category = defaultCategory();
+        category.setName("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.post(URL+ CRUD.C.getAction()).content(
+                                objectMapper.writeValueAsString(category)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testCreateCategory_blankDescription() throws Exception {
+        var category = defaultCategory();
+        category.setDescription("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.post(URL+ CRUD.C.getAction()).content(
+                                objectMapper.writeValueAsString(category)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
     public void testUpdateCategory() throws Exception {
         CategoryDTO categoryDTO = defaultCategory();
         categoryDTO.setName("Category 3");
@@ -71,9 +105,42 @@ public class CategoryControllerTest {
         System.out.println(result.getResponse().getContentAsString());
     }
 
+
+    @Test
+    public void testUpdateCategory_blankName() throws Exception {
+        var category = defaultCategory();
+        category.setName("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
+                                objectMapper.writeValueAsString(category)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testUpdateCategory_blankDescription() throws Exception {
+        var category = defaultCategory();
+        category.setDescription("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
+                                objectMapper.writeValueAsString(category)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
     @Test
     public void testDeleteCategory() throws Exception {
-        String category = "Category 3";
+        String category = "Category 4";
         var  result = mockMvc.perform(MockMvcRequestBuilders.delete(URL+ CRUD.D.getAction())
                         .content(category)
                         .header("Authorization", "Bearer " + token)

@@ -39,7 +39,7 @@ public class UserControllerTest {
     }
 
 
-    //HAPPY PATH FOR CRUD
+
     @Test
     public void testCreateUser() throws Exception {
         var  result = mockMvc.perform(MockMvcRequestBuilders.post(URL+ CRUD.C.getAction()).content(
@@ -49,6 +49,103 @@ public class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+
+    @Test
+    public void testCreateUse_blankEmail() throws Exception {
+        var user = defaultUserPrincipal();
+        user.setEmail("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.post(URL+ CRUD.C.getAction()).content(
+                                objectMapper.writeValueAsString(user)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testCreateUse_Not_format_Email() throws Exception {
+        var user = defaultUserPrincipal();
+        user.setEmail("sasuke.com");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.post(URL+ CRUD.C.getAction()).content(
+                                objectMapper.writeValueAsString(user)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testCreateUse_blankPassword() throws Exception {
+        var user = defaultUserPrincipal();
+        user.setPassword("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.post(URL+ CRUD.C.getAction()).content(
+                                objectMapper.writeValueAsString(user)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testCreateUse_blankPhoneNumber() throws Exception {
+        var user = defaultUserPrincipal();
+        user.setPhoneNumber("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.post(URL+ CRUD.C.getAction()).content(
+                                objectMapper.writeValueAsString(user)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testCreateUse_blankLastName() throws Exception {
+        var user = defaultUserPrincipal();
+        user.setLastName("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.post(URL+ CRUD.C.getAction()).content(
+                                objectMapper.writeValueAsString(user)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testCreateUse_blankRole() throws Exception {
+        var user = defaultUserPrincipal();
+        user.setRole("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.post(URL+ CRUD.C.getAction()).content(
+                                objectMapper.writeValueAsString(user)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
                 .andReturn();
 
         System.out.println(result.getResponse().getContentAsString());
@@ -71,10 +168,109 @@ public class UserControllerTest {
         System.out.println(result.getResponse().getContentAsString());
     }
 
+
+
+    @Test
+    public void testUpdateUser_blankEmail() throws Exception {
+        var user = defaultUserPrincipal();
+        user.setEmail("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
+                                objectMapper.writeValueAsString(user)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testUpdateUse_Not_format_Email() throws Exception {
+        var user = defaultUserPrincipal();
+        user.setEmail("sasuke.com");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
+                                objectMapper.writeValueAsString(user)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testUpdateUse_blankPassword() throws Exception {
+        var user = defaultUserPrincipal();
+        user.setPassword("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
+                                objectMapper.writeValueAsString(user)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testUpdateUse_blankPhoneNumber() throws Exception {
+        var user = defaultUserPrincipal();
+        user.setPhoneNumber("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
+                                objectMapper.writeValueAsString(user)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testUpdateUse_blankLastName() throws Exception {
+        var user = defaultUserPrincipal();
+        user.setLastName("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
+                                objectMapper.writeValueAsString(user)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testUpdateUse_blankRole() throws Exception {
+        var user = defaultUserPrincipal();
+        user.setRole("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
+                                objectMapper.writeValueAsString(user)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
     @Test
     public void testDeleteUser() throws Exception {
-        String email = "email3@email.com";
-        var  result = mockMvc.perform(MockMvcRequestBuilders.delete(URL+ CRUD.D.getAction()+"/{email}",email)
+        String email = "email2@email.com";
+        var  result = mockMvc.perform(MockMvcRequestBuilders.delete(URL+ CRUD.D.getAction())
+                        .content(email)
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))

@@ -65,6 +65,13 @@ public class TestConfigurationData {
                 .description("Supervisor")
                 .authorities(new ArrayList<>(Arrays.asList(authorities3,authorities4,authorities5)))
                 .build();
+
+        Role role5= Role.builder()
+                .roleId(UUID.fromString("a351796c-ff13-11ed-be56-0242ac120015"))
+                .roleName("DELETE")
+                .description("Supervisor")
+                .authorities(new ArrayList<>(Arrays.asList(authorities3,authorities4,authorities5)))
+                .build();
         ////////////////////////////////////////
 
         Category category1 = Category.builder()
@@ -85,6 +92,12 @@ public class TestConfigurationData {
         Category category4 = Category.builder()
                 .categoryId(UUID.fromString("a3517ba6-ff13-11ed-be56-0242ac120005"))
                 .name("Category 4")
+                .description("Description 4")
+                .build();
+
+        Category category5 = Category.builder()
+                .categoryId(UUID.fromString("a3517ba6-ff13-11ed-be56-0242ac120305"))
+                .name("Category 5")
                 .description("Description 4")
                 .build();
         ////////////////////////////////////////
@@ -156,6 +169,15 @@ public class TestConfigurationData {
                 .price(4000L)
                 .category(category4)
                 .build();
+
+        Item item5 = Item.builder()
+                .itemId(UUID.fromString("a35182a4-ff13-11ed-be56-0242ac120007"))
+                .name("Item 5")
+                .description("Description 5")
+                .imageUrl("https://via.placeholder.com/150")
+                .price(4000L)
+                .category(category4)
+                .build();
         ////////////////////////////////////////
         OrderStore orderStore1 = OrderStore.builder()
                 .orderId(UUID.fromString("a35184d4-ff13-11ed-be56-0242ac120002"))
@@ -181,14 +203,15 @@ public class TestConfigurationData {
         ////////////////////////////////////////
         return args -> {
             authoritiesRepository.saveAll(Arrays.asList(authorities1, authorities2));
-            roleRepository.saveAll(Arrays.asList(role1, role2, role3, role4));
-            categoryRepository.saveAll(Arrays.asList(category1, category2, category3, category4));
+            roleRepository.saveAll(Arrays.asList(role1, role2, role3, role4,role5));
+            categoryRepository.saveAll(Arrays.asList(category1, category2, category3, category4,category5));
             userRepository.saveAll(Arrays.asList(user1, user2, user3));
-            itemRepository.saveAll(Arrays.asList(item1, item2, item3, item4));
+            itemRepository.saveAll(Arrays.asList(item1, item2, item3, item4,item5));
             orderRepository.saveAll(Arrays.asList(orderStore1, orderStore2, orderStore3));
         };
 
 
     }
+
 
 }

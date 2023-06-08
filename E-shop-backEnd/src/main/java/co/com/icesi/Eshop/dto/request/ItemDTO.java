@@ -16,21 +16,17 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class ItemDTO {
 
+
     @NotBlank
-    @NotNull
     private String description;
     @NotBlank
-    @NotNull
     private String name;
 
     @Min(value = 0)
-    @NotNull
     private Long price;
     @NotBlank
-    @NotNull
     private String imageUrl;
     @NotBlank
-    @NotNull
     private String category;
 
     private String orderId;

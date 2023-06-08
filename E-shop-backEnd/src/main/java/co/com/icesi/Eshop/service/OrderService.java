@@ -43,28 +43,34 @@ public class OrderService {
         return orderMapper.toOrderResponseDTO(order);
     }
     public OrderResponseDTO payOrder(String orderId) {
-        String orderIdF = orderId.substring(1, orderId.length()-1);
+        String orderIdF = orderId;
+        if(orderIdF.matches(".*\".*")){
+            orderIdF = orderId.substring(1, orderId.length() - 1);
+        }
         OrderStore order = orderRepository.findById(UUID.fromString(orderIdF)).orElseThrow(() -> new RuntimeException("Order not found"));
         order.setStatus("PAID");
         return orderMapper.toOrderResponseDTO(orderRepository.save(order));
     }
     public OrderResponseDTO cancelOrder(String orderId) {
         String orderIdF = orderId.substring(1, orderId.length()-1);
-
         OrderStore order = orderRepository.findById(UUID.fromString(orderIdF)).orElseThrow(() -> new RuntimeException("Order not found"));
         order.setStatus("CANCELED");
         return orderMapper.toOrderResponseDTO(orderRepository.save(order));
     }
     public OrderResponseDTO deliverOrder(String orderId) {
-        String orderIdF = orderId.substring(1, orderId.length()-1);
-
+        String orderIdF = orderId;
+        if(orderIdF.matches(".*\".*")){
+            orderIdF = orderId.substring(1, orderId.length() - 1);
+        }
         OrderStore order = orderRepository.findById(UUID.fromString(orderIdF)).orElseThrow(() -> new RuntimeException("Order not found"));
         order.setStatus("DELIVERED");
         return orderMapper.toOrderResponseDTO(orderRepository.save(order));
     }
     public OrderResponseDTO receiveOrder(String orderId) {
-        String orderIdF = orderId.substring(1, orderId.length()-1);
-
+        String orderIdF = orderId;
+        if(orderIdF.matches(".*\".*")){
+            orderIdF = orderId.substring(1, orderId.length() - 1);
+        }
         OrderStore order = orderRepository.findById(UUID.fromString(orderIdF)).orElseThrow(() -> new RuntimeException("Order not found"));
         order.setStatus("RECEIVED");
         return orderMapper.toOrderResponseDTO(orderRepository.save(order));
@@ -73,7 +79,10 @@ public class OrderService {
         return orderMapper.toOrderResponseDTO(orderRepository.findById(UUID.fromString(orderId)).orElseThrow(() -> new RuntimeException("Order not found")));
     }
     public List<OrderResponseDTO> getOrderByUser(String userEmail) {
-        String userEmailF = userEmail.substring(1, userEmail.length()-1);
+        String userEmailF = userEmail;
+        if(userEmailF.matches(".*\".*")){
+            userEmailF = userEmail.substring(1, userEmail.length() - 1);
+        }
         return orderRepository.findByUserPrincipalEmail(userEmailF).stream().map(orderMapper::toOrderResponseDTO).collect(Collectors.toList());
     }
     public List<OrderResponseDTO> getAllOrders() {

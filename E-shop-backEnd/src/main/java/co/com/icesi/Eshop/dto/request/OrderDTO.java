@@ -19,15 +19,14 @@ import java.util.List;
 public class OrderDTO {
 
     private String orderId;
+
     @NotBlank
-    @NotNull
     private String userEmail;
+
     @NotBlank
-    @NotNull
     private String status;
 
     @Min(value = 0)
-    @NotNull
     private Long total;
 
 

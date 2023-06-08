@@ -29,7 +29,4 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private List<Item> items;
 
-
-    public void setId(UUID uuid) {
-    }
 }

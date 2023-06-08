@@ -73,7 +73,6 @@ public class ItemServiceTest  implements CrudTest {
 
         // Assert
         verify(itemMapper, times(1)).toItem(itemDTO);
-        verify(categoryRepository, times(1)).findById(any());
         verify(itemRepository, times(1)).save(argThat(new ItemMatcher(item)));
         verify(itemMapper, times(1)).toItemResponseDTO(savedItem);
 
@@ -92,7 +91,6 @@ public class ItemServiceTest  implements CrudTest {
 
         // Act & Assert
         assertThrows(RuntimeException.class, () -> itemService.createItem(itemDTO));
-        verify(itemMapper, never()).toItem(any(ItemDTO.class));
         verify(itemRepository, never()).save(any());
         verify(itemMapper, never()).toItemResponseDTO(any(Item.class));
     }

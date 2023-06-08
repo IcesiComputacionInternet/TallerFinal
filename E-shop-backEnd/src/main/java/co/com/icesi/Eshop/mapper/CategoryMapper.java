@@ -11,14 +11,14 @@ public interface CategoryMapper {
 
     Category toCategory(CategoryDTO category);
 
-    Category toCategory(CategoryResponseDTO category);
+   // Category toCategory(CategoryResponseDTO category);
 
-    CategoryDTO toCategoryDTO(Category category);
+  //  CategoryDTO toCategoryDTO(Category category);
 
-    CategoryDTO toCategoryDTO(CategoryResponseDTO category);
+   // CategoryDTO toCategoryDTO(CategoryResponseDTO category);
 
     CategoryResponseDTO toCategoryResponseDTO(Category category);
 
-    CategoryResponseDTO toCategoryResponseDTO(CategoryDTO categoryDTO);
+   // CategoryResponseDTO toCategoryResponseDTO(CategoryDTO categoryDTO);
 
 }

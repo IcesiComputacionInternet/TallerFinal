@@ -40,7 +40,7 @@ public class RoleControllerTest {
     }
 
 
-    //HAPPY PATH FOR CRUD
+
     @Test
     public void testCreateRole() throws Exception {
         var  result = mockMvc.perform(MockMvcRequestBuilders.post(URL+ CRUD.C.getAction()).content(
@@ -50,6 +50,38 @@ public class RoleControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testCreateRole_blank_roleName() throws Exception {
+        var role = defaultRole();
+        role.setRoleName("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.post(URL+ CRUD.C.getAction()).content(
+                                objectMapper.writeValueAsString(role)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testCreateRole_blank_description() throws Exception {
+        var role = defaultRole();
+        role.setDescription("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.post(URL+ CRUD.C.getAction()).content(
+                                objectMapper.writeValueAsString(role)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
                 .andReturn();
 
         System.out.println(result.getResponse().getContentAsString());
@@ -72,9 +104,43 @@ public class RoleControllerTest {
         System.out.println(result.getResponse().getContentAsString());
     }
 
+
+    @Test
+    public void testUpdate_blank_roleName() throws Exception {
+        var role = defaultRole();
+        role.setRoleName("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
+                                objectMapper.writeValueAsString(role)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testUpdate_blank_description() throws Exception {
+        var role = defaultRole();
+        role.setDescription("");
+        var  result = mockMvc.perform(MockMvcRequestBuilders.put(URL+ CRUD.U.getAction()).content(
+                                objectMapper.writeValueAsString(role)
+                        )
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+
     @Test
     public void testDeleteRole() throws Exception {
-        String role = "\"DELETE\"";
+        String role = "DELETE";
         var  result = mockMvc.perform(MockMvcRequestBuilders.delete(URL+ CRUD.D.getAction())
                         .content(role)
                         .header("Authorization", "Bearer " + token)

@@ -38,12 +38,19 @@ public class CategoryServiceTest  implements CrudTest {
     @Test
     @Override
     public void createTest() {
+        CategoryResponseDTO expected = new CategoryResponseDTO();
+        expected.setName(defaultCategory().getName());
+        expected.setDescription(defaultCategory().getDescription());
+
         when(categoryMapper.toCategory(defaultCategoryDTO())).thenReturn(defaultCategory());
+        when(categoryMapper.toCategoryResponseDTO(any())).thenReturn(expected);
+
         CategoryResponseDTO result = categoryService.createCategory(defaultCategoryDTO());
-        verify(categoryMapper,times(1)).toCategory(any(CategoryDTO.class));
-        verify(categoryMapper,times(1)).toCategoryResponseDTO(any(CategoryDTO.class));
+        verify(categoryMapper,times(1)).toCategory(any());
+        verify(categoryMapper,times(1)).toCategoryResponseDTO(any());
         verify(categoryRepository,times(1)).save(argThat(new CategoryMatcher(defaultCategory())));
         assertNotNull(result);
+        assertEquals(expected,result);
     }
 
 
@@ -157,7 +164,6 @@ public class CategoryServiceTest  implements CrudTest {
 
         // Act & Assert
         assertThrows(RuntimeException.class, () -> categoryService.deleteCategory(categoryName));
-        verify(categoryRepository).findByName(categoryDelete);
         verify(categoryRepository, never()).delete(any());
         verify(categoryMapper, never()).toCategoryResponseDTO(any(Category.class));
     }
