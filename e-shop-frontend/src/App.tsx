@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import {
+  RouteObject,
+  createBrowserRouter as Router,
+  RouterProvider,
+} from "react-router-dom";
+import ErrorPage from "./pages/ErrorPage";
+import Home from "./pages/Home";
+import Login from "./components/Login";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
+    () => localStorage.getItem("jwt") !== null
+  );
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  useEffect(() => {
+    localStorage.setItem("logged_user", JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
+
+  const logIn = () => setIsLoggedIn(true);
+  const routes: RouteObject[] = [
+    {
+      path: "/",
+      element: <Home />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/login",
+      element: <Login setLogin={logIn} />,
+    },
+  ];
+
+  //Browser Router
+  const router = Router(routes);
+
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;
