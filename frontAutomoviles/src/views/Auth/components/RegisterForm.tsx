@@ -7,6 +7,7 @@ import {faEnvelope,
         faCalendar,
         faAddressCard } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { register } from '../../../services/register';
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -14,22 +15,154 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    const [userCredError, setUserCredError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+    const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+
     const [address, setAddress] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [birthDate, setBirthDate] = useState('');
 
-    const handleSubmit = (event: any) => {
-      event.preventDefault();
+    const handleSubmit = async (event: any) => {
+        event.preventDefault();
+        if((email.trim() === '' || phone.trim() === '')){
+            handleUserCredentialBlur();
+            return;
+        }else if(password.trim() === '' || password !== confirmPassword){
+            handlePasswordBlur();
+            handleConfirmPasswordBlur();
+            return;
+        }
+        const userInfo = {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phoneNumber: phone,
+            address: address,
+            birthDate: birthDate,
+            password: password,
+          };
+        register(userInfo).then((result) => {
+            if(result){
+                console.log('Registered successfully');
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
     };
+
+    const handleEmailChange = (event: any) => {
+        setEmail(event.target.value);
+    };
+
+    const handleUserCredentialBlur = () => {
+        if(email === '' && phone === ''){
+            setUserCredError(true);
+        }else{
+            setUserCredError(false);
+        }
+    };
+
+    const handlePasswordBlur = () => {
+        if(password === ''){
+            setPasswordError(true);
+        }else{
+            setPasswordError(false);
+        }
+    };
+
+    const handleConfirmPasswordBlur = () => {
+        if(confirmPassword === '' || password !== confirmPassword){
+            setConfirmPasswordError(true);
+        }else{
+            setConfirmPasswordError(false);
+        }
+    }
 
     return (
         <div className='container d-flex align-items-center'>
             <div className='row justify-content-center w-100'>
                 <div className='card'>
                     <div className='card-body text-center'>
-                        <h3 className='card-title'>Register</h3>
+                        <h2 className='card-title'>Register</h2>
+                        <h6>Can register with email or/and phone</h6>
                         <form onSubmit={handleSubmit}>
+                        <ul className="list-inline d-flex align-items-center">
+                                <li className="list-inline-item">
+                                    <FontAwesomeIcon icon={faEnvelope} size='2x'/>
+                                </li>
+                                <li className="list-inline-item w-100">
+                                    <div className='form-group form-floating'>
+                                        <input 
+                                            type="email"
+                                            className={`form-control ${userCredError ? 'is-invalid' : ''}`}
+                                            placeholder='Email'
+                                            value={email}
+                                            onChange={handleEmailChange}
+                                            onBlur={handleUserCredentialBlur}
+                                        />
+                                        <label>Email</label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul className="list-inline d-flex align-items-center">
+                                <li className="list-inline-item">
+                                    <FontAwesomeIcon icon={faPhone} size='2x'/>
+                                </li>
+                                <li className="list-inline-item w-100">
+                                    <div className='form-group form-floating'>
+                                        <input 
+                                            type="phone"
+                                            className={`form-control ${userCredError ? 'is-invalid' : ''}`}
+                                            placeholder='Phone'
+                                            value={phone}
+                                            onChange={(event) => setPhone(event.target.value)}
+                                            onBlur={handleUserCredentialBlur}
+                                        />
+                                        <label>Phone</label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul className="list-inline d-flex align-items-center">
+                                <li className="list-inline-item">
+                                    <FontAwesomeIcon icon={faLock} size='2x'/>
+                                </li>
+                                <li className="list-inline-item w-100">
+                                    <div className='form-group form-floating'>
+                                        <input
+                                            type="password"
+                                            className={`form-control ${passwordError ? 'is-invalid' : ''}`}
+                                            placeholder='Password'
+                                            value={password}
+                                            onChange={(event) => setPassword(event.target.value)}
+                                            onBlur={handlePasswordBlur}
+                                        />
+                                        <label>Password</label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul className="list-inline d-flex align-items-center">
+                                <li className="list-inline-item">
+                                    <FontAwesomeIcon icon={faLock} size='2x'/>
+                                </li>
+                                <li className="list-inline-item w-100">
+                                    <div className='form-group form-floating'>
+                                        <input
+                                            type="password"
+                                            className={`form-control ${confirmPasswordError ? 'is-invalid' : ''}`}
+                                            placeholder='Confirm Password'
+                                            value={confirmPassword}
+                                            onChange={(event) => setConfirmPassword(event.target.value)}
+                                            onBlur={handleConfirmPasswordBlur}
+                                        />
+                                        <label>Confirm Password</label>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <h5 className='card-title'>Aditional Information</h5>
+
                             <ul className="list-inline d-flex align-items-center">
                                 <li className="list-inline-item">
                                     <FontAwesomeIcon icon={faAddressCard} size='2x'/>
@@ -88,81 +221,13 @@ const Register = () => {
                                 <li className="list-inline-item w-100">
                                     <div className='form-group form-floating'>
                                         <input
-                                            type="text"
+                                            type="date"
                                             className='form-control picker__input'
                                             placeholder='Birth Date'
                                             value={birthDate}
                                             onChange={(event) => setBirthDate(event.target.value)}
                                         />
                                         <label>Birth Date</label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <ul className="list-inline d-flex align-items-center">
-                                <li className="list-inline-item">
-                                    <FontAwesomeIcon icon={faEnvelope} size='2x'/>
-                                </li>
-                                <li className="list-inline-item w-100">
-                                    <div className='form-group form-floating'>
-                                        <input 
-                                            type="email"
-                                            className='form-control'
-                                            placeholder='Email'
-                                            value={email}
-                                            onChange={(event) => setEmail(event.target.value)} 
-                                        />
-                                        <label>Email</label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <ul className="list-inline d-flex align-items-center">
-                                <li className="list-inline-item">
-                                    <FontAwesomeIcon icon={faPhone} size='2x'/>
-                                </li>
-                                <li className="list-inline-item w-100">
-                                    <div className='form-group form-floating'>
-                                        <input 
-                                            type="phone"
-                                            className='form-control'
-                                            placeholder='Phone'
-                                            value={phone}
-                                            onChange={(event) => setPhone(event.target.value)} 
-                                        />
-                                        <label>Phone</label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <ul className="list-inline d-flex align-items-center">
-                                <li className="list-inline-item">
-                                    <FontAwesomeIcon icon={faLock} size='2x'/>
-                                </li>
-                                <li className="list-inline-item w-100">
-                                    <div className='form-group form-floating'>
-                                        <input
-                                            type="password"
-                                            className='form-control'
-                                            placeholder='Password'
-                                            value={password}
-                                            onChange={(event) => setPassword(event.target.value)}
-                                        />
-                                        <label>Password</label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <ul className="list-inline d-flex align-items-center">
-                                <li className="list-inline-item">
-                                    <FontAwesomeIcon icon={faLock} size='2x'/>
-                                </li>
-                                <li className="list-inline-item w-100">
-                                    <div className='form-group form-floating'>
-                                        <input
-                                            type="password"
-                                            className='form-control'
-                                            placeholder='Confirm Password'
-                                            value={confirmPassword}
-                                            onChange={(event) => setConfirmPassword(event.target.value)}
-                                        />
-                                        <label>Confirm Password</label>
                                     </div>
                                 </li>
                             </ul>

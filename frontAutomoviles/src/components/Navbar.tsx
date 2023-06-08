@@ -1,7 +1,12 @@
 import { faUser,
         faHouse,
-         faCartShopping } from "@fortawesome/free-solid-svg-icons";
+        faCartShopping,
+        faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const logOut = () => {
+    localStorage.clear();
+}
 
 const Profile = () => {
     return (
@@ -54,6 +59,23 @@ const Cart = () => {
     )
 }
 
+const LogOut = () => {
+    return(
+        <li onClick={logOut}>
+            <a href="/" className="nav-link text-white">
+                <ul className="list-inline">
+                    <li className="list-inline-item">
+                        <FontAwesomeIcon icon={faRightFromBracket}/>
+                    </li>
+                    <li className="list-inline-item">
+                        Log Out
+                    </li>
+                </ul>
+            </a>
+        </li>
+    )
+}
+
 function Navbar() {
     return (
         <header>
@@ -67,6 +89,7 @@ function Navbar() {
                             <Profile />
                             <Home />
                             <Cart />
+                            <LogOut />
                         </ul>
                     </div>
                 </div>
