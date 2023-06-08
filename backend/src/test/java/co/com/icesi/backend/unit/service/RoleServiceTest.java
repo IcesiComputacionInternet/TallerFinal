@@ -25,14 +25,12 @@ public class RoleServiceTest {
     private RoleService roleService;
     private RoleRepository roleRepository;
     private RoleMapper roleMapper;
-    private CellphoneShopExceptionBuilder exceptionBuilder;
 
     @BeforeEach
     private void init(){
         roleRepository = mock(RoleRepository.class);
         roleMapper = spy(RoleMapperImpl.class);
-        exceptionBuilder = spy(CellphoneShopExceptionBuilder.class);
-        roleService = new RoleService(roleRepository, roleMapper, exceptionBuilder);
+        roleService = new RoleService(roleRepository, roleMapper);
         roleService = spy(roleService);
     }
 

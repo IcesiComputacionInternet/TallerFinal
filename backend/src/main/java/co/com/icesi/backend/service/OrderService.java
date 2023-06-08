@@ -35,7 +35,7 @@ public class OrderService {
     private final CellphoneMapper cellphoneMapper;
     private final CellphoneShopExceptionBuilder exceptionBuilder = new CellphoneShopExceptionBuilder();
 
-    private ResponseOrderDTO saveOrder(RequestNewOrderDTO requestOrderDTO) {
+    public ResponseOrderDTO saveOrder(RequestNewOrderDTO requestOrderDTO) {
         checkPermissionsToCreate();
         var userEmail = CellphoneSecurityContext.getCurrentUserEmail();
         ShopUser shopUser =  userRepository.findByEmail(userEmail).orElseThrow(
@@ -59,7 +59,7 @@ public class OrderService {
         shopOrder.setItems(items);
         shopOrder.setQuantities(quantities);
         orderRepository.save(shopOrder);
-        ResponseOrderDTO responseOrderDTO =orderMapper.fromOrderToResponseOrderDTO(shopOrder);
+        ResponseOrderDTO responseOrderDTO = orderMapper.fromOrderToResponseOrderDTO(shopOrder);
         responseOrderDTO.setItems(cellphones);
         responseOrderDTO.setMessage("Order successfully created");
         return responseOrderDTO;

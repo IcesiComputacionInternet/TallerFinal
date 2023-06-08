@@ -27,15 +27,13 @@ public class CellphoneServiceTest {
     private CellphoneRepository cellphoneRepository;
     private CategoryRepository categoryRepository;
     private CellphoneMapper cellphoneMapper;
-    private CellphoneShopExceptionBuilder exceptionBuilder;
 
     @BeforeEach
     private void init(){
         cellphoneRepository = mock(CellphoneRepository.class);
         categoryRepository = mock(CategoryRepository.class);
-        exceptionBuilder = spy(CellphoneShopExceptionBuilder.class);
         cellphoneMapper = spy(CellphoneMapperImpl.class);
-        cellphoneService = new CellphoneService(cellphoneRepository, cellphoneMapper, categoryRepository, exceptionBuilder);
+        cellphoneService = new CellphoneService(cellphoneRepository, cellphoneMapper, categoryRepository);
         cellphoneService = spy(cellphoneService);
     }
 
