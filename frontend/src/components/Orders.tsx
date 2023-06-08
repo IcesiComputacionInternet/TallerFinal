@@ -28,6 +28,26 @@ function Orders(){
     fetchItems();
     }, []);
 
+
+    const changeOrderStatus = async (cOrderId, newStatus) => {
+      
+          var token = localStorage.getItem("jwt");
+          const response = await axios.put(
+            baseUrl+"/orders/"+`${cOrderId}`,
+            {
+                orderId:cOrderId,
+                status: newStatus },
+            {
+              headers: {
+                "Access-Control-Allow-Origin": baseUrl,
+                "MediaType": "application/json",
+                Authorization: `Bearer ${token}`
+              }
+            }
+          );
+          window.location.reload();
+      
+      };
     
     return (
         <div>
@@ -75,11 +95,26 @@ function Orders(){
                          )))}
                     </div>
                   
+                    <button
+                    onClick={() => changeOrderStatus(order.orderId, "SHIPPED")}
+                    disabled={order.status === "SHIPPED" || order.status === "RECEIVED"}
+                    >
+                    Ship Order
+                    </button>
+                    <button
+                    onClick={() => changeOrderStatus(order.orderId, "RECEIVED")}
+                    disabled={order.status === "RECEIVED"}
+                    >
+                    Order Received
+                    </button>
+
+
                   </div>
                 </div>
               ))
             )}
           </div>
+          
         </div>
       );
 }
