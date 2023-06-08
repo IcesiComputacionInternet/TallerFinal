@@ -62,8 +62,8 @@ public class OrderTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
-        var result = mocMvc.perform(MockMvcRequestBuilders.get("/orders/getUserOrders")
-                        .content("noname@email.com")
+        String email="noname@email.com";
+        var result = mocMvc.perform(MockMvcRequestBuilders.get("/orders/getUserOrders/"+email)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
@@ -84,13 +84,14 @@ public class OrderTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
-        var result = mocMvc.perform(MockMvcRequestBuilders.get("/orders/getUserOrders")
-                        .content("not a email@email.com")
+        String email="not an email@email.com";
+        var result = mocMvc.perform(MockMvcRequestBuilders.get("/orders/getUserOrders/"+email)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
                 .andExpect(status().is5xxServerError())
                 .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
         MovieError movieError = objectMapper.readValue(result.getResponse().getContentAsString(), MovieError.class);
         assertNotNull(movieError);
         assertEquals("No existe un usuario con este email", movieError.getDetails());
@@ -143,6 +144,29 @@ public class OrderTest {
 
     }
 
+
+
+    @Test
+    public void findByUser() throws Exception {
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        String email="noname@email.com";
+        var result = mocMvc.perform(MockMvcRequestBuilders.get("/orders/getUserOrders/"+email)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+        OrderDTO[] orderDTOS = objectMapper.readValue(result.getResponse().getContentAsString(), OrderDTO[].class);
+        assertNotNull(orderDTOS);
+    }
 
 
 }

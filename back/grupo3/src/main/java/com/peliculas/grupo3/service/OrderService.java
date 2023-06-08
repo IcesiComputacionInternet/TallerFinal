@@ -110,7 +110,13 @@ public class OrderService {
     }
 
     public List<OrderDTO> findByUser(String email) {
-        MovieUser user = userRepository.findByEmail(email).orElseThrow(
+        String decodedName;
+        try {
+            decodedName = URLDecoder.decode(email, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            throw new RuntimeException("Hubo un problema al transoformar");
+        }
+        MovieUser user = userRepository.findByEmail(decodedName).orElseThrow(
                 ()-> new RuntimeException("No existe un usuario con este email") );
 
         if(user.getMovieOrders().isEmpty()){

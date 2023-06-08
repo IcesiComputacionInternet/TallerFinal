@@ -28,8 +28,8 @@ public interface OrderApi {
     @PostMapping("/deleteMovie")
     OrderDTO deleteMovie(@RequestBody String number , String movieName);
 
-    @GetMapping ("/getUserOrders")
-    List<OrderDTO> getUserOrders(@RequestBody String email);
+    @GetMapping ("/getUserOrders/{email}")
+    List<OrderDTO> getUserOrders(@PathVariable String email);
 
     @PostMapping("/changeStatus")
     OrderDTO changeStatus(@RequestBody String number, String status);
