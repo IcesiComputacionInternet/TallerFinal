@@ -7,6 +7,8 @@ import Divider  from '@mui/material/Divider'
 import { createTheme } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import Router from 'next/router'
+import { useRef } from "react";
+import axios from 'axios';
 
 const theme = createTheme({
   palette: {
@@ -20,41 +22,53 @@ const theme = createTheme({
 })
 
 
-const Home: NextPage = () => {
-  //const navigation : NavigateFunction = useNavigate(); 
+export default function index() {
+  const usernameRef = useRef("");
+  const passwordRef = useRef("");
   const handleRegister = () => {
     Router.push("/register");
   }
   const handleLogin = () => {
-    Router.push("/home");
+    const username = usernameRef.current.value;
+    const password = passwordRef.current.value;
+    axios.post("http://localhost:9090/login", {
+      username: username,
+      password: password
+    }).then((response) => {
+        console.log(response.data);
+        //localStorage.setItem("token", response.data.token);
+        //localStorage.setItem("role", response.data.role);
+    }).catch((error) => {
+        console.log(error)
+    });
   }
-
   return (
     <div className={styles.flexContainer}>
       <ThemeProvider theme={theme}>
       <div className={styles.section1}>
         <div>
-          <h1>Bienvenido</h1>
+          <h1>Welcome</h1>
         </div>
         <div className={styles.form}>
           <div>
             <h4 style={{margin:0}}>Username</h4>
               <TextField id="outlined-basic" 
-              label="Username" 
               variant="outlined" 
               sx={{maxWidth: 250}} 
-              size='small' 
+              size='small'
+              inputRef={usernameRef}
               />
           </div>
           <div>
             <h4 style={{margin:0}}>Password</h4>
             <TextField 
             id="outlined-basic" 
-            label="Password" 
             variant="outlined" 
             sx={{maxWidth: 250}} 
             size='small'             
-            type='password'/>
+            type='password'
+            inputRef={passwordRef}/>
+            
           </div>
             
             
@@ -88,4 +102,3 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home

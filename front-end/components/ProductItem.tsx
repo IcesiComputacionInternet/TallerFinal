@@ -2,13 +2,20 @@ import { IconButton } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React from "react";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 
 interface ProductItemProps {
     name: String;
     price: Number;
     amount: Number;
-    image: String;
     category: String;
+    productId: String;
 }
 
 const theme = createTheme({
@@ -23,6 +30,16 @@ const theme = createTheme({
 });
 
 export default function ProductItem(props: ProductItemProps) {
+    const [open, setOpen] = React.useState(false);
+    const handleDelete = () => {
+        setOpen(true);
+    }
+    const handleDisagree = () => {
+        setOpen(false);
+    }
+    const handleEdit = () => {
+        window.location.href = "/products/" + props.productId;
+    }
     return (
         <div style={{
             display:"flex",
@@ -49,14 +66,35 @@ export default function ProductItem(props: ProductItemProps) {
             </div>
             <div style={{flexGrow:1,display:"flex",justifyContent:"flex-end"}}>
                 <ThemeProvider theme={theme}>
-                <IconButton>
+                <IconButton onClick={handleDelete}>
                     <DeleteIcon color="secondary"/>
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={handleEdit}>
                     <EditIcon color="secondary"/>
                 </IconButton>
                 </ThemeProvider>
             </div>
+            <Dialog
+                open={open}
+                onClose={() => console.log("")}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                >
+                <DialogTitle id="alert-dialog-title">
+                {"Are you sure you want to delete this product?"}
+                </DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    All the information will be erased from the database and the product will not be able to be selled again.
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleDisagree}>Disagree</Button>
+                <Button onClick={() => console.log("")} autoFocus>
+                    Agree
+                </Button>
+                </DialogActions>
+            </Dialog>
         </div>   
     )
 }
