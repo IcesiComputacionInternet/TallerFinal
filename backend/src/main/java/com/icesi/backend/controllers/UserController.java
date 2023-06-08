@@ -1,6 +1,7 @@
 package com.icesi.backend.controllers;
 
 import com.icesi.backend.DTO.UserCreateDTO;
+import com.icesi.backend.DTO.UserUpdateDTO;
 import com.icesi.backend.models.ShopUser;
 import com.icesi.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public ShopUser updateUser(@RequestBody UserCreateDTO userCreateDTO){
-        return userService.updateUser(userCreateDTO).get();
+    public ShopUser updateUser(@RequestBody UserUpdateDTO userUpdateDTO){
+        return userService.updateUser(userUpdateDTO).get();
     }
 }
