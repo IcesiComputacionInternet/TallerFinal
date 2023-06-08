@@ -5,6 +5,7 @@ import co.com.icesi.eShop_Back.mapper.UserMapper;
 import co.com.icesi.eShop_Back.repository.RoleRepository;
 import co.com.icesi.eShop_Back.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -15,6 +16,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder encoder;
 
     public void create(RequestUserDTO userDTO) {
         boolean emailExists = userRepository.existsByEmail(userDTO.getEmail());
@@ -23,8 +25,9 @@ public class UserService {
         if (emailExists && phoneExists){ throw new RuntimeException("Email and Phone is already used");}
         if (emailExists){ throw new RuntimeException("Email already exists");}
         if (phoneExists){ throw new RuntimeException("Phone number already exists");}
-
+        userDTO.setPassword(encoder.encode(userDTO.getPassword()));
         var user = userMapper.fromUserDTO(userDTO);
+
         user.setUserId(UUID.randomUUID());
         user.setRole(roleRepository.findByName(userDTO.getRole()).orElseThrow(() -> new RuntimeException("Role not found")));
         userRepository.save(user);

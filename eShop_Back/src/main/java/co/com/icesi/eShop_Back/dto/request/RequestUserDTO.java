@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 public class RequestUserDTO{
         private String firstName;
         private String lastName;
-        private String direction;
-        private LocalDateTime brithDay;
+        private String address;
+        private LocalDateTime birthDay;
         @Email
         @NotNull
         private String email;

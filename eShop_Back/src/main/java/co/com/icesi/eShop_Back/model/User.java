@@ -25,7 +25,7 @@ public class User {
     private String password;
     private String phoneNumber;
     private String address;
-    private LocalDateTime brithDay;
+    private LocalDateTime birthDay;
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "role_role_id")
     private Role role;
