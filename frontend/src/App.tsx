@@ -6,7 +6,7 @@ import CreateItem from "./pages/CreateItem.tsx";
 import Orders from "./pages/Orders.tsx";
 import Roles from "./pages/Roles.tsx";
 import { Store }  from "./pages/Store.tsx";
-// import {Container, Navbar} from "react-bootstrap";
+import { Navbar } from "./components/Navbar"
 import {ShoppingCartProvider} from "./methods/ShoppingCartCtx.tsx";
 // import NotFound from "./components/NotFound";
 

@@ -69,8 +69,8 @@ const Roles = () => {
                 </div>
 
                 <div className="button-container">
-                    <button className="btn btn-primary">Done</button>
-                    <button className="btn btn-outline-danger" >Cancel</button>
+                    <button className="btn btn-primary form-button">Done</button>
+                    <button className="btn btn-outline-danger form-button" >Cancel</button>
                 </div>
             </form>
         </div>
