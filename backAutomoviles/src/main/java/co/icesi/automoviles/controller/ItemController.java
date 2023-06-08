@@ -40,4 +40,9 @@ public class ItemController implements ItemAPI {
         PageResponse<ItemShowDTO> response = new PageResponse<>(items, new ItemShowDTO[0]);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @Override
+    public void deleteItemById(String itemId) {
+        itemService.deleteItemById(itemId);
+    }
 }

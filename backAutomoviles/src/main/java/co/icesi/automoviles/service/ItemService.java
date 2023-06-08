@@ -32,10 +32,12 @@ public class ItemService {
         Category category = getCategory(itemCreateDTO.getCategoryUUID());
         CategoryShowDTOForItem categoryShowDTOForItem = categoryMapper.fromCategoryToCategoryShowDTOFromItem(category);
         Item item = itemMapper.fromItemCreateDTOToItem(itemCreateDTO);
-        item.setItemId(UUID.randomUUID());
+        UUID uuid = UUID.randomUUID();
+        item.setItemId(uuid);
         item.setCategory(category);
         ItemShowDTO itemShowDTO = itemMapper.fromItemToItemShowDTO(itemRepository.save(item));
         itemShowDTO.setCategory(categoryShowDTOForItem);
+        itemShowDTO.setItemId(uuid);
         return itemShowDTO;
     }
 
@@ -77,7 +79,7 @@ public class ItemService {
                 ShopExceptionBuilder.createShopException(
                         "item with the id: " + itemUUID + " not found",
                         HttpStatus.NOT_FOUND,
-                        new DetailBuilder(ErrorCode.ERR_404, "category", "id", itemUUID))
+                        new DetailBuilder(ErrorCode.ERR_404, "item", "id", itemUUID))
         );
     }
 
@@ -88,5 +90,9 @@ public class ItemService {
            return fromItemToShowDTO(entity);
         });
         return itemShowDTOS;
+    }
+
+    public void deleteItemById(String itemId){
+        itemRepository.delete(getItem(itemId));
     }
 }

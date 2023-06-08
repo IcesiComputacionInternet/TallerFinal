@@ -29,6 +29,24 @@ public class EShopUserService {
     private final PasswordEncoder passwordEncoder;
 
     public EShopUserShowDTO registerEShopUser(EShopUserCreateDTO EShopUserCreateDTO) {
+        checkConditionsToCreateEShopUser(EShopUserCreateDTO);
+        Role role = findRoleByName(RoleType.USER.toString());
+        EShopUser eShopUser = EShopUserMapper.fromEShopUserCreateDTO(EShopUserCreateDTO);
+        eShopUser.setRole(role);
+        eShopUser.setEShopUserId(UUID.randomUUID());
+        eShopUser.setPassword(passwordEncoder.encode(EShopUserCreateDTO.getPassword()));
+        return EShopUserMapper.fromEShopUserToEShopUserShowDTO(EShopUserRepository.save(eShopUser));
+    }
+
+    private void checkConditionsToCreateEShopUser(EShopUserCreateDTO EShopUserCreateDTO){
+        if(EShopUserCreateDTO.getPhoneNumber() == null && EShopUserCreateDTO.getEmail() == null){
+            throw ShopExceptionBuilder.createShopException(
+                    "field email and phone number: at least one must be different of null",
+                    HttpStatus.BAD_REQUEST,
+                    new DetailBuilder(ErrorCode.ERR_400, "email and phone number", "at least one must be different of null")
+            ).get();
+        }
+
         ArrayList<String> errors = new ArrayList<>();
 
         if(!emailAvailable(EShopUserCreateDTO.getEmail())){
@@ -47,25 +65,17 @@ public class EShopUserService {
                     new DetailBuilder(ErrorCode.ERR_400, "email or phone number", allErrorMessages)
             ).get();
         }
-
-        Role role = findRoleByName(RoleType.USER.toString());
-
-        EShopUser eShopUser = EShopUserMapper.fromEShopUserCreateDTO(EShopUserCreateDTO);
-        eShopUser.setRole(role);
-        eShopUser.setEShopUserId(UUID.randomUUID());
-        eShopUser.setPassword(passwordEncoder.encode(EShopUserCreateDTO.getPassword()));
-        return EShopUserMapper.fromEShopUserToEShopUserShowDTO(EShopUserRepository.save(eShopUser));
     }
 
     private boolean emailAvailable(String email){
-        if(EShopUserRepository.findByEmail(email).isPresent()){
+        if(email != null && EShopUserRepository.findByEmail(email).isPresent()){
             return false;
         }
         return true;
     }
 
     private boolean phoneNumberAvailable(String phoneNumber){
-        if(EShopUserRepository.findByPhoneNumber(phoneNumber).isPresent()){
+        if(phoneNumber != null && EShopUserRepository.findByPhoneNumber(phoneNumber).isPresent()){
             return false;
         }
         return true;

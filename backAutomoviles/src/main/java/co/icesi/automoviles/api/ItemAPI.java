@@ -30,4 +30,7 @@ public interface ItemAPI {
             @RequestParam(name = "sort", defaultValue = "name") String sortBy,
             @RequestParam(name = "sort_dir", defaultValue = "asc") String sortDirection
     );
+
+    @DeleteMapping("{itemId}")
+    public void deleteItemById(@PathVariable("itemId") String itemId);
 }
