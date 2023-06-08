@@ -3,9 +3,11 @@ package co.icesi.automoviles;
 import co.icesi.automoviles.enums.RoleType;
 import co.icesi.automoviles.model.Category;
 import co.icesi.automoviles.model.EShopUser;
+import co.icesi.automoviles.model.Item;
 import co.icesi.automoviles.model.Role;
 import co.icesi.automoviles.repository.CategoryRepository;
 import co.icesi.automoviles.repository.EShopUserRepository;
+import co.icesi.automoviles.repository.ItemRepository;
 import co.icesi.automoviles.repository.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -28,6 +30,7 @@ public class AutomovilesApplication {
 	CommandLineRunner commandLineRunner(EShopUserRepository eShopUserRepository,
 										RoleRepository roleRepository,
 										CategoryRepository categoryRepository,
+										ItemRepository itemRepository,
 										PasswordEncoder encoder) {
 		Role eShopUserRole1 = Role.builder()
 				.roleId(UUID.fromString("f218a75c-c6af-4f1e-a2c6-b2b47f1a0678"))
@@ -71,12 +74,53 @@ public class AutomovilesApplication {
 				.phoneNumber("+573121234567")
 				.password(encoder.encode("password"))
 				.build();
-		Category category = Category.builder()
+		Category sportCategory = Category.builder()
 				.categoryId(UUID.fromString("246ccb5e-33e8-4d5a-9dc1-06bdc0ecf3ae"))
 				.name("Sport")
 				.description("Sport category")
 				.items(null)
 				.build();
+		Item car1 = Item.builder()
+				.itemId(UUID.fromString("e9c14553-3e76-4968-b78c-0d6fc8dfcdbb"))
+				.description("Description for car 1")
+				.name("Car 1")
+				.price(10000000)
+				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=996")
+				.category(sportCategory)
+				.build();
+		Item car2 = Item.builder()
+				.itemId(UUID.fromString("30eadfff-5cc6-4968-9755-11de28678e38"))
+				.description("Description for car 2")
+				.name("Car 2")
+				.price(10000000)
+				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=996")
+				.category(sportCategory)
+				.build();
+		Item car3 = Item.builder()
+				.itemId(UUID.fromString("5f81aa60-fb85-4de6-b7c4-824ea6b7fdf1"))
+				.description("Description for car 3")
+				.name("Car 3")
+				.price(10000000)
+				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=996")
+				.category(sportCategory)
+				.build();
+		Item car4 = Item.builder()
+				.itemId(UUID.fromString("71f244d1-5128-4460-921f-4fa8a0d096c0"))
+				.description("Description for car 4")
+				.name("Car 4")
+				.price(10000000)
+				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=996")
+				.category(sportCategory)
+				.build();
+		Item car5 = Item.builder()
+				.itemId(UUID.fromString("bcc455da-3b03-4ab8-adbb-d45754a6365a"))
+				.description("Description for car 5")
+				.name("Car 5")
+				.price(10000000)
+				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=996")
+				.category(sportCategory)
+				.build();
+
 
 		return args -> {
 			roleRepository.save(eShopUserRole1);
@@ -85,7 +129,12 @@ public class AutomovilesApplication {
 			eShopUserRepository.save(eShopUser1);
 			eShopUserRepository.save(eShopUser2);
 			eShopUserRepository.save(eShopUser3);
-			categoryRepository.save(category);
+			categoryRepository.save(sportCategory);
+			itemRepository.save(car1);
+			itemRepository.save(car2);
+			itemRepository.save(car3);
+			itemRepository.save(car4);
+			itemRepository.save(car5);
 		};
 	}
 }
