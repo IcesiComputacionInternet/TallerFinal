@@ -5,6 +5,7 @@ import ProductItem from "../../components/ProductItem";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CategoryItem from "../../components/CategoryItem";
 import axios from "axios";
+import { useEffect,useState } from "react";
 
 const theme = createTheme({
     palette: {
@@ -17,7 +18,23 @@ const theme = createTheme({
     },
 });
 
-export default function Categories(props:any) {
+export default function Categories() {
+    const [categories,setCategories] = useState([]);
+    useEffect(() => {
+        axios.get("http://localhost:9090/category/all",{
+        headers:{
+            "Authorization":"Bearer " + localStorage.getItem("token"),
+            "Content-Type":"application/json"
+        }
+    }).then((response) => {
+        console.log(response.data);
+        setCategories(response.data);
+    }).catch((error) => {
+        console.log(error);
+    })
+    },[])
+
+
 
     const handleNewCategory = () => {
         window.location.href = "/categories/new";
@@ -39,23 +56,13 @@ export default function Categories(props:any) {
                 <div className={styles.itemsSection}>
                     <div className={styles.itemsList}>
                         <CategoryItem name="Category 1" description="Description 1" categoryId="1"/>
+                        {categories.map((category) => {
+                            return <CategoryItem name={category.name} description={category.description} categoryId={category.id}/>
+                        })
+                        }
                     </div>
                 </div>
             </div>
         </div>
     )
 }
-
-/**export async function getServerSideProps(context:any){
-    const {data}= await axios.get("http://localhost:9090/item/all",{
-        headers:{
-            "Authorization":"Bearer " + localStorage.getItem("token"),
-            "Content-Type":"application/json"
-        }
-    })
-    return{
-        props:{
-            data
-        }
-    }
-}**/

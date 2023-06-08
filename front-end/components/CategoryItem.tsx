@@ -10,6 +10,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
+import axios from "axios";
 
 interface CategoryItemProps {
     categoryId: String;
@@ -41,13 +42,16 @@ export default function CategoryItem(props: CategoryItemProps){
     const handleEdit = () => {
         window.location.href = "/categories/" + props.categoryId;
     }
+    const handleAgree = () => {
+        
+    }
 
     return(
         <div className={styles.itemDiv}>
-            <div style={{flexGrow:2,borderRight:"1px solid black"}}>
+            <div style={{width:420,borderRight:"1px solid black"}}>
                 <h3 style={{fontWeight:"normal",marginLeft:5}}>{props.name}</h3>
             </div>
-            <div style={{flexGrow:2,borderRight:"1px solid black",paddingLeft:10}}>
+            <div style={{width:420,borderRight:"1px solid black",paddingLeft:10}}>
                 <h3 style={{fontWeight:"normal"}}>{props.description}</h3>
             </div>
             <div style={{flexGrow:1,display:"flex",justifyContent:"flex-end"}}>

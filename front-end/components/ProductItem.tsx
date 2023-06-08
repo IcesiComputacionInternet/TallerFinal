@@ -52,13 +52,13 @@ export default function ProductItem(props: ProductItemProps) {
             paddingLeft:20,
             paddingRight:20,
         }} >
-            <div style={{flexGrow:2,borderRight:"1px solid black"}}>
+            <div style={{width:350,borderRight:"1px solid black"}}>
                 <h3 style={{fontWeight:"normal"}}>{props.name}</h3>
             </div>
-            <div style={{flexGrow:2,borderRight:"1px solid black",paddingLeft:10}}>
+            <div style={{width:200,borderRight:"1px solid black",paddingLeft:10}}>
                 <h3 style={{fontWeight:"normal"}}>{props.price + "$"}</h3>
             </div>
-            <div style={{flexGrow:2,borderRight:"1px solid black",paddingLeft:10}}>
+            <div style={{width:90,borderRight:"1px solid black",paddingLeft:10}}>
                 <h3 style={{fontWeight:"normal"}}>{props.amount + " left"}</h3>
             </div>
             <div style={{flexGrow:2,paddingLeft:10}}>
