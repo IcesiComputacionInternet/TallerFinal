@@ -12,6 +12,7 @@ function Home () {
 
 
   const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getMovies()
@@ -19,20 +20,28 @@ function Home () {
   }, [])
 
   async function getMovies() {
-    const {data} = await axios.get("http://localhost:8080/movies/all",
-    {
-        headers: {
-            "Access-Control-Allow-Origin": "http://localhost:8080",
-            "MediaType": "application/json",
-            "Authorization": "Bearer " + localStorage.getItem('jwt')
-        }
+    try {
+      const {data} = await axios.get("http://localhost:8080/movies/all",
+      {
+          headers: {
+              "Access-Control-Allow-Origin": "http://localhost:8080",
+              "MediaType": "application/json",
+              "Authorization": "Bearer " + localStorage.getItem('jwt')
+          }
+  
+      })
 
-    })
+      let res = {data}
+      console.log(res)
+      setMovies(res)
+      setIsLoading(false)
+
+    } catch (err) {
+      console.error("Error fetching movies:", err);
+    }
     
-    let res = {data}
-    console.log(res)
-    //setMovies(res)
-    return res;
+    
+    
   }
 
   
@@ -48,7 +57,11 @@ function Home () {
       <Navigation/>
       <Carousel/>
 
-      <MoviesList movies = {movies}/>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <MoviesList movies={movies} />
+      )}
       
       
       
