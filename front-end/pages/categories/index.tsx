@@ -4,6 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ProductItem from "../../components/ProductItem";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CategoryItem from "../../components/CategoryItem";
+import axios from "axios";
 
 const theme = createTheme({
     palette: {
@@ -16,7 +17,8 @@ const theme = createTheme({
     },
 });
 
-export default function Categories() {
+export default function Categories(props:any) {
+
     const handleNewCategory = () => {
         window.location.href = "/categories/new";
     }
@@ -36,10 +38,24 @@ export default function Categories() {
                 </div>
                 <div className={styles.itemsSection}>
                     <div className={styles.itemsList}>
-                        <CategoryItem name="Category 1" description="Description 1"/>
+                        <CategoryItem name="Category 1" description="Description 1" categoryId="1"/>
                     </div>
                 </div>
             </div>
         </div>
     )
 }
+
+/**export async function getServerSideProps(context:any){
+    const {data}= await axios.get("http://localhost:9090/item/all",{
+        headers:{
+            "Authorization":"Bearer " + localStorage.getItem("token"),
+            "Content-Type":"application/json"
+        }
+    })
+    return{
+        props:{
+            data
+        }
+    }
+}**/

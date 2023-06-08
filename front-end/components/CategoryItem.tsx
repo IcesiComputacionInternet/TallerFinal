@@ -12,6 +12,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 
 interface CategoryItemProps {
+    categoryId: String;
     name : String;
     description : String;
 }
@@ -31,6 +32,16 @@ const theme = createTheme({
 
 export default function CategoryItem(props: CategoryItemProps){
     const [open, setOpen] = React.useState(false);
+    const handleDelete = () => {
+        setOpen(true);
+    }
+    const handleDisagree = () => {
+        setOpen(false);
+    }
+    const handleEdit = () => {
+        window.location.href = "/categories/" + props.categoryId;
+    }
+
     return(
         <div className={styles.itemDiv}>
             <div style={{flexGrow:2,borderRight:"1px solid black"}}>
@@ -41,10 +52,10 @@ export default function CategoryItem(props: CategoryItemProps){
             </div>
             <div style={{flexGrow:1,display:"flex",justifyContent:"flex-end"}}>
                 <ThemeProvider theme={theme}>
-                    <IconButton onClick={() => console.log("")}>
+                    <IconButton onClick={handleDelete}>
                         <DeleteIcon color="secondary"/>
                     </IconButton>
-                    <IconButton onClick={() => console.log("")}>
+                    <IconButton onClick={handleEdit}>
                         <EditIcon color="secondary"/>
                     </IconButton>
                 </ThemeProvider>
@@ -64,7 +75,7 @@ export default function CategoryItem(props: CategoryItemProps){
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                <Button onClick={() => console.log("")}>Disagree</Button>
+                <Button onClick={handleDisagree}>Disagree</Button>
                 <Button onClick={() => console.log("")} autoFocus>
                     Agree
                 </Button>

@@ -33,8 +33,14 @@ const theme = createTheme({
 
 export default function OrderItem(props: OrderItemProps){
     const [open, setOpen] = React.useState(false);
-    const handleOnClick = () => {
+    const handleEdit = () => {
         window.location.href = "/orders/" + props.orderId;
+    }
+    const handleDelete = () => {
+        setOpen(true);
+    }
+    const handleDisagree = () => {
+        setOpen(false);
     }
 
 
@@ -54,10 +60,10 @@ export default function OrderItem(props: OrderItemProps){
             </div>
             <div style={{flexGrow:1,display:"flex",justifyContent:"flex-end"}}>
                 <ThemeProvider theme={theme}>
-                <IconButton onClick={() => console.log("")}>
+                <IconButton onClick={handleDelete}>
                     <DeleteIcon color="secondary"/>
                 </IconButton>
-                <IconButton onClick={handleOnClick}>
+                <IconButton onClick={handleEdit}>
                     <EditIcon color="secondary"/>
                 </IconButton>
                 </ThemeProvider>
@@ -77,7 +83,7 @@ export default function OrderItem(props: OrderItemProps){
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                <Button onClick={() => console.log("")}>Disagree</Button>
+                <Button onClick={handleDisagree}>Disagree</Button>
                 <Button onClick={() => console.log("")} autoFocus>
                     Agree
                 </Button>
