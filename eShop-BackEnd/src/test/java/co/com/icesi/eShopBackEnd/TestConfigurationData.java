@@ -1,9 +1,13 @@
 package co.com.icesi.eShopBackEnd;
 
 
+import co.com.icesi.eShopBackEnd.dto.CreateCategoryDTO;
+import co.com.icesi.eShopBackEnd.model.Category;
 import co.com.icesi.eShopBackEnd.model.Customer;
 import co.com.icesi.eShopBackEnd.model.Role;
+import co.com.icesi.eShopBackEnd.repository.CategoryRepository;
 import co.com.icesi.eShopBackEnd.repository.CustomerRepository;
+import co.com.icesi.eShopBackEnd.service.CategoryService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +21,7 @@ import java.util.UUID;
 public class TestConfigurationData {
     @Bean
     CommandLineRunner commandLineRunner(CustomerRepository users,
-                                        PasswordEncoder encoder) {
+                                        PasswordEncoder encoder, CategoryService categoryRepository) {
 
         Role admin = Role.builder()
                 .roleId(UUID.randomUUID())
@@ -83,13 +87,30 @@ public class TestConfigurationData {
 
 
 
+        Customer shopCustomer = Customer.builder()
+                .customerId(UUID.randomUUID())
+                .firstName("Zara")
+                .lastName("Gomez")
+                .email("zas@email.com")
+                .password(encoder.encode("password"))
+                .phoneNumber("+573268691487")
+                .address("Avenida 6ta")
+                .birthday(date1)
+                .role(shop)
+                .build();
 
-
+        CreateCategoryDTO categoryDTO= CreateCategoryDTO.builder()
+                .name("Television")
+                .description("Is a teacher the university Icesi")
+                .build();
 
 
         return args -> {
+
             users.save(adminCustomer);
             users.save(normalCustomer);
+            users.save(shopCustomer);
+            categoryRepository.save(categoryDTO);
         };
 
     }
