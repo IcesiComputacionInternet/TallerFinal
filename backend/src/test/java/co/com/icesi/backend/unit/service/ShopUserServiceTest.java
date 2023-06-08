@@ -31,7 +31,6 @@ public class ShopUserServiceTest {
     private RoleRepository roleRepository;
     private UserMapper userMapper;
     private RoleMapper roleMapper;
-    private CellphoneShopExceptionBuilder exceptionBuilder;
 
     @BeforeEach
     private void init(){

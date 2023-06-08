@@ -25,7 +25,6 @@ public class RoleServiceTest {
     private RoleService roleService;
     private RoleRepository roleRepository;
     private RoleMapper roleMapper;
-    private CellphoneShopExceptionBuilder exceptionBuilder;
 
     @BeforeEach
     private void init(){

@@ -27,7 +27,6 @@ public class CellphoneServiceTest {
     private CellphoneRepository cellphoneRepository;
     private CategoryRepository categoryRepository;
     private CellphoneMapper cellphoneMapper;
-    private CellphoneShopExceptionBuilder exceptionBuilder;
 
     @BeforeEach
     private void init(){
