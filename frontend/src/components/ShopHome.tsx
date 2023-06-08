@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Modal, Button, Navbar } from "react-bootstrap";
-import { BsCartFill } from "react-icons/bs";
+import { BsCartFill, BsTrash } from "react-icons/bs";
 import Logout from "./Logout";
 import "../ShopHome.css";
 import ReactModal from "react-modal";
@@ -56,7 +56,7 @@ const ShopHome = () => {
   };
 
   const addItemToCart = () => {
-    if (selectedItem) {
+    if (selectedItem && selectedItem.available) {
       setCartItems((prevItems) => [...prevItems, selectedItem]);
       setSelectedItem(null);
       setShowModal(false);
@@ -72,10 +72,17 @@ const ShopHome = () => {
     setShowCartModal(false);
   };
 
+  const handleClearCart = () => {
+    if (window.confirm("¿Estás seguro de eliminar todos los productos del carrito?")) {
+      setCartItems([]);
+      alert("Se han eliminado todos los productos del carrito");
+    }
+  };
+
   return (
     <div>
-      <Navbar bg="dark" variant="dark" fixed="top" className="justify-content-between">
-        <Navbar.Brand href="/home-shope">Mi Tienda</Navbar.Brand>
+      <Navbar bg="primary" variant="dark" fixed="top" className="justify-content-between">
+        <Navbar.Brand href="#home">Mi Tienda</Navbar.Brand>
         <div className="d-flex align-items-center ml-auto">
           <div className="cart-icon-container mr-3" onClick={handleOpenCartModal}>
             <BsCartFill size={24} />
@@ -121,7 +128,10 @@ const ShopHome = () => {
           <p>No hay productos en el carrito</p>
         )}
         <div className="text-center">
-          <Button variant="primary" onClick={handleCloseCartModal}>
+          <Button variant="danger" onClick={handleClearCart} disabled={cartItems.length === 0}>
+            <BsTrash /> Eliminar todos los productos
+          </Button>
+          <Button variant="secondary" onClick={handleCloseCartModal}>
             Cerrar
           </Button>
         </div>
@@ -153,7 +163,7 @@ const ShopHome = () => {
           </Modal.Body>
           <Modal.Footer>
             <div className="text-center">
-              <Button variant="primary" onClick={addItemToCart}>
+              <Button variant="primary" onClick={addItemToCart} disabled={!selectedItem.available}>
                 Comprar
               </Button>
             </div>
