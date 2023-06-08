@@ -1,8 +1,10 @@
 package co.icesi.automoviles;
 
 import co.icesi.automoviles.enums.RoleType;
+import co.icesi.automoviles.model.Category;
 import co.icesi.automoviles.model.EShopUser;
 import co.icesi.automoviles.model.Role;
+import co.icesi.automoviles.repository.CategoryRepository;
 import co.icesi.automoviles.repository.EShopUserRepository;
 import co.icesi.automoviles.repository.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -25,6 +27,7 @@ public class AutomovilesApplication {
 	@Profile("!test")
 	CommandLineRunner commandLineRunner(EShopUserRepository eShopUserRepository,
 										RoleRepository roleRepository,
+										CategoryRepository categoryRepository,
 										PasswordEncoder encoder) {
 		Role eShopUserRole1 = Role.builder()
 				.roleId(UUID.fromString("f218a75c-c6af-4f1e-a2c6-b2b47f1a0678"))
@@ -68,6 +71,12 @@ public class AutomovilesApplication {
 				.phoneNumber("+573121234567")
 				.password(encoder.encode("password"))
 				.build();
+		Category category = Category.builder()
+				.categoryId(UUID.fromString("246ccb5e-33e8-4d5a-9dc1-06bdc0ecf3ae"))
+				.name("Sport")
+				.description("Sport category")
+				.items(null)
+				.build();
 
 		return args -> {
 			roleRepository.save(eShopUserRole1);
@@ -76,6 +85,7 @@ public class AutomovilesApplication {
 			eShopUserRepository.save(eShopUser1);
 			eShopUserRepository.save(eShopUser2);
 			eShopUserRepository.save(eShopUser3);
+			categoryRepository.save(category);
 		};
 	}
 }

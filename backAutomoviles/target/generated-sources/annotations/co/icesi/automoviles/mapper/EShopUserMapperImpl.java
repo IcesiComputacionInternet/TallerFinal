@@ -1,12 +1,10 @@
 package co.icesi.automoviles.mapper;
 
-import co.icesi.automoviles.dto.CategoryShowDTO;
 import co.icesi.automoviles.dto.EShopUserCreateDTO;
 import co.icesi.automoviles.dto.EShopUserShowDTO;
 import co.icesi.automoviles.dto.ItemShowDTO;
 import co.icesi.automoviles.dto.PurchaseOrderShowDTO;
 import co.icesi.automoviles.dto.RoleShowDTO;
-import co.icesi.automoviles.model.Category;
 import co.icesi.automoviles.model.EShopUser;
 import co.icesi.automoviles.model.Item;
 import co.icesi.automoviles.model.PurchaseOrder;
@@ -18,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-08T10:03:40-0500",
+    date = "2023-06-08T16:09:00-0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component
@@ -111,47 +109,6 @@ public class EShopUserMapperImpl implements EShopUserMapper {
         return roleShowDTO.build();
     }
 
-    protected List<ItemShowDTO> itemListToItemShowDTOList(List<Item> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<ItemShowDTO> list1 = new ArrayList<ItemShowDTO>( list.size() );
-        for ( Item item : list ) {
-            list1.add( itemToItemShowDTO( item ) );
-        }
-
-        return list1;
-    }
-
-    protected CategoryShowDTO categoryToCategoryShowDTO(Category category) {
-        if ( category == null ) {
-            return null;
-        }
-
-        CategoryShowDTO.CategoryShowDTOBuilder categoryShowDTO = CategoryShowDTO.builder();
-
-        categoryShowDTO.categoryId( category.getCategoryId() );
-        categoryShowDTO.name( category.getName() );
-        categoryShowDTO.description( category.getDescription() );
-        categoryShowDTO.items( itemListToItemShowDTOList( category.getItems() ) );
-
-        return categoryShowDTO.build();
-    }
-
-    protected List<PurchaseOrderShowDTO> purchaseOrderListToPurchaseOrderShowDTOList(List<PurchaseOrder> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<PurchaseOrderShowDTO> list1 = new ArrayList<PurchaseOrderShowDTO>( list.size() );
-        for ( PurchaseOrder purchaseOrder : list ) {
-            list1.add( purchaseOrderToPurchaseOrderShowDTO( purchaseOrder ) );
-        }
-
-        return list1;
-    }
-
     protected ItemShowDTO itemToItemShowDTO(Item item) {
         if ( item == null ) {
             return null;
@@ -164,10 +121,21 @@ public class EShopUserMapperImpl implements EShopUserMapper {
         itemShowDTO.name( item.getName() );
         itemShowDTO.price( item.getPrice() );
         itemShowDTO.imageUrl( item.getImageUrl() );
-        itemShowDTO.category( categoryToCategoryShowDTO( item.getCategory() ) );
-        itemShowDTO.purchaseOrders( purchaseOrderListToPurchaseOrderShowDTOList( item.getPurchaseOrders() ) );
 
         return itemShowDTO.build();
+    }
+
+    protected List<ItemShowDTO> itemListToItemShowDTOList(List<Item> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<ItemShowDTO> list1 = new ArrayList<ItemShowDTO>( list.size() );
+        for ( Item item : list ) {
+            list1.add( itemToItemShowDTO( item ) );
+        }
+
+        return list1;
     }
 
     protected PurchaseOrderShowDTO purchaseOrderToPurchaseOrderShowDTO(PurchaseOrder purchaseOrder) {
@@ -183,5 +151,18 @@ public class EShopUserMapperImpl implements EShopUserMapper {
         purchaseOrderShowDTO.items( itemListToItemShowDTOList( purchaseOrder.getItems() ) );
 
         return purchaseOrderShowDTO.build();
+    }
+
+    protected List<PurchaseOrderShowDTO> purchaseOrderListToPurchaseOrderShowDTOList(List<PurchaseOrder> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<PurchaseOrderShowDTO> list1 = new ArrayList<PurchaseOrderShowDTO>( list.size() );
+        for ( PurchaseOrder purchaseOrder : list ) {
+            list1.add( purchaseOrderToPurchaseOrderShowDTO( purchaseOrder ) );
+        }
+
+        return list1;
     }
 }

@@ -9,5 +9,6 @@ public class ItemCreateDTO {
     private String description;
     private String name;
     private long price;
-    private String imageUrl; 
+    private String imageUrl;
+    private String categoryUUID;
 }

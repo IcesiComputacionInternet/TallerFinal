@@ -2,11 +2,10 @@ package co.icesi.automoviles.mapper;
 
 import co.icesi.automoviles.dto.CategoryCreateDTO;
 import co.icesi.automoviles.dto.CategoryShowDTO;
+import co.icesi.automoviles.dto.CategoryShowDTOForItem;
 import co.icesi.automoviles.dto.ItemShowDTO;
-import co.icesi.automoviles.dto.PurchaseOrderShowDTO;
 import co.icesi.automoviles.model.Category;
 import co.icesi.automoviles.model.Item;
-import co.icesi.automoviles.model.PurchaseOrder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-08T10:03:40-0500",
+    date = "2023-06-08T16:27:45-0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component
@@ -50,45 +49,19 @@ public class CategoryMapperImpl implements CategoryMapper {
         return categoryShowDTO.build();
     }
 
-    protected List<ItemShowDTO> itemListToItemShowDTOList(List<Item> list) {
-        if ( list == null ) {
+    @Override
+    public CategoryShowDTOForItem fromCategoryToCategoryShowDTOFromItem(Category category) {
+        if ( category == null ) {
             return null;
         }
 
-        List<ItemShowDTO> list1 = new ArrayList<ItemShowDTO>( list.size() );
-        for ( Item item : list ) {
-            list1.add( itemToItemShowDTO( item ) );
-        }
+        CategoryShowDTOForItem.CategoryShowDTOForItemBuilder categoryShowDTOForItem = CategoryShowDTOForItem.builder();
 
-        return list1;
-    }
+        categoryShowDTOForItem.categoryId( category.getCategoryId() );
+        categoryShowDTOForItem.name( category.getName() );
+        categoryShowDTOForItem.description( category.getDescription() );
 
-    protected PurchaseOrderShowDTO purchaseOrderToPurchaseOrderShowDTO(PurchaseOrder purchaseOrder) {
-        if ( purchaseOrder == null ) {
-            return null;
-        }
-
-        PurchaseOrderShowDTO.PurchaseOrderShowDTOBuilder purchaseOrderShowDTO = PurchaseOrderShowDTO.builder();
-
-        purchaseOrderShowDTO.purchaseOrderId( purchaseOrder.getPurchaseOrderId() );
-        purchaseOrderShowDTO.status( purchaseOrder.getStatus() );
-        purchaseOrderShowDTO.total( purchaseOrder.getTotal() );
-        purchaseOrderShowDTO.items( itemListToItemShowDTOList( purchaseOrder.getItems() ) );
-
-        return purchaseOrderShowDTO.build();
-    }
-
-    protected List<PurchaseOrderShowDTO> purchaseOrderListToPurchaseOrderShowDTOList(List<PurchaseOrder> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<PurchaseOrderShowDTO> list1 = new ArrayList<PurchaseOrderShowDTO>( list.size() );
-        for ( PurchaseOrder purchaseOrder : list ) {
-            list1.add( purchaseOrderToPurchaseOrderShowDTO( purchaseOrder ) );
-        }
-
-        return list1;
+        return categoryShowDTOForItem.build();
     }
 
     protected ItemShowDTO itemToItemShowDTO(Item item) {
@@ -103,9 +76,21 @@ public class CategoryMapperImpl implements CategoryMapper {
         itemShowDTO.name( item.getName() );
         itemShowDTO.price( item.getPrice() );
         itemShowDTO.imageUrl( item.getImageUrl() );
-        itemShowDTO.category( fromCategoryToCategoryShowDTO( item.getCategory() ) );
-        itemShowDTO.purchaseOrders( purchaseOrderListToPurchaseOrderShowDTOList( item.getPurchaseOrders() ) );
+        itemShowDTO.category( fromCategoryToCategoryShowDTOFromItem( item.getCategory() ) );
 
         return itemShowDTO.build();
+    }
+
+    protected List<ItemShowDTO> itemListToItemShowDTOList(List<Item> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<ItemShowDTO> list1 = new ArrayList<ItemShowDTO>( list.size() );
+        for ( Item item : list ) {
+            list1.add( itemToItemShowDTO( item ) );
+        }
+
+        return list1;
     }
 }

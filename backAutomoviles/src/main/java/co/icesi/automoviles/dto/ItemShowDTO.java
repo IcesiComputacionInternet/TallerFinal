@@ -1,8 +1,7 @@
 package co.icesi.automoviles.dto;
 
-import java.util.List;
-import java.util.UUID;
 
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,7 +12,6 @@ public class ItemShowDTO {
     private String description;
     private String name;
     private long price;
-    private String imageUrl; 
-    private CategoryShowDTO category;
-    private List<PurchaseOrderShowDTO> purchaseOrders;
+    private String imageUrl;
+    private CategoryShowDTOForItem category;
 }
