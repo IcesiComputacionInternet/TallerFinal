@@ -1,6 +1,7 @@
 package com.icesi.backend.service.impl;
 
 import com.icesi.backend.DTO.UserCreateDTO;
+import com.icesi.backend.DTO.UserUpdateDTO;
 import com.icesi.backend.mappers.UserMapper;
 import com.icesi.backend.models.ShopUser;
 import com.icesi.backend.respositories.UserRepository;
@@ -55,7 +56,7 @@ public class UserService {
         return Optional.empty();
     }
 
-    public Optional<ShopUser> updateUser(UserCreateDTO userCreateDTO){
-        return Optional.of(userRepository.save(userMapper.fromUserCreateDTO(userCreateDTO)));
+    public Optional<ShopUser> updateUser(UserUpdateDTO userUpdateDTO){
+        return Optional.of(userRepository.save(userMapper.fromUserUpdateDTO(userUpdateDTO)));
     }
 }
