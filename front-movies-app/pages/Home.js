@@ -14,7 +14,7 @@ function Home () {
   const [movies, setMovies] = useState([]);
   const [categories, setCategories] = useState([]);
   const [current, setCurrent] = useState([]);
-  
+
   const [isLoadingCurrent, setIsLoadingCurrent] = useState(true);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
   const [isLoadingMovies, setIsLoadingMovies] = useState(true);
@@ -104,7 +104,7 @@ function Home () {
         
       </Head>
       
-      {isLoadingCategories && isLoadingCurrent ? (
+      {isLoadingCategories || isLoadingCurrent ? (
       <h1>Loading...</h1>
       ) : (
         <Navigation user={current.data} categories={categories}/>
@@ -114,7 +114,7 @@ function Home () {
       {isLoadingMovies ? (
         <h1>Loading...</h1>
       ) : (
-        <MoviesList movies={movies} />
+        <MoviesList movies={movies}/>
       )}
       
       
