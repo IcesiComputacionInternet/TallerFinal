@@ -10,7 +10,7 @@ import java.util.UUID;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends CrudRepository<ShopUser, UUID> {
+public interface UserRepository extends JpaRepository<ShopUser, UUID> {
 
     @Query("SELECT u FROM ShopUser u WHERE u.phoneNumber = :phoneNumber")
     Optional<ShopUser> findByPhoneNumber(String phoneNumber);

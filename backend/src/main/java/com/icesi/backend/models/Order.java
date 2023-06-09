@@ -26,6 +26,6 @@ public class Order {
     private String status;
     private Long total;
     @OneToMany()
-    private List<Item> itemList;
+    private List<OrderItem> itemList;
 
 }
