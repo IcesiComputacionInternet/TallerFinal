@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Navigation from '../../components/Navigation'
+import "bootstrap/dist/css/bootstrap.min.css";
+import Navigation from "../../components/Navigation";
 
 const movie = () => {
   const router = useRouter();
@@ -18,9 +18,9 @@ const movie = () => {
     if (router.query.movie) {
       let encodedMovie = encodeURIComponent(router.query.movie);
       getData(encodedMovie);
-      getCategories()
+      getCategories();
       console.log(movie);
-      getCurrentUser()
+      getCurrentUser();
     }
   }, [router.query.movie]);
 
@@ -38,21 +38,21 @@ const movie = () => {
 
   async function getCurrentUser() {
     try {
-      const {data} = await axios.get("http://localhost:8080/users/CurrentUser",
-      {
+      const { data } = await axios.get(
+        "http://localhost:8080/users/CurrentUser",
+        {
           headers: {
-              "Access-Control-Allow-Origin": "http://localhost:8080",
-              "MediaType": "application/json",
-              "Authorization": "Bearer " + localStorage.getItem('jwt')
-          }
-  
-      })
+            "Access-Control-Allow-Origin": "http://localhost:8080",
+            MediaType: "application/json",
+            Authorization: "Bearer " + localStorage.getItem("jwt"),
+          },
+        }
+      );
 
-      let res = {data}
-      console.log(res)
-      setCurrent(res)
-      setIsLoadingCurrent(false)
-
+      let res = { data };
+      console.log(res);
+      setCurrent(res);
+      setIsLoadingCurrent(false);
     } catch (err) {
       console.error("Error fetching current user:", err);
     }
@@ -75,7 +75,7 @@ const movie = () => {
         imageURL: data.imageURL,
         pgRating: data.pgRating,
         price: data.price,
-        categoryName: data.categoryDTO.name,
+        categoryName: data.categoryName,
       });
       //console.log(movie);
       setIsLoading(false);
@@ -86,69 +86,98 @@ const movie = () => {
 
   async function getCategories() {
     try {
-      const {data} = await axios.get("http://localhost:8080/categories/all",
-      {
-          headers: {
-              "Access-Control-Allow-Origin": "http://localhost:8080",
-              "MediaType": "application/json",
-              "Authorization": "Bearer " + localStorage.getItem('jwt')
-          }
-  
-      })
+      const { data } = await axios.get("http://localhost:8080/categories/all", {
+        headers: {
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+          MediaType: "application/json",
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      });
 
-      let res = {data}
-      console.log(res)
-      setCategories(res)
-      setIsLoadingCategories(false)
-
+      let res = { data };
+      console.log(res);
+      setCategories(res);
+      setIsLoadingCategories(false);
     } catch (err) {
       console.error("Error fetching movies:", err);
     }
   }
 
+  async function handleOrder() {
+    console.log("Order!");
+    let order = {};
+    if (localStorage.getItem("order") == null) {
+      let newOrder = {
+        status: "en proceso",
+        total: movie.price,
+        user: current.data,
+        orderNumber: "3",
+        movies: [movie],
+      };
+      localStorage.setItem("order", JSON.stringify(newOrder));
+    } else {
+      order = JSON.parse(localStorage.getItem("order"));
+      order.movies.push(movie);
+      order.total = order.total + movie.price;
+      console.log(order)
+      localStorage.setItem("order", JSON.stringify(order))
+    }
+  }
 
   return (
     <div>
-        {isLoadingCategories || isLoadingCurrent ? (
-      <h1>Loading...</h1>
+      {isLoadingCategories || isLoadingCurrent ? (
+        <h1>Loading...</h1>
       ) : (
-        <Navigation user={current.data} categories={categories}/>
+        <Navigation user={current.data} categories={categories} />
       )}
-      
+
       {isLoading ? (
         <div className="text-center">
-            <div className="spinner-grow spinner-grow-sm" role="status">
-                <span className="visually-hidden">Loading...</span>
-            </div>
-            <div className="spinner-grow spinner-grow-sm" role="status">
-                <span className="visually-hidden">Loading...</span>
-            </div>
-            <div className="spinner-grow spinner-grow-sm" role="status">
-                <span className="visually-hidden">Loading...</span>
-            </div>
+          <div className="spinner-grow spinner-grow-sm" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <div className="spinner-grow spinner-grow-sm" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <div className="spinner-grow spinner-grow-sm" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
         </div>
       ) : (
-        <div style={{display: "flex", flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <h1>{movie.name}</h1>
           <div>
-            <img  width="300" height="400" src={movie.imageURL} alt="..." />
+            <img width="300" height="400" src={movie.imageURL} alt="..." />
           </div>
-          <div width= "100" style={{display: "flex", flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+          <div
+            width="100"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <h2>{movie.name}</h2>
             <h4>Category: {movie.categoryName}</h4>
             <h4>Ranking: {movie.pgRating}</h4>
             <p>{movie.description}</p>
           </div>
 
-          <div style={{display: "flex"}}>
-          <button className= "btn btn-primary">
-            Buy For {movie.price}$
-          </button>
-          <button className= "btn btn-primary">
-            Add To Order
-          </button>
+          <div style={{ display: "flex" }}>
+            <button className="btn btn-primary">Buy For {movie.price}$</button>
+            <button className="btn btn-primary" onClick={handleOrder}>
+              Add To Order
+            </button>
           </div>
-          
         </div>
       )}
     </div>
