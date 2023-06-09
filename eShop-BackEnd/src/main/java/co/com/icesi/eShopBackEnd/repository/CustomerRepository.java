@@ -23,6 +23,9 @@ public interface CustomerRepository extends JpaRepository<Customer, UUID> {
     @Query(value = "SELECT c FROM Customer c WHERE c.customerId = :idNumber")
     Optional<Customer> getCustomerById(UUID idNumber);
 
+    @Query(value = "SELECT c FROM Customer c WHERE c.customerId = :idNumber")
+    Optional<Customer>  findByIdTheCustomer(UUID idNumber);
+
     @Query("UPDATE Customer customer SET customer = :customer WHERE customer.email = :email")
     Customer uptadeInformation(Customer customer, String email);
 

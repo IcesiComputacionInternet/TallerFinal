@@ -112,6 +112,7 @@ public class TestConfigurationData {
                 .name("itemValid")
                 .itemId(UUID.randomUUID())
                 .category(assignCategory)
+                .stock(10000000)
                 .description("Is a teacher the university Icesi")
                 .build();
 
