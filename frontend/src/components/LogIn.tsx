@@ -1,4 +1,4 @@
-
+// @ts-ignore 
 import React, { useState } from "react";
 
 import { NavigateFunction, useNavigate } from "react-router-dom";
@@ -21,7 +21,7 @@ const Login = ({ setLogin }: Props) => {
     return (
         <body>
         <div className="container">
-            <form className="login-form">
+            <form className="logIn-form">
                 <h3>Sign In</h3>
                 <p>Welcome to BookStore</p>
                 <div className="form-group">
@@ -55,7 +55,7 @@ const Login = ({ setLogin }: Props) => {
                     Sign Up
                 </button>
             </form>
-            <img src={loginImg} alt="Mobile Login" className="svg-image" />
+            <img src={loginImg} alt="Book Login" className="svg-image" />
         </div>
         </body>
     );
