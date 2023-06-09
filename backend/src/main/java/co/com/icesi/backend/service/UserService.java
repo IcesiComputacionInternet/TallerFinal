@@ -70,7 +70,16 @@ public class UserService {
         }
     }
 
+    public void checkPermissionsToView() {
+        if(!CellphoneSecurityContext.getCurrentUserRole().equals(UserRole.ADMIN.getRole())){
+            throw exceptionBuilder.noPermissionException(
+                    "Only an ADMIN user can view users."
+            );
+        }
+    }
+
     public ResponseUserDTO getUser(String userEmail) {
+        checkPermissionsToView();
         return userMapper.fromUserToResponseUserDTO(
                 userRepository.findByEmail(userEmail).orElseThrow(
                         () -> exceptionBuilder.notFoundException(
