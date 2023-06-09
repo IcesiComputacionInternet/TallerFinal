@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import AdminNavbar from "../../components/AdminNavbar";
+import Navbar from "../../components/Navbar";
 import { Modal } from "react-bootstrap";
 
 const baseUrl = "http://localhost:8091";
@@ -47,7 +47,7 @@ const Items = () => {
 
   return (
     <div>
-     <AdminNavbar />
+     <Navbar />
       <div className="title-container">
         <h2 className="mx-auto">Productos de la tienda</h2>
       </div>
