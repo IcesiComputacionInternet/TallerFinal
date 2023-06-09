@@ -22,7 +22,7 @@ public class ItemService {
 
     public ItemDTO addItem(ItemDTO newItem){
         validateItemName(newItem.getName());
-        Category category = validateItemCategory(newItem.getCategory());
+        Category category = validateItemCategory(newItem.getCategory().getName());
         validateItemPrice(newItem.getPrice());
 
         Item item = itemMapper.fromItemDTO(newItem);

@@ -11,11 +11,11 @@ import java.util.UUID;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, UUID> {
 
-    @Query("SELECT i FROM Item i WHERE i.name = ?name")
+    @Query("SELECT i FROM Item i WHERE i.name = :name")
     Optional<Item> findByName(String name);
 
 
-    @Query("SELECT i FROM Item i WHERE i.category.categoryId = ?categoryId")
+    @Query("SELECT i FROM Item i WHERE i.category.categoryId = :categoryId")
     Optional<Item> findByCategoryId(UUID categoryId);
 
 
