@@ -1,9 +1,7 @@
 package co.com.icesi.backend.integrationTests;
 
 import co.com.icesi.backend.Enum.UserRole;
-import co.com.icesi.backend.dto.request.LoginDTO;
 import co.com.icesi.backend.dto.request.RequestUserDTO;
-import co.com.icesi.backend.dto.request.TokenDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -196,6 +194,27 @@ public class UserControllerTest {
                                 ))
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isConflict())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testCreateAUserWithInvalidEmail() throws Exception {
+        var result = mockMvc.perform(MockMvcRequestBuilders.post("/users/create").content(
+                                objectMapper.writeValueAsString(
+                                        RequestUserDTO.builder()
+                                                .email("sara@gmail.com")
+                                                .phoneNumber("+573254789615")
+                                                .firstName("Sara")
+                                                .lastName("Alvarez")
+                                                .address("Calle 5A # 9-15")
+                                                .password("password")
+                                                .birthday("2023-06-05")
+                                                .role(UserRole.USER.getRole())
+                                                .build()
+                                ))
+                        .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
     }
