@@ -12,19 +12,28 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 const theme = createTheme();
 
+const baseUrl = "http://localhost:8080";
+
 export default function Register() {
 
   const navigate = useNavigate();
-
+  
+  const[firstName, setFirstName] = useState("");
+  const[lastName, setLastName] = useState("");
+  const[address, setAddress] = useState("");
+  const[birthDay, setBirthDay] = useState("");
   const[username, setUsername] = useState("");
   const[password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const[confirmPassword, setConfirmPassword] = useState("");
+  const[phoneNumber, setPhoneNumber] = useState("");
+  const role = "client";
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
@@ -32,9 +41,31 @@ export default function Register() {
       return;
     }
 
-    if (username.length == 0 && password.length == 0 && confirmPassword.length == 0) {
+    if (username.length == 0 && password.length == 0 && confirmPassword.length == 0 && phoneNumber.length == 0) {
       alert("Please fill all the fields");
       return;
+    }
+    await createUser();
+
+  };
+
+  const createUser = async () => {
+    try {
+      const response = await axios.post(baseUrl+'/api/users/add', {
+        firstName,
+        lastName,
+        address,
+        birthDay,
+        username,
+        password,
+        phoneNumber,
+        role,
+      });
+  
+      // Resto del código si la petición es exitosa
+    } catch (error) {
+      console.error(error);
+      alert("Se produjo un error al crear el usuario");
     }
   };
 
@@ -58,15 +89,49 @@ export default function Register() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              
+            <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  id="firstname"
+                  label="First Name"
+                  name="firstname"
+                  onChange={(event)=> setFirstName(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  id="lastname"
+                  label="Last Name"
+                  name="lastname"
+                  onChange={(event)=> setLastName(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  id="birthday"
+                  label="Birthday"
+                  name="birthday"
+                  onChange={(event)=> setBirthDay(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  id="address"
+                  label="Address"
+                  name="address"
+                  onChange={(event)=> setAddress(event.target.value)}
+                />
+              </Grid>    
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
                   id="username"
-                  label="Username"
+                  label="Email"
                   name="username"
-                  autoComplete="username"
                   onChange={(event)=> setUsername(event.target.value)}
                 />
               </Grid>
@@ -78,7 +143,6 @@ export default function Register() {
                   label="Password"
                   type="password"
                   id="password"
-                  autoComplete="new-password"
                   onChange={(event)=> setPassword(event.target.value)}
                 />
               </Grid>
@@ -90,8 +154,17 @@ export default function Register() {
                   label="Confirm password"
                   type="password"
                   id="confPassword"
-                  autoComplete="new-password"
                   onChange={(event)=> setConfirmPassword(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="Phone number"
+                  label="Colombian phone number"
+                  id="phoneNumber"
+                  onChange={(event)=> setPhoneNumber(event.target.value)}
                 />
               </Grid>
             </Grid>
