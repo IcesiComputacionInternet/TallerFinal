@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,6 +34,10 @@ public class RoleService {
         role.setRoleId(UUID.randomUUID());
 
         return roleMapper.fromRole(roleRepository.save(role));
+    }
+
+    public List<RoleDTO> getAll(){
+        return roleRepository.findAll().stream().map(roleMapper::fromRole).toList();
     }
 
 

@@ -7,6 +7,7 @@ import com.example.eshopbackend.repository.CategoryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -26,6 +27,10 @@ public class CategoryService {
         category.setCategoryId(UUID.randomUUID());
 
         return categoryMapper.fromCategory(categoryRepository.save(category));
+    }
+
+    public List<CategoryDTO> getAll(){
+        return categoryRepository.findAll().stream().map(categoryMapper::fromCategory).toList();
     }
 
     public CategoryDTO update(String categoryId, CategoryDTO categoryDTO){

@@ -6,6 +6,8 @@ import com.example.eshopbackend.service.CategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class CategoryController implements CategoryApi {
@@ -15,6 +17,11 @@ public class CategoryController implements CategoryApi {
     public void createCategory(CategoryDTO categoryDTO) {
 
         categoryService.save(categoryDTO);
+    }
+
+    @Override
+    public List<CategoryDTO> getAll() {
+        return categoryService.getAll();
     }
 
     @Override
