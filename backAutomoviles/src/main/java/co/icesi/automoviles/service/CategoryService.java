@@ -42,9 +42,10 @@ public class CategoryService {
 
     }
 
+    @Transactional
     public CategoryShowDTO updateCategory(String categoryId, CategoryCreateDTO categoryCreateDTO) {
         Category category = getCategory(UUID.fromString(categoryId));
-        if (!category.getName().equals(categoryCreateDTO)){
+        if (!category.getName().equals(categoryCreateDTO.getName())){
             checkIfTheNameIsAvailable(categoryCreateDTO.getName());
         }
         List<Item> itemList = category.getItems();
