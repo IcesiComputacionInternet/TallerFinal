@@ -14,8 +14,6 @@ import java.util.UUID;
 @Entity
 @Builder
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "orders")
 public class Order {
     @Id

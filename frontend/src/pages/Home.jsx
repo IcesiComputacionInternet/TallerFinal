@@ -1,12 +1,12 @@
 import React from 'react';
+import Navbar from '../components/Navbar';
 
-const Home = () => {
-  return (
-    <div>
-      <h2>Inicio</h2>
-      {/* Aquí puedes agregar el contenido de la página de inicio */}
-    </div>
-  );
+function Home(){
+    return (
+        <div>
+            <Navbar/>
+        </div>
+    );
 };
 
 export default Home;
