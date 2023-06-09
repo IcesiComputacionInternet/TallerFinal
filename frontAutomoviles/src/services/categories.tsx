@@ -16,6 +16,20 @@ export const getCategoriesPage = async (page: number) => {
     return data;
 }
 
+export const getCategoriesList = async () => {
+    const {data} = await axios.get(
+        `${baseUrl}/categories/list`,
+        {
+            headers: {
+                "Access-Control-Allow-Origin": baseUrl,
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`
+            }
+        }
+    );
+    return data;
+}
+
 export const updateCategory = async (categoryId: string, newName:string, newDesc:string) => {
     const {data} = await axios.patch(
         `${baseUrl}/categories/${categoryId}`,

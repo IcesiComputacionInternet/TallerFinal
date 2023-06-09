@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import Pagination from '../../../components/Pagination';
 import { getItemsPage, deleteItem } from '../../../services/items';
 import ModalView from './ModalView';
-import ModalCreate from './ModelCreate';
+import ModalCreate from './ModalCreate';
+import ModalEdit from './ModalEdit';
 
 interface Props {
     setInfoToast: (message: string, title: string) => void;
@@ -13,25 +14,36 @@ function Item({setInfoToast}: Props) {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const [selectedItem, setSelectedItem] = useState({} as any);
+    const [filter, setFilter] = useState("");
 
     const [viewModal, setViewModal] = useState(false);
     const [createModal, setCreateModal] = useState(false);
+    const [editModal, setEditModal] = useState(false);
 
     useEffect(() => {
-        getItemsPage(currentPage, "").then((result) => {
+        getItemsPage(currentPage, filter).then((result) => {
             console.log(result.items);
             setTotalPages(result.totalPages);
             setItems(result.items);
         });
-    }, [currentPage]);
+    }, [currentPage, filter]);
 
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
     };
 
+    const handleFilterChange = (event: any) => {
+        setFilter(event.target.value);
+    }
+
     const handleViewItem = (item:any) => {
         setSelectedItem(item);
         setViewModal(true);
+    }
+
+    const handleEditItem = (item:any) => {
+        setSelectedItem(item);
+        setEditModal(true);
     }
 
     const handleDeleteItem = (itemId:string) => {
@@ -45,10 +57,17 @@ function Item({setInfoToast}: Props) {
 
     return (
         <div className="container">
-            <button className="btn btn-primary my-4" onClick={() => setCreateModal(true)}>Create</button>
             <div className="d-flex flex-column align-items-center">
                 <h1 className="text-center">Items</h1>
             </div>
+            <button className="btn d-flex btn-primary my-1" onClick={() => setCreateModal(true)}>Create</button>
+            <input
+                type="text"
+                className="form-control w-50 my-1"
+                placeholder="Search"
+                value={filter}
+                onChange={handleFilterChange}
+            />
             <table className="table table-striped">
                 <thead>
                     <tr>
@@ -66,7 +85,7 @@ function Item({setInfoToast}: Props) {
                             <td>{item.price}</td>
                             <td>
                                 <button className="btn btn-primary mx-2" onClick={() => handleViewItem(item)}>View</button>
-                                <button className="btn btn-primary mx-2">Edit</button>
+                                <button className="btn btn-primary mx-2" onClick={() => handleEditItem(item)}>Edit</button>
                                 <button className="btn btn-danger mx-2" onClick={() => handleDeleteItem(item.itemId)}>Delete</button>
                             </td>
                         </tr>
@@ -83,6 +102,9 @@ function Item({setInfoToast}: Props) {
             )}
             {createModal && (
                 <ModalCreate setInfoToast={setInfoToast} handleCancel={() => setCreateModal(false)}/>
+            )}
+            {editModal && (
+                <ModalEdit item={selectedItem} setInfoToast={setInfoToast} handleCancel={() => setEditModal(false)}/>
             )}
         </div>
     );
