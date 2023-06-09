@@ -23,8 +23,8 @@ const Register = ({ onRegistrationComplete }: Props) => {
 
   const navigation : NavigateFunction = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState(null);
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -137,7 +137,7 @@ const Register = ({ onRegistrationComplete }: Props) => {
                             className="form-control"
                             value={email}
                             onChange={(event) => setEmail(event.target.value)}
-                            required
+                            
                           />
                         </div>
                         <div className="form-group">
@@ -148,7 +148,7 @@ const Register = ({ onRegistrationComplete }: Props) => {
                             placeholder="+573100000000"
                             value={phoneNumber}
                             onChange={(event) => setPhoneNumber(event.target.value)}
-                            required
+                            
                           />
                         </div>
                         <div className="form-group">
