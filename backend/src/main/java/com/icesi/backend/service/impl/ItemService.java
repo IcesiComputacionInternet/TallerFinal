@@ -1,15 +1,17 @@
-package com.icesi.backend.service;
+package com.icesi.backend.service.impl;
 
 import com.icesi.backend.DTO.ItemCreateDTO;
 import com.icesi.backend.mappers.ItemMapper;
 import com.icesi.backend.models.Item;
 import com.icesi.backend.respositories.ItemRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.spel.support.ReflectivePropertyAccessor;
+import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
 import java.util.Optional;
-
+@AllArgsConstructor
+@Service
 public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
