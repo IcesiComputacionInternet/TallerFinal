@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
+import {useState, useEffect} from "react";
 import axios from "axios";
 import {NavigateFunction,useNavigate} from "react-router-dom";
-import Logout from "./Logout";
+import Navbar from "./Navbar";
 
 const baseUrl="http://localhost:8091";
 
@@ -88,7 +88,7 @@ function CreateItems(){
   
           alert("Item created")
         } catch (error) {
-          
+          alert("El item no pudo ser creado "+error.response.data.details[0].errorMessage)
         }
         setFormData({
           name: '',
@@ -114,20 +114,10 @@ function CreateItems(){
 
       return (
         <div>
-          <div className="p-3 navbar bg-body-tertiary" style={{ backgroundColor: "#e3f2fd" }}>
-            <div className="col-1">
-              <h4>Home</h4>
-            </div>
-            <div className="col-1">
-              <Logout />
-            </div>
-          </div>
-          <div className="m-3 text-center">
-            <h2>Create Items</h2>
-          </div>
-      
+          <Navbar/>
+          <br />      
           <div className="container d-flex justify-content-center">
-            <div className="scroll-container" style={{ height: "500px", overflowY: "scroll", width: "50%" }}>
+            <div className="scroll-container" style={{ height: "800px", overflowY: "scroll", width: "50%" }}>
               <form onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="col-md-12">
