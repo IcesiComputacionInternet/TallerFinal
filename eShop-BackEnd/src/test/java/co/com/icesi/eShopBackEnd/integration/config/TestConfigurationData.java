@@ -1,4 +1,4 @@
-package co.com.icesi.eShopBackEnd;
+package co.com.icesi.eShopBackEnd.integration.config;
 
 
 import co.com.icesi.eShopBackEnd.dto.AssignCategoryDTO;

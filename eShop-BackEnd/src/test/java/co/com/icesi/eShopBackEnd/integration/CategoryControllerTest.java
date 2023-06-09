@@ -1,6 +1,6 @@
 package co.com.icesi.eShopBackEnd.integration;
 
-import co.com.icesi.eShopBackEnd.TestConfigurationData;
+import co.com.icesi.eShopBackEnd.integration.config.TestConfigurationData;
 import co.com.icesi.eShopBackEnd.dto.AssignCategoryDTO;
 import co.com.icesi.eShopBackEnd.dto.CreateCategoryDTO;
 import co.com.icesi.eShopBackEnd.dto.LoginDTO;

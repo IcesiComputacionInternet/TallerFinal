@@ -1,15 +1,12 @@
 package co.com.icesi.eShopBackEnd.integration;
 
 
-import co.com.icesi.eShopBackEnd.TestConfigurationData;
-import co.com.icesi.eShopBackEnd.dto.AssignCategoryDTO;
-import co.com.icesi.eShopBackEnd.dto.CreateCategoryDTO;
+import co.com.icesi.eShopBackEnd.integration.config.TestConfigurationData;
 import co.com.icesi.eShopBackEnd.dto.CreateCustomerDTO;
 import co.com.icesi.eShopBackEnd.dto.LoginDTO;
 import co.com.icesi.eShopBackEnd.dto.response.TokenDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;

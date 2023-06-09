@@ -3,6 +3,7 @@ package co.com.icesi.eShopBackEnd.unit.service;
 import co.com.icesi.eShopBackEnd.dto.CreateItemDTO;
 import co.com.icesi.eShopBackEnd.dto.CreateRoleDTO;
 import co.com.icesi.eShopBackEnd.dto.CreateSalesOderDTO;
+import co.com.icesi.eShopBackEnd.dto.response.salesOrderResponse.ResponseSalesOrderDTO;
 import co.com.icesi.eShopBackEnd.mapper.RoleMapper;
 import co.com.icesi.eShopBackEnd.mapper.SalesOrderMapper;
 import co.com.icesi.eShopBackEnd.mapper.SalesOrderMapperImpl;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,21 +61,21 @@ public class SalesOrderServiceTest {
 
     }
     @Test
-    public void testCreateSalesOrderService(){
+    public void testCreateSalesOrderService() {
+        // Mocking customer repository
+        when(customerRepository.findUserByEmail(any())).thenReturn(Optional.of(defaultCustomer()));
 
-            when(customerRepository.findUserByEmail(any())).thenReturn(Optional.of(defaultCustomer()));
-            when(itemRepository.returnItem(any())).thenReturn(Optional.of(defaultItem()));
+        // Mocking item repository
+        List<Item> items = Arrays.asList(defaultItem());
+        when(itemRepository.returnItem(any())).thenReturn(Optional.of(defaultItem()));
 
-            when(salesOrderMapper.fromCreateSalesOrderDTO(any())).thenReturn(defaulSalesOrder());
-
-
-            when(salesOrderRepository.save(any())).thenReturn(defaultItem());
-            salesOrderService.save(defaultSalesOderDTO());
-        assertEquals("TV", defaultItem().getName());
-
-
-
+        SalesOrder salesOrder = defaulSalesOrder();
+        when(salesOrderMapper.fromCreateSalesOrderDTO(any())).thenReturn(salesOrder);
+        when(salesOrderRepository.save(any())).thenReturn(salesOrder);
+        ResponseSalesOrderDTO responseDTO = salesOrderService.save(defaultSalesOderDTO());
+        assertEquals("TV", responseDTO.getItems().get(0).getName());
     }
+
 
     private SalesOrder defaulSalesOrder() {
         return SalesOrder.builder().total(500L).customer(defaultCustomer()).items(itemsI()).build();

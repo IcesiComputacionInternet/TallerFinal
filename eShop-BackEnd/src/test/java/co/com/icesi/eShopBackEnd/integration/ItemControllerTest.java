@@ -1,11 +1,9 @@
 package co.com.icesi.eShopBackEnd.integration;
 
-import co.com.icesi.eShopBackEnd.TestConfigurationData;
+import co.com.icesi.eShopBackEnd.integration.config.TestConfigurationData;
 import co.com.icesi.eShopBackEnd.dto.CreateItemDTO;
-import co.com.icesi.eShopBackEnd.dto.CreateRoleDTO;
 import co.com.icesi.eShopBackEnd.dto.LoginDTO;
 import co.com.icesi.eShopBackEnd.dto.response.TokenDTO;
-import co.com.icesi.eShopBackEnd.model.Item;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;

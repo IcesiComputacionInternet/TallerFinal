@@ -1,6 +1,6 @@
 package co.com.icesi.eShopBackEnd.integration;
 
-import co.com.icesi.eShopBackEnd.TestConfigurationData;
+import co.com.icesi.eShopBackEnd.integration.config.TestConfigurationData;
 import co.com.icesi.eShopBackEnd.dto.CreateRoleDTO;
 import co.com.icesi.eShopBackEnd.dto.LoginDTO;
 import co.com.icesi.eShopBackEnd.dto.response.TokenDTO;
@@ -31,6 +31,8 @@ public class RoleControllerTest {
 
     @Autowired
     ObjectMapper objectMapper;
+
+
 
     public TokenDTO generateAdminToken() throws Exception{
         var result = mockMvc.perform(MockMvcRequestBuilders.post("/login").content(
@@ -101,7 +103,7 @@ public class RoleControllerTest {
         var newResult = mockMvc.perform(MockMvcRequestBuilders.post("/role").content(
                                 objectMapper.writeValueAsString(defaultRoleUser())
                         )
-                        .header("Authorization","Bearer "+generateUserToken().getToken())
+                        .header("Authorization","Bearer "+generateAdminToken().getToken())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -116,7 +118,7 @@ public class RoleControllerTest {
         var newResult = mockMvc.perform(MockMvcRequestBuilders.post("/role").content(
                                 objectMapper.writeValueAsString(defaultRoleUser())
                         )
-                        .header("Authorization","Bearer "+generateUserToken().getToken())
+                        .header("Authorization","Bearer "+generateAdminToken().getToken())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
