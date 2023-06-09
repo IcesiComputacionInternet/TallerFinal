@@ -198,7 +198,7 @@ public class CategoryControllerTest {
                                 ))
                         .header("Authorization", "Bearer "+token.getToken())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isForbidden())
+                .andExpect(status().isUnauthorized())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
     }
@@ -222,7 +222,7 @@ public class CategoryControllerTest {
                                 ))
                         .header("Authorization", "Bearer "+token.getToken())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isForbidden())
+                .andExpect(status().isUnauthorized())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
     }
@@ -258,7 +258,7 @@ public class CategoryControllerTest {
         var result = mockMvc.perform(MockMvcRequestBuilders.get("/categories/{name}", CategoryType.MID_RANGE.getCategory())
                         .header("Authorization", "Bearer "+token.getToken())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isForbidden())
+                .andExpect(status().isUnauthorized())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
     }
@@ -276,7 +276,7 @@ public class CategoryControllerTest {
         var result = mockMvc.perform(MockMvcRequestBuilders.get("/categories/{name}", CategoryType.MID_RANGE.getCategory())
                         .header("Authorization", "Bearer "+token.getToken())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isForbidden())
+                .andExpect(status().isUnauthorized())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
     }
@@ -291,7 +291,7 @@ public class CategoryControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         TokenDTO token = objectMapper.readValue(resultToken.getResponse().getContentAsString(),TokenDTO.class);
-        var result = mockMvc.perform(MockMvcRequestBuilders.get("/getCategories")
+        var result = mockMvc.perform(MockMvcRequestBuilders.get("/categories/getCategories")
                         .header("Authorization", "Bearer "+token.getToken())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

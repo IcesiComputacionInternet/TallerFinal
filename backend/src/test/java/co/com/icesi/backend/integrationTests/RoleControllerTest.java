@@ -290,7 +290,7 @@ public class RoleControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         TokenDTO token = objectMapper.readValue(resultToken.getResponse().getContentAsString(),TokenDTO.class);
-        var result = mockMvc.perform(MockMvcRequestBuilders.get("/getRoles")
+        var result = mockMvc.perform(MockMvcRequestBuilders.get("/roles/getRoles")
                         .header("Authorization", "Bearer "+token.getToken())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
