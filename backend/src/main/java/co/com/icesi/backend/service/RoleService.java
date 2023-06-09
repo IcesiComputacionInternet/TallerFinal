@@ -43,7 +43,6 @@ public class RoleService {
     }
 
     public RoleDTO getRole(String roleName) {
-        checkPermissions();
         return roleMapper.fromRoleToRoleDTO(
                 roleRepository.findByName(roleName).orElseThrow(
                         () -> exceptionBuilder.notFoundException(

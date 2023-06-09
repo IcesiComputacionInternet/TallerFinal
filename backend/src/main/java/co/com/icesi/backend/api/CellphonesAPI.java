@@ -15,6 +15,6 @@ public interface CellphonesAPI {
     ResponseCellphoneDTO createCellphone(@RequestBody @Valid RequestCellphoneDTO cellphoneDTO);
     @GetMapping("/{id}")
     ResponseCellphoneDTO getCellphone(@PathVariable("id")UUID cellphoneId);
-    @GetMapping("/getAccounts")
+    @GetMapping("/getItems")
     List<ResponseCellphoneDTO> getAllCellphones();
 }

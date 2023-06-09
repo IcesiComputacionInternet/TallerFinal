@@ -1,27 +1,27 @@
 package co.com.icesi.backend.integrationTests;
 
 import co.com.icesi.backend.Enum.CategoryType;
+import co.com.icesi.backend.Enum.OrderStatus;
 import co.com.icesi.backend.Enum.UserRole;
-import co.com.icesi.backend.model.Category;
-import co.com.icesi.backend.model.Cellphone;
-import co.com.icesi.backend.model.Role;
-import co.com.icesi.backend.model.ShopUser;
-import co.com.icesi.backend.repository.CategoryRepository;
-import co.com.icesi.backend.repository.CellphoneRepository;
-import co.com.icesi.backend.repository.RoleRepository;
-import co.com.icesi.backend.repository.UserRepository;
+import co.com.icesi.backend.model.*;
+import co.com.icesi.backend.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.*;
 
 @TestConfiguration
 public class TestConfigurationData {
     @Bean
-    CommandLineRunner commandLineRunner(UserRepository userRepository, RoleRepository roleRepository, CategoryRepository categoryRepository, CellphoneRepository cellphoneRepository, PasswordEncoder passwordEncoder) {
+    CommandLineRunner commandLineRunner(UserRepository userRepository,
+                                        OrderRepository orderRepository,
+                                        RoleRepository roleRepository,
+                                        CategoryRepository categoryRepository,
+                                        CellphoneRepository cellphoneRepository,
+                                        PasswordEncoder passwordEncoder) {
 
         Role adminRole = Role.builder()
                 .roleId(UUID.randomUUID())
@@ -96,7 +96,7 @@ public class TestConfigurationData {
                 .build();
 
         Cellphone item1 = Cellphone.builder()
-                .cellphoneId(UUID.randomUUID())
+                .cellphoneId(UUID.fromString("de7ae704-6bbf-47da-925a-b0bdd13351cf"))
                 .name("Xiaomi Celular Redmi Note 12 128Gb Verde")
                 .description("Fotografía profesional en tu bolsillo Descubre infinitas posibilidades " +
                         "para tus fotos con las 3 cámaras principales de tu equipo. " +
@@ -211,6 +211,20 @@ public class TestConfigurationData {
                 .category(midRangeCategory)
                 .build();
 
+        List<Cellphone> items = new ArrayList<>();
+        items.add(item1);
+        Set<Integer> quantities = new HashSet<>();
+        quantities.add(1);
+
+        ShopOrder order = ShopOrder.builder()
+                .orderId(UUID.fromString("de7ae704-6bbf-47da-925a-b0bdd13351cf"))
+                .shopUser(user)
+                .status(OrderStatus.IN_PROCESS)
+                .total(929900L)
+                .items(items)
+                .quantities(quantities)
+                .build();
+
         return args -> {
             roleRepository.save(adminRole);
             roleRepository.save(userRole);
@@ -230,6 +244,8 @@ public class TestConfigurationData {
             cellphoneRepository.save(item4);
             cellphoneRepository.save(item5);
             cellphoneRepository.save(item6);
+
+            orderRepository.save(order);
         };
     }
 }

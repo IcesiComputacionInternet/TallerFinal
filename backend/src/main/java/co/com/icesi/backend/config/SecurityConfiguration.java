@@ -71,12 +71,32 @@ public class SecurityConfiguration {
     public AuthorizationManager<RequestAuthorizationContext> requestAuthorizationContextAuthorizationManager
             (HandlerMappingIntrospector introspector){
         RequestMatcher permitAll = new AndRequestMatcher(new MvcRequestMatcher(introspector, "/token"));
+        RequestMatcher permitAllSignUp = new AndRequestMatcher(new MvcRequestMatcher(introspector, "/users/create"));
 
         MvcRequestMatcher mvcRequestMatcher;
 
         RequestMatcherDelegatingAuthorizationManager.Builder managerBuilder
                 = RequestMatcherDelegatingAuthorizationManager.builder()
-                .add(permitAll, (context, other) -> new AuthorizationDecision(true));
+                .add(permitAll, (context, other) -> new AuthorizationDecision(true))
+                .add(permitAllSignUp, (context, other) -> new AuthorizationDecision(true));
+
+        managerBuilder.add(new MvcRequestMatcher(introspector, "/roles/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
+
+        managerBuilder.add(new MvcRequestMatcher(introspector, "/cellphone/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN","SCOPE_SHOP"));
+
+        managerBuilder.add(new MvcRequestMatcher(introspector, "/users/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN","SCOPE_SHOP", "SCOPE_USER"));
+
+        managerBuilder.add(new MvcRequestMatcher(introspector, "/store/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN","SCOPE_SHOP", "SCOPE_USER"));
+
+        managerBuilder.add(new MvcRequestMatcher(introspector, "/orders/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN","SCOPE_SHOP"));
+
+
+
 
         AuthorizationManager<HttpServletRequest> manager = managerBuilder.build();
         return (authentication, object) -> manager.check(authentication, object.getRequest());

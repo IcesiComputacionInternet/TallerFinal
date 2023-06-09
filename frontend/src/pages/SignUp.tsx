@@ -6,15 +6,16 @@ import axios from "axios";
 
 
 interface RequestUserDTO {
-    firstName: string;
-    lastName: string;
+    firstName ?: string;
+    lastName ?: string;
     email: string;
     password: string;
     phoneNumber: string;
-    address: string;
-    birthday: string;
+    address ?: string;
+    birthday ?: string;
     role: string;
 }
+
 
 const baseUrl = "http://localhost:8080";
 
@@ -25,7 +26,6 @@ const SignUp = () => {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [address, setAddress] = useState("");
     const [birthday, setBirthday] = useState("");
-    const [role, setRol] = useState("");
     const [password, setPassword] = useState("");
     const navigation : NavigateFunction = useNavigate();
 
@@ -41,17 +41,16 @@ const SignUp = () => {
                 phoneNumber: phoneNumber,
                 address: address,
                 birthday: birthday,
-                role: role,
+                role: "USER",
             };
 
             console.log(requestUserDTO)
 
             const userCtx = (requestUserDTO: RequestUserDTO) => {
-                return axios.post(`${baseUrl}/users/create`, requestUserDTO, {
+                return axios.post(baseUrl + "/users/create", requestUserDTO, {
                 headers: {
                     "Access-Control-Allow-Origin": baseUrl,
-                    "MediaType": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem('jwt')
+                    "MediaType": "application/json"
                 }
             });
         }
@@ -60,6 +59,7 @@ const SignUp = () => {
             console.log(response.data)
             if (response.status == 200) {
                 alert("Success");
+                navigation("/");
             }
 
         } catch (error) {
@@ -68,6 +68,9 @@ const SignUp = () => {
     };
 
     const cancelSignUp = () => {
+        localStorage.removeItem("jwt");
+        localStorage.removeItem("userEmail");
+        localStorage.setItem("logged_user", JSON.stringify(false));
         navigation("/");
     }
 
@@ -159,33 +162,10 @@ const SignUp = () => {
                     <span className="input-highlight"></span>
                 </div>
 
-                <div className="form-check form-check-inline">
-                    <input
-                        className="form-check-input"
-                        type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio1"
-                        value="SHOP"
-                        onChange={(event) => setRol(event.target.value)}
-                    />
-                        <label className="form-check-label" htmlFor="inlineRadio1">Seller</label>
+                <div className="button-container">
+                    <button className="btn btn-primary form-button" type="button" onClick={handleSubmit}>Sign Up</button>
+                    <button className="btn btn-outline-danger form-button" onClick={cancelSignUp}>Cancel</button>
                 </div>
-                <div className="form-check form-check-inline">
-                    <input
-                        className="form-check-input"
-                        type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio2"
-                        value="USER"
-                        onChange={(event) => setRol(event.target.value)}
-                    />
-                        <label className="form-check-label" htmlFor="inlineRadio2">Buyer</label>
-                </div>
-
-                    <div className="button-container">
-                        <button className="btn btn-primary form-button" type="button" onClick={handleSubmit}>Sign Up</button>
-                        <button className="btn btn-outline-danger form-button" onClick={cancelSignUp}>Cancel</button>
-                    </div>
             </form>
         </div>
     );
