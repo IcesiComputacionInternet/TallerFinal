@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import {NavigateFunction,useNavigate} from "react-router-dom";
 import Logout from "./Logout";
+import Navbar from "./Navbar";
 
 const baseUrl="http://localhost:8091";
 
@@ -9,8 +10,23 @@ const baseUrl="http://localhost:8091";
 function Orders(){
     
     const [orders, setOrders] = useState([]);
+    const [role, setRole] = useState("");
 
     useEffect(() => {
+      const checkRole= async () => {
+        
+        var token=localStorage.getItem("jwt");
+        if (token) {
+
+            const user = localStorage.getItem("currentRole");
+            
+            if(user){
+                setRole(user)
+            }
+        }
+        };
+        checkRole();
+
     const fetchItems = async () => {
         var token=localStorage.getItem("jwt");
         const response = await axios.get(
@@ -51,17 +67,8 @@ function Orders(){
     
     return (
         <div>
-          <div
-            className="p-3 navbar bg-body-tertiary"
-            style={{ backgroundColor: "#e3f2fd" }}
-          >
-            <div className="col-1">
-              <h4>Orders</h4>
-            </div>
-            <div className="col-1">
-              <Logout />
-            </div>
-          </div>
+          <Navbar/>
+
           <div className="m-3">
             <h2>My orders</h2>
           </div>
@@ -94,21 +101,22 @@ function Orders(){
                                 </div>
                          )))}
                     </div>
-                  
-                    <button
-                    onClick={() => changeOrderStatus(order.orderId, "SHIPPED")}
-                    disabled={order.status === "SHIPPED" || order.status === "RECEIVED"}
-                    >
-                    Ship Order
-                    </button>
-                    <button
-                    onClick={() => changeOrderStatus(order.orderId, "RECEIVED")}
-                    disabled={order.status === "RECEIVED"}
-                    >
-                    Order Received
-                    </button>
-
-
+                  {(role==='ADMIN' || role==='SHOP') &&
+                    <div>
+                      <button
+                      onClick={() => changeOrderStatus(order.orderId, "SHIPPED")}
+                      disabled={order.status === "SHIPPED" || order.status === "RECEIVED"}
+                      >
+                      Ship Order
+                      </button>
+                      <button
+                      onClick={() => changeOrderStatus(order.orderId, "RECEIVED")}
+                      disabled={order.status === "RECEIVED"}
+                      >
+                      Order Received
+                      </button>
+                    </div>
+                    }
                   </div>
                 </div>
               ))
