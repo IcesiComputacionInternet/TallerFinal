@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Modal, Button, Navbar } from "react-bootstrap";
 import { BsCartFill} from "react-icons/bs";
-import Logout from "./Logout";
-import "../ShopHome.css";
+import Logout from "../../components/Logout";
+import "../../ShopHome.css";
 import ReactModal from "react-modal";
 import { Link } from "react-router-dom";
 
@@ -86,9 +86,10 @@ const ShopHome = () => {
           },
         }
       );
-      if (response.status === 201) {
+      if (response.status === 200) {
         setCartItems([]);
         alert("Orden realizada con éxito");
+        window.location.reload();
       }
     } catch (error) {
       console.error("Error creating order:", error);
@@ -157,11 +158,15 @@ const ShopHome = () => {
           <Button variant="success" onClick={handleOrder} disabled={cartItems.length === 0}>
             Hacer orden
           </Button>
-          <Button variant="secondary" onClick={handleCloseCartModal}>
+          <Button variant="btn btn-dark" onClick={handleCloseCartModal}>
             Cerrar
+          </Button>
+          <Button variant="danger" onClick={() => setCartItems([])} disabled={cartItems.length === 0}>
+            Vaciar Carrito
           </Button>
         </div>
       </ReactModal>
+
 
       {selectedItem && (
         <Modal show={showModal} onHide={handleCloseModal}>
@@ -189,8 +194,8 @@ const ShopHome = () => {
           </Modal.Body>
           <Modal.Footer>
             <div className="text-center">
-              <Button variant="primary" onClick={addItemToCart} disabled={!selectedItem.available}>
-                Comprar
+              <Button variant="btn btn-outline-dark" onClick={addItemToCart} disabled={!selectedItem.available}>
+                Añadir al carrito
               </Button>
             </div>
           </Modal.Footer>
