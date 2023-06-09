@@ -46,7 +46,7 @@ const Login = ({ setLogin }: Props) =>{
           localStorage.setItem("currentRole",role);
           
 
-          navigation("/home-shop");
+          navigation("/users/home-shop");
         }
           
       } catch (error) {

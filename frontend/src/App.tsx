@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import MainHome from "./components/MainHome";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import ShopHome from "./components/ShopHome";
+import ShopHome from "./pages/users/ShopHome";
 import NotFound from "./components/NotFound";
 import HomeAdmin from "./pages/admin/AdminHome";
 import AdminUsers from "./pages/admin/Users";
@@ -41,7 +41,7 @@ function App() {
           element={<Register onRegistrationComplete={registered} />}
         />
         <Route
-          path="/home-shop"
+          path="/users/home-shop"
           element={isLoggedIn ? <ShopHome /> : <Navigate to="/login" />}
         />
         <Route path="/*" element={<NotFound />} />

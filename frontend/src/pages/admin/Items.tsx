@@ -1,16 +1,34 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import AdminNavbar from "../../components/AdminNavbar";
+import { Modal, Button } from "react-bootstrap";
 
 const baseUrl = "http://localhost:8091";
 
-function Items (){
+interface Item {
+  itemId: string;
+  description: string;
+  name: string;
+  price: number;
+  imageUrl: string;
+  minVoltage: number;
+  maxVoltage: number;
+  sourceOfEnergy: string;
+  levelOfEfficiency: string;
+  marca: string;
+  model: string;
+  guarantee: number;
+  available?: boolean;
+}
 
-  const [items, setItems] = useState([]);
+const Items = () => {
+
+  const [items, setItems] = useState<Item[]>([]);
+  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     async function getData() {
-
       const resultItems = await getItems();
       setItems(resultItems);
     }
@@ -18,44 +36,66 @@ function Items (){
     getData();
   }, []);
 
+  const handleItemClick = (item: Item) => {
+    setSelectedItem(item);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
-    <>
+    <div>
      <AdminNavbar />
-     <br />
-     {items.length > 0 ?(
-        <div className="container">
-          <p className="h4">Items registrados</p>
-        <br />
-          <table className="table table-striped-columns" style={{tableLayout:"fixed"}}>
-            <thead>
-                <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Marca</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Categoria</th>
-                </tr>
-            </thead>
-            <tbody>
-              {items.map((item, index) => (
-                  <tr key={index}>
-                    <td>{item.name}</td>
-                    <td>{item.marca}</td>
-                    <td>${item.price}</td>
-                    <td>{item.category}</td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+      <div className="title-container">
+        <h2 className="mx-auto">Productos de la tienda</h2>
+      </div>
+      <div className="shop-home-container">
+        <div className="item-grid">
+          {items.map((item, index) => (
+            <div
+              key={index}
+              className="item"
+              onClick={() => handleItemClick(item)}
+            >
+              <h3>{item.name}</h3>
+              <img src={item.imageUrl} alt={item.name} />
+              <p className="description">{item.description}</p>
+            </div>
+          ))}
         </div>
-      ) : (
-        <div className="container">
-          <p className="h4">No hay items registrados</p>
-        </div>
+      </div>
+
+      {selectedItem && (
+        <Modal show={showModal} onHide={handleCloseModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>{selectedItem.name}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <img
+              src={selectedItem.imageUrl}
+              alt={selectedItem.name}
+              className="modal-image"
+            />
+            <p><strong>Descripción:</strong> {selectedItem.description}</p>
+            <p><strong>Precio:</strong> ${selectedItem.price}</p>
+            <p><strong>Voltaje Mínimo:</strong> {selectedItem.minVoltage}</p>
+            <p><strong>Voltaje Máximo:</strong> {selectedItem.maxVoltage}</p>
+            <p><strong>Fuente de Energía:</strong> {selectedItem.sourceOfEnergy}</p>
+            <p><strong>Nivel de Eficiencia:</strong> {selectedItem.levelOfEfficiency}</p>
+            <p><strong>Marca:</strong> {selectedItem.marca}</p>
+            <p><strong>Modelo:</strong> {selectedItem.model}</p>
+            <p><strong>Garantía:</strong> {selectedItem.guarantee}</p>
+            <p className={`availability ${selectedItem.available ? 'available' : 'unavailable'}`}>
+              <strong>Disponible:</strong> {selectedItem.available ? 'Sí' : 'No'}
+            </p>
+          </Modal.Body>
+        </Modal>
       )}
-    </>
+    </div>
   );
-      
-}
+};
 
 async function getItems(){
 
@@ -69,10 +109,7 @@ async function getItems(){
       }
     }
   )
-
   return items.data;
 }
-    
+
 export default Items;
-
-

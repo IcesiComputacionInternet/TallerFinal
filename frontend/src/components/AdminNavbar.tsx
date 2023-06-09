@@ -11,20 +11,25 @@ function AdminNavbar (){
               </a>
               <div className="collapse navbar-collapse justify-content-center">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0" style={{fontSize: "1.25rem"}}>
+                  <li className="separator"></li>
                   <li className="nav-item">
                     <a className="nav-link text-white" aria-current="page" href="/admin/users">Usuarios</a>
                   </li>
+                  <li className="separator"></li>
                   <li className="nav-item">
-                    <a className="nav-link text-white" aria-current="page" href="/admin/items">Items</a>
+                    <a className="nav-link text-white" aria-current="page" href="/admin/items">ítems</a>
                   </li>
+                  <li className="separator"></li>
                   <li className="nav-item">
-                    <a className="nav-link text-white" aria-current="page" href="/admin/orders">Ordenes</a>
+                    <a className="nav-link text-white" aria-current="page" href="/admin/orders">Órdenes</a>
                   </li>
+                  <li className="separator"></li>
                   <li className="nav-item">
                     <a className="nav-link text-white" aria-current="page" href="/admin/roles">Roles</a>
                   </li>
+                  <li className="separator"></li>
                   <li className="nav-item">
-                    <a className="nav-link text-white" aria-current="page" href="/admin/categories">Categorias</a>
+                    <a className="nav-link text-white" aria-current="page" href="/admin/categories">Categorías</a>
                   </li>
               </ul>
               <Logout />
