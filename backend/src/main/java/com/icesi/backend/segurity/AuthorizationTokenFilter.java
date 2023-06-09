@@ -7,7 +7,7 @@ import com.icesi.backend.error.exception.E_SHOP_Error;
 import com.icesi.backend.error.exception.E_SHOP_Exception;
 import com.icesi.backend.errorConstants.BackendApplicationErrors;
 import com.icesi.backend.models.PermissionUser;
-import com.icesi.backend.service.LoginService_Interfase;
+import com.icesi.backend.service.LoginService_Interface;
 import com.icesi.backend.service.impl.Token_Parser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -61,7 +61,7 @@ public class AuthorizationTokenFilter extends OncePerRequestFilter {
             "OPTIONS /orders"
     };
 
-    private final LoginService_Interfase loginService;
+    private final LoginService_Interface loginService;
 
 
     /**

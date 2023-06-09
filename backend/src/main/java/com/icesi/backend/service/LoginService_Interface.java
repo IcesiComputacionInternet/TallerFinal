@@ -8,7 +8,7 @@ import com.icesi.backend.models.PermissionUser;
 import java.util.List;
 import java.util.UUID;
 
-public interface LoginService_Interfase {
+public interface LoginService_Interface {
 
     TokenDTO loginByEmail(LoginDTO loginDTO);
 

@@ -21,8 +21,8 @@ public class UserController {
     }
 
     @GetMapping()
-    public List<ShopUser> getUsers(){
-        return userService.getUsers();
+    public List<ShopUser> getUser(){
+        return (List<ShopUser>) userService.getUser();
     }
     @PostMapping("/create")
     public ShopUser createUser(@RequestBody UserCreateDTO userCreateDTO){

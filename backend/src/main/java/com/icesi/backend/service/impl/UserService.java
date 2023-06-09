@@ -5,6 +5,7 @@ import com.icesi.backend.DTO.UserUpdateDTO;
 import com.icesi.backend.mappers.UserMapper;
 import com.icesi.backend.models.ShopUser;
 import com.icesi.backend.respositories.UserRepository;
+import com.icesi.backend.service.UserService_Interface;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -12,17 +13,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class UserService {
+public class UserService implements UserService_Interface {
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private UserMapper userMapper;
 
-    public List<ShopUser> getUsers(){
-        return userRepository.findAll();
+    public ShopUser getUser(){
+        return (ShopUser) userRepository.findAll();
     }
     public Optional<ShopUser> createUser(UserCreateDTO user){
         Optional<String> email = Optional.ofNullable(user.getEmail());

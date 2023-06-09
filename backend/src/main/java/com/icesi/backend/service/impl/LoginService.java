@@ -12,7 +12,7 @@ import com.icesi.backend.models.Role;
 import com.icesi.backend.models.ShopUser;
 import com.icesi.backend.respositories.RoleRepository;
 import com.icesi.backend.respositories.UserRepository;
-import com.icesi.backend.service.LoginService_Interfase;
+import com.icesi.backend.service.LoginService_Interface;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @Service
-public class LoginService implements LoginService_Interfase {
+public class LoginService implements LoginService_Interface {
 
     public final UserRepository userRepository;
 
