@@ -13,8 +13,6 @@ function ModalEdit({Category, handleCancel, setEditModal, setInfoToast}: Props) 
     const [newName, setNewName] = useState(Category.name);
     const [newDescription, setNewDescription] = useState(Category.description);
 
-    console.log(Category);
-
     const handleChangeName = (event: any) => {
         setNewName(event.target.value);
     }

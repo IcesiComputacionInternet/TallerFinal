@@ -64,7 +64,7 @@ function OrderItem ({Order}: Props) {
                     aria-labelledby='contained-modal-title-vcenter'
                     centered
                 >
-                    <Modal.Header closeButton>
+                    <Modal.Header>
                         <Modal.Title id='contained-modal-title-vcenter'>
                             Order: {selectedOrder.purchaseOrderId}
                         </Modal.Title>

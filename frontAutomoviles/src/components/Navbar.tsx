@@ -112,6 +112,9 @@ function Navbar({isLoggedIn}: Props) {
         menuItems.push(<Orders />)
         menuItems.push(<Cart />)
         menuItems.push(<LogOut />)
+    }else if(localStorage.getItem('role') === 'SHOP'){
+        menuItems.push(<Manage />)
+        menuItems.push(<LogOut />)
     }
     
     return (
