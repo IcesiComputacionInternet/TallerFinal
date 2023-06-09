@@ -8,7 +8,7 @@ const AdminView : NextPage = () => {
         <div className={styles.maxContainer}>
             <div className={styles.insideHomeContainer}>
                 <div className={styles.buttonsContainer}>
-
+                <h1>Welcome dear admin!</h1>
                 </div>
             </div>
         </div>

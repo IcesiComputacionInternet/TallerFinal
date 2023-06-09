@@ -41,39 +41,41 @@ public class SalesOrderServiceTest {
     @Test
     public void testCreateSalesOrderServiceWhenCustomerNotExist() {
         try {
-            when(customerRepository.findById(any())).thenReturn(Optional.of(defaultCustomerWithIdNotExist()));
+            when(customerRepository.findByIdTheCustomer(any())).thenReturn(Optional.of(defaultCustomerWithIdNotExist()));
             salesOrderService.save(defaultSalesOderDTO());
         } catch (RuntimeException exception) {
             assertEquals("Not existing data", exception.getMessage());
         }
 
     }
-    @Test
-    public void testCreateSalesOrderService() {
-        try{
-        when(customerRepository.findUserByEmail(any())).thenReturn(Optional.of(defaultCustomer()));
-        salesOrderService.save(defaultSalesOderDTO());
-    } catch (RuntimeException exception) {
-        assertEquals("Not existing data", exception.getMessage());
-    }
 
-    }
     @Test
     public void testCreateSalesOrderServiceWhenItemsNotExist() {
-        // Mocking customer repository
-        when(customerRepository.findUserByEmail(any())).thenReturn(Optional.of(defaultCustomer()));
-
-        // Mocking item repository
-        List<Item> items = Arrays.asList(defaultItem());
-        when(itemRepository.returnItem(any())).thenReturn(Optional.of(defaultItem()));
+        try{
+        when(customerRepository.findByIdTheCustomer(any())).thenReturn(Optional.of(defaultCustomer()));
+        when(itemRepository.returnItem(any())).thenReturn(Optional.of(defaultItemInvalid()));
 
         SalesOrder salesOrder = defaulSalesOrder();
         when(salesOrderMapper.fromCreateSalesOrderDTO(any())).thenReturn(salesOrder);
         when(salesOrderRepository.save(any())).thenReturn(salesOrder);
         ResponseSalesOrderDTO responseDTO = salesOrderService.save(defaultSalesOderDTO());
         assertEquals("TV", responseDTO.getItems().get(0).getName());
+        } catch (RuntimeException exception) {
+            assertEquals("Not existing data", exception.getMessage());
+        }
     }
+    @Test
+    public void testCreateSalesOrderService() {
 
+            when(customerRepository.findByIdTheCustomer(any())).thenReturn(Optional.of(defaultCustomer()));
+            when(itemRepository.returnItem(any())).thenReturn(Optional.of(defaultItem()));
+            SalesOrder salesOrder = defaulSalesOrder();
+            when(salesOrderMapper.fromCreateSalesOrderDTO(any())).thenReturn(salesOrder);
+            when(salesOrderRepository.save(any())).thenReturn(salesOrder);
+            salesOrderService.save(defaultSalesOderDTO());
+
+
+    }
 
     private SalesOrder defaulSalesOrder() {
         return SalesOrder.builder().total(500L).customer(defaultCustomer()).items(itemsI()).build();
@@ -152,5 +154,8 @@ public class SalesOrderServiceTest {
     }
     private Category defaulCategory() {
         return Category.builder().name("TV").description("TV").build();
+    }
+    private Item defaultItemInvalid() {
+        return Item.builder().name("TV28").price(2000L).category(defaulCategory()).brand("password").stock(3).imageURL("tv.com").description("TV").build();
     }
 }

@@ -20,6 +20,7 @@ const theme = createTheme({
 
 export default function Categories() {
     const [categories,setCategories] = useState([]);
+    const [visible,setVisible] = useState(true);
     useEffect(() => {
         axios.get("http://localhost:9090/category/all",{
         headers:{
@@ -33,9 +34,9 @@ export default function Categories() {
         console.log(error);
     })
     },[])
-
-
-
+    const handleAgree = () => {
+        setVisible(false);
+    }
     const handleNewCategory = () => {
         window.location.href = "/categories/new";
     }
@@ -55,9 +56,9 @@ export default function Categories() {
                 </div>
                 <div className={styles.itemsSection}>
                     <div className={styles.itemsList}>
-                        <CategoryItem name="Category 1" description="Description 1" categoryId="1"/>
+                        {visible? <CategoryItem name="Category 1X" description="Description 1" categoryId="1" handleAgree={handleAgree}/> : <div></div>}
                         {categories.map((category) => {
-                            return <CategoryItem name={category.name} description={category.description} categoryId={category.id}/>
+                            return <CategoryItem name={category.name} description={category.description} categoryId={category.id} handleAgree={() => console.log("")}/>
                         })
                         }
                     </div>

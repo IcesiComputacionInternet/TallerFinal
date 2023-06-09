@@ -16,6 +16,7 @@ interface ProductItemProps {
     amount: Number;
     category: String;
     productId: String;
+    handleAgree: () => void;
 }
 
 const theme = createTheme({
@@ -90,7 +91,7 @@ export default function ProductItem(props: ProductItemProps) {
                 </DialogContent>
                 <DialogActions>
                 <Button onClick={handleDisagree}>Disagree</Button>
-                <Button onClick={() => console.log("")} autoFocus>
+                <Button onClick={props.handleAgree} autoFocus>
                     Agree
                 </Button>
                 </DialogActions>

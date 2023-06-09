@@ -35,16 +35,14 @@ public class SalesOrderService {
     @Transactional
     public ResponseSalesOrderDTO save(CreateSalesOderDTO createDTO){
 
-        Customer customer = customerRepository.findById(UUID.fromString(createDTO.customer())).orElseThrow(
+        Customer customer = customerRepository.findByIdTheCustomer(UUID.fromString(createDTO.customer())).orElseThrow(
                 ArgumentsExceptionBuilder.createArgumentsExceptionSup(
                         "Not existing data",
                         HttpStatus.BAD_REQUEST,
                         new DetailBuilder(ErrorCode.ERR_NOT_FOUND,"user")
                 )
         );
-
         List<Item> items = validateItemsStock(validateItemsExists(createDTO.items()),createDTO.items());
-
 
         SalesOrder newOrder = salesOrderMapper.fromCreateSalesOrderDTO(createDTO);
         newOrder.setOrderId(UUID.randomUUID());
@@ -52,7 +50,6 @@ public class SalesOrderService {
         newOrder.setTotal(calculateTotal(items,createDTO.items()));
         newOrder.setCustomer(customer);
         newOrder.setItems(items);
-
         //Update the stock of each item
         updateItemsStock(items,createDTO.items());
         return salesOrderMapper.fromSalesOrderToResponse(salesOrderRepository.save(newOrder));
