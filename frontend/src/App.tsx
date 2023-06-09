@@ -17,7 +17,6 @@ import CreateCategories from "./pages/admin/CreateCategories";
 import AdminCategories from "./pages/admin/Categories";
 import ShopHome from "./pages/shop/ShopHome";
 import ShopItems from "./pages/shop/Items";
-import Draft from "./components/Draft";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
@@ -60,7 +59,6 @@ function App() {
 
         <Route path="/shop/home" element={<ShopHome />} />
         <Route path="/shop/items" element={<ShopItems />} />
-        <Route path="/draft" element={<Draft />} />
         {isLoggedIn && (
           <Route path="/orders" element={<Orders />} />
         )}
