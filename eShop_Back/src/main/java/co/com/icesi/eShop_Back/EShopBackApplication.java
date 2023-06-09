@@ -109,15 +109,15 @@ public class EShopBackApplication {
 				.build();
 		Category gaming = Category.builder()
 				.categoryId(UUID.randomUUID())
-				.name("Gaming")
+				.name("All in one")
 				.description("Gaming")
-				.imageUrl("https://raw.githubusercontent.com/IcesiComputacionInternet/TallerFinal/Grupo_5/eShop_Front/src/resources/images/gaming.webp")
+				.imageUrl("https://raw.githubusercontent.com/IcesiComputacionInternet/TallerFinal/Grupo_5/eShop_Front/src/resources/images/all-in-one.png")
 				.build();
 		Category pcGamer = Category.builder()
 				.categoryId(UUID.randomUUID())
 				.name("PC Gamer")
 				.description("PC Gamer")
-				.imageUrl("https://raw.githubusercontent.com/IcesiComputacionInternet/TallerFinal/Grupo_5/eShop_Front/src/resources/images/pcgamer.webp")
+				.imageUrl("https://raw.githubusercontent.com/IcesiComputacionInternet/TallerFinal/Grupo_5/eShop_Front/src/resources/images/gaming.webp")
 				.build();
 		Category laptop = Category.builder()
 				.categoryId(UUID.randomUUID())
