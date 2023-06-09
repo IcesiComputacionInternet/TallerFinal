@@ -27,6 +27,7 @@ export default function Login() {
     }));
   };
 
+
   const handleLogin = async () => {
     console.log(loginData)
     const username = loginData.username
@@ -77,7 +78,10 @@ export default function Login() {
             onChange={handleInputChange}
           />
           <Button variant="contained" color="primary" fullWidth onClick={handleLogin}>
-            Iniciar sesión
+            Log in
+          </Button>
+          <Button variant="contained" color="primary" fullWidth onClick={() => router.push("/signin")}>
+            Sing up
           </Button>
         </form>
       </div>
