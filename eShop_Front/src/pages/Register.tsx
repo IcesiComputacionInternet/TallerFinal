@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavigateFunction } from "react-router-dom";
 import axios from 'axios';
 
 
@@ -27,7 +27,7 @@ export default function Register() {
   const[lastName, setLastName] = useState("");
   const[address, setAddress] = useState("");
   const[birthDay, setBirthDay] = useState("");
-  const[username, setUsername] = useState("");
+  const[email, setEmail] = useState("");
   const[password, setPassword] = useState("");
   const[confirmPassword, setConfirmPassword] = useState("");
   const[phoneNumber, setPhoneNumber] = useState("");
@@ -41,7 +41,7 @@ export default function Register() {
       return;
     }
 
-    if (username.length == 0 && password.length == 0 && confirmPassword.length == 0 && phoneNumber.length == 0) {
+    if (email.length == 0 && password.length == 0 && confirmPassword.length == 0 && phoneNumber.length == 0) {
       alert("Please fill all the fields");
       return;
     }
@@ -51,18 +51,18 @@ export default function Register() {
 
   const createUser = async () => {
     try {
-      const response = await axios.post(baseUrl+'/api/users/add', {
+      const response = await axios.post(baseUrl+'/register', {
         firstName,
         lastName,
         address,
         birthDay,
-        username,
+        email,
         password,
         phoneNumber,
         role,
       });
-  
-      // Resto del código si la petición es exitosa
+      alert("La cuenta ha sido creada correctamente")
+      navigate("/")
     } catch (error) {
       console.error(error);
       alert("Se produjo un error al crear el usuario");
@@ -129,10 +129,10 @@ export default function Register() {
                 <TextField
                   required
                   fullWidth
-                  id="username"
+                  id="email"
                   label="Email"
-                  name="username"
-                  onChange={(event)=> setUsername(event.target.value)}
+                  name="email"
+                  onChange={(event)=> setEmail(event.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
