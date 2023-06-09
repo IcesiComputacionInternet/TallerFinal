@@ -2,6 +2,7 @@ package co.com.icesi.eShop_Back.model;
 
 import co.com.icesi.eShop_Back.model.security.UserPermission;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Role {
     @Id
+    @Type(type = "uuid-char")
     private UUID roleId;
     private String name;
     private String description;

@@ -22,7 +22,7 @@ public class UserPermission {
     @Id
     @GeneratedValue
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Type(type = "pg-uuid")
+    @Type(type = "uuid-char")
     private UUID permissionId;
     private String path;
     @Column(name ="`key`")
