@@ -77,7 +77,7 @@ class LogInTest {
 	}
 
 	@Test
-	public void testCurrentUser() throws Exception {
+	public void testCurrentUserAdmin() throws Exception {
 		String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
 								objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
 						)
@@ -95,6 +95,27 @@ class LogInTest {
 		UserDTO userDTO = objectMapper.readValue(result.getResponse().getContentAsString(), UserDTO.class);
 		assertNotNull(userDTO);
 		assertEquals("noname@email.com", userDTO.getEmail());
+	}
+
+	@Test
+	public void testCurrentUserUser() throws Exception {
+		String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+								objectMapper.writeValueAsString(new LoginDTO("chillguy@email.com", "password"))
+						)
+						.contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andReturn().getResponse().getContentAsString();
+		TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+		var result = mocMvc.perform(MockMvcRequestBuilders.get("/users/CurrentUser")
+						.contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON)
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+				.andExpect(status().isOk())
+				.andReturn();
+		UserDTO userDTO = objectMapper.readValue(result.getResponse().getContentAsString(), UserDTO.class);
+		assertNotNull(userDTO);
+		assertEquals("chillguy@email.com", userDTO.getEmail());
 	}
 
 
