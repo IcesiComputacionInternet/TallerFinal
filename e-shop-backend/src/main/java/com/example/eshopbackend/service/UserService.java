@@ -25,7 +25,7 @@ public class UserService {
 
     private final RoleRepository roleRepository;
 
-    private final PasswordEncoder passwordEncoder;
+    //private final PasswordEncoder passwordEncoder;
 
     public void save(UserDTO userToSave){
         //Validate email and phone are not repeated
@@ -34,7 +34,7 @@ public class UserService {
         validateRole(userToSave.getRole());
 
         //Encode password from DTO
-        userToSave.setPassword(passwordEncoder.encode(userToSave.getPassword()));
+        // userToSave.setPassword(passwordEncoder.encode(userToSave.getPassword()));
         //create user
         User user = userMapper.fromUserDTO(userToSave);
         user.setUserId(UUID.randomUUID());
