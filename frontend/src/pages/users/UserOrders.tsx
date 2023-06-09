@@ -86,7 +86,7 @@ const UserOrders = () => {
                     </Navbar.Brand>
                 <div className="d-flex align-items-center">
                     <div className="container">
-                    <Link to="/orders" className="btn btn-light">Mis órdenes</Link>
+                    <Link to="/user/orders" className="btn btn-light">Mis órdenes</Link>
                     </div>
                     <div className="cart-icon-container ml-auto" onClick={handleOpenCartModal}>
                     <BsCartFill size={24} />

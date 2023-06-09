@@ -132,6 +132,8 @@ const ShopHome = () => {
   };
 
   const handleOrder = async () => {
+    localStorage.setItem("cartItems", JSON.stringify([]));
+
     try {
       const response = await axios.post(
         "http://localhost:8091/orders",
@@ -232,6 +234,7 @@ const ShopHome = () => {
             if (window.confirm("¿Estás seguro de vaciar el carrito?")) {
               setCartItems([]);
               alert("Carrito vaciado con éxito");
+              localStorage.setItem("cartItems", JSON.stringify([]));
             }
           }} disabled={cartItems.length === 0}>
             Vaciar Carrito

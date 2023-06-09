@@ -50,13 +50,13 @@ function HomeAdmin (){
 
   const handleClickMoreItems = async (event: any) => {
     event.preventDefault();
-    navigation("/admin/items");
+    navigation("/items");
   };
 
 
   const handleClickMoreOrders = async (event: any) => {
     event.preventDefault();
-    navigation("/admin/orders");
+    navigation("/orders");
   };
 
   if(currentUser !== "ADMIN"){
@@ -164,7 +164,7 @@ function HomeAdmin (){
           </table>
        </div>
        <div className="d-flex justify-content-end">
-         <button type="button" className="btn btn-link" onClick={handleClickMoreOrders}>Ver más ordenes </button>
+         <button type="button" className="btn btn-link" onClick={handleClickMoreOrders}>Ver más órdenes </button>
       </div>
       </div>
       ) : (
