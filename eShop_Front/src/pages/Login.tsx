@@ -10,9 +10,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
-import axios, {AxiosResponse} from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useNavigate, NavigateFunction } from "react-router-dom";
-
 
 const theme = createTheme();
 
@@ -31,28 +30,33 @@ const Login = ({ setLogin }: Props) => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
-    const { data } = await axios.post(
-      baseUrl + "/auth",
-      {
-        username,
-        password,
-      },
-      {
-        headers: {
-          "Access-Control-Allow-Origin": baseUrl,
-        },
-      }
-    );
-    console.log(data.token)
+    const userCredentials = {
+      username: username,
+      password: password,
+    };
+    console.log(userCredentials);
 
-    if (data.token!=null) {
-      localStorage.setItem("jwt", data.token);
-      setLogin(true);
-      navigation("/home");
-      // console.log(data.token)
-    } else {
-      console.log("entre")
-      alert("Invalid username or password");
+    try {
+      const response = await axios.post(
+        baseUrl + "/auth",
+        {
+          username,
+          password,
+        },
+        {
+          headers: {
+            "Access-Control-Allow-Origin": baseUrl,
+          },
+        }
+      );
+      if (response.status === 200) {
+        localStorage.setItem("jwt", response.data.token);
+        navigation("/home");
+      } else {
+        alert("Username or password incorrect");
+      }
+    } catch (error) {
+      alert("Username or password incorrect");
     }
   };
 
@@ -97,7 +101,7 @@ const Login = ({ setLogin }: Props) => {
               autoComplete="current-password"
               onChange={(event) => setPassword(event.target.value)}
             />
-            
+
             <Button
               type="submit"
               fullWidth
