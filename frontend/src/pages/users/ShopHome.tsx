@@ -4,6 +4,7 @@ import { Modal, Button, Navbar } from "react-bootstrap";
 import { BsCartFill} from "react-icons/bs";
 import Logout from "../../components/Logout";
 import "../../ShopHome.css";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import ReactModal from "react-modal";
 import { Link } from "react-router-dom";
 
@@ -24,21 +25,37 @@ interface Item {
 }
 
 const ShopHome = () => {
+
+  const navigation : NavigateFunction = useNavigate();
+
+
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [cartItems, setCartItems] = useState<Item[]>([]);
   const [showCartModal, setShowCartModal] = useState(false);
 
+  const [currentUser, setCurrentUser] = useState("");
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
+
+        if(localStorage.getItem("jwt")){
+          const user = localStorage.getItem("currentRole");
+
+          if(user){
+            setCurrentUser(user)
+          } 
+        }
+
         const response = await axios.get("http://localhost:8091/items", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwt")}`,
           },
         });
         setItems(response.data);
+
       } catch (error) {
         alert("Error fetching items: "+error);
       }
@@ -95,6 +112,11 @@ const ShopHome = () => {
       console.error("Error creating order:", error);
       alert("Ocurrió un error al crear la orden");
     }
+  };
+
+  const handleClick = async (event: any) => {
+    event.preventDefault();
+    navigation("/createitems");
   };
 
   return (
@@ -201,7 +223,16 @@ const ShopHome = () => {
           </Modal.Footer>
         </Modal>
       )}
+      <br />
+      <div className="container">
+          {(currentUser ==='ADMIN' || currentUser==='SHOP') &&(
+                <div style={{textAlign:"center"}}>
+                  <button type="button" className="btn btn-primary" onClick={handleClick}>Crear ítems</button>
+                </div>
+          )}
+      </div>
     </div>
+
   );
 };
 

@@ -23,8 +23,18 @@ public class AuthController {
 
     @PostMapping("/token")
     public TokenDTO token(@RequestBody LoginDTO loginDTO){
-        Authentication authentication =authenticatorManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginDTO.username(),loginDTO.password()));
+
+        Authentication authentication;
+
+        if (loginDTO.username() == null){
+            authentication = authenticatorManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(loginDTO.phoneNumber(), loginDTO.password()));
+
+        }else{
+            authentication = authenticatorManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(loginDTO.username(), loginDTO.password()));
+        }
+
         return tokenService.generateToken(authentication);
     }
 
