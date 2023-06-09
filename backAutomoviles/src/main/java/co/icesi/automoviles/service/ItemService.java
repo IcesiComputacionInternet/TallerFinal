@@ -83,8 +83,8 @@ public class ItemService {
         );
     }
 
-    public Page<ItemShowDTO> getAllItems(int perPage, String sortBy, String sortDir){
-        Pageable pageable = SortUtil.sort(perPage, perPage, sortBy, sortDir);
+    public Page<ItemShowDTO> getAllItems(int page, int perPage, String sortBy, String sortDir){
+        Pageable pageable = SortUtil.sort(page, perPage, sortBy, sortDir);
         Page<Item> items = itemRepository.getAllItems(pageable);
         Page<ItemShowDTO> itemShowDTOS = items.map(entity -> {
            return fromItemToShowDTO(entity);

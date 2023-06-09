@@ -35,8 +35,9 @@ public class ItemController implements ItemAPI {
 
     @Override
     public ResponseEntity<PageResponse<ItemShowDTO>> getItems(Integer page, Integer perPage, String sortBy, String sortDirection) {
+        int indexPage = page - 1;
         Page<ItemShowDTO> items;
-        items = itemService.getAllItems(perPage, sortBy, sortDirection);
+        items = itemService.getAllItems(indexPage, perPage, sortBy, sortDirection);
         PageResponse<ItemShowDTO> response = new PageResponse<>(items, new ItemShowDTO[0]);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

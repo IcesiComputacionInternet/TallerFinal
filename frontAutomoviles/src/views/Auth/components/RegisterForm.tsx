@@ -9,7 +9,11 @@ import {faEnvelope,
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { register } from '../../../services/register';
 
-const Register = () => {
+interface Props {
+    setViewLogin: () => void;
+}
+
+const Register = ({setViewLogin} : Props) => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
@@ -26,26 +30,19 @@ const Register = () => {
 
     const handleSubmit = async (event: any) => {
         event.preventDefault();
-        if((email.trim() === '' || phone.trim() === '')){
-            handleUserCredentialBlur();
-            return;
-        }else if(password.trim() === '' || password !== confirmPassword){
-            handlePasswordBlur();
-            handleConfirmPasswordBlur();
-            return;
-        }
+       
         const userInfo = {
             firstName: firstName,
             lastName: lastName,
             email: email,
             phoneNumber: phone,
             address: address,
-            birthDate: birthDate,
             password: password,
           };
         register(userInfo).then((result) => {
             if(result){
                 console.log('Registered successfully');
+                setViewLogin();
             }
         }).catch((error) => {
             console.log(error);

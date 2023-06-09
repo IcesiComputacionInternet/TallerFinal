@@ -1,10 +1,12 @@
 package co.icesi.automoviles.mapper;
 
+import co.icesi.automoviles.dto.CategoryShowDTOForItem;
 import co.icesi.automoviles.dto.EShopUserCreateDTO;
 import co.icesi.automoviles.dto.EShopUserShowDTO;
 import co.icesi.automoviles.dto.ItemShowDTO;
 import co.icesi.automoviles.dto.PurchaseOrderShowDTO;
 import co.icesi.automoviles.dto.RoleShowDTO;
+import co.icesi.automoviles.model.Category;
 import co.icesi.automoviles.model.EShopUser;
 import co.icesi.automoviles.model.Item;
 import co.icesi.automoviles.model.PurchaseOrder;
@@ -16,8 +18,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-08T16:09:00-0500",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Amazon.com Inc.)"
+    date = "2023-06-08T18:09:05-0500",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Oracle Corporation)"
 )
 @Component
 public class EShopUserMapperImpl implements EShopUserMapper {
@@ -109,6 +111,20 @@ public class EShopUserMapperImpl implements EShopUserMapper {
         return roleShowDTO.build();
     }
 
+    protected CategoryShowDTOForItem categoryToCategoryShowDTOForItem(Category category) {
+        if ( category == null ) {
+            return null;
+        }
+
+        CategoryShowDTOForItem.CategoryShowDTOForItemBuilder categoryShowDTOForItem = CategoryShowDTOForItem.builder();
+
+        categoryShowDTOForItem.categoryId( category.getCategoryId() );
+        categoryShowDTOForItem.name( category.getName() );
+        categoryShowDTOForItem.description( category.getDescription() );
+
+        return categoryShowDTOForItem.build();
+    }
+
     protected ItemShowDTO itemToItemShowDTO(Item item) {
         if ( item == null ) {
             return null;
@@ -121,6 +137,7 @@ public class EShopUserMapperImpl implements EShopUserMapper {
         itemShowDTO.name( item.getName() );
         itemShowDTO.price( item.getPrice() );
         itemShowDTO.imageUrl( item.getImageUrl() );
+        itemShowDTO.category( categoryToCategoryShowDTOForItem( item.getCategory() ) );
 
         return itemShowDTO.build();
     }

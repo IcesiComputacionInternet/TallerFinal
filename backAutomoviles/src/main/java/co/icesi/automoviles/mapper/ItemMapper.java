@@ -9,6 +9,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ItemMapper {
     Item fromItemCreateDTOToItem(ItemCreateDTO itemCreateDTO);
-    @Mapping(target = "categoryShowDTOForItem", ignore = true)
+    @Mapping(target = "category", ignore = true)
     ItemShowDTO fromItemToItemShowDTO(Item item);
 }

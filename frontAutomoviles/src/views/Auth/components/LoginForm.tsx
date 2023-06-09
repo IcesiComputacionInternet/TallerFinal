@@ -24,7 +24,7 @@ const Login = ({setLogin}: Props) => {
         await login(emailOrPhone, password).then((result) => {
             if(result){
                 setLogin();
-                navigation("/home");
+                navigation("/");
             }
         });
     };

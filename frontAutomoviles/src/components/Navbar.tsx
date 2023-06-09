@@ -1,7 +1,8 @@
 import { faUser,
         faHouse,
         faCartShopping,
-        faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+        faRightFromBracket,
+        faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const logOut = () => {
@@ -59,6 +60,23 @@ const Cart = () => {
     )
 }
 
+const AuthView = () => {
+    return (
+        <li>
+            <a href="/login" className="nav-link text-white">
+                <ul className="list-inline">
+                    <li className="list-inline-item">
+                        <FontAwesomeIcon icon={faRightToBracket}/>
+                    </li>
+                    <li className="list-inline-item">
+                        Log In
+                    </li>
+                </ul>
+            </a>
+        </li>
+    )
+}
+
 const LogOut = () => {
     return(
         <li onClick={logOut}>
@@ -76,7 +94,19 @@ const LogOut = () => {
     )
 }
 
-function Navbar() {
+interface Props {
+    isLoggedIn: boolean;
+}
+
+function Navbar({isLoggedIn}: Props) {
+    const menuItems = []
+
+    if(!isLoggedIn){
+        menuItems.push(<AuthView />)
+    }else{
+        menuItems.push(<LogOut />)
+    }
+        
     return (
         <header>
             <div className="px-3 py-2 bg-dark text-white">
@@ -86,10 +116,7 @@ function Navbar() {
                             eShop
                         </a>
                         <ul className="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-                            <Profile />
-                            <Home />
-                            <Cart />
-                            <LogOut />
+                            {menuItems}
                         </ul>
                     </div>
                 </div>

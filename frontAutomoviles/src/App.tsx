@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      {isLoggedIn ? <Navbar />  : <></>}
+      <Navbar isLoggedIn={isLoggedIn}/>
       <BrowserRouter>
         <Routes>
           <Route
@@ -30,8 +30,8 @@ function App() {
             element={<AuthView setLogin={logIn}/>}
           />
           <Route 
-            path='/home' 
-            element={isLoggedIn ? <Home /> : <Navigate to='/login' />} 
+            path='/' 
+            element={<Home />} 
           />
           <Route 
             path='/*' 
