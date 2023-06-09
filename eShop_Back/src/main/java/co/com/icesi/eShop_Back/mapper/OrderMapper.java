@@ -12,7 +12,7 @@ public interface OrderMapper {
     @Mapping(target = "user", source = "user",ignore=true)
     @Mapping(target = "items", source = "items",ignore=true)
     Order orderDTOToOrder(RequestOrderDTO order);
-
+    @Mapping(target = "user", source = "user",ignore=true)
     @Mapping(target = "items", source = "items",ignore=true)
     ResponseOrderDTO orderToOrderDTO(Order order);
 }
