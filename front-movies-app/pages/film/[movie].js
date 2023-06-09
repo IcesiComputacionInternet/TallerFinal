@@ -215,7 +215,7 @@ const movie = () => {
             }}
           >
             <h2>{movie.name}</h2>
-            <h4>Category: {movie.categoryName}</h4>
+            <h4>Category: Accion{/*movie.categoryName*/}</h4>
             <h4>Ranking: {movie.pgRating}</h4>
             <p>{movie.description}</p>
           </div>
