@@ -13,6 +13,7 @@ import AdminOrders from "./pages/admin/Orders";
 import CreateRoles from "./pages/admin/CreateRole";
 import AdminRoles from "./pages/admin/Roles";
 import CreateItems from "./components/CreateItems";
+import Orders from "./components/Orders";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
@@ -27,29 +28,33 @@ function App() {
 
   const registered = () => true;
 
-  return(
-      <BrowserRouter>
-          <Routes>
-              <Route path="/login" element={<Login setLogin={logIn}/>}></Route>
-              <Route
-                  path="/"
-                  element={<MainHome />}
-              ></Route>
-              <Route path="/register" element={<Register onRegistrationComplete={registered}/>}>
-              </Route>
-              <Route path="/home-shop" element={isLoggedIn ? <ShopHome /> : <Navigate to="/login" />} />
-              <Route path="/*" element={<NotFound/>}>
-              </Route>
-              <Route path="/admin/home" element={<HomeAdmin/>}></Route>
-              <Route path="/admin/users" element={<AdminUsers/>}></Route>
-              <Route path="/admin/items" element={<AdminItems/>}></Route>
-              <Route path="/admin/orders" element={<AdminOrders/>}></Route>
-              <Route path="/admin/roles" element={<AdminRoles/>}></Route>
-              <Route path="/admin/users/create" element={<CreateUsers/>}></Route>
-              <Route path="/admin/roles/create" element={<CreateRoles/>}></Route>
-              <Route path="/createitems" element={<CreateItems/>}></Route>
-          </Routes>
-      </BrowserRouter>
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login setLogin={logIn} />} />
+        <Route path="/" element={<MainHome />} />
+        <Route
+          path="/register"
+          element={<Register onRegistrationComplete={registered} />}
+        />
+        <Route
+          path="/home-shop"
+          element={isLoggedIn ? <ShopHome /> : <Navigate to="/login" />}
+        />
+        <Route path="/*" element={<NotFound />} />
+        <Route path="/admin/home" element={<HomeAdmin />} />
+        <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/admin/items" element={<AdminItems />} />
+        <Route path="/admin/orders" element={<AdminOrders />} />
+        <Route path="/admin/roles" element={<AdminRoles />} />
+        <Route path="/admin/users/create" element={<CreateUsers />} />
+        <Route path="/admin/roles/create" element={<CreateRoles />} />
+        <Route path="/createitems" element={<CreateItems />} />
+        {isLoggedIn && (
+          <Route path="/orders" element={<Orders />} />
+        )}
+      </Routes>
+    </BrowserRouter>
   );
 }
 
