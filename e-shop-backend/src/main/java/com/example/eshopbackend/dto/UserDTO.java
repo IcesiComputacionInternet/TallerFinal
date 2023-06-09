@@ -27,6 +27,7 @@ public class UserDTO {
 
     @NotBlank
     private String password;
+    @NotNull
     private String phoneNumber;
     private String address;
     private LocalDateTime birthDate;

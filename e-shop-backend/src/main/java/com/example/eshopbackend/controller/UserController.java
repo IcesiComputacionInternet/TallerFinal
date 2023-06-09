@@ -27,4 +27,9 @@ public class UserController implements UserApi {
     public void deleteById(String id) {
         userService.delete(UUID.fromString(id));
     }
+
+    @Override
+    public void update(UserDTO userDTO, String id) {
+        userService.update(userDTO, UUID.fromString(id));
+    }
 }

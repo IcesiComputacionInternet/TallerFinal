@@ -17,4 +17,7 @@ public interface UserApi {
 
     @DeleteMapping("/delete/{id}")
     void deleteById(@PathVariable("id") String id);
+
+    @PostMapping("/update/{id}")
+    void update(@RequestBody @Valid UserDTO userDTO, @PathVariable("id") String id);
 }

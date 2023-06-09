@@ -28,6 +28,7 @@ public class UserService {
     //private final PasswordEncoder passwordEncoder;
 
     public UserDTO save(UserDTO userToSave){
+        // validatePhoneOrEmail(userToSave);
         //Validate email and phone are not repeated
         validatePhoneAndEmail(userToSave.getPhoneNumber(), userToSave.getEmail());
         //Validate role exists
@@ -43,6 +44,12 @@ public class UserService {
 
         return userMapper.fromUser(userRepository.save(user));
     }
+
+    /*private void validatePhoneOrEmail(UserDTO userToSave) {
+        if(userToSave.getEmail().isBlank() && userToSave.getPhoneNumber().isBlank()){
+            throw new RuntimeException("For creating an user you need at least either email or phoneNumber");
+        }
+    }*/
 
     public void delete(UUID id){
         userRepository.deleteById(id);
@@ -84,5 +91,11 @@ public class UserService {
 
     private boolean validateEmail(String email) {
         return userRepository.findByEmail(email).isPresent();
+    }
+
+    public void update(UserDTO userDTO, UUID id) {
+        User newUser = userMapper.fromUserDTO(userDTO);
+        newUser.setUserId(id);
+        userRepository.save(newUser);
     }
 }
