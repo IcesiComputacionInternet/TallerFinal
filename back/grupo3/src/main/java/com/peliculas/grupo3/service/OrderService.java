@@ -164,7 +164,7 @@ public class OrderService {
 
         order.getMovies().remove(movie);
         order.setTotal(order.getTotal()-movie.getPrice());
-
+        orderRepository.save(order);
         return orderMapper.fromOrder(order);
     }
 

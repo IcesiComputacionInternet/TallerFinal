@@ -11,11 +11,9 @@ export default function orders() {
 
     const urlOrder = "http://localhost:3000/orders/order/";
 
-    const [categories, setCategories] = useState([]);
     const [orders, setOrders] = useState([]);
 
     const [isLoading, setIsLoading] = useState(true);
-    const [isLoadingCategories, setIsLoadingCategories] = useState(true);
 
     const [current, setCurrent] = useState([]);
     const [isLoadingCurrent, setIsLoadingCurrent] = useState(true);
@@ -23,7 +21,6 @@ export default function orders() {
     useEffect(() => {
         if (router.query.email) {
           getOrders(router.query.email)
-          getCategories()
           getCurrentUser()
         }
       }, [router.query.email]);
@@ -72,39 +69,13 @@ export default function orders() {
         }
       }
 
-      async function getCategories() {
-        try {
-          const {data} = await axios.get("http://localhost:8080/categories/all",
-          {
-              headers: {
-                  "Access-Control-Allow-Origin": "http://localhost:8080",
-                  "MediaType": "application/json",
-                  "Authorization": "Bearer " + localStorage.getItem('jwt')
-              }
-      
-          })
-    
-          let res = {data}
-          console.log(res)
-          setCategories(res)
-          setIsLoadingCategories(false)
-    
-        } catch (err) {
-          console.error("Error fetching movies:", err);
-        }
-      }
-
       const handleAddOrder = () => {
         router.push("/orders/newOrder")
       }
 
     return(
         <div>
-            {isLoadingCategories || isLoadingCurrent ? (
-                <h1>Loading...</h1>
-            ) : (
-                <Navigation user={current.data} categories={categories}/>
-            )}
+            <Navigation/>
 
             <div className="text-center">
                 {isLoadingCurrent ? (
@@ -123,7 +94,7 @@ export default function orders() {
                         <ul className="list-group">
                             {
                             orders.data.map((order) => (
-                                <a href = {urlOrder + order.orderNumber} class="list-group-item list-group-item-action">
+                                <a href = {urlOrder + order.orderNumber} className="list-group-item list-group-item-action">
                                 <div className="d-flex w-100 justify-content-between">
                                   <h5 className="mb-1">{order.orderNumber}</h5>
                                   <small className="text-muted">{order.status}</small>

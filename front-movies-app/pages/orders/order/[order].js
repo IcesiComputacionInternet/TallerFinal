@@ -9,7 +9,6 @@ export default function orderDetails() {
 
     const router = useRouter();
 
-    const [categories, setCategories] = useState([]);
     const [order, setOrder] = useState({
         orderNumber: "",
         movies: [],
@@ -18,7 +17,6 @@ export default function orderDetails() {
     });
 
     const [isLoading, setIsLoading] = useState(true);
-    const [isLoadingCategories, setIsLoadingCategories] = useState(true);
 
     const [current, setCurrent] = useState([]);
     const [isLoadingCurrent, setIsLoadingCurrent] = useState(true);
@@ -53,28 +51,6 @@ export default function orderDetails() {
         }
       }
 
-      async function getCategories() {
-        try {
-          const {data} = await axios.get("http://localhost:8080/categories/all",
-          {
-              headers: {
-                  "Access-Control-Allow-Origin": "http://localhost:8080",
-                  "MediaType": "application/json",
-                  "Authorization": "Bearer " + localStorage.getItem('jwt')
-              }
-      
-          })
-    
-          let res = {data}
-          console.log(res)
-          setCategories(res)
-          setIsLoadingCategories(false)
-    
-        } catch (err) {
-          console.error("Error fetching movies:", err);
-        }
-      }
-
 
       async function getOrders(order) {
         try {
@@ -102,11 +78,7 @@ export default function orderDetails() {
 
       return(
         <div className="text-center">
-            {isLoadingCategories || isLoadingCurrent ? (
-                <h1>Loading...</h1>
-            ) : (
-                <Navigation user={current.data} categories={categories}/>
-            )}
+            <Navigation/>
             <div>
               {isLoadingCurrent || isLoading ? (
                       <h1>Loading...</h1>

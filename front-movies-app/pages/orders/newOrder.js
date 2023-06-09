@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios'
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
+import Navigation from '../../components/Navigation'
 
 export default function newOrder() {
     const router = useRouter()
@@ -63,6 +64,8 @@ export default function newOrder() {
     }
 
     return (
+      <>
+        <Navigation/>
         <Container maxWidth="sm" style={{ margin: 'auto', marginTop: '25vh' }}>
       <div style={{ border: '1px solid #9E9E9E', borderRadius: '25px', textAlign: 'center', padding: '2em' }}>
         <h2>Crear nueva orden</h2>
@@ -82,5 +85,6 @@ export default function newOrder() {
         </form>
       </div>
     </Container>
+      </>
     )
 }
