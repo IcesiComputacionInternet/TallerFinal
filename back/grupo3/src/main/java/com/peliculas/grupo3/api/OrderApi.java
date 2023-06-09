@@ -31,6 +31,6 @@ public interface OrderApi {
     List<OrderDTO> getUserOrders(@PathVariable String email);
 
     @PostMapping("/changeStatus")
-    OrderDTO changeStatus(@RequestBody String number, String status);
+    OrderDTO changeStatus(@RequestBody OrderTargetDTO targetDTO);
 
 }

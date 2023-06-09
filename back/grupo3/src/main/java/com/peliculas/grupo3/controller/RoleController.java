@@ -23,7 +23,7 @@ public class RoleController implements RoleApi {
     public List<RoleDTO> getAllRoles() {
         return roleService.findAll();
     }
-    //TODO implementar metodos de la api
+
 
 
 }

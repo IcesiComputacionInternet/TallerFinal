@@ -12,7 +12,6 @@ import java.util.List;
 public interface RoleApi {
     String BASE_ROLE_URL = "/roles";
 
-    //TODO crear los metodos para el crud de roles
 
     @PostMapping("/")
     RoleDTO createRole(@RequestBody RoleDTO roleDTO);

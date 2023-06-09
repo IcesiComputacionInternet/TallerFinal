@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 public class UserController implements UserApi {
-    //TODO implementar metodos de la api
 
     private final UserService userService;
 

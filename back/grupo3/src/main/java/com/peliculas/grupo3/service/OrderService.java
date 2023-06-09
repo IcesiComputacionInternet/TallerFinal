@@ -135,15 +135,15 @@ public class OrderService {
         return user.getMovieOrders().stream().map(orderMapper::fromOrder).toList();
     }
 
-    public OrderDTO changeStatus(String number, String status){
-        MovieOrder order = orderRepository.findByOrderNumber(number).orElseThrow(
+    public OrderDTO changeStatus(OrderTargetDTO targetDTO){
+        MovieOrder order = orderRepository.findByOrderNumber(targetDTO.getOrdernumber()).orElseThrow(
                 ()-> new RuntimeException("No existe una orden con este numero") );
 
-        if(status.equalsIgnoreCase("cancelada")
-                || status.equalsIgnoreCase("en proceso")
-                || status.equalsIgnoreCase("confirmada")
-                || status.equalsIgnoreCase("terminada")){
-            order.setStatus(status);
+        if(targetDTO.getMovieName().equalsIgnoreCase("cancelada")
+                || targetDTO.getMovieName().equalsIgnoreCase("en proceso")
+                || targetDTO.getMovieName().equalsIgnoreCase("confirmada")
+                || targetDTO.getMovieName().equalsIgnoreCase("terminada")){
+            order.setStatus(targetDTO.getMovieName());
         }else{
             throw new RuntimeException("El estado de la orden no es valido");
         }

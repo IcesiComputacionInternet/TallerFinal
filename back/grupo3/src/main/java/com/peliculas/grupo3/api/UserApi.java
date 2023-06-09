@@ -12,8 +12,6 @@ import static com.peliculas.grupo3.api.UserApi.BASE_USER_URL;
 public interface UserApi {
     String BASE_USER_URL = "/users";
 
-    //TODO crear los metodos para el crud de usuarios
-
 
     @PostMapping("/")
     UserDTO createUser(@Valid @RequestBody UserDTO userDTO);
