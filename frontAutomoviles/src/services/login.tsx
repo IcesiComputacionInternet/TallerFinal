@@ -18,6 +18,7 @@ export const login = async (user: string, password: string) => {
     );
     if(data.token){
         localStorage.setItem("jwt", data.token);
+        localStorage.setItem("role", data.role);
         return true;
     }else{
         return false;

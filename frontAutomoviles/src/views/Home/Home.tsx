@@ -1,9 +1,45 @@
-function Home () {
-  return (
-    <div>
-      <h1>Home</h1>
-    </div>
-  )
+import { useEffect, useState } from "react";
+import { getItemsPage } from "../../services/items";
+import Item from "./components/Item";
+import Pagination from "./components/Pagination";
+
+interface Props {
+  isLogged: boolean;
 }
+
+function Home ({isLogged}: Props) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    getItemsPage(currentPage).then((result) => {
+      setTotalPages(result.totalPages);
+      setItems(result.items);
+    });
+  }, [currentPage]);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  return (
+    <div className="container">
+      <div className="d-flex flex-column align-items-center">
+        <h1 className="text-center">Productos</h1>
+          {items.map((item: any) => (
+            <div key={item.id}>
+              <Item item={item} isLogged={isLogged} />
+            </div>
+          ))}
+      </div>
+      <Pagination 
+        totalPages={totalPages} 
+        currentPage={currentPage}
+        handlePageChange={handlePageChange}
+      />
+    </div>
+  );
+};
 
 export default Home;

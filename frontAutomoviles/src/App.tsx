@@ -31,7 +31,7 @@ function App() {
           />
           <Route 
             path='/' 
-            element={<Home />} 
+            element={<Home isLogged={isLoggedIn}/>} 
           />
           <Route 
             path='/*' 
