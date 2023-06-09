@@ -9,11 +9,23 @@ function HomeAdmin (){
 
   const navigation : NavigateFunction = useNavigate();
 
+  const [currentUser, setCurrentUser] = useState("");
+
   const [orders, setOrders] = useState([]);
   const [users, setUsers] = useState([]);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
+
+    if(localStorage.getItem("jwt")){
+      const user = localStorage.getItem("currentRole");
+
+      if(user){
+        setCurrentUser(user);
+      }
+
+    }
+
     async function getData() {
 
       const resultUsers = await getUsers();
@@ -44,6 +56,10 @@ function HomeAdmin (){
     event.preventDefault();
     navigation("/admin/orders");
   };
+
+  if(currentUser !== "ADMIN"){
+    navigation("/NotFound");
+  }
 
   return (
     <>

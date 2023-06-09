@@ -62,8 +62,20 @@ const Login = ({ setLogin }: Props) =>{
           const role=user.roleName
           localStorage.setItem("currentRole",role);
           
+          if(role === "ADMIN"){
+            console.log("admin")
 
-          navigation("/users/home-shop");
+              navigation("/admin/home");
+
+          }else if(role === "SHOP"){
+            console.log("shop")
+              navigation("/shop/home");
+
+          }else{
+
+            navigation("/users/home-shop");
+          }
+
         }
           
       } catch (error) {
