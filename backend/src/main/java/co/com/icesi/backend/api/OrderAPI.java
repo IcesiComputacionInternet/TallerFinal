@@ -1,8 +1,10 @@
 package co.com.icesi.backend.api;
 
 import co.com.icesi.backend.dto.request.RequestCellphoneDTO;
+import co.com.icesi.backend.dto.request.RequestChangeOrderDTO;
 import co.com.icesi.backend.dto.request.RequestNewOrderDTO;
 import co.com.icesi.backend.dto.response.ResponseCellphoneDTO;
+import co.com.icesi.backend.dto.response.ResponseOrderDTO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,12 +15,12 @@ import java.util.UUID;
 public interface OrderAPI {
     String BASE_URL_ORDER = "/orders";
 
-    ResponseCellphoneDTO createCellphone(RequestCellphoneDTO cellphoneDTO);
-
     @PostMapping("/create")
-    ResponseCellphoneDTO cOrder(@RequestBody @Valid RequestNewOrderDTO orderItemDTO);
+    ResponseOrderDTO createOrder(@RequestBody @Valid RequestNewOrderDTO orderDTO);
+    @PostMapping("/changeStatus")
+    ResponseOrderDTO changeOrderStatus(@RequestBody @Valid RequestChangeOrderDTO changeOrderDTO);
     @GetMapping("/{id}")
-    ResponseCellphoneDTO getCellphone(@PathVariable("id") UUID cellphoneId);
+    ResponseOrderDTO getOrder(@PathVariable("id") UUID orderId);
     @GetMapping("/getAccounts")
-    List<ResponseCellphoneDTO> getAllCellphones();
+    List<ResponseOrderDTO> getAllOrders();
 }

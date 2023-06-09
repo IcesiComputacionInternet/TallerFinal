@@ -5,6 +5,7 @@ import co.com.icesi.backend.Enum.UserRole;
 import co.com.icesi.backend.dto.request.RequestChangeOrderDTO;
 import co.com.icesi.backend.dto.request.RequestOrderItemDTO;
 import co.com.icesi.backend.dto.request.RequestNewOrderDTO;
+import co.com.icesi.backend.dto.request.RoleDTO;
 import co.com.icesi.backend.dto.response.ResponseCellphoneDTO;
 import co.com.icesi.backend.dto.response.ResponseOrderDTO;
 import co.com.icesi.backend.error.util.CellphoneShopExceptionBuilder;
@@ -97,5 +98,20 @@ public class OrderService {
                     "A shop user can't create orders."
             );
         }
+    }
+
+    public ResponseOrderDTO getOrder(UUID orderId){
+        return orderMapper.ToResponseOrderDTO(
+                orderRepository.findById(orderId)
+                        .orElseThrow(() -> exceptionBuilder.notFoundException(
+                                "The category with the specified name does not exists.", orderId.toString()))
+        );
+    }
+
+    public List<ResponseOrderDTO> getOrders() {
+        return orderRepository.findAll()
+                .stream()
+                .map(orderMapper::ToResponseOrderDTO)
+                .collect(Collectors.toList());
     }
 }

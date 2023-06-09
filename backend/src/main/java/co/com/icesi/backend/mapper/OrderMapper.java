@@ -16,4 +16,7 @@ public interface OrderMapper {
     @Mapping(target = "shopUser", ignore=true)
     @Mapping(target = "message", source = "message")
     ResponseOrderDTO fromRequestChangeToResponseOrderDTO(ShopOrder shopOrder, String message);
+
+    @Mapping(target = "shopUser", ignore=true)
+    ResponseOrderDTO ToResponseOrderDTO(ShopOrder shopOrder);
 }
