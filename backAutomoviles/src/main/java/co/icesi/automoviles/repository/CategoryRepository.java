@@ -1,5 +1,6 @@
 package co.icesi.automoviles.repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,4 +18,8 @@ public interface CategoryRepository extends JpaRepository<Category, UUID>{
     @Query( "SELECT c " +
             "FROM Category c")
     Page<Category> getAllCategories(Pageable pageable);
+
+    @Query( "SELECT c " +
+            "FROM Category c")
+    List<Category> getAllCategories();
 }

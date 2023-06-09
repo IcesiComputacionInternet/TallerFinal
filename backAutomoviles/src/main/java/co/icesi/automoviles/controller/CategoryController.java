@@ -12,6 +12,8 @@ import co.icesi.automoviles.dto.CategoryShowDTO;
 import co.icesi.automoviles.service.CategoryService;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class CategoryController implements CategoryAPI {
@@ -35,6 +37,11 @@ public class CategoryController implements CategoryAPI {
     @Override
     public CategoryShowDTO updateCategory(String categoryId, CategoryCreateDTO categoryCreateDTO) {
         return categoryService.updateCategory(categoryId, categoryCreateDTO);
+    }
+
+    @Override
+    public List<CategoryShowDTO> getAllCategories() {
+        return getAllCategories();
     }
 
 }

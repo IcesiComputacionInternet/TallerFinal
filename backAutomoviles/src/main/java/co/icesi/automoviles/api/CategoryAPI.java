@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import co.icesi.automoviles.dto.CategoryCreateDTO;
 import co.icesi.automoviles.dto.CategoryShowDTO;
 
+import java.util.List;
+
 @RequestMapping("/categories")
 public interface CategoryAPI {
     
@@ -27,4 +29,6 @@ public interface CategoryAPI {
     @PatchMapping("{categoryId}")
     public CategoryShowDTO updateCategory(@PathVariable("categoryId") String categoryId, @RequestBody CategoryCreateDTO categoryCreateDTO);
 
+    @GetMapping("list")
+    List<CategoryShowDTO> getAllCategories();
 }

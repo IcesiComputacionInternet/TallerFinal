@@ -89,4 +89,9 @@ public class CategoryService {
         }
         return true;
     }
+
+    public List<CategoryShowDTO> getAllCategories(){
+        return categoryRepository.getAllCategories().stream()
+                .map(categoryMapper::fromCategoryToCategoryShowDTO).toList();
+    }
 }

@@ -107,6 +107,10 @@ public class SecurityConfiguration {
         updateCategory.setMethod(HttpMethod.PATCH);
         managerBuilder.add(updateCategory, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 
+        MvcRequestMatcher getAllItemsInAList = new MvcRequestMatcher(introspector, CategoryAPI.ROOT_PATH+"/list");
+        getAllItemsInAList.setMethod(HttpMethod.GET);
+        managerBuilder.add(getAllItemsInAList, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_SHOP", "SCOPE_USER"));
+
         MvcRequestMatcher createItem = new MvcRequestMatcher(introspector, ItemAPI.ROOT_PATH);
         createItem.setMethod(HttpMethod.POST);
         managerBuilder.add(createItem, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_SHOP"));
@@ -151,7 +155,7 @@ public class SecurityConfiguration {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
         configuration.setAllowedHeaders(List.of("*"));
         return new CorsConfigurationSource() {
             @Override
