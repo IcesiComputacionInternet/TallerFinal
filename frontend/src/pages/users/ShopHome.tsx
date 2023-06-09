@@ -6,7 +6,6 @@ import Logout from "../../components/Logout";
 import "../../ShopHome.css";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import ReactModal from "react-modal";
-import { Link } from "react-router-dom";
 
 interface Item {
   itemId: string;
@@ -189,7 +188,12 @@ const ShopHome = () => {
           <Button variant="btn btn-dark" onClick={handleCloseCartModal}>
             Cerrar
           </Button>
-          <Button variant="danger" onClick={() => setCartItems([])} disabled={cartItems.length === 0}>
+          <Button variant="danger" onClick={() => {
+            if (window.confirm("¿Estás seguro de vaciar el carrito?")) {
+              setCartItems([]);
+              alert("Carrito vaciado con éxito");
+            }
+          }} disabled={cartItems.length === 0}>
             Vaciar Carrito
           </Button>
         </div>
