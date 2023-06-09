@@ -8,7 +8,7 @@ const Items = () => {
       <br />
       <br />
       <br />
-      <CrudApi type="PRODUCT" />;
+      <CrudApi type="PRODUCTS" />;
     </div>
   );
 };

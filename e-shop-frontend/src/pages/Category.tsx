@@ -8,7 +8,7 @@ const Category = () => {
       <br />
       <br />
       <br />
-      <CrudApi type="CATEGORY" />;
+      <CrudApi type="CATEGORIES" />;
     </div>
   );
 };
