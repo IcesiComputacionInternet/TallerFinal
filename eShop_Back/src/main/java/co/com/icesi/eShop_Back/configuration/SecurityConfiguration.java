@@ -92,7 +92,7 @@ public class SecurityConfiguration {
 
         RequestMatcher permitAll = new AndRequestMatcher(
                 new MvcRequestMatcher(introspector, "/auth"),
-                new MvcRequestMatcher(introspector, "/api/users/add")
+                new MvcRequestMatcher(introspector, "/register")
         );
 
         System.out.println(permitAll);

@@ -48,10 +48,22 @@ public class EShopBackApplication {
 				.description("Client")
 				.build();
 		////////////////////////////////////////
-		UserPermission all = UserPermission.builder()
+		UserPermission users = UserPermission.builder()
 				.permissionId(UUID.randomUUID())
-				.key("ALL")
-				.path(BASE_URL + "/**")
+				.key("USERS")
+				.path(BASE_URL + "/users/**")
+				.roles(List.of(ADMIN))
+				.build();
+		UserPermission roles = UserPermission.builder()
+				.permissionId(UUID.randomUUID())
+				.key("USERS")
+				.path(BASE_URL + "/roles/**")
+				.roles(List.of(ADMIN))
+				.build();
+		UserPermission categories = UserPermission.builder()
+				.permissionId(UUID.randomUUID())
+				.key("USERS")
+				.path(BASE_URL + "/categories/**")
 				.roles(List.of(ADMIN))
 				.build();
 		UserPermission orders = UserPermission.builder()
@@ -86,7 +98,9 @@ public class EShopBackApplication {
 				.role(SHOP)
 				.build();
 		////////////////////////////////////////
-		permissionRepository.save(all);
+		permissionRepository.save(users);
+		permissionRepository.save(roles);
+		permissionRepository.save(categories);
 		permissionRepository.save(orders);
 		permissionRepository.save(items);
 		permissionRepository.save(getItems);
