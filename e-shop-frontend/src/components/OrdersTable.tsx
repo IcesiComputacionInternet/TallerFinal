@@ -34,26 +34,17 @@ const OrdersTable = ({ orders }: Order) => {
                       <td>{order.user}</td>
                       <td>{order.status}</td>
                       <td>
-                        <button
-                          className="btn btn-outline-primary"
-                          onClick={() => {}}
-                        >
+                        <button className="btn btn-outline-primary">
                           Pendiente
                         </button>
                       </td>
                       <td>
-                        <button
-                          className="btn btn-outline-primary"
-                          onClick={() => {}}
-                        >
+                        <button className="btn btn-outline-primary">
                           En curso
                         </button>
                       </td>
                       <td>
-                        <button
-                          className="btn btn-outline-primary"
-                          onClick={() => {}}
-                        >
+                        <button className="btn btn-outline-primary">
                           Terminada
                         </button>
                       </td>

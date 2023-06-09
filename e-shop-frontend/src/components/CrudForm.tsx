@@ -8,9 +8,6 @@ interface initialForm {
   type: string;
 }
 
-interface typeForm {
-  type: string;
-}
 const data = {
   name: "",
   constellation: "",
@@ -68,7 +65,7 @@ const CrudForm = ({
   return (
     <div>
       {!dataToEdit ? <h3>Agregar</h3> : <h3>Editar</h3>}
-      {type === "ORDER" && (
+      {type === "ORDERS" && (
         <form className="row">
           <div className="mb-3">
             <label htmlFor="email" className="form-label">
@@ -96,7 +93,7 @@ const CrudForm = ({
           </button>
         </form>
       )}
-      {type === "PRODUCT" && (
+      {type === "PRODUCTS" && (
         <form>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">
@@ -169,7 +166,7 @@ const CrudForm = ({
           </button>
         </form>
       )}
-      {type === "USER" && (
+      {type === "USERS" && (
         <form>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">
@@ -260,7 +257,7 @@ const CrudForm = ({
           </button>
         </form>
       )}
-      {type === "CATEGORY" && (
+      {type === "CATEGORIES" && (
         <form>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">

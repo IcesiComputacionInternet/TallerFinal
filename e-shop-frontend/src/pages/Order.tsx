@@ -8,7 +8,7 @@ const Order = () => {
       <br />
       <br />
       <br />
-      <CrudApi type="ORDER" />;
+      <CrudApi type="ORDERS" />;
     </div>
   );
 };
