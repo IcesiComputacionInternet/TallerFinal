@@ -34,9 +34,11 @@ public class PurchaseOrderController implements PurchaseOrderAPI {
 
     @Override
     public ResponseEntity<PageResponse<PurchaseOrderShowDTO>> getAllPurchaseOrder(Integer page, Integer perPage, String sortBy, String sortDirection) {
+        String currentUserId = ShopSecurityContext.getCurrentUserId();
+        String currentRole = ShopSecurityContext.getCurrentUserRole();
         int indexPage = page - 1;
         Page<PurchaseOrderShowDTO> purchaseOrderShowDTOS;
-        purchaseOrderShowDTOS = purchaseOrderService.getAllPurchaseOrders(indexPage, perPage, sortBy, sortDirection);
+        purchaseOrderShowDTOS = purchaseOrderService.getAllPurchaseOrders(indexPage, perPage, sortBy, sortDirection, currentUserId, currentRole);
         PageResponse<PurchaseOrderShowDTO> response = new PageResponse<>(purchaseOrderShowDTOS, new PurchaseOrderShowDTO[0]);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

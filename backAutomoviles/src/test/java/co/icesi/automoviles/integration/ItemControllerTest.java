@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Optional;
-import java.util.UUID;
 
 import static co.icesi.automoviles.utils.DTOBuilder.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -71,7 +70,7 @@ public class ItemControllerTest {
     }
 
     @Test
-    public void  testEndpointForItemCreationWithAdminCredentials() throws Exception {
+    public void testEndpointForItemCreationWithAdminCredentials() throws Exception {
         loginAsAdmin();
         ItemCreateDTO itemCreateDTO = defaultItemCreateDTO();
         var result = mockMvc.perform(MockMvcRequestBuilders.post(ItemAPI.ROOT_PATH)
