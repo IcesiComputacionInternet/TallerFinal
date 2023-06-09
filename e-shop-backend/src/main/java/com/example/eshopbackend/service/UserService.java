@@ -8,6 +8,7 @@ import com.example.eshopbackend.repository.RoleRepository;
 import com.example.eshopbackend.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -24,17 +25,31 @@ public class UserService {
 
     private final RoleRepository roleRepository;
 
-    public User save(UserDTO userToSave){
+    private final PasswordEncoder passwordEncoder;
+
+    public void save(UserDTO userToSave){
         //Validate email and phone are not repeated
         validatePhoneAndEmail(userToSave.getPhoneNumber(), userToSave.getEmail());
         //Validate role exists
         validateRole(userToSave.getRole());
 
+        //Encode password from DTO
+        userToSave.setPassword(passwordEncoder.encode(userToSave.getPassword()));
         //create user
         User user = userMapper.fromUserDTO(userToSave);
         user.setUserId(UUID.randomUUID());
 
-        return userRepository.save(user);
+        userRepository.save(user);
+    }
+
+    public void delete(UUID id){
+        userRepository.deleteById(id);
+    }
+
+    public UserDTO get(UUID id){
+        User user = userRepository.findById(id).orElseThrow(
+            () -> new RuntimeException("The user must have a role"));
+        return userMapper.fromUser(user);
     }
 
     private void validateRole(RoleDTO role) {

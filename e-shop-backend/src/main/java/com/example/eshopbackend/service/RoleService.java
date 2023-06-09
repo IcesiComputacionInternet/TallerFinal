@@ -19,7 +19,7 @@ public class RoleService {
 
     private final RoleMapper roleMapper;
 
-    public Role save(RoleDTO roleToSave){
+    public void save(RoleDTO roleToSave){
         //Validate if roleName already exists. Throw error otherwise
         roleRepository.findByRoleName(roleToSave.getRoleName()).orElseThrow(
             () -> new RuntimeException("Error: The role name '" + roleToSave.getRoleName() + "' is already taken."));
@@ -28,7 +28,7 @@ public class RoleService {
         //Generate ID
         role.setRoleId(UUID.randomUUID());
 
-        return roleRepository.save(role);
+        roleRepository.save(role);
     }
 
 
