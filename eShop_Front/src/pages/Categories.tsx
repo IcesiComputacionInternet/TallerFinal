@@ -5,15 +5,16 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import '../styles/categories.css';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 
-const baseURL = "http://localhost:8080/api/categories";
+const baseUrl = "http://localhost:8080/api/categories";
 
 interface Category {
+    id: number;
     name: string;
     description: string;
-    imageURL: string;
+    imageUrl: string;
 }
 
-const Categories = () => {
+export default function Categories() {
     const [categories, setCategories] = useState<Category[]>([]); // [state, function
     const navigation: NavigateFunction = useNavigate();
     const token = localStorage.getItem("jwt");
@@ -22,25 +23,28 @@ const Categories = () => {
         navigation("/orders");
     };
 
+    
     useEffect(() => {
         fetchCategories();
     }, []);
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get(baseURL + "/get/all", 
+            const response = await axios.get(baseUrl + "/get/all", 
             {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + token,
+                    "Access-Control-Allow-Origin": baseUrl,
                 }
             });
             console.log("Categories fetched: ", response.data);
             const mappedCategories = response.data.map((
-                { name, description, imageURL}: { name: string, description: number, imageURL: string,}) => 
+                { name, description, imageUrl}: { name: string, description: number, imageUrl: string,}) => 
                 ({
                     name,
                     description,
-                    imageURL,
+                    imageUrl,
                 }
                 ));
             setCategories(mappedCategories);
@@ -48,6 +52,37 @@ const Categories = () => {
             console.error("Error fetching the categories: ", error);
         }
     };
+    
+    const gridColumns = Math.ceil(categories.length / 2); // Divide the number of categories into 2 columns. If the number is odd, add an extra column with ceiling function.
+
+    let testCategories = [
+        {
+            id: 1,
+            name: "Portatiles",
+            description: "Portatiles",
+            imageUrl: "src/resources/images/portatiles.webp",
+        },
+        {
+            id: 2,
+            name: "Computadores de escritorio",
+            description: "Computadores de escritorio",
+            imageUrl: "src/resources/images/desktop.webp",
+        },
+        {
+            id: 3,
+            name: "All-in-one",
+            description: "All-in-one",
+            imageUrl: "src/resources/images/all-in-one.png",
+        },
+        {
+            id: 4,
+            name: "Gaming",
+            description: "Gaming",
+            imageUrl: "src/resources/images/gaming.webp",
+        },
+    ];
+
+    /*setCategories(testCategories);*/
 
     return (
         <div className="containerGrid">    
@@ -55,67 +90,24 @@ const Categories = () => {
                 CATEGORIES
             </Typography>
             <Grid container spacing={2}>
-                <Grid item xs={12} sm={6} md={6}>
-                    <Card className="cardCategory" onClick={handleClick}>
-                        <CardMedia
-                            component="img"
-                            height= "auto"
-                            image="src/resources/images/portatiles.webp"
-                            alt="portatiles"
-                        />
-                        <CardContent className="cardContent">
-                            <Typography variant="h5" component="div">
-                                PORTATILES
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={6} md={6}>
-                    <Card className="cardCategory" onClick={handleClick}>
-                        <CardMedia
-                            component="img"
-                            height= "auto"
-                            image="src/resources/images/desktop.webp"
-                            alt="portatiles"
-                        />
-                        <CardContent>
-                            <Typography variant="h5" component="div">
-                                COMPUTADORES DE ESCRITORIO
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={6} md={6}>
-                    <Card className="cardCategory" onClick={handleClick}>
-                        <CardMedia
-                            component="img"
-                            height= "auto"
-                            image="src/resources/images/all-in-one.png"
-                            alt="portatiles"
-                        />
-                        <CardContent>
-                            <Typography variant="h5" component="div">
-                                ALL-IN-ONE
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={6} md={6}>
-                    <Card className="cardCategory" onClick={handleClick}>
-                        <CardMedia
-                            component="img"
-                            height="auto"
-                            image="src/resources/images/gaming.webp"
-                            alt="portatiles"
-                        />
-                        <CardContent>
-                            <Typography variant="h5" component="div">
-                                GAMING
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={12} md={12} style={{ display: 'flex', justifyContent: 'center' }}>
+                {categories.map((category) => (
+                    <Grid item xs={12} sm={6} md={12 / gridColumns} key={category.id}>
+                        <Card className="cardCategory" onClick={handleClick}>
+                            <CardMedia
+                                component="img"
+                                height= "auto"
+                                image= {category.imageUrl}
+                                alt= {category.name}
+                            />
+                            <CardContent className="cardContent">
+                                <Typography variant="h5" component="div">
+                                    {category.name}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                ))}
+                <Grid item xs={12} sm={12} md={12}>
                     <Card className="cardCategory" id="addCategory">
                         <CardContent>
                             <AddBoxIcon sx={{ fontSize: 120 }} className="addIcon"/>
@@ -129,5 +121,3 @@ const Categories = () => {
         </div>    
     );
 };
-
-export default Categories
