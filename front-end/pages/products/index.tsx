@@ -19,6 +19,7 @@ const theme = createTheme({
 
 export default function Producst(props:any){
     const [products,setProducts] = useState([]);
+    const [visible,setVisible] = useState(true);
     useEffect(() => {
         axios.get("http://localhost:9090/item/all",{
             headers: {
@@ -27,11 +28,14 @@ export default function Producst(props:any){
             }
         }).then((response) => {
             setProducts(response.data);
+            console.log(response.data);
         }).catch((error) => {
             console.log(error);
         });
     },[]);
-
+    const handleAgree = () => {
+        setVisible(false);
+    }
     const handleAddProduct = () => {
         window.location.href = "/products/newProduct";
     }
@@ -51,8 +55,15 @@ export default function Producst(props:any){
                 </div>
                 <div className={styles.itemsSection}>
                     <div className={styles.itemsList}>
+                        {visible? <ProductItem name="Product 1X" price={100} amount={10} category="Category 1" productId="1" handleAgree={handleAgree}/> : <div></div>}
                         {products.map((product:any) => {
-                            return <ProductItem name={product.name} price={product.price} amount={product.stock} category={product.category.name} productId={product.id}/>
+                            return <ProductItem 
+                            name={product.name} 
+                            price={product.price} 
+                            amount={product.stock} 
+                            category={product.category.name} 
+                            productId={product.itemId} 
+                            handleAgree={() => console.log("")}/>
                         })
                         }
                     </div>

@@ -88,10 +88,22 @@ public class EShopBackEndApplication {
 				.role(user)
 				.build();
 
+		Customer shopCustomer = Customer.builder()
+				.customerId(UUID.randomUUID())
+				.firstName("Shop")
+				.lastName("Shop")
+				.email("shop@email.com")
+				.password(encoder.encode("password"))
+				.phoneNumber("+573258691487")
+				.address("Avenida 6ta")
+				.birthday(date1)
+				.role(shop)
+				.build();
 
 		return args -> {
 			users.save(adminCustomer);
 			users.save(normalCustomer);
+			users.save(shopCustomer);
 			categories.save(category);
 		};
 

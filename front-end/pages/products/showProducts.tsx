@@ -4,7 +4,7 @@ import Filterbar from "../../components/Filterbar";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const items = [{
+const itemsExample = [{
     name: "Xiaomi TV 60\" 4K",
     price: "$1'500.000",
     handleClick: () => {

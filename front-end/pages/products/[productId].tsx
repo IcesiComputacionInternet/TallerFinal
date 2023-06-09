@@ -3,11 +3,49 @@ import Divider from "@mui/material/Divider";
 import { Button, TextField } from "@mui/material";
 import Autocomplete from '@mui/material/Autocomplete';
 import axios from "axios";
-import { useRef } from "react";
-const options = [{ label: 'The Shawshank Redemption', year: 1994 },{label:'Hey',year:1886} ];
+import { useRef,useEffect,useState } from "react";
+
+
 
 
 export default function ProductItem(props:any) {
+    const [product,setProduct] = useState();
+    const [categories,setCategories] = useState();
+    const [productLoaded,setProductLoaded] = useState(false);
+    const [categoriesLoaded,setCategoriesLoaded] = useState(false);
+    useEffect(() => {
+        axios.get(`http://localhost:9090/item/itemId/${props.productId}`,{
+            headers:{
+                "Authorization":"Bearer " + localStorage.getItem("token"),
+                "Content-Type":"application/json"
+            }
+        }).then((response) => {
+            console.log(response.data);
+            setProduct(response.data);
+            setProductLoaded(true);
+        }).catch((error) => {
+            console.log(error);
+        })
+    },[])
+
+    useEffect(() => {
+        axios.get(`http://localhost:9090/category/all`,{
+            headers:{
+                "Authorization":"Bearer " + localStorage.getItem("token"),
+                "Content-Type":"application/json"
+            }
+        }).then((response) => {
+            console.log(response.data);
+            setCategories(response.data.map((category:any) => {
+                return {label: category.name, id: category.id};
+            }));
+            
+            setCategoriesLoaded(true);
+        }).catch((error) => {
+            console.log(error);
+        })
+    },[])
+
     const nameRef = useRef();
     const priceRef = useRef();
     const brandRef = useRef();
@@ -43,59 +81,55 @@ export default function ProductItem(props:any) {
             alert("Something went wrong, please check the information and try again.")
         });
     };
+
+    if(!productLoaded || !categoriesLoaded){
+        return <div>Loading...</div>
+    }
+    else{
     return(
-        <div className={styles.maxContainer}>
-            <div className={styles.insideContainer}>
-                <div className={styles.formSection}>
-                    <h1>Product {props.name}</h1>
-                    <Divider />
-                    <h2>Product name</h2>    
-                    <TextField id="outlined-basic" variant="outlined" size="small" value={props.name} inputRef={nameRef}/>
-                    <h2>Price</h2>
-                    <TextField id="outlined-basic" variant="outlined" size="small" value={props.price} inputRef={priceRef}/>
-                    <h2>Brand</h2>
-                    <TextField id="outlined-basic" variant="outlined" size="small" value={props.brand} inputRef={brandRef}/>
-                    <h2>Initial stock</h2>
-                    <TextField id="outlined-basic" variant="outlined" size="small" value={props.stock} inputRef={stockRef}/>
-                    <h2>Image URL</h2>
-                    <TextField id="outlined-basic" variant="outlined" size="small" inputRef={stockRef}/>
-                    <h2>Category</h2>
-                    <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        options={options}
-                        sx={{ width: 300 }}
-                        renderInput={(params) => <TextField {...params} size="small" inputRef={categoryRef} value={props.category}/>}
-                    />
-                    <h2>Description</h2>
-                    <TextField id="outlined-basic"  variant="outlined" multiline rows={3} size="small" value={props.description} inputRef={descriptionRef}/>
-                    <div className={styles.buttonsNewProduct}> 
-                        <Button variant="contained" color="success" onClick={handleSave}>Save</Button>
-                        <div style={{width:30}}></div>
-                        <Button variant="contained" color="error" onClick={handleCancel}>Cancel</Button>
+            <div className={styles.maxContainer}>
+                <div className={styles.insideContainer}>
+                    <div className={styles.formSection}>
+                        <h1>Product {props.name}</h1>
+                        <Divider />
+                        <h2>Product name</h2>    
+                        <TextField id="outlined-basic" variant="outlined" size="small" value={product.name} inputRef={nameRef}/>
+                        <h2>Price</h2>
+                        <TextField id="outlined-basic" variant="outlined" size="small" value={product.price} inputRef={priceRef}/>
+                        <h2>Brand</h2>
+                        <TextField id="outlined-basic" variant="outlined" size="small" value={product.brand} inputRef={brandRef}/>
+                        <h2>Initial stock</h2>
+                        <TextField id="outlined-basic" variant="outlined" size="small" value={product.stock} inputRef={stockRef}/>
+                        <h2>Image URL</h2>
+                        <TextField id="outlined-basic" variant="outlined" size="small" value={product.imageURL} inputRef={stockRef}/>
+                        <h2>Category</h2>
+                        <Autocomplete
+                            disablePortal
+                            id="combo-box-demo"
+                            options={categories}
+                            sx={{ width: 300 }}
+                            value={product.category.name}
+                            renderInput={(params) => <TextField {...params} size="small" inputRef={categoryRef}/>}
+                        />
+                        <h2>Description</h2>
+                        <TextField id="outlined-basic"  variant="outlined" multiline rows={3} size="small" value={product.description} inputRef={descriptionRef}/>
+                        <div className={styles.buttonsNewProduct}> 
+                            <Button variant="contained" color="success" onClick={handleSave}>Save</Button>
+                            <div style={{width:30}}></div>
+                            <Button variant="contained" color="error" onClick={handleCancel}>Cancel</Button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
+    
 }
 
-/**export async function getServerSideProps(context:any) {
-    const {data} = await axios.get("http://localhost:9090/item/"+context.query.productId,{
-        headers:{
-            "Authorization":"Bearer " + localStorage.getItem("token"),
-            "Content-Type":"application/json"
-        }
-    })
+export async function getServerSideProps(context:any) {
     return {
         props: {
-            name: data.name,
-            price: data.price,
-            category: data.category,
-            brand: data.brand,
-            stock: data.stock,
-            imageUrl: data.imageURL,
-            description: data.description
+            productId: context.params.productId,
         },
     };
-}**/
+}

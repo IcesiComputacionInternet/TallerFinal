@@ -16,6 +16,7 @@ interface CategoryItemProps {
     categoryId: String;
     name : String;
     description : String;
+    handleAgree:any;
 }
 
 
@@ -41,9 +42,6 @@ export default function CategoryItem(props: CategoryItemProps){
     }
     const handleEdit = () => {
         window.location.href = "/categories/" + props.categoryId;
-    }
-    const handleAgree = () => {
-        
     }
 
     return(
@@ -80,7 +78,7 @@ export default function CategoryItem(props: CategoryItemProps){
                 </DialogContent>
                 <DialogActions>
                 <Button onClick={handleDisagree}>Disagree</Button>
-                <Button onClick={() => console.log("")} autoFocus>
+                <Button onClick={props.handleAgree} autoFocus>
                     Agree
                 </Button>
                 </DialogActions>

@@ -56,13 +56,13 @@ export default function Product(props:any){
         }).catch((error) => {
             console.log(error);
         });
-        setOpen(true);
+        setOpen(false);
     }
     const handleDisagree = () => {
         setOpen(false);
     }
     const handleBuy = () => {
-        setOpen(false);
+        setOpen(true);
     }
 
     if(loading){
@@ -91,9 +91,12 @@ export default function Product(props:any){
                     <div className={styles.productPaymentSection}>
                         <h2>{product.name}</h2>
                         <div style={{display:"flex",justifyContent:"left",width:"calc(100%)",flexDirection:"column",flexGrow:1}}>
-                            <h3>Price: ${product.price}</h3>
-                            <h3>Remaining unities: {product.stock}</h3>
-                            <h3>Category: {product.category.name}</h3>
+                            <h3>Price:</h3>
+                            <h3 style={{fontWeight:"normal",marginTop:0}}>${product.price}</h3>
+                            <h3>Remaining unities:</h3>
+                            <h3 style={{fontWeight:"normal",marginTop:0}}>{product.stock}</h3>
+                            <h3>Category:</h3>
+                            <h3 style={{fontWeight:"normal",marginTop:0}}>{product.category.name}</h3>
                         </div>
                         <div style={{display:"flex",justifyContent:"left",width:"calc(100%)",flexDirection:"column",flexGrow:1}}>
 

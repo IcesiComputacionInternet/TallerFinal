@@ -36,7 +36,6 @@ export default function register() {
         const phoneNum = phoneNumRef.current.value;
         const address = addressRef.current.value;
         const birth = birthRef.current.value;
-        console.log(firstName + " " + lastName + " " + email + " " + password + " " + phoneNum + " " + address + " " + birth);
         axios.post("http://localhost:9090/user", {
             firstName: firstName,
             lastName: lastName,
