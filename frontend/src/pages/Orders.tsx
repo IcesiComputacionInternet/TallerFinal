@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import storeItems from "../testData/items.json"
-import { NavigateFunction, useNavigate } from "react-router-dom";
+// import React, { useEffect, useState } from "react";
+import ordersTest from "../testData/orders.json"
+// import { NavigateFunction, useNavigate } from "react-router-dom";
 
-const baseUrl = "http://localhost:8080";
 
 function Orders(){
-    const [orders, setOrders] = useState([]);
-    const navigation : NavigateFunction = useNavigate();
-
+    // const [orders, setOrders] = useState([]);
 
     // useEffect(() => {
     //     localStorage.setItem("logged_user", JSON.stringify(true));
@@ -27,7 +23,7 @@ function Orders(){
                     <h1>
                         Orders
                     </h1>
-                    {storeItems.length > 0 ? (
+                    {ordersTest.length > 0 ? (
                         <div className="table-responsive">
                             <table className="table table-bordered mx-auto mt-3 table-striped" style={{ width: "80%" }}>
                                 <thead >
@@ -40,9 +36,9 @@ function Orders(){
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {storeItems && storeItems.map((item: any, index) => (
+                                {ordersTest && ordersTest.map((order: any, index) => (
                                     <tr key={index}>
-                                        <td>{item.id}</td>
+                                        <td>{order.user}</td>
                                         <td>
                                             <select className="form-select" style={{width:"50%"}}>
                                                 <option value="IN_PROCESS">IN PROCESS</option>
@@ -50,9 +46,9 @@ function Orders(){
                                                 <option value="DELIVERED">DELIVERED</option>
                                             </select>
                                         </td>
-                                        {/*<td>{item.name}</td>*/}
-                                        {/*<td>{order.items}</td>*/}
-                                        {/*<td>{order.total}</td>*/}
+                                        <td>{order.items}</td>
+                                        <td>{order.address}</td>
+                                        <td>{order.total}</td>
 
                                     </tr>
                                 ))}

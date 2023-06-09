@@ -25,6 +25,11 @@ export function ShopNavbar() {
                         New Item
                     </Nav.Link>
                 </Nav>
+                <Nav className="me-auto">
+                    <Nav.Link href="/orders" as={NavLink} style={{fontSize:"13"}}>
+                        Orders
+                    </Nav.Link>
+                </Nav>
                 <button className="btn btn-outline-danger" type="button" onClick={handleLogOut}>Log out</button>
             </div>
         </NavbarBs>
