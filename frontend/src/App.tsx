@@ -15,6 +15,7 @@ import AdminRoles from "./pages/admin/Roles";
 import CreateItems from "./components/CreateItems";
 import Orders from "./components/Orders";
 import CreateCategories from "./pages/admin/CreateCategories";
+import AdminCategories from "./pages/admin/Categories";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
@@ -48,6 +49,7 @@ function App() {
         <Route path="/admin/items" element={<AdminItems />} />
         <Route path="/admin/orders" element={<AdminOrders />} />
         <Route path="/admin/roles" element={<AdminRoles />} />
+        <Route path="/admin/categories" element={<AdminCategories />} />
         <Route path="/admin/users/create" element={<CreateUsers />} />
         <Route path="/admin/roles/create" element={<CreateRoles />} />
         <Route path="/admin/categories/create" element={<CreateCategories />} />

@@ -23,6 +23,9 @@ function AdminNavbar (){
                   <li className="nav-item">
                     <a className="nav-link text-white" aria-current="page" href="/admin/roles">Roles</a>
                   </li>
+                  <li className="nav-item">
+                    <a className="nav-link text-white" aria-current="page" href="/admin/categories">Categorias</a>
+                  </li>
               </ul>
               <Logout />
               </div>
