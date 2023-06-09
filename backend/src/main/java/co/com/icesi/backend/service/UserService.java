@@ -49,11 +49,9 @@ public class UserService {
     }
 
     public void checkPermissionsToAssignRole(String roleToAssign) {
-        String role = CellphoneSecurityContext.getCurrentUserRole();
-        if((roleToAssign.equals(UserRole.ADMIN.getRole()) && role.equals(UserRole.USER.getRole()))
-                || (role.equals(UserRole.SHOP.getRole()))){
+        if(roleToAssign.equals(UserRole.ADMIN.getRole()) || roleToAssign.equals(UserRole.SHOP.getRole())){
             throw exceptionBuilder.noPermissionException(
-                    "A normal user or a bank user can't create users of type ADMIN."
+                    "A normal user can't create users of type ADMIN or SHOP."
             );
         }
     }
