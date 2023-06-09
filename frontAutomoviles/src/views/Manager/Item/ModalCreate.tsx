@@ -1,26 +1,34 @@
 import { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { postItem } from "../../../services/items";
+import { getCategoriesList } from "../../../services/categories";
 
 interface Props {
     handleCancel: () => void;
     setInfoToast: (message: string, title: string) => void;
 }
 
+interface Category {
+    categoryId: string;
+    name: string;
+}
+
 function ModalCreate({ handleCancel, setInfoToast }: Props) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
-    const [category, setCategory] = useState(0);
-    const [categories, setCategories] = useState([]);
+    const [category, setCategory] = useState("");
+    const [categories, setCategories] = useState<Category[]>([]);
     const [imageUrl, setImageUrl] = useState("https://via.placeholder.com/300x300");
 
     useEffect(() => {
-
+        getCategoriesList().then((result) => {
+            setCategories(result);
+        });
     }, []);
 
     const handleCreate = () => {
-        postItem(name, description, price, "", imageUrl).then((result) => {
+        postItem(name, description, price, imageUrl, category).then((result) => {
             if (result) {
                 setInfoToast("Item created successfully", "Success");
                 window.location.reload();
@@ -81,11 +89,11 @@ function ModalCreate({ handleCancel, setInfoToast }: Props) {
                             className="form-control" 
                             id="category" 
                             value={category}
-                            onChange={(event) => setCategory(parseInt(event.target.value))}
+                            onChange={(event) => setCategory(event.target.value)}
                         >
-                            <option value="1">Category 1</option>
-                            <option value="2">Category 2</option>
-                            <option value="3">Category 3</option>
+                            {categories.map((ct) => (
+                                <option key={ct.categoryId} value={ct.categoryId}>{ct.name}</option>
+                            ))}
                         </select>
                     </div>
                     <div className="form-group">
@@ -117,7 +125,7 @@ function ModalCreate({ handleCancel, setInfoToast }: Props) {
                                 </div>
                                 <p className="card-text">{description}</p>
                                 <p className="card-text">Price: {price}</p>
-                                <p className="card-text">Category: {categories[category]}</p>
+                                <p className="card-text">Category: {categories.filter((ct) => ct.categoryId === category)[0]?.name}</p>
                             </div>
                         </div>
                     </div>
