@@ -303,7 +303,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testGetARoleWhenLoggedUserIsShop() throws Exception {
+    public void testGetAUserWhenLoggedUserIsShop() throws Exception {
         var resultToken = mockMvc.perform(MockMvcRequestBuilders.post("/token").content(
                                 objectMapper.writeValueAsString(new LoginDTO("kerenlopez@gmail.com", "password"))
                         )
@@ -321,7 +321,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testGetARoleWhenLoggedUserIsANormalUser() throws Exception {
+    public void testGetAUserWhenLoggedUserIsANormalUser() throws Exception {
         var resultToken = mockMvc.perform(MockMvcRequestBuilders.post("/token").content(
                                 objectMapper.writeValueAsString(new LoginDTO("luismiguel@gmail.com", "password"))
                         )
