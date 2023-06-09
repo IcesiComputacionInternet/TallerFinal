@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class E_SHOP_Error {
+public class EShopError {
 
     private BackendApplicationErrors code;
     private String message;

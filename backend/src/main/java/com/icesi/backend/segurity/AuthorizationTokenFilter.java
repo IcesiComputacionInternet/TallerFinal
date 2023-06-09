@@ -3,11 +3,11 @@ package com.icesi.backend.segurity;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.icesi.backend.error.exception.E_SHOP_Error;
-import com.icesi.backend.error.exception.E_SHOP_Exception;
+import com.icesi.backend.error.exception.EShopError;
+import com.icesi.backend.error.exception.EShopException;
 import com.icesi.backend.errorConstants.BackendApplicationErrors;
 import com.icesi.backend.models.PermissionUser;
-import com.icesi.backend.service.LoginService_Interface;
+import com.icesi.backend.service.LoginServiceInterface;
 import com.icesi.backend.service.impl.Token_Parser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -61,7 +61,7 @@ public class AuthorizationTokenFilter extends OncePerRequestFilter {
             "OPTIONS /orders"
     };
 
-    private final LoginService_Interface loginService;
+    private final LoginServiceInterface loginService;
 
 
     /**
@@ -85,15 +85,15 @@ public class AuthorizationTokenFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
             } else {
                 createUnauthorizedFilter(
-                        new E_SHOP_Exception(HttpStatus.UNAUTHORIZED,
-                                new E_SHOP_Error(BackendApplicationErrors.CODE_L_03, BackendApplicationErrors.CODE_L_03.getMessage())),
+                        new EShopException(HttpStatus.UNAUTHORIZED,
+                                new EShopError(BackendApplicationErrors.CODE_L_03, BackendApplicationErrors.CODE_L_03.getMessage())),
                         response);
             }
         } catch (JwtException e) {
             System.out.println("Error verifying JWT token: " + e.getMessage());
             createUnauthorizedFilter(
-                    new E_SHOP_Exception(HttpStatus.UNAUTHORIZED,
-                            new E_SHOP_Error(BackendApplicationErrors.CODE_L_03, BackendApplicationErrors.CODE_L_03.getMessage())),
+                    new EShopException(HttpStatus.UNAUTHORIZED,
+                            new EShopError(BackendApplicationErrors.CODE_L_03, BackendApplicationErrors.CODE_L_03.getMessage())),
                     response);
         } finally {
             SecurityContextHolder.clearContext();
@@ -114,7 +114,7 @@ public class AuthorizationTokenFilter extends OncePerRequestFilter {
         boolean isValid = checkPermissions(permissions, request);
 
         if (!isValid) {
-            E_SHOP_Exception unauthorizedException = createUnauthorizedException();
+            EShopException unauthorizedException = createUnauthorizedException();
             createUnauthorizedFilter(unauthorizedException, response);
         }
     }
@@ -136,9 +136,9 @@ public class AuthorizationTokenFilter extends OncePerRequestFilter {
      *
      * @return Una instancia de E_SHOP_Exception con el código de error y mensaje correspondientes.
      */
-    private E_SHOP_Exception createUnauthorizedException() {
-        E_SHOP_Error error = new E_SHOP_Error(BackendApplicationErrors.CODE_L_03, BackendApplicationErrors.CODE_L_03.getMessage());
-        return new E_SHOP_Exception(HttpStatus.UNAUTHORIZED, error);
+    private EShopException createUnauthorizedException() {
+        EShopError error = new EShopError(BackendApplicationErrors.CODE_L_03, BackendApplicationErrors.CODE_L_03.getMessage());
+        return new EShopException(HttpStatus.UNAUTHORIZED, error);
     }
 
 
@@ -215,9 +215,9 @@ public class AuthorizationTokenFilter extends OncePerRequestFilter {
      * @throws IOException si ocurre un error al escribir la respuesta
      */
     @SneakyThrows
-    private void createUnauthorizedFilter(E_SHOP_Exception ESHOP_Exception, HttpServletResponse response) {
+    private void createUnauthorizedFilter(EShopException ESHOP_Exception, HttpServletResponse response) {
         ObjectMapper objectMapper = new ObjectMapper();
-        E_SHOP_Error ESHOP_Error = ESHOP_Exception.getError();
+        EShopError ESHOP_Error = ESHOP_Exception.getError();
         String message = objectMapper.writeValueAsString(ESHOP_Error);
 
         response.setStatus(HttpStatus.UNAUTHORIZED.value());

@@ -7,9 +7,9 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @AllArgsConstructor
-public class E_SHOP_Exception extends RuntimeException{
+public class EShopException extends RuntimeException{
 
     private HttpStatus status;
-    private E_SHOP_Error error;
+    private EShopError error;
 
 }

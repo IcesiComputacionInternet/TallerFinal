@@ -1,10 +1,8 @@
 package com.icesi.backend.service.impl;
 
-import com.icesi.backend.DTO.OrderCreateDTO;
 import com.icesi.backend.DTO.OrderItemDTO;
-import com.icesi.backend.DTO.OrderUpdateDTO;
-import com.icesi.backend.error.exception.E_SHOP_Error;
-import com.icesi.backend.error.exception.E_SHOP_Exception;
+import com.icesi.backend.error.exception.EShopError;
+import com.icesi.backend.error.exception.EShopException;
 import com.icesi.backend.errorConstants.BackendApplicationErrors;
 import com.icesi.backend.mappers.OrderMapper;
 import com.icesi.backend.models.Item;
@@ -12,12 +10,10 @@ import com.icesi.backend.models.Order;
 import com.icesi.backend.models.OrderItem;
 import com.icesi.backend.models.ShopUser;
 import com.icesi.backend.respositories.ItemRepository;
-import com.icesi.backend.respositories.OrderItemRepository;
 import com.icesi.backend.respositories.OrderRepository;
 import com.icesi.backend.respositories.UserRepository;
-import com.icesi.backend.service.OrderService_Interface;
+import com.icesi.backend.service.OrderServiceInterface;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +27,7 @@ import java.util.stream.StreamSupport;
 
 @Service
 @AllArgsConstructor
-public class OrderService implements OrderService_Interface {
+public class OrderService implements OrderServiceInterface {
 
     private OrderRepository orderRepository;
 
@@ -45,7 +41,7 @@ public class OrderService implements OrderService_Interface {
 
     @Override
     public Order getOrder(UUID orderId) {
-        return orderRepository.findById(orderId).orElseThrow(()-> new E_SHOP_Exception(HttpStatus.NOT_FOUND, new E_SHOP_Error(BackendApplicationErrors.CODE_O_01, BackendApplicationErrors.CODE_O_01.getMessage())));
+        return orderRepository.findById(orderId).orElseThrow(()-> new EShopException(HttpStatus.NOT_FOUND, new EShopError(BackendApplicationErrors.CODE_O_01, BackendApplicationErrors.CODE_O_01.getMessage())));
     }
 
 
@@ -54,8 +50,8 @@ public class OrderService implements OrderService_Interface {
     @Transactional
     public Order createOrder(Order order, UUID userId, List<OrderItemDTO> items) {
         ShopUser user = userRepository.findById(userId).orElseThrow(()->
-                new E_SHOP_Exception(HttpStatus.NOT_FOUND,
-                        new E_SHOP_Error(BackendApplicationErrors.CODE_O_01,
+                new EShopException(HttpStatus.NOT_FOUND,
+                        new EShopError(BackendApplicationErrors.CODE_O_01,
                                 BackendApplicationErrors.CODE_O_01.getMessage())));
 
         List<OrderItem> orderItems = new ArrayList<>();
@@ -64,8 +60,8 @@ public class OrderService implements OrderService_Interface {
             List<Item> list = itemRepository.findByAvailableAndItem(true, item.getItemId());
 
             if(list.size() < item.getQuantity()){
-                throw new E_SHOP_Exception(HttpStatus.NOT_FOUND,
-                        new E_SHOP_Error(BackendApplicationErrors.CODE_I_02,
+                throw new EShopException(HttpStatus.NOT_FOUND,
+                        new EShopError(BackendApplicationErrors.CODE_I_02,
                                 BackendApplicationErrors.CODE_I_02.getMessage()));
             }
 
@@ -104,7 +100,7 @@ public class OrderService implements OrderService_Interface {
         int res = orderRepository.updateStatusByOrderId(status,orderId);
 
         if(res == 0){
-            throw new E_SHOP_Exception(HttpStatus.NOT_FOUND, new E_SHOP_Error(BackendApplicationErrors.CODE_O_01, BackendApplicationErrors.CODE_O_01.getMessage()));
+            throw new EShopException(HttpStatus.NOT_FOUND, new EShopError(BackendApplicationErrors.CODE_O_01, BackendApplicationErrors.CODE_O_01.getMessage()));
         }
     }
 

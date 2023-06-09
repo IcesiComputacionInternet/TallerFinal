@@ -1,8 +1,8 @@
 package com.icesi.backend.controllers;
 
 import com.icesi.backend.DTO.ItemCreateDTO;
-import com.icesi.backend.error.exception.E_SHOP_Error;
-import com.icesi.backend.error.exception.E_SHOP_Exception;
+import com.icesi.backend.error.exception.EShopError;
+import com.icesi.backend.error.exception.EShopException;
 import com.icesi.backend.errorConstants.BackendApplicationErrors;
 import com.icesi.backend.models.Item;
 import com.icesi.backend.service.impl.ItemService;
@@ -30,7 +30,7 @@ public class ItemController {
         if (createdItem.isPresent()) {
             return createdItem.get();
         } else {
-            throw new E_SHOP_Exception(HttpStatus.NOT_FOUND, new E_SHOP_Error(BackendApplicationErrors.CODE_O_01, BackendApplicationErrors.CODE_O_01.getMessage()));
+            throw new EShopException(HttpStatus.NOT_FOUND, new EShopError(BackendApplicationErrors.CODE_O_01, BackendApplicationErrors.CODE_O_01.getMessage()));
         }
     }
 }

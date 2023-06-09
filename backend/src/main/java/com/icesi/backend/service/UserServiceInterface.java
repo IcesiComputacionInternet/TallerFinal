@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Optional;
 
-public interface UserService_Interface {
+public interface UserServiceInterface {
 
 
     ShopUser getUser();

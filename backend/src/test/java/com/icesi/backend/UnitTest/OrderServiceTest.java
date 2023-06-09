@@ -1,7 +1,7 @@
-package com.icesi.backend.Unit_test;
+package com.icesi.backend.UnitTest;
 
 import com.icesi.backend.DTO.OrderItemDTO;
-import com.icesi.backend.error.exception.E_SHOP_Exception;
+import com.icesi.backend.error.exception.EShopException;
 import com.icesi.backend.mappers.OrderMapper;
 import com.icesi.backend.models.Item;
 import com.icesi.backend.models.Order;
@@ -66,7 +66,7 @@ public class OrderServiceTest {
         when(orderRepository.findById(orderId)).thenReturn(Optional.empty());
 
         // Act and Assert
-        Assertions.assertThrows(E_SHOP_Exception.class, () -> orderService.getOrder(orderId));
+        Assertions.assertThrows(EShopException.class, () -> orderService.getOrder(orderId));
     }
 
     @Test
@@ -102,7 +102,7 @@ public class OrderServiceTest {
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
         // Act and Assert
-        Assertions.assertThrows(E_SHOP_Exception.class, () -> orderService.createOrder(new Order(), userId, items));
+        Assertions.assertThrows(EShopException.class, () -> orderService.createOrder(new Order(), userId, items));
     }
 
     @Test
@@ -127,7 +127,7 @@ public class OrderServiceTest {
         when(itemRepository.findByAvailableAndItem(true, item.getItemId())).thenReturn(Collections.singletonList(availableItem));
 
         // Act and Assert
-        Assertions.assertThrows(E_SHOP_Exception.class, () -> orderService.createOrder(new Order(), userId, items));
+        Assertions.assertThrows(EShopException.class, () -> orderService.createOrder(new Order(), userId, items));
     }
 
     @Test
@@ -151,7 +151,7 @@ public class OrderServiceTest {
         when(orderRepository.updateStatusByOrderId(status, orderId)).thenReturn(0);
 
         // Act and Assert
-        Assertions.assertThrows(E_SHOP_Exception.class, () -> orderService.updateOrder(orderId, status));
+        Assertions.assertThrows(EShopException.class, () -> orderService.updateOrder(orderId, status));
     }
 
     // Add more test cases for other methods if needed

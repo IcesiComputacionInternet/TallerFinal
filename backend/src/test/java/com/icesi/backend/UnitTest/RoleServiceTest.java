@@ -1,4 +1,4 @@
-package com.icesi.backend.Unit_test;
+package com.icesi.backend.UnitTest;
 
 import com.icesi.backend.DTO.RoleCreateDTO;
 import com.icesi.backend.mappers.RoleMapper;

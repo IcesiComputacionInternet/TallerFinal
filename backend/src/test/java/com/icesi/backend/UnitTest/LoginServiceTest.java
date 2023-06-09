@@ -1,8 +1,8 @@
-package com.icesi.backend.Unit_test;
+package com.icesi.backend.UnitTest;
 
 import com.icesi.backend.DTO.LoginDTO;
 import com.icesi.backend.DTO.TokenDTO;
-import com.icesi.backend.error.exception.E_SHOP_Exception;
+import com.icesi.backend.error.exception.EShopException;
 import com.icesi.backend.models.PermissionUser;
 import com.icesi.backend.models.Role;
 import com.icesi.backend.models.ShopUser;
@@ -67,7 +67,7 @@ public class LoginServiceTest {
         when(userRepository.findByEmail(loginDTO.getUsername())).thenReturn(Optional.empty());
 
         // Act and Assert
-        Assertions.assertThrows(E_SHOP_Exception.class, () -> loginService.loginByEmail(loginDTO));
+        Assertions.assertThrows(EShopException.class, () -> loginService.loginByEmail(loginDTO));
     }
 
     @Test
@@ -101,7 +101,7 @@ public class LoginServiceTest {
         when(userRepository.findByPhoneNumber(loginDTO.getUsername())).thenReturn(Optional.empty());
 
         // Act and Assert
-        Assertions.assertThrows(E_SHOP_Exception.class, () -> loginService.loginByPhoneNumber(loginDTO));
+        Assertions.assertThrows(EShopException.class, () -> loginService.loginByPhoneNumber(loginDTO));
     }
 
     @Test
@@ -130,7 +130,7 @@ public class LoginServiceTest {
         when(roleRepository.findById(roleId)).thenReturn(Optional.empty());
 
         // Act and Assert
-        Assertions.assertThrows(E_SHOP_Exception.class, () -> loginService.getPermissionsByRoleId(roleId));
+        Assertions.assertThrows(EShopException.class, () -> loginService.getPermissionsByRoleId(roleId));
     }
 
     // Add more test cases for other methods if needed

@@ -5,19 +5,17 @@ import com.icesi.backend.DTO.UserUpdateDTO;
 import com.icesi.backend.mappers.UserMapper;
 import com.icesi.backend.models.ShopUser;
 import com.icesi.backend.respositories.UserRepository;
-import com.icesi.backend.service.UserService_Interface;
+import com.icesi.backend.service.UserServiceInterface;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class UserService implements UserService_Interface {
+public class UserService implements UserServiceInterface {
     @Autowired
     private UserRepository userRepository;
     @Autowired
