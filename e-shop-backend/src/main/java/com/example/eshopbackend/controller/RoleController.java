@@ -6,6 +6,8 @@ import com.example.eshopbackend.service.RoleService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class RoleController implements RoleApi {
@@ -14,5 +16,10 @@ public class RoleController implements RoleApi {
     @Override
     public RoleDTO createRole(RoleDTO roleDTO) {
         return roleService.save(roleDTO);
+    }
+
+    @Override
+    public List<RoleDTO> getAll() {
+        return roleService.getAll();
     }
 }
