@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import AdminNavbar from "../../components/AdminNavbar";
+import Navbar from "../../components/Navbar";
 
 const baseUrl = "http://localhost:8091";
 
@@ -9,9 +9,21 @@ function Categories (){
 
   const navigation : NavigateFunction = useNavigate();
 
+  const [currentUser, setCurrentUser] = useState("");
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+
+    if(localStorage.getItem("jwt")){
+      const user = localStorage.getItem("currentRole");
+
+      if(user){
+        setCurrentUser(user);
+      }
+    }else{
+      navigation("/NotFound");
+    }
+    
     async function getData() {
 
       const resultProducts= await getCategories();
@@ -25,9 +37,13 @@ function Categories (){
     navigation("/admin/categories/create");
   };
 
+  if(currentUser !== "ADMIN"){
+    navigation("/NotFound");
+  }
+  
   return (
     <>
-     <AdminNavbar />
+     <Navbar />
      <br />
      {categories.length > 0 ?(
         <div className="container mt-4">

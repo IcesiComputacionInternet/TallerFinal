@@ -8,11 +8,6 @@ interface Props {
     setLogin: (isLoggedIn: boolean) => void;
 }
 
-interface UserData {
-  username?: string;
-  phoneNumber?: string;
-  password: string;
-}
 
 const Login = ({ setLogin }: Props) =>{
 
@@ -26,19 +21,12 @@ const Login = ({ setLogin }: Props) =>{
 
       try {
 
-        const requestData:UserData = {
-          password
-        };
-
-        if (!username.includes("@")) {
-          requestData.phoneNumber = username;
-
-        }else{
-          requestData.username = username;
-        }
-
         const { data } = await axios.post(
-          baseUrl+"/token", requestData,
+          baseUrl+"/token",
+          {
+              username,
+              password
+          },
           {
             headers: {
               "Access-Control-Allow-Origin": baseUrl,

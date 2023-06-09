@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import AdminNavbar from "../../components/AdminNavbar";
+import Navbar from "../../components/Navbar";
 
 const baseUrl = "http://localhost:8091";
 
@@ -24,6 +24,8 @@ function HomeAdmin (){
         setCurrentUser(user);
       }
 
+    }else{
+      navigation("/NotFound");
     }
 
     async function getData() {
@@ -63,7 +65,7 @@ function HomeAdmin (){
 
   return (
     <>
-     <AdminNavbar />
+     <Navbar />
      {users.length > 0 ?(
         <div className="container mt-4">
         <p className="h4">Usuarios registrados</p>

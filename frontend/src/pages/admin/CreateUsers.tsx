@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -18,6 +18,7 @@ interface UserData {
 function CreateUser() {
 
   const navigation : NavigateFunction = useNavigate();
+  const [currentUser, setCurrentUser] = useState("");
 
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -27,6 +28,19 @@ function CreateUser() {
   const [lastName, setLastName] = useState("");
   const [birthday, setBirthday] = useState("");
   const [roleName, setRoleName] = useState("");
+
+  useEffect(() => {
+    if(localStorage.getItem("jwt")){
+      const user = localStorage.getItem("currentRole");
+
+      if(user){
+        setCurrentUser(user);
+      }
+    }else{
+      navigation("/NotFound");
+    }
+    
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();

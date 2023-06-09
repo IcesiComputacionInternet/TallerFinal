@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -6,10 +6,24 @@ const baseUrl = "http://localhost:8091";
 
 function CreateRoles() {
 
+  const [currentUser, setCurrentUser] = useState("");
   const navigation : NavigateFunction = useNavigate();
 
   const [roleName, setRoleName] = useState("");
   const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if(localStorage.getItem("jwt")){
+      const user = localStorage.getItem("currentRole");
+
+      if(user){
+        setCurrentUser(user);
+      }
+    }else{
+      navigation("/NotFound");
+    }
+    
+  }, []);
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -37,6 +51,10 @@ function CreateRoles() {
       alert("Creation failed! "+error.response.data.details[0].errorMessage);
     }
   };
+
+  if(currentUser !== "ADMIN"){
+    navigation("/NotFound");
+  }
 
   return (
     <div className="container">

@@ -1,17 +1,29 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import AdminNavbar from "../../components/AdminNavbar";
+import Navbar from "../../components/Navbar";
 
 const baseUrl = "http://localhost:8091";
 
 function Users (){
 
   const navigation : NavigateFunction = useNavigate();
+  const [currentUser, setCurrentUser] = useState("");
 
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
+
+    if(localStorage.getItem("jwt")){
+      const user = localStorage.getItem("currentRole");
+
+      if(user){
+        setCurrentUser(user);
+      }
+    }else{
+      navigation("/NotFound");
+    }
+
     async function getData() {
 
       const resultUsers = await getUsers();
@@ -25,9 +37,13 @@ function Users (){
     navigation("/admin/users/create");
   };
 
+  if(currentUser !== "ADMIN"){
+    navigation("/NotFound");
+  }
+
   return (
     <>
-     <AdminNavbar />
+     <Navbar />
      <br />
      {users.length > 0 ?(
         <div className="container mt-4">
