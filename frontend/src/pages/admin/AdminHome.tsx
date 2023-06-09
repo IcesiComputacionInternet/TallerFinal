@@ -86,7 +86,7 @@ function HomeAdmin (){
      <br />
      {items.length > 0 ?(
         <div className="container">
-          <p className="h4">Items registrados</p>
+          <p className="h4">ítems registrados</p>
         <br />
           <table className="table table-striped-columns" style={{tableLayout:"fixed"}}>
             <thead>
@@ -94,7 +94,7 @@ function HomeAdmin (){
                 <th scope="col">Nombre</th>
                 <th scope="col">Marca</th>
                 <th scope="col">Precio</th>
-                <th scope="col">Categoria</th>
+                <th scope="col">Categoría</th>
                 </tr>
             </thead>
             <tbody>
@@ -114,14 +114,14 @@ function HomeAdmin (){
         </div>
       ) : (
         <div className="container">
-          <p className="h4">No hay items registrados</p>
+          <p className="h4">No hay ítems registrados</p>
         </div>
       )}   
 
     <br />
      {orders.length > 0 ?(
       <div className="container">
-        <p className="h4">Ordenes registradas</p>
+        <p className="h4">Órdenes registradas</p>
        <br />
        <div className="table-responsive">
         <table className="table table-striped-columns" style={{tableLayout:"fixed"}}>

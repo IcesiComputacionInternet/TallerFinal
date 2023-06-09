@@ -24,7 +24,7 @@ function Orders (){
      <br />
     {orders.length > 0 ?(
       <div className="container">
-        <p className="h4">Ordenes registradas</p>
+        <p className="h4">Órdenes registradas</p>
        <br />
        <div className="table-responsive">
         <table className="table table-striped-columns" style={{tableLayout:"fixed"}}>
