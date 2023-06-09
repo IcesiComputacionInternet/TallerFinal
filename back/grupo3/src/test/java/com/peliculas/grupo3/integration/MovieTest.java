@@ -2,6 +2,7 @@ package com.peliculas.grupo3.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.peliculas.grupo3.TestConfigurationData;
+import com.peliculas.grupo3.dto.CategoryDTO;
 import com.peliculas.grupo3.dto.LoginDTO;
 import com.peliculas.grupo3.dto.MovieDTO;
 import com.peliculas.grupo3.dto.TokenDTO;
@@ -111,7 +112,7 @@ class MovieTest {
                                     MovieDTO.builder()
                                             .name("Dungeons & Dragons: Honor Among Thieves")
                                             .description("A charming thief and a band of unlikely adventurers undertake an epic heist to retrieve a lost relic, but things go dangerously awry when they run afoul of the wrong people.")
-                                            .categoryName("Fantasia")
+                                            .categoryDTO(new CategoryDTO("Fantasia","Peliculas de fantasia"))
                                             .price(10L)
                                             .imageURL("https://image.tmdb.org/t/p/original/A7AoNT06aRAc4SV89Dwxj3EYAgC.jpg")
                                             .pgRating("PG-13")
@@ -142,7 +143,7 @@ class MovieTest {
                                         MovieDTO.builder()
                                                 .name("Fast X")
                                                 .description("New movie")
-                                                .categoryName("Fantasia")
+                                                .categoryDTO(new CategoryDTO("Fantasia","Peliculas de fantasia"))
                                                 .price(10L)
                                                 .imageURL("https://image.tmdb.org/t/p/original/A7AoNT06aRAc4SV89Dwxj3EYAgC.jpg")
                                                 .pgRating("PG-13")
@@ -173,7 +174,7 @@ class MovieTest {
                                         MovieDTO.builder()
                                                 .name("New movie")
                                                 .description("new details")
-                                                .categoryName("not a category")
+                                                .categoryDTO(new CategoryDTO("not a category","Peliculas de fantasia"))
                                                 .price(10L)
                                                 .imageURL("https://i.imgflip.com/5b93jb.png")
                                                 .pgRating("PG-13")
@@ -204,7 +205,7 @@ class MovieTest {
                                         MovieDTO.builder()
                                                 .name("New movie")
                                                 .description("new details")
-                                                .categoryName("Fantasia")
+                                                .categoryDTO(new CategoryDTO("Fantasia","Peliculas de fantasia"))
                                                 .price(10L)
                                                 .imageURL("https://i.imgflip.com/5b93jb.png")
                                                 .pgRating("PG-9999")
@@ -235,7 +236,7 @@ class MovieTest {
                                         MovieDTO.builder()
                                                 .name("New movie")
                                                 .description("new details")
-                                                .categoryName("Fantasia")
+                                                .categoryDTO(new CategoryDTO("Fantasia","Peliculas de fantasia"))
                                                 .price(-10L)
                                                 .imageURL("https://i.imgflip.com/5b93jb.png")
                                                 .pgRating("PG-13")

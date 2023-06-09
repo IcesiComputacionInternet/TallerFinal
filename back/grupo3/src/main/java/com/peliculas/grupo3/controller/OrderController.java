@@ -2,6 +2,7 @@ package com.peliculas.grupo3.controller;
 
 import com.peliculas.grupo3.api.OrderApi;
 import com.peliculas.grupo3.dto.OrderDTO;
+import com.peliculas.grupo3.dto.OrderTargetDTO;
 import com.peliculas.grupo3.service.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,13 +31,13 @@ public class OrderController implements OrderApi {
     }
 
     @Override
-    public OrderDTO addMovie(String number, String movieName) {
-        return orderService.addMovie(number, movieName);
+    public OrderDTO addMovie(OrderTargetDTO targetDTO) {
+        return orderService.addMovie(targetDTO);
     }
 
     @Override
-    public OrderDTO deleteMovie(String number, String movieName) {
-        return orderService.removeMovie(number, movieName);
+    public OrderDTO deleteMovie(OrderTargetDTO targetDTO) {
+        return orderService.removeMovie(targetDTO);
     }
 
     @Override

@@ -99,6 +99,40 @@ public class OrderTest {
     }
 
     @Test
+    public void getUserOrdersNoOrders() throws Exception {
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        mocMvc.perform(MockMvcRequestBuilders.post("/users/").content(
+                                objectMapper.writeValueAsString(new UserDTO(
+                                        "nombre",
+                                        "apellido",
+                                        "noOrders@gmail.co",
+                                        "+57 399 123 432",
+                                        "123",
+                                        "USER")))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().isOk());
+        String email="noOrders@gmail.co";
+        var result = mocMvc.perform(MockMvcRequestBuilders.get("/orders/getUserOrders/"+email)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().is5xxServerError())
+                .andReturn();
+        MovieError movieError = objectMapper.readValue(result.getResponse().getContentAsString(), MovieError.class);
+        assertNotNull(movieError);
+        assertEquals("El usuario no tiene ordenes", movieError.getDetails());
+
+    }
+    @Test
     public void findByNumberHappyPath() throws Exception {
         String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
                                 objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
@@ -144,10 +178,8 @@ public class OrderTest {
 
     }
 
-
-
     @Test
-    public void findByUser() throws Exception {
+    public void addMovieHappyPath() throws Exception{
         String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
                                 objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
                         )
@@ -156,16 +188,19 @@ public class OrderTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
-        String email="noname@email.com";
-        var result = mocMvc.perform(MockMvcRequestBuilders.get("/orders/getUserOrders/"+email)
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/addMovie")
+                        .content(objectMapper.writeValueAsString( new OrderTargetDTO(
+                                "2",
+                                "John Wick: Chapter 4"
+                        )))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
                 .andExpect(status().isOk())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
-        OrderDTO[] orderDTOS = objectMapper.readValue(result.getResponse().getContentAsString(), OrderDTO[].class);
-        assertNotNull(orderDTOS);
+        OrderDTO orderDTO = objectMapper.readValue(result.getResponse().getContentAsString(), OrderDTO.class);
+        assertNotNull(orderDTO);
     }
 
 
