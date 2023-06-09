@@ -2,10 +2,6 @@ import { useEffect, useState } from 'react';
 import OrderItem from './components/OrderItem';
 import { getOrders } from '../../services/orders';
 
-interface Props {
-    setInfoToast: (message: string, title: string) => void;
-}
-
 interface Order {
     purchaseOrderId: string,
     status: string,
@@ -27,14 +23,13 @@ interface Item {
     }
 }
 
-function Orders ({setInfoToast}: Props) {
+function Orders () {
     const [orders, setOrders] = useState<Order[]>([]);
 
     useEffect(() => {
         getOrders().then((result) => {
             console.log(result.items);
             setOrders(result.items);
-            setInfoToast('Orders loaded successfully', 'Success');
         });
     }, []);
 

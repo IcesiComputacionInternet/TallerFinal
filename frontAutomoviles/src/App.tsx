@@ -63,7 +63,7 @@ function App() {
           />
           <Route
             path="/orders"
-            element={<Orders setInfoToast={handleOpenToast}/>}
+            element={<Orders />}
           />
           <Route 
             path='/*' 
