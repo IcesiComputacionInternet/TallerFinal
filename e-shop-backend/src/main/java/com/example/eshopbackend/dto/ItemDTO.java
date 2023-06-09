@@ -19,7 +19,6 @@ public class ItemDTO {
     private String imageUrl;
     @NotBlank
     private String description;
-    @NotBlank
     private CategoryDTO category;
 
     private int warranty;
