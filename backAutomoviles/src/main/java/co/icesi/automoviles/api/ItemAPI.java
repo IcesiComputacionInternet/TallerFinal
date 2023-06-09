@@ -12,7 +12,7 @@ import java.util.List;
 
 @RequestMapping("/items")
 public interface ItemAPI {
-    public static final String ROOT_PATH = "/items/";
+    public static final String ROOT_PATH = "/items";
 
     @PostMapping
     public ItemShowDTO createItem(@Valid @RequestBody ItemCreateDTO itemCreateDTO);
