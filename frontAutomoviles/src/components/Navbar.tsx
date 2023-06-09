@@ -1,5 +1,4 @@
-import { faUser,
-        faHouse,
+import {faHouse,
         faCartShopping,
         faRightFromBracket,
         faRightToBracket } from "@fortawesome/free-solid-svg-icons";
@@ -7,40 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const logOut = () => {
     localStorage.clear();
-}
-
-const Profile = () => {
-    return (
-        <li>
-            <a href="/profile" className="nav-link text-white">
-                <ul className="list-inline">
-                    <li className="list-inline-item">
-                        <FontAwesomeIcon icon={faUser}/>
-                    </li>
-                    <li className="list-inline-item">
-                        Profile
-                    </li>
-                </ul>
-            </a>
-        </li>
-    )
-}
-
-const Home = () => {
-    return (
-        <li>
-            <a href="/home" className="nav-link text-white">
-                <ul className="list-inline">
-                    <li className="list-inline-item">
-                        <FontAwesomeIcon icon={faHouse}/>
-                    </li>
-                    <li className="list-inline-item">
-                        Home
-                    </li>
-                </ul>
-            </a>
-        </li>
-    )
 }
 
 const Cart = () => {
@@ -103,17 +68,25 @@ function Navbar({isLoggedIn}: Props) {
 
     if(!isLoggedIn){
         menuItems.push(<AuthView />)
-    }else{
+    }else if(localStorage.getItem('role') === 'USER'){
+        menuItems.push(<Cart />)
         menuItems.push(<LogOut />)
     }
-        
+    
     return (
         <header>
             <div className="px-3 py-2 bg-dark text-white">
                 <div className="container">
-                    <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                        <a href="/" className="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-                            eShop
+                    <div className="d-flex justify-content-lg-start">
+                        <a href="/" className="me-lg-auto text-white">
+                            <ul className="list-inline d-flex align-items-center">
+                                <li className="list-inline-item">
+                                    <FontAwesomeIcon icon={faHouse} size="xl"/>
+                                </li>
+                                <li className="list-inline-item" style={{fontSize:'20px'}}>
+                                    eShop
+                                </li>
+                            </ul>
                         </a>
                         <ul className="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                             {menuItems}

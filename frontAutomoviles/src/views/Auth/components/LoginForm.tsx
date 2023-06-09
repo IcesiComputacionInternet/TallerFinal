@@ -9,9 +9,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface Props {
     setLogin: () => void;
+    setInfoToast: (message: string, title: string) => void;
 }
 
-const Login = ({setLogin}: Props) => {
+const Login = ({setLogin, setInfoToast}: Props) => {
     const [emailOrPhone, setEmailOrPhone] = useState("");
     const [password, setPassword] = useState("");
     const [emailOrPhoneError, setEmailOrPhoneError] = useState(false);
@@ -25,7 +26,10 @@ const Login = ({setLogin}: Props) => {
             if(result){
                 setLogin();
                 navigation("/");
+                setInfoToast("You have successfully logged in!", "Success");
             }
+        }).catch((error) => {
+            setInfoToast(error.message, "Error");
         });
     };
 

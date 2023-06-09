@@ -6,11 +6,17 @@ import AuthView from './views/Auth/AuthView';
 import Home from './views/Home/Home';
 import NotFound from './views/NotFound/NotFound';
 import Navbar from './components/Navbar';
+import Toast from './components/Toast';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
     () => localStorage.getItem('jwt') !== null
   );
+  const [infoToast, setInfoToast] = useState({
+    show: false,
+    message: "",
+    title: ""
+  });
 
   useEffect(() => {
     localStorage.setItem("logged_user", JSON.stringify(isLoggedIn));
@@ -20,6 +26,22 @@ function App() {
     setIsLoggedIn(true);
   };
 
+  const handleCloseToast = () => {
+    setInfoToast({
+        show: false,
+        message: "",
+        title: ""
+    });
+  };
+
+  const handleOpenToast = (message: string, title: string) => {
+    setInfoToast({
+        show: true,
+        message: message,
+        title: title
+    });
+  };
+
   return (
     <>
       <Navbar isLoggedIn={isLoggedIn}/>
@@ -27,11 +49,11 @@ function App() {
         <Routes>
           <Route
             path="/login"
-            element={<AuthView setLogin={logIn}/>}
+            element={<AuthView setLogin={logIn} setInfoToast={handleOpenToast}/>}
           />
           <Route 
             path='/' 
-            element={<Home isLogged={isLoggedIn}/>} 
+            element={<Home isLogged={isLoggedIn} setInfoToast={handleOpenToast}/>} 
           />
           <Route 
             path='/*' 
@@ -41,6 +63,11 @@ function App() {
       </BrowserRouter>
 
       <FooterInfo />
+      {infoToast.show && (
+                <div className="toast-container position-fixed bottom-0 end-0 p-3">
+                    <Toast title={infoToast.title} message={infoToast.message} onClose={handleCloseToast} />
+                </div>
+                )}
     </>
   )
 }

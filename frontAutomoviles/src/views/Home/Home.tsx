@@ -5,9 +5,10 @@ import Pagination from "./components/Pagination";
 
 interface Props {
   isLogged: boolean;
+  setInfoToast: (message: string, title: string) => void;
 }
 
-function Home ({isLogged}: Props) {
+function Home ({isLogged, setInfoToast}: Props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [items, setItems] = useState([]);
@@ -29,7 +30,7 @@ function Home ({isLogged}: Props) {
         <h1 className="text-center">Productos</h1>
           {items.map((item: any) => (
             <div key={item.id}>
-              <Item item={item} isLogged={isLogged} />
+              <Item item={item} isLogged={isLogged} setInfoToast={setInfoToast}/>
             </div>
           ))}
       </div>
