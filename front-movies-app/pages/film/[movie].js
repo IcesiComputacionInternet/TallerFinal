@@ -86,7 +86,7 @@ const movie = () => {
 
   async function getCategories() {
     try {
-      const { data } = await axios.get("http://localhost:8080/categories/all", {
+      const { data } = await axios.post("http://localhost:8080/categories/all", {
         headers: {
           "Access-Control-Allow-Origin": "http://localhost:8080",
           MediaType: "application/json",
