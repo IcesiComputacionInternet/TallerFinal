@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Modal, Button, Navbar } from "react-bootstrap";
-import { BsCartFill, BsTrash } from "react-icons/bs";
+import { BsCartFill} from "react-icons/bs";
 import Logout from "./Logout";
 import "../ShopHome.css";
 import ReactModal from "react-modal";
@@ -73,19 +73,12 @@ const ShopHome = () => {
     setShowCartModal(false);
   };
 
-  const handleClearCart = () => {
-    if (window.confirm("¿Estás seguro de eliminar todos los productos del carrito?")) {
-      setCartItems([]);
-      alert("Se han eliminado todos los productos del carrito");
-    }
-  };
-
   const handleOrder = async () => {
     try {
       const response = await axios.post(
         "http://localhost:8091/orders",
         {
-          items: cartItems.map((item) => item.itemId),
+          items: cartItems,
         },
         {
           headers: {
@@ -155,7 +148,7 @@ const ShopHome = () => {
           <p>No hay productos en el carrito</p>
         )}
         <div className="text-center">
-          <Button variant="danger" onClick={handleOrder} disabled={cartItems.length === 0}>
+          <Button variant="success" onClick={handleOrder} disabled={cartItems.length === 0}>
             Hacer orden
           </Button>
           <Button variant="secondary" onClick={handleCloseCartModal}>
