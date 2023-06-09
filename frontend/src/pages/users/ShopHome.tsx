@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Modal, Button, Navbar } from "react-bootstrap";
 import { BsCartFill} from "react-icons/bs";
-import Logout from "./Logout";
-import "../ShopHome.css";
+import Logout from "../../components/Logout";
+import "../../ShopHome.css";
 import ReactModal from "react-modal";
 import { Link } from "react-router-dom";
 
