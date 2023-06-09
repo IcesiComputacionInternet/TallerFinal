@@ -19,8 +19,6 @@ import java.util.List;
 public class RequestOrderDTO {
     @NotBlank(message = "User id is mandatory")
     private String user;
-    @NotNull(message = "Status is mandatory")
-    private Status status;
     @NotNull(message = "Total is mandatory")
     @Min(value = 0, message = "Total must be greater than 0")
     private Long total;

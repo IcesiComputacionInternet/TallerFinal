@@ -16,22 +16,27 @@ public class CategoryController implements CategoryApi {
     private final CategoryService categoryService;
 
     @Override
-    public void saveCategory(RequestCategoryDTO categoryDTO) {
+    public void save(RequestCategoryDTO categoryDTO) {
         categoryService.create(categoryDTO);
     }
 
     @Override
-    public ResponseCategoryDTO getCategoryById(String id) {
+    public ResponseCategoryDTO getById(String id) {
         return categoryService.get(UUID.fromString(id));
     }
 
     @Override
-    public void deleteCategoryById(String id) {
+    public void deleteById(String id) {
         categoryService.delete(UUID.fromString(id));
     }
 
     @Override
     public List<ResponseCategoryDTO> findAll() {
         return categoryService.getAll();
+    }
+
+    @Override
+    public void update(RequestCategoryDTO categoryDTO, String id) {
+        categoryService.update(categoryDTO, UUID.fromString(id));
     }
 }

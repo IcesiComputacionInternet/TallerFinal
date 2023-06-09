@@ -14,17 +14,22 @@ public class UserController implements UserApi {
     private final UserService userService;
 
     @Override
-    public void saveUser(RequestUserDTO userDTO) {
+    public void save(RequestUserDTO userDTO) {
         userService.create(userDTO);
     }
 
     @Override
-    public RequestUserDTO getUserById(String id) {
+    public void saveClient(RequestUserDTO userDTO) {
+        userService.create(userDTO, "CLIENT");
+    }
+
+    @Override
+    public RequestUserDTO getById(String id) {
         return userService.get(UUID.fromString(id));
     }
 
     @Override
-    public void deleteUserById(String id) {
+    public void deleteById(String id) {
         userService.delete(UUID.fromString(id));
     }
 }
