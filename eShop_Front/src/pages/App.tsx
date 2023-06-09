@@ -5,6 +5,7 @@ import Register from './Register';
 import Home from './Home';
 import '../styles/App.css'
 import Orders from './Orders';
+import Categories from './Categories';
 
 function App() {
 
@@ -26,7 +27,8 @@ function App() {
         <Routes>
             <Route path="/" element={<Login setLogin={logIn}/>}/>
             <Route path="/register" element={<Register/>}/>
-            <Route path="/orders" element={<Orders/>}/>     
+            <Route path="/orders" element={<Orders/>}/>
+            <Route path="/categories" element={<Categories/>}/>     
             <Route path="/home" element={<Home/>}/>      
         </Routes>
     </Router>
