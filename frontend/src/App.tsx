@@ -61,7 +61,6 @@ function App() {
 
         <Route path="/shop/home" element={<ShopHome />} />
         <Route path="/shop/items" element={<ShopItems />} />
-
         <Route path="/draft" element={<Draft />} />
         {isLoggedIn && (
           <Route path="/orders" element={<Orders />} />
