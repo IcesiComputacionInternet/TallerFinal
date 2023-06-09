@@ -54,7 +54,7 @@ const Login = ({ setLogin }: Props) => {
       console.log(role)
       if (response.status === 200) {
         localStorage.setItem("jwt", response.data.token);
-        navigation("/home");
+        navigation("/shop");
       } else {
         alert("Username or password incorrect");
       }

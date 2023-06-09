@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Grid, Card, CardContent, Typography, CardMedia, Button } from '@mui/material';
 import shop from '../styles/shop.css';
+import { useNavigate, NavigateFunction } from "react-router-dom";
 
 const baseUrl = "http://localhost:8080/api/items";
 
@@ -14,14 +15,21 @@ interface Item {
 }
 
 const products = [
-    { id: 1, name: 'Producto 1', price: 10, image: 'path_to_image_1' },
-    { id: 2, name: 'Producto 2', price: 20, image: 'path_to_image_2' },
-    { id: 3, name: 'Producto 3', price: 30, image: 'path_to_image_3' },
+    { id: 1, name: 'Producto 1', price: 10, image: 'src/resources/images/PC_2018.webp' },
+    { id: 2, name: 'Producto 2', price: 20, image: 'src/resources/images/PC_2018.webp' },
+    { id: 3, name: 'Producto 3', price: 30, image: 'src/resources/images/PC_2018.webp' },
     // Agrega más productos aquí...
   ];
 
 export default function Shop() {
+
+    const navigation: NavigateFunction = useNavigate();
     const [items, setItems] = useState<Item[]>([]); // [state, function]
+    
+    const handleClick = () => {
+        navigation("/orders")
+        
+    }
 
 
     return (
@@ -56,8 +64,9 @@ export default function Shop() {
                 </Grid>
                 ))}
             </Grid>
+            <Button variant="contained" color="secondary" sx={{marginTop:20}} onClick={handleClick}>Ver ordenes</Button>
         </div>
     );
-};
+}
 
 
