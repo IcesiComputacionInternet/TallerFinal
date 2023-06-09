@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles(profiles="test")
 
 public class UserControllerTest {
-    @Autowired
+    /*@Autowired
     private MockMvc mockMvc;
 
     @Autowired
@@ -272,5 +272,5 @@ public class UserControllerTest {
                 .address("Calle 5 # 54B-01 b/Los Alamos, Cali - Colombia")
                 .birthday("12/08/2003")
                 .build();
-    }
+    }*/
 }

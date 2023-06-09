@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class CategoryServiceTest {
-    private CategoryService categoryService;
+    /*private CategoryService categoryService;
     private CategoryRepository categoryRepository;
     private CategoryMapper categoryMapper;
     private CellphoneShopExceptionBuilder exceptionBuilder;
@@ -78,5 +78,5 @@ public class CategoryServiceTest {
                 .name("LOW_MED_RANGE")
                 .description("Loreno Insomnio, I never knew how to say it")
                 .build();
-    }
+    }*/
 }

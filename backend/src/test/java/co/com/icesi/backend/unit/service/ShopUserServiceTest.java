@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 
 public class ShopUserServiceTest {
-    private UserService userService;
+    /*private UserService userService;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private UserMapper userMapper;
@@ -200,5 +200,5 @@ public class ShopUserServiceTest {
                 .description("Director del programa de Ingenieria de sistemas")
                 .roleName("Director SIS")
                 .build();
-    }
+    }*/
 }

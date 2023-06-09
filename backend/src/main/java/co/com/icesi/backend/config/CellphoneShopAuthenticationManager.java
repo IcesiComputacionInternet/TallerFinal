@@ -16,7 +16,7 @@ public class CellphoneShopAuthenticationManager extends DaoAuthenticationProvide
         this.setUserDetailsService(userManagementService);
         this.setPasswordEncoder(passwordEncoder);
     }
-
+    @Override
     public Authentication createSuccessAuthentication(Object principal, Authentication authentication, UserDetails user){
         UsernamePasswordAuthenticationToken successAuthentication =
                 (UsernamePasswordAuthenticationToken) super.createSuccessAuthentication(principal, authentication, user);

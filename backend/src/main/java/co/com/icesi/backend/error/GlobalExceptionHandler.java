@@ -18,7 +18,7 @@ import static co.com.icesi.backend.error.util.CellphoneShopExceptionBuilder.crea
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(BadCredentialsException.class)
+   @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<CellphoneError> handleLoginException(
             BadCredentialsException badCredentialsException){
         var error = createCellphoneError(HttpStatus.UNAUTHORIZED, new DetailBuilder(ErrorCode.ERROR_401));
@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(cellphoneException.getError().getStatus()).body(cellphoneException.getError());
     }
 
-    @ExceptionHandler(RuntimeException.class)
+   @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<CellphoneError> handleRuntimeException(){
         var error = createCellphoneError(HttpStatus.INTERNAL_SERVER_ERROR, new DetailBuilder(ErrorCode.ERROR_500));
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);

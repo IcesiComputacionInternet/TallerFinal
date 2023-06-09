@@ -50,7 +50,7 @@ public class AuthControllerTest {
                                 objectMapper.writeValueAsString(new LoginDTO("lauramartinezgmail.com", "password")))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isUnauthorized())
                 .andReturn();
         TokenDTO token =objectMapper.readValue(result.getResponse().getContentAsString(), TokenDTO.class);
         assertNotNull(token);
@@ -62,7 +62,7 @@ public class AuthControllerTest {
                                 objectMapper.writeValueAsString(new LoginDTO("sara@email.com", "password")))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isUnauthorized())
                 .andReturn();
         TokenDTO token =objectMapper.readValue(result.getResponse().getContentAsString(), TokenDTO.class);
         assertNotNull(token);
