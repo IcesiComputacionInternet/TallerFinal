@@ -77,12 +77,16 @@ public class SecurityConfiguration {
                 = RequestMatcherDelegatingAuthorizationManager.builder()
                 .add(permitAll, (context, other) -> new AuthorizationDecision(true));
 
-        managerBuilder.add(new MvcRequestMatcher(introspector, "/admin/**"),
+        managerBuilder.add(new MvcRequestMatcher(introspector, "/categories/**"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
-        managerBuilder.add(new MvcRequestMatcher(introspector, "/user"),
-                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER"));
-        managerBuilder.add(new MvcRequestMatcher(introspector, "/role"),
-                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_BANK"));
+        managerBuilder.add(new MvcRequestMatcher(introspector, "/items/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_SHOP","SCOPE_ADMIN"));
+        managerBuilder.add(new MvcRequestMatcher(introspector, "/orders/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
+        managerBuilder.add(new MvcRequestMatcher(introspector, "/roles/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
+        managerBuilder.add(new MvcRequestMatcher(introspector, "/users/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 
 
         AuthorizationManager<HttpServletRequest> manager = managerBuilder.build();
