@@ -1,4 +1,5 @@
 import { Grid, Card, CardContent, Typography, CardMedia } from '@mui/material';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import '../styles/categories.css';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 
@@ -71,6 +72,16 @@ const Categories = () => {
                         <CardContent>
                             <Typography variant="h5" component="div">
                                 GAMING
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Card className="cardCategory" id="addCategory">
+                        <CardContent>
+                            <AddBoxIcon sx={{ fontSize: 120 }} className="addIcon"/>
+                            <Typography variant="h5" component="div">
+                                AGREGAR CATEGORÍA
                             </Typography>
                         </CardContent>
                     </Card>
