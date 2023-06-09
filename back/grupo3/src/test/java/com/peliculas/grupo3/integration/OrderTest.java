@@ -701,4 +701,83 @@ public class OrderTest {
     }
 
 
+    @Test
+    public void changeStatusHappyPath() throws Exception{
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/changeStatus")
+                        .content(objectMapper.writeValueAsString( new OrderTargetDTO(
+                                "2",
+                                "cancelada"
+                        )))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+        OrderDTO orderDTO = objectMapper.readValue(result.getResponse().getContentAsString(), OrderDTO.class);
+        assertNotNull(orderDTO);
+    }
+
+    @Test
+    public void changeStatusOrderNotFound() throws Exception{
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/changeStatus")
+                        .content(objectMapper.writeValueAsString( new OrderTargetDTO(
+                                "10",
+                                "cancelada"
+                        )))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().is5xxServerError())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+        MovieError movieError = objectMapper.readValue(result.getResponse().getContentAsString(), MovieError.class);
+        assertNotNull(movieError);
+        assertEquals("No existe una orden con este numero", movieError.getDetails());
+    }
+
+    @Test
+    public void changeStatusNotAValidStatus() throws Exception{
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/changeStatus")
+                        .content(objectMapper.writeValueAsString( new OrderTargetDTO(
+                                "2",
+                                "oogaaa boogaaaaa"
+                        )))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().is5xxServerError())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+        MovieError movieError = objectMapper.readValue(result.getResponse().getContentAsString(), MovieError.class);
+        assertNotNull(movieError);
+        assertEquals("El estado de la orden no es valido", movieError.getDetails());
+    }
+
+
+
 }

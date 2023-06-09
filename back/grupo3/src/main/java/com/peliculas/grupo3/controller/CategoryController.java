@@ -22,7 +22,7 @@ public class CategoryController implements CategoryApi {
     public List<CategoryDTO> getAllCategories() {
         return categoryService.findAll();
     }
-    // TODO implementar metodos de la api
+
 
 
 

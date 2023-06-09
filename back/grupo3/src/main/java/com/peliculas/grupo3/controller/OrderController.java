@@ -46,8 +46,7 @@ public class OrderController implements OrderApi {
     }
 
     @Override
-    public OrderDTO changeStatus(String number, String status) {
-        return orderService.changeStatus(number, status);
+    public OrderDTO changeStatus(OrderTargetDTO targetDTO) {return orderService.changeStatus(targetDTO);
     }
 
 }

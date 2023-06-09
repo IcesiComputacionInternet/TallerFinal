@@ -14,7 +14,6 @@ import static com.peliculas.grupo3.api.CategoryApi.BASE_CATEGORY_URL;
 public interface CategoryApi {
     String BASE_CATEGORY_URL = "/categories";
 
-    //TODO crear los metodos para el crud de categorias
 
     @PostMapping("/")
     CategoryDTO createCategory(@RequestBody CategoryDTO categoryDTO);
