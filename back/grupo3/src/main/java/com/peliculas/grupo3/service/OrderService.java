@@ -1,6 +1,7 @@
 package com.peliculas.grupo3.service;
 
 import com.peliculas.grupo3.dto.OrderDTO;
+import com.peliculas.grupo3.dto.OrderTargetDTO;
 import com.peliculas.grupo3.mapper.MovieMapper;
 import com.peliculas.grupo3.mapper.OrderMapper;
 import com.peliculas.grupo3.model.Movie;
@@ -12,6 +13,8 @@ import com.peliculas.grupo3.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
 
@@ -84,15 +87,21 @@ public class OrderService {
     }
 
     public OrderDTO findByOrderNumber(String orderNumber) {
-        return orderMapper.fromOrder(orderRepository.findByOrderNumber(orderNumber).orElseThrow(
+        String decodedName;
+        try {
+            decodedName = URLDecoder.decode(orderNumber, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            throw new RuntimeException("Hubo un problema al transoformar");
+        }
+        return orderMapper.fromOrder(orderRepository.findByOrderNumber(decodedName).orElseThrow(
                 ()-> new RuntimeException("No existe una orden con este numero") ));
     }
 
-    public OrderDTO addMovie(String number, String name){
-        MovieOrder order = orderRepository.findByOrderNumber(number).orElseThrow(
+    public OrderDTO addMovie(OrderTargetDTO targetDTO){
+        MovieOrder order = orderRepository.findByOrderNumber(targetDTO.getOrdernumber()).orElseThrow(
                 ()-> new RuntimeException("No existe una orden con este numero") );
 
-        Movie movie = movieRepository.findByName(name).orElseThrow(
+        Movie movie = movieRepository.findByName(targetDTO.getMovieName()).orElseThrow(
                 ()-> new RuntimeException("No existe una pelicula con este nombre") );
 
         order.getMovies().add(movie);
@@ -102,7 +111,13 @@ public class OrderService {
     }
 
     public List<OrderDTO> findByUser(String email) {
-        MovieUser user = userRepository.findByEmail(email).orElseThrow(
+        String decodedName;
+        try {
+            decodedName = URLDecoder.decode(email, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            throw new RuntimeException("Hubo un problema al transoformar");
+        }
+        MovieUser user = userRepository.findByEmail(decodedName).orElseThrow(
                 ()-> new RuntimeException("No existe un usuario con este email") );
 
         if(user.getMovieOrders().isEmpty()){
@@ -128,11 +143,11 @@ public class OrderService {
         return orderMapper.fromOrder(order);
     }
 
-    public OrderDTO removeMovie(String number, String name){
-        MovieOrder order = orderRepository.findByOrderNumber(number).orElseThrow(
+    public OrderDTO removeMovie(OrderTargetDTO targetDTO){
+        MovieOrder order = orderRepository.findByOrderNumber(targetDTO.getOrdernumber()).orElseThrow(
                 ()-> new RuntimeException("No existe una orden con este numero") );
 
-        Movie movie = movieRepository.findByName(name).orElseThrow(
+        Movie movie = movieRepository.findByName(targetDTO.getMovieName()).orElseThrow(
                 ()-> new RuntimeException("No existe una pelicula con este nombre") );
 
         if(!order.getMovies().contains(movie)){

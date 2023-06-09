@@ -29,7 +29,7 @@ public class MovieService {
             throw new RuntimeException("La pelicula ya existe");
         }
 
-        Category category = categoryRepository.findByName(movieDTO.getCategoryName()).orElseThrow(
+        Category category = categoryRepository.findByName(movieDTO.getCategoryDTO().getName()).orElseThrow(
                 ()-> new RuntimeException("La categoria no existe")
         );
 
