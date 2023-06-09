@@ -1,4 +1,5 @@
 import { Grid, Card, CardContent, Typography, CardMedia } from '@mui/material';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import '../styles/categories.css';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 
@@ -50,11 +51,7 @@ const Categories = () => {
                         <CardMedia
                             component="img"
                             height= "auto"
-<<<<<<< HEAD
                             image="src/resources/images/all-in-one.webp"
-=======
-                            image="src/resources/images/all-in-one.png"
->>>>>>> c512242d76961edb35d24d1e91d1c289c9800f16
                             alt="portatiles"
                         />
                         <CardContent>
@@ -68,18 +65,23 @@ const Categories = () => {
                     <Card className="cardCategory" onClick={handleClick}>
                         <CardMedia
                             component="img"
-<<<<<<< HEAD
                             height="auto"
                             image="src/resources/images/pcgamer.webp"
-=======
-                            height= "auto"
-                            image="src/resources/images/gaming.webp"
->>>>>>> c512242d76961edb35d24d1e91d1c289c9800f16
                             alt="portatiles"
                         />
                         <CardContent>
                             <Typography variant="h5" component="div">
                                 GAMING
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Card className="cardCategory" id="addCategory">
+                        <CardContent>
+                            <AddBoxIcon sx={{ fontSize: 120 }} className="addIcon"/>
+                            <Typography variant="h5" component="div">
+                                AGREGAR CATEGORÍA
                             </Typography>
                         </CardContent>
                     </Card>
