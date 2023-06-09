@@ -4,6 +4,7 @@ import com.example.eshopbackend.dto.UserDTO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RequestMapping(UserApi.USER_BASE_URL)
 public interface UserApi {
@@ -14,6 +15,9 @@ public interface UserApi {
 
     @GetMapping("get/{id}")
     UserDTO getById(@PathVariable("id") String id);
+
+    @GetMapping("/get/all")
+    List<UserDTO> getAll();
 
     @DeleteMapping("/delete/{id}")
     void deleteById(@PathVariable("id") String id);
