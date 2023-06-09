@@ -1,7 +1,9 @@
 package com.example.eshopbackend.integration.controller;
+
 import com.example.eshopbackend.TestConfigurationData;
-import com.example.eshopbackend.dto.CategoryDTO;
 import com.example.eshopbackend.dto.LoginDTO;
+import com.example.eshopbackend.dto.RoleDTO;
+import com.example.eshopbackend.dto.TokenDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -16,11 +18,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
+@SpringBootTest
 @Import(TestConfigurationData.class)
-public class CategoryControllerTest{
+@ActiveProfiles(profiles="test")
+public class RoleControllerTest {
     @Autowired
     private MockMvc mvc;
 
@@ -28,6 +30,10 @@ public class CategoryControllerTest{
     ObjectMapper mapper;
 
     private String token;
+
+    @Test
+    void contextLoads() {
+    }
 
     private String getToken(String username, String password) throws Exception {
         var result = mvc.perform(MockMvcRequestBuilders.post("/token").content(
@@ -42,13 +48,13 @@ public class CategoryControllerTest{
     }
 
     @Test
-    public void testCreateCategory() throws Exception {
+    public void testCreateARoleHappy_Path() throws Exception {
         loginAsAdmin();
-        var result = mvc.perform(MockMvcRequestBuilders.post("/categories/add").content(
+        var result = mvc.perform(MockMvcRequestBuilders.post("/roles/add").content(
                                 mapper.writeValueAsString(
-                                        CategoryDTO.builder()
-                                                .description("Category for testing")
-                                                .name("Test Category")
+                                        RoleDTO.builder()
+                                                .description("Role for testing")
+                                                .roleName("ADMIN-2")
                                                 .build()
                                 ))
                         .header("Authorization", "Bearer "+token)
@@ -59,15 +65,14 @@ public class CategoryControllerTest{
     }
 
     @Test
-    public void testGetAllCategories() throws Exception {
+    public void testGetAllRoles() throws Exception {
         loginAsAdmin();
-        var result = mvc.perform(MockMvcRequestBuilders.get("/categories/getAll")
+        var result = mvc.perform(MockMvcRequestBuilders.get("/roles/getAll")
                         .header("Authorization", "Bearer "+token)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
-
     }
 
     private void loginAsAdmin() throws Exception {
@@ -81,5 +86,4 @@ public class CategoryControllerTest{
     private void loginAsShop() throws Exception {
         token = getToken("johndoe3@email.com", "password");
     }
-
 }

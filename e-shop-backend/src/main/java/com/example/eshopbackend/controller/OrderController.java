@@ -23,4 +23,9 @@ public class OrderController implements OrderAPI {
     public void createOrder(OrderDTO orderDTO) {
         orderService.save(orderDTO);
     }
+
+    @Override
+    public void updateOrder(String orderId, String status) {
+
+    }
 }

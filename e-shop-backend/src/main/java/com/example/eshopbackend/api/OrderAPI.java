@@ -1,9 +1,7 @@
 package com.example.eshopbackend.api;
 
 import com.example.eshopbackend.dto.OrderDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +14,9 @@ public interface OrderAPI {
 
     @PostMapping
     void createOrder(OrderDTO orderDTO);
+
+    @PatchMapping("/update/{orderId}")
+    void updateOrder(@PathVariable String orderId, String status);
 
 
 }
