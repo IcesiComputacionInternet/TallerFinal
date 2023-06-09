@@ -150,9 +150,15 @@ public class PurchaseOrderService {
         return purchaseOrderShowDTO;
     }
 
-    public Page<PurchaseOrderShowDTO> getAllPurchaseOrders(int page, int perPage, String sortBy, String sortDir){
+    public Page<PurchaseOrderShowDTO> getAllPurchaseOrders(int page, int perPage, String sortBy, String sortDir, String loggedEShopUser, String role){
         Pageable pageable = SortUtil.sort(page, perPage, sortBy, sortDir);
-        Page<PurchaseOrder> purchaseOrders = purchaseOrderRepository.getAllPurchaseOrders(pageable);
+        Page<PurchaseOrder> purchaseOrders;
+        if(!role.equals(RoleType.ADMIN.toString()) && !role.equals(RoleType.SHOP.toString())){
+            purchaseOrders = purchaseOrderRepository.getAllPurchaseOrdersById(UUID.fromString(loggedEShopUser), pageable);
+        }else {
+            purchaseOrders = purchaseOrderRepository.getAllPurchaseOrders(pageable);
+        }
+
         Page<PurchaseOrderShowDTO> purchaseOrderShowDTOS = purchaseOrders.map(entity -> fromPurchaseOrderToShowDTO(entity));
         return purchaseOrderShowDTOS;
     }
