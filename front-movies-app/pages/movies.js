@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import Navigation from "../components/Navigation";
 import MoviesList from "../components/MoviesList";
 import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content';
 
 export default function Movies() {
+  const baseUrl = 'http://localhost:8080'
   const router = useRouter();
   const [movies, setMovies] = useState([]);
   const [current, setCurrent] = useState({});
@@ -33,6 +35,7 @@ export default function Movies() {
       setCurrent(res);
       // setCurrent(res)
       // setIsLoadingCurrent(false)
+      setIsReady(true)
     } catch (err) {
       console.error("Error fetching current user:", err);
     }
@@ -75,7 +78,12 @@ export default function Movies() {
       console.error("Error fetching categories:", err);
     }
   }
-
+  
+  const handleNotAuthorized = (current) => {
+      if (current.data.role.name != "ADMIN") {
+          router.push("/acceso-denegado");
+        }
+  }
   useEffect(() => {
     if (isReady) {
         handleNotAuthorized(current)
@@ -93,21 +101,74 @@ export default function Movies() {
       console.log("Yo! " + current)
     }
 
-    const handleNotAuthorized = (current) => {
-        if (current.role.name != "ADMIN") {
-            router.push("/acceso-denegado");
-          }
-    }
     getMovies();
   }, []);
 
-  const addMovie = () => {
+  const MySwal = withReactContent(Swal);
+
+  const addMovie = async () => {
     Swal.fire({
         title: 'En progreso',
         text: 'Todavía no añadimos peliculas',
         icon: 'info',
         confirmButtonText: 'Ok'
     })
+    try {
+      const { value: formValues } = await MySwal.fire({
+        title: 'Add Movie',
+        html: `
+          <input id="name" class="swal2-input" placeholder="Name">
+          <input id="description" class="swal2-input" placeholder="Description">
+          <input id="price" class="swal2-input" placeholder="Price">
+          <input id="imageURL" class="swal2-input" placeholder="Image URL">
+          <input id="pgRating" class="swal2-input" placeholder="PG Rating">
+          <input id="categoryName" class="swal2-input" placeholder="Category Name">
+          <input id="categoryDescription" class="swal2-input" placeholder="Category Description">
+        `,
+        focusConfirm: false,
+        preConfirm: () => {
+          return {
+            name: document.getElementById('name').value,
+            description: document.getElementById('description').value,
+            price: document.getElementById('price').value,
+            imageURL: document.getElementById('imageURL').value,
+            pgRating: document.getElementById('pgRating').value,
+            categoryDTO: {
+              name: document.getElementById('categoryName').value,
+              description: document.getElementById('categoryDescription').value,
+            },
+          };
+        },
+      });
+  
+      if (formValues) {
+        // Aquí puedes enviar los datos del formulario a través de una solicitud POST
+        try {
+
+          const {data} = axios.post(`${baseUrl}/movies/`,formValues, {
+            headers: {
+              "Access-Control-Allow-Origin": "http://localhost:8080",
+              "MediaType": "application/json",
+              "Authorization": "Bearer " + localStorage.getItem('jwt')
+            }
+          })
+  
+          let res = {data}
+          console.log(res)
+          router.push("/Home")
+        } catch(err) {
+          Swal.fire({
+            title: 'Hubo un error!',
+            text: 'No se puedo crear la película',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          })
+        }
+        console.log(formValues);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
