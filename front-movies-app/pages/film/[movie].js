@@ -9,20 +9,26 @@ const movie = () => {
   const baseUrl = "http://localhost:8080";
   const router = useRouter();
 
+  const [categories, setCategories] = useState([]);
   console.log("rou");
   console.log(router.query.movie);
 
+  const [current, setCurrent] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [isLoadingCurrent, setIsLoadingCurrent] = useState(true);
 
   useEffect(() => {
     if (router.query.movie) {
       let encodedMovie = encodeURIComponent(router.query.movie);
       getData(encodedMovie);
+      getCategories();
       console.log(movie);
+      getCurrentUser();
     }
   }, [router.query.movie]);
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
   const [isReady, setIsReady] = useState(false);
 
   const [movie, setMovie] = useState({
@@ -34,6 +40,27 @@ const movie = () => {
     pgRating: "",
   });
 
+  async function getCurrentUser() {
+    try {
+      const { data } = await axios.get(
+        "http://localhost:8080/users/CurrentUser",
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "http://localhost:8080",
+            MediaType: "application/json",
+            Authorization: "Bearer " + localStorage.getItem("jwt"),
+          },
+        }
+      );
+
+      let res = { data };
+      console.log(res);
+      setCurrent(res);
+      setIsLoadingCurrent(false);
+    } catch (err) {
+      console.error("Error fetching current user:", err);
+    }
+  }
 
   async function getData(name) {
     try {
@@ -56,6 +83,25 @@ const movie = () => {
       });
       //console.log(movie);
       setIsLoading(false);
+    } catch (err) {
+      console.error("Error fetching movies:", err);
+    }
+  }
+
+  async function getCategories() {
+    try {
+      const { data } = await axios.post("http://localhost:8080/categories/all", {
+        headers: {
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+          MediaType: "application/json",
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      });
+
+      let res = { data };
+      console.log(res);
+      setCategories(res);
+      setIsLoadingCategories(false);
     } catch (err) {
       console.error("Error fetching movies:", err);
     }
@@ -178,7 +224,12 @@ const movie = () => {
   }
   return (
     <div>
-      <Navigation/>
+      {/* {isLoadingCategories || isLoadingCurrent ? (
+        <h1>Loading...</h1>
+      ) : (
+        <Navigation user={current.data} categories={categories} />
+      )} */}
+      
 
       {isLoading ? (
         <div className="text-center">
@@ -215,7 +266,7 @@ const movie = () => {
             }}
           >
             <h2>{movie.name}</h2>
-            <h4>Category: Accion{/*movie.categoryName*/}</h4>
+            <h4>Category: Acción</h4>
             <h4>Ranking: {movie.pgRating}</h4>
             <p>{movie.description}</p>
           </div>
