@@ -1,6 +1,8 @@
 package com.peliculas.grupo3.service;
 
+import com.peliculas.grupo3.dto.CategoryDTO;
 import com.peliculas.grupo3.dto.MovieDTO;
+import com.peliculas.grupo3.mapper.CategoryMapper;
 import com.peliculas.grupo3.mapper.MovieMapper;
 import com.peliculas.grupo3.model.Category;
 import com.peliculas.grupo3.model.Movie;
@@ -23,6 +25,9 @@ public class MovieService {
     private final MovieMapper movieMapper;
 
     private final CategoryRepository categoryRepository;
+
+    private final CategoryMapper categoryMapper;
+
 
     public MovieDTO save(MovieDTO movieDTO){
         if(movieRepository.findByName(movieDTO.getName()).isPresent()){
@@ -53,7 +58,13 @@ public class MovieService {
     }
 
     public List<MovieDTO> findAll(){
-        return movieRepository.findAll().stream().map(movieMapper::fromMovie).toList();
+        List<CategoryDTO> categories = movieRepository.findAll().stream().map(movie -> movie.getCategory()).map(categoryMapper::fromCategory).toList();
+        List<MovieDTO> movies = movieRepository.findAll().stream().map(movieMapper::fromMovie).toList();
+        for (int i = 0; i < categories.size(); i++) {
+            movies.get(i).setCategoryDTO(categories.get(i));
+        }
+
+        return movies;
     }
 
     public MovieDTO findByName(String name) {
@@ -63,12 +74,16 @@ public class MovieService {
         try {
             decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
         } catch (Exception e) {
-            throw new RuntimeException("Hubo un problema al transoformar");
+            throw new RuntimeException("Hubo un problema al transformar");
         }
 
-
-        return movieRepository.findByName(decodedName).map(movieMapper::fromMovie).orElseThrow(
+        CategoryDTO category = movieRepository.findByName(decodedName).map(movie -> movie.getCategory()).map(categoryMapper::fromCategory).orElseThrow(
+                () -> new RuntimeException("La pelicula no tiene categoría")
+        );
+        MovieDTO movie = movieRepository.findByName(decodedName).map(movieMapper::fromMovie).orElseThrow(
                 () -> new RuntimeException("La pelicula no existe"));
+        movie.setCategoryDTO(category);
+        return movie;
     }
 
     public List<MovieDTO> findByCategory(String name){

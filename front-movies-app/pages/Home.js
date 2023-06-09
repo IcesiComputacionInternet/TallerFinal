@@ -13,6 +13,9 @@ function Home () {
 
   const [movies, setMovies] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [current, setCurrent] = useState([]);
+
+  const [isLoadingCurrent, setIsLoadingCurrent] = useState(true);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
   const [isLoadingMovies, setIsLoadingMovies] = useState(true);
 
@@ -21,7 +24,31 @@ function Home () {
     console.log(movies)
     getCategories()
     console.log(categories)
+    getCurrentUser()
   }, [])
+
+  async function getCurrentUser() {
+    try {
+      const {data} = await axios.get("http://localhost:8080/users/CurrentUser",
+      {
+          headers: {
+              "Access-Control-Allow-Origin": "http://localhost:8080",
+              "MediaType": "application/json",
+              "Authorization": "Bearer " + localStorage.getItem('jwt')
+          }
+  
+      })
+
+      let res = {data}
+      console.log(res)
+      setCurrent(res)
+      localStorage.setItem("user", res.data)
+      setIsLoadingCurrent(false)
+
+    } catch (err) {
+      console.error("Error fetching current user:", err);
+    }
+  }
 
   async function getMovies() {
     try {
@@ -77,18 +104,17 @@ function Home () {
         
       </Head>
       
-      {isLoadingCategories ? (
+      {isLoadingCategories || isLoadingCurrent ? (
       <h1>Loading...</h1>
       ) : (
-        <Navigation categories={categories}/>
+        <Navigation user={current.data} categories={categories}/>
       )}
-      
-      <Carousel/>
+      {/* <Carousel/> */}
 
       {isLoadingMovies ? (
         <h1>Loading...</h1>
       ) : (
-        <MoviesList movies={movies} />
+        <MoviesList movies={movies}/>
       )}
       
       

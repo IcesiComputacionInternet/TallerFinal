@@ -11,12 +11,16 @@ const movie = () => {
   console.log("rou");
   console.log(router.query.movie);
 
+  const [current, setCurrent] = useState([]);
+  const [isLoadingCurrent, setIsLoadingCurrent] = useState(true);
+
   useEffect(() => {
     if (router.query.movie) {
       let encodedMovie = encodeURIComponent(router.query.movie);
       getData(encodedMovie);
       getCategories()
       console.log(movie);
+      getCurrentUser()
     }
   }, [router.query.movie]);
 
@@ -31,6 +35,28 @@ const movie = () => {
     categoryName: "",
     pgRating: "",
   });
+
+  async function getCurrentUser() {
+    try {
+      const {data} = await axios.get("http://localhost:8080/users/CurrentUser",
+      {
+          headers: {
+              "Access-Control-Allow-Origin": "http://localhost:8080",
+              "MediaType": "application/json",
+              "Authorization": "Bearer " + localStorage.getItem('jwt')
+          }
+  
+      })
+
+      let res = {data}
+      console.log(res)
+      setCurrent(res)
+      setIsLoadingCurrent(false)
+
+    } catch (err) {
+      console.error("Error fetching current user:", err);
+    }
+  }
 
   async function getData(name) {
     try {
@@ -49,7 +75,7 @@ const movie = () => {
         imageURL: data.imageURL,
         pgRating: data.pgRating,
         price: data.price,
-        categoryName: data.categoryName,
+        categoryName: data.categoryDTO.name,
       });
       //console.log(movie);
       setIsLoading(false);
@@ -83,21 +109,22 @@ const movie = () => {
 
   return (
     <div>
-        {isLoadingCategories ? (
+        {isLoadingCategories || isLoadingCurrent ? (
       <h1>Loading...</h1>
       ) : (
-        <Navigation categories={categories}/>
+        <Navigation user={current.data} categories={categories}/>
       )}
+      
       {isLoading ? (
-        <div class="text-center">
-            <div class="spinner-grow spinner-grow-sm" role="status">
-                <span class="visually-hidden">Loading...</span>
+        <div className="text-center">
+            <div className="spinner-grow spinner-grow-sm" role="status">
+                <span className="visually-hidden">Loading...</span>
             </div>
-            <div class="spinner-grow spinner-grow-sm" role="status">
-                <span class="visually-hidden">Loading...</span>
+            <div className="spinner-grow spinner-grow-sm" role="status">
+                <span className="visually-hidden">Loading...</span>
             </div>
-            <div class="spinner-grow spinner-grow-sm" role="status">
-                <span class="visually-hidden">Loading...</span>
+            <div className="spinner-grow spinner-grow-sm" role="status">
+                <span className="visually-hidden">Loading...</span>
             </div>
         </div>
       ) : (
@@ -114,10 +141,10 @@ const movie = () => {
           </div>
 
           <div style={{display: "flex"}}>
-          <button class= "btn btn-primary">
+          <button className= "btn btn-primary">
             Buy For {movie.price}$
           </button>
-          <button class= "btn btn-primary">
+          <button className= "btn btn-primary">
             Add To Order
           </button>
           </div>

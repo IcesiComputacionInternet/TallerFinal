@@ -6,8 +6,8 @@ export default function MoviesList ({movies}) {
     return (
     
       <div style={{display: 'flex'}}>
-        {movies.data.map((movie) => (
-          <Card movie = {movie}/>
+        {movies.data.map((movie, key) => (
+          <Card movie = {movie} key={key}/>
         ))}
       </div>
     
