@@ -20,7 +20,10 @@ public class CustomerController implements CustomerAPI {
     public ResponseCustomerDTO createUser(CreateCustomerDTO user) {
         return customerService.save(user);
     }
-
+    @Override
+    public ResponseCustomerDTO updateUser(CreateCustomerDTO user) {
+        return customerService.save(user);
+    }
     @Override
     public List<ResponseSalesOrderDTO> getOrdersByUserEmail(String userEmail) {
         return customerService.getOrdersByUserEmail(userEmail);

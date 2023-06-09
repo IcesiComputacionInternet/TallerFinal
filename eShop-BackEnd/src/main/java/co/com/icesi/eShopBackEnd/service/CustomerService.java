@@ -33,6 +33,25 @@ public class CustomerService {
     private final PasswordEncoder encoder;
     private final SecurityContext context;
 
+
+    public ResponseCustomerDTO updateCustomer(CreateCustomerDTO user) {
+        validatePhone( user.phoneNumber());
+        Customer newCustomer = customerRepository.findUserByEmail(user.email()).orElseThrow(
+                ArgumentsExceptionBuilder.createArgumentsExceptionSup(
+                        "Not existing data",
+                        HttpStatus.BAD_REQUEST,
+                        new DetailBuilder(ErrorCode.ERR_NOT_FOUND,"customer")
+                )
+        );
+        newCustomer.setFirstName(user.firstName());
+        newCustomer.setLastName(user.lastName());
+        newCustomer.setAddress(user.address());
+        newCustomer.setBirthday(LocalDate.parse(user.birthday()));
+        newCustomer.setPhoneNumber(user.phoneNumber());
+        newCustomer.setPassword(user.password());
+        ResponseCustomerDTO userResponse = customerMapper.fromUserToResponseUserDTO(customerRepository.uptadeInformation(newCustomer,newCustomer.getEmail()));
+        return userResponse;
+    }
     public ResponseCustomerDTO save(CreateCustomerDTO user) {
         validateEmailAndPhone(user.email(), user.phoneNumber());
 
@@ -85,6 +104,18 @@ public class CustomerService {
         }
     }
 
+    private void validatePhone( String userPhone){
+        boolean phoneNumber = customerRepository.findByPhoneNumber(userPhone);
+
+        if (phoneNumber) {
+            throw ArgumentsExceptionBuilder.createArgumentsException(
+                    "Existing data",
+                    HttpStatus.BAD_REQUEST,
+                    new DetailBuilder(ErrorCode.ERR_406,"Phone number")
+            );
+            //throw new ArgumentsException("Phone number already exist");
+        }
+    }
     public List<ResponseSalesOrderDTO> getOrdersByUserEmail(String userEmail){
         Customer customer = customerRepository.findUserByEmail(userEmail).orElseThrow(
                 ArgumentsExceptionBuilder.createArgumentsExceptionSup(

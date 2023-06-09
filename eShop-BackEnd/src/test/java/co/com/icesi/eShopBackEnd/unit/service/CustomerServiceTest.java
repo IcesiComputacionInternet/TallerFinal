@@ -15,6 +15,7 @@ import co.com.icesi.eShopBackEnd.repository.RoleRepository;
 import co.com.icesi.eShopBackEnd.security.SecurityContext;
 import co.com.icesi.eShopBackEnd.service.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -50,6 +51,7 @@ public class CustomerServiceTest {
     }
 
     @Test
+    @Order(1)
     public void testCreateResponseCustomer() {
         when(customerRepository.findByEmail(any())).thenReturn(false);
         when(customerRepository.findByPhoneNumber(any())).thenReturn(false);
@@ -64,7 +66,10 @@ public class CustomerServiceTest {
 
     }
 
+
+
     @Test
+    @Order(3)
     public void testCreateResponseCustomerWentEmailAlreadyExist() {
 
 
@@ -83,6 +88,7 @@ public class CustomerServiceTest {
     }
 
     @Test
+    @Order(4)
     public void testCreateResponseCustomerWentPhoneNumberAlreadyExist() {
         try {
             when(customerRepository.findByPhoneNumber(any())).thenReturn(true);
@@ -102,6 +108,7 @@ public class CustomerServiceTest {
     }
 
     @Test
+    @Order(5)
     public void testCreateResponseCustomerWentThereIsNoRole() {
         try {
             when(customerRepository.findByPhoneNumber(any())).thenReturn(false);
@@ -117,7 +124,16 @@ public class CustomerServiceTest {
 
 
     }
+    @Test
+    @Order(6)
+    public void testUpdate() {
+        when(customerRepository.findUserByEmail(any())).thenReturn(Optional.of(defaultCustomer()));
+        when(customerRepository.uptadeInformation(any(),any())).thenReturn(((defaultCustomer())));
+        customerService.updateCustomer(createCustomerDTO());
+        assertEquals("call 65 Nº 32", defaultCustomer().getAddress());
+        assertEquals("lucho@email.com", defaultCustomer().getEmail());
 
+    }
     private Role defaultRole() {
         return Role.builder().roleName("USER").description("Is a teacher the university Icesi").build();
     }
@@ -131,7 +147,7 @@ public class CustomerServiceTest {
     }
 
     private CreateCustomerDTO createCustomerDTO() {
-        return CreateCustomerDTO.builder().firstName("luis").lastName("andres").address("call 65 Nº 32").birthday("2023-06-06").email("johndoe@email.com").phoneNumber("332036584").password("password").build();
+        return CreateCustomerDTO.builder().firstName("luisa").lastName("andrea").address("call 65 Nº 32").birthday("2023-06-06").email("lucho@email.com").phoneNumber("332036584").password("password").build();
     }
 
     private ResponseCustomerDTO defaultResponseCustomerDTO() {

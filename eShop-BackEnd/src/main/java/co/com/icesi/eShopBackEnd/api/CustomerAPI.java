@@ -19,7 +19,8 @@ public interface CustomerAPI {
 
     @PostMapping
     ResponseCustomerDTO createUser(@Valid @RequestBody CreateCustomerDTO user);
-
+    @PostMapping
+    ResponseCustomerDTO updateUser(@Valid @RequestBody CreateCustomerDTO user);
     @GetMapping("/order/{userEmail}")
     List<ResponseSalesOrderDTO> getOrdersByUserEmail(@PathVariable String userEmail);
 }
