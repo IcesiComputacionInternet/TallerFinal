@@ -86,8 +86,13 @@ public class ItemService {
     public Page<ItemShowDTO> getAllItems(int page, int perPage, String sortBy, String sortDir){
         Pageable pageable = SortUtil.sort(page, perPage, sortBy, sortDir);
         Page<Item> items = itemRepository.getAllItems(pageable);
-        Page<ItemShowDTO> itemShowDTOS = items.map(entity -> fromItemToShowDTO(entity));
-        return itemShowDTOS;
+        return items.map(this::fromItemToShowDTO);
+    }
+
+    public Page<ItemShowDTO> getByNameContains(String filter, int page, int perPage, String sortBy, String sortDir){
+        Pageable pageable = SortUtil.sort(page, perPage, sortBy, sortDir);
+        Page<Item> items = itemRepository.getByNameContains(filter, pageable);
+        return items.map(this::fromItemToShowDTO);
     }
 
     public void deleteItemById(String itemId){

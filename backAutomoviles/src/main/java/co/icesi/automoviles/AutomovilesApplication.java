@@ -85,7 +85,7 @@ public class AutomovilesApplication {
 				.description("Description for car 1")
 				.name("Car 1")
 				.price(10000000)
-				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=996")
+				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=500")
 				.category(sportCategory)
 				.build();
 		Item car2 = Item.builder()
@@ -93,7 +93,7 @@ public class AutomovilesApplication {
 				.description("Description for car 2")
 				.name("Car 2")
 				.price(10000000)
-				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=996")
+				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=500")
 				.category(sportCategory)
 				.build();
 		Item car3 = Item.builder()
@@ -101,7 +101,7 @@ public class AutomovilesApplication {
 				.description("Description for car 3")
 				.name("Car 3")
 				.price(10000000)
-				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=996")
+				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=500")
 				.category(sportCategory)
 				.build();
 		Item car4 = Item.builder()
@@ -109,7 +109,7 @@ public class AutomovilesApplication {
 				.description("Description for car 4")
 				.name("Car 4")
 				.price(10000000)
-				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=996")
+				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=500")
 				.category(sportCategory)
 				.build();
 		Item car5 = Item.builder()
@@ -117,9 +117,36 @@ public class AutomovilesApplication {
 				.description("Description for car 5")
 				.name("Car 5")
 				.price(10000000)
-				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=996")
+				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=500")
 				.category(sportCategory)
 				.build();
+		Item car6 = Item.builder()
+				.itemId(UUID.fromString("bcc455da-3b03-4ab8-adbb-d45754a7365a"))
+				.description("Description for car 6")
+				.name("Car 6")
+				.price(10000000)
+				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=500")
+				.category(sportCategory)
+				.build();
+		Item car7 = Item.builder()
+				.itemId(UUID.fromString("bcc455da-3b03-4a18-adbb-d45754a6365a"))
+				.description("Description for car 7")
+				.name("Car 7")
+				.price(10000000)
+				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=500")
+				.category(sportCategory)
+				.build();
+		Item car8 = Item.builder()
+				.itemId(UUID.fromString("bcc455da-3b03-4ab8-adbb-d25754a6365a"))
+				.description("Description for car 8")
+				.name("Car 8")
+				.price(10000000)
+				.imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=500")
+				.category(sportCategory)
+				.build();
+
+
+
 
 
 		return args -> {
@@ -135,6 +162,9 @@ public class AutomovilesApplication {
 			itemRepository.save(car3);
 			itemRepository.save(car4);
 			itemRepository.save(car5);
+			itemRepository.save(car6);
+			itemRepository.save(car7);
+			itemRepository.save(car8);
 		};
 	}
 }

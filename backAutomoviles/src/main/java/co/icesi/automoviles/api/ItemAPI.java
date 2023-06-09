@@ -12,7 +12,7 @@ import java.util.List;
 
 @RequestMapping("/items")
 public interface ItemAPI {
-    public static final String ROOT_PATH = "/items";
+    public static final String ROOT_PATH = "/items/";
 
     @PostMapping
     public ItemShowDTO createItem(@Valid @RequestBody ItemCreateDTO itemCreateDTO);
@@ -28,7 +28,8 @@ public interface ItemAPI {
             @RequestParam(name = "page", defaultValue = "1") Integer page,
             @RequestParam(name = "per_page", defaultValue = "5") Integer perPage,
             @RequestParam(name = "sort", defaultValue = "name") String sortBy,
-            @RequestParam(name = "sort_dir", defaultValue = "asc") String sortDirection
+            @RequestParam(name = "sort_dir", defaultValue = "asc") String sortDirection,
+            @RequestParam(name = "filter", required = false) String filter
     );
 
     @DeleteMapping("{itemId}")

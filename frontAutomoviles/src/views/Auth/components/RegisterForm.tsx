@@ -11,9 +11,10 @@ import { register } from '../../../services/register';
 
 interface Props {
     setViewLogin: () => void;
+    setInfoToast: (message: string, title: string) => void;
 }
 
-const Register = ({setViewLogin} : Props) => {
+const Register = ({setViewLogin, setInfoToast} : Props) => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
@@ -41,11 +42,11 @@ const Register = ({setViewLogin} : Props) => {
           };
         register(userInfo).then((result) => {
             if(result){
-                console.log('Registered successfully');
+                setInfoToast("You have successfully registered!", "Success");
                 setViewLogin();
             }
         }).catch((error) => {
-            console.log(error);
+            setInfoToast(error.message, "Error");
         });
     };
 
