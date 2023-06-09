@@ -104,6 +104,10 @@ public class OrderService {
         Movie movie = movieRepository.findByName(targetDTO.getMovieName()).orElseThrow(
                 ()-> new RuntimeException("No existe una pelicula con este nombre") );
 
+        if(order.getMovies().contains(movie))
+        {
+            throw new RuntimeException("La pelicula ya esta en la orden");
+        }
         order.getMovies().add(movie);
         order.setTotal(order.getTotal()+movie.getPrice());
 

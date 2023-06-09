@@ -203,5 +203,184 @@ public class OrderTest {
         assertNotNull(orderDTO);
     }
 
+    @Test
+    public void addMovieAlreadyInOrder() throws Exception{
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/addMovie")
+                        .content(objectMapper.writeValueAsString( new OrderTargetDTO(
+                                "2",
+                                "Fast X"
+                        )))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().is5xxServerError())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+        MovieError movieError = objectMapper.readValue(result.getResponse().getContentAsString(), MovieError.class);
+        assertNotNull(movieError);
+        assertEquals("La pelicula ya esta en la orden", movieError.getDetails());
+    }
+
+    @Test
+    public void addMovieMovieNotFound() throws Exception{
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/addMovie")
+                        .content(objectMapper.writeValueAsString( new OrderTargetDTO(
+                                "2",
+                                "Fast 10"
+                        )))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().is5xxServerError())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+        MovieError movieError = objectMapper.readValue(result.getResponse().getContentAsString(), MovieError.class);
+        assertNotNull(movieError);
+        assertEquals("No existe una pelicula con este nombre", movieError.getDetails());
+    }
+
+    @Test
+    public void addMovieOrderNotFound() throws Exception{
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/addMovie")
+                        .content(objectMapper.writeValueAsString( new OrderTargetDTO(
+                                "3",
+                                "Spider-Man: Across the Spider-Verse"
+                        )))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().is5xxServerError())
+                .andReturn();
+        MovieError movieError = objectMapper.readValue(result.getResponse().getContentAsString(), MovieError.class);
+        assertNotNull(movieError);
+        assertEquals("No existe una orden con este numero", movieError.getDetails());
+    }
+
+    @Test
+    public void deleteMovieHappyPath() throws Exception{
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/deleteMovie")
+                        .content(objectMapper.writeValueAsString( new OrderTargetDTO(
+                                "2",
+                                "Fast X"
+                        )))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+        OrderDTO orderDTO = objectMapper.readValue(result.getResponse().getContentAsString(), OrderDTO.class);
+        assertNotNull(orderDTO);
+    }
+
+    @Test
+    public void deleteMovieNotInOrder() throws Exception{
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/deleteMovie")
+                        .content(objectMapper.writeValueAsString( new OrderTargetDTO(
+                                "2",
+                                "Spider-Man: Across the Spider-Verse"
+                        )))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().is5xxServerError())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+        MovieError movieError = objectMapper.readValue(result.getResponse().getContentAsString(), MovieError.class);
+        assertNotNull(movieError);
+        assertEquals("La orden no contiene esta pelicula", movieError.getDetails());
+    }
+
+    @Test
+    public void deleteMovieMovieNotFound() throws Exception{
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/deleteMovie")
+                        .content(objectMapper.writeValueAsString( new OrderTargetDTO(
+                                "2",
+                                "Fast 10"
+                        )))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().is5xxServerError())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+        MovieError movieError = objectMapper.readValue(result.getResponse().getContentAsString(), MovieError.class);
+        assertNotNull(movieError);
+        assertEquals("No existe una pelicula con este nombre", movieError.getDetails());
+    }
+
+    @Test
+    public void removeMovieOrderNotFound() throws Exception{
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/deleteMovie")
+                        .content(objectMapper.writeValueAsString( new OrderTargetDTO(
+                                "3",
+                                "Spider-Man: Across the Spider-Verse"
+                        )))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().is5xxServerError())
+                .andReturn();
+        MovieError movieError = objectMapper.readValue(result.getResponse().getContentAsString(), MovieError.class);
+        assertNotNull(movieError);
+        assertEquals("No existe una orden con este numero", movieError.getDetails());
+    }
+
 
 }
