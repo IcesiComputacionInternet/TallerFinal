@@ -47,12 +47,12 @@ public class TokenService {
                 .build();
         var encoderParameters = JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS256).build(),claims);
         var token = this.encoder.encode(encoderParameters).getTokenValue();
-
         Optional<Customer> customer = customerRepository.getCustomerById(UUID.fromString(customAuthentication.getName()));
         var role  = customer.isPresent() ? customer.get().getRole().getRoleName():"NONE";
         return TokenDTO.builder()
                 .token(token)
                 .role(role)
+                .userId(UUID.fromString(customAuthentication.getName()))
                 .build();
     }
 
