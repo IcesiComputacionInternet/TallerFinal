@@ -9,6 +9,8 @@ export default function orders() {
 
     const router = useRouter();
 
+    const urlOrder = "http://localhost:3000/orders/order/";
+
     const [categories, setCategories] = useState([]);
     const [orders, setOrders] = useState([]);
 
@@ -112,8 +114,9 @@ export default function orders() {
                 ):(
                     <div>
                         <ul className="list-group">
-                            {orders.data.map((order) => (
-                                <a href="#" class="list-group-item list-group-item-action">
+                            {
+                            orders.data.map((order) => (
+                                <a href = {urlOrder + order.orderNumber} class="list-group-item list-group-item-action">
                                 <div className="d-flex w-100 justify-content-between">
                                   <h5 className="mb-1">{order.orderNumber}</h5>
                                   <small className="text-muted">{order.status}</small>

@@ -2,14 +2,20 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navigation from '../../components/Navigation'
+import Navigation from '../../../components/Navigation'
+import MoviesList from "../../../components/MoviesList";
 
 export default function orderDetails() {
 
     const router = useRouter();
 
     const [categories, setCategories] = useState([]);
-    const [orders, setOrders] = useState([]);
+    const [order, setOrder] = useState({
+        orderNumber: "",
+        movies: [],
+        total: 0,
+        status: "",
+    });
 
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadingCategories, setIsLoadingCategories] = useState(true);
@@ -18,12 +24,12 @@ export default function orderDetails() {
     const [isLoadingCurrent, setIsLoadingCurrent] = useState(true);
 
     useEffect(() => {
-        if (router.query.email) {
-          getOrders(router.query.email)
+        if (router.query.order) {
+          getOrders(router.query.order)
           getCategories()
           getCurrentUser()
         }
-    }, [router.query.email]);
+    }, [router.query.order]);
 
     async function getCurrentUser() {
         try {
@@ -69,10 +75,10 @@ export default function orderDetails() {
         }
       }
 
-      
-      async function getOrders(email) {
+
+      async function getOrders(order) {
         try {
-          const {data} = await axios.get("http://localhost:8080/orders/getUserOrders/" + email,
+          const {data} = await axios.get("http://localhost:8080/orders/findByNumber/" + order,
           {
               headers: {
                   "Access-Control-Allow-Origin": "http://localhost:8080",
@@ -81,10 +87,12 @@ export default function orderDetails() {
               }
       
           })
-    
-          let res = {data}
-          console.log(res)
-          setOrders(res)
+          setOrder({
+            orderNumber: data.orderNumber,
+            movies: data.movies,
+            total: data.total,
+            status: data.status,
+          });
           setIsLoading(false)
     
         } catch (err) {
@@ -92,7 +100,28 @@ export default function orderDetails() {
         }
       }
 
-      
+      return(
+        <div className="text-center">
+            {isLoadingCategories || isLoadingCurrent ? (
+                <h1>Loading...</h1>
+            ) : (
+                <Navigation user={current.data} categories={categories}/>
+            )}
+            <div>
+              {isLoadingCurrent || isLoading ? (
+                      <h1>Loading...</h1>
+                  ) : (
+                      <h1>{current.data.firstName}'s Order {order.orderNumber}</h1>
+                  )}
+
+              {isLoading ? (
+                  <h1>Loading...</h1>
+              ) : (
+                <MoviesList movies={order.movies}/>
+              )}
+            </div>
+        </div>
+      )
 
     
 }

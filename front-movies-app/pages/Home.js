@@ -114,7 +114,7 @@ function Home () {
       {isLoadingMovies ? (
         <h1>Loading...</h1>
       ) : (
-        <MoviesList movies={movies}/>
+        <MoviesList movies={movies.data}/>
       )}
       
       
