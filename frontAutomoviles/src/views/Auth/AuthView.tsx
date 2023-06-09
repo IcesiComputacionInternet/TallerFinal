@@ -33,7 +33,7 @@ function AuthView ({setLogin, setInfoToast}: Props) {
                 ) : (
                     <div className="py-4">
                         <div className="col-md-6 container d-flex">
-                            <RegisterForm setViewLogin={toggleView}/>
+                            <RegisterForm setViewLogin={toggleView} setInfoToast={setInfoToast}/>
                         </div>
                         <p className="text-center py-3">
                             ¿Ya tienes una cuenta?{' '}

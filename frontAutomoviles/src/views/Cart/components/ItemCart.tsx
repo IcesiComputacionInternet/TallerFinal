@@ -1,4 +1,4 @@
-interface Props {
+interface CartItem {
     item: {
         itemId: string;
         name: string;
@@ -10,23 +10,14 @@ interface Props {
             description: string;
         }
     },
-    isLogged: boolean;
-    setInfoToast: (message: string, title: string) => void;
+    handleRemoveFromCart: (itemId: string) => void;
 }
 
-function Item  ({item, isLogged, setInfoToast}:Props) {
-    const handleAddToCart = () => {
-        if(isLogged){
-            if(localStorage.getItem('cart') === null){
-                localStorage.setItem('cart', JSON.stringify([]));
-            }
-            localStorage.setItem('cart', JSON.stringify([...JSON.parse(localStorage.getItem('cart') || '[]'), item]));
-            setInfoToast('Item added to cart', 'Success');
-        }else{
-            setInfoToast('You must be logged in to add items to the cart', 'Warning');
-        }
-    }
+function ItemCart ({item, handleRemoveFromCart}:CartItem) {
 
+    const handleRemove = () => {
+        handleRemoveFromCart(item.itemId);
+    }
     return (
         <div className="card text-bg-dark mb-3" style={{maxWidth: '750px'}}>
             <div className="row g-0">
@@ -41,7 +32,7 @@ function Item  ({item, isLogged, setInfoToast}:Props) {
                     <div className="card-body d-flex flex-column">
                         <div className="d-flex justify-content-between align-items-center mb-3">
                             <h5 className="card-title">{item.name}</h5>
-                            <button className="btn btn-primary" onClick={handleAddToCart}>Add to cart</button>
+                            <button className="btn btn-primary" onClick={handleRemove}>Remove from cart</button>
                         </div>
                         <p className="card-text">{item.description}</p>
                         <p className="card-text">Price: {item.price}</p>
@@ -53,4 +44,4 @@ function Item  ({item, isLogged, setInfoToast}:Props) {
     )
 }
 
-export default Item;
+export default ItemCart;

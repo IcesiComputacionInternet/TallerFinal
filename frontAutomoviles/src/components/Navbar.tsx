@@ -1,5 +1,6 @@
 import {faHouse,
         faCartShopping,
+        faBagShopping,
         faRightFromBracket,
         faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,6 +19,23 @@ const Cart = () => {
                     </li>
                     <li className="list-inline-item">
                         Cart
+                    </li>
+                </ul>
+            </a>
+        </li>
+    )
+}
+
+const Orders = () => {
+    return (
+        <li>
+            <a href="/orders" className="nav-link text-white">
+                <ul className="list-inline">
+                    <li className="list-inline-item">
+                        <FontAwesomeIcon icon={faBagShopping}/>
+                    </li>
+                    <li className="list-inline-item">
+                        Orders
                     </li>
                 </ul>
             </a>
@@ -69,6 +87,7 @@ function Navbar({isLoggedIn}: Props) {
     if(!isLoggedIn){
         menuItems.push(<AuthView />)
     }else if(localStorage.getItem('role') === 'USER'){
+        menuItems.push(<Orders />)
         menuItems.push(<Cart />)
         menuItems.push(<LogOut />)
     }
