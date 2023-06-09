@@ -92,8 +92,13 @@ public class SecurityConfiguration {
         managerBuilder.add(new MvcRequestMatcher(introspector, "/store/**"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN","SCOPE_SHOP", "SCOPE_USER"));
 
+        managerBuilder.add(new MvcRequestMatcher(introspector, "/orders/create"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER"));
+
         managerBuilder.add(new MvcRequestMatcher(introspector, "/orders/**"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN","SCOPE_SHOP"));
+
+
 
 
 
