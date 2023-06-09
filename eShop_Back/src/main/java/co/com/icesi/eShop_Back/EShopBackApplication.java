@@ -67,7 +67,7 @@ public class EShopBackApplication {
 				.permissionId(UUID.randomUUID())
 				.key("USERS")
 				.path(BASE_URL + "/categories/**")
-				.roles(List.of(ADMIN))
+				.roles(List.of(ADMIN, SHOP, CLIENT))
 				.build();
 		UserPermission orders = UserPermission.builder()
 				.permissionId(UUID.randomUUID())
