@@ -5,8 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function Navigation({categories, user}) {
 
     console.log(user)
-
-    const orderLink = "/orders/" + user.email
+    let email = user != undefined ? user.email : localStorage.getItem("user").email
+    const orderLink = "/orders/" + email
     
 
     return (

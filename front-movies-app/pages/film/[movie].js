@@ -75,7 +75,7 @@ const movie = () => {
         imageURL: data.imageURL,
         pgRating: data.pgRating,
         price: data.price,
-        categoryName: data.categoryName,
+        categoryName: data.categoryDTO.name,
       });
       //console.log(movie);
       setIsLoading(false);
@@ -116,15 +116,15 @@ const movie = () => {
       )}
       
       {isLoading ? (
-        <div class="text-center">
-            <div class="spinner-grow spinner-grow-sm" role="status">
-                <span class="visually-hidden">Loading...</span>
+        <div className="text-center">
+            <div className="spinner-grow spinner-grow-sm" role="status">
+                <span className="visually-hidden">Loading...</span>
             </div>
-            <div class="spinner-grow spinner-grow-sm" role="status">
-                <span class="visually-hidden">Loading...</span>
+            <div className="spinner-grow spinner-grow-sm" role="status">
+                <span className="visually-hidden">Loading...</span>
             </div>
-            <div class="spinner-grow spinner-grow-sm" role="status">
-                <span class="visually-hidden">Loading...</span>
+            <div className="spinner-grow spinner-grow-sm" role="status">
+                <span className="visually-hidden">Loading...</span>
             </div>
         </div>
       ) : (
@@ -141,10 +141,10 @@ const movie = () => {
           </div>
 
           <div style={{display: "flex"}}>
-          <button class= "btn btn-primary">
+          <button className= "btn btn-primary">
             Buy For {movie.price}$
           </button>
-          <button class= "btn btn-primary">
+          <button className= "btn btn-primary">
             Add To Order
           </button>
           </div>

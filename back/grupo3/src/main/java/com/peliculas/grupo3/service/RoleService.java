@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Service
 public class RoleService {
-    //TODO implementar metodos del repositorio
+
 
     private final RoleRepository roleRepository;
 

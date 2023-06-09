@@ -119,7 +119,9 @@ public class OrderTest {
                                         "noOrders@gmail.co",
                                         "+57 399 123 432",
                                         "123",
-                                        "USER")))
+                                        "USER",
+                                        "address",
+                                        "10/10/2000")))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))

@@ -73,7 +73,10 @@ public class UserTest {
                                         "123@gmail.co",
                                         "+57 305 123 432",
                                         "123",
-                                        "USER")))
+                                        "USER",
+                                "address",
+                                        "10/10/200"
+                                        )))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
@@ -100,7 +103,9 @@ public class UserTest {
                                         "123gmail",
                                         "+57 305 125 432",
                                         "123",
-                                        "USER")))
+                                        "USER",
+                                        "address",
+                                        "10/10/200")))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
@@ -124,7 +129,9 @@ public class UserTest {
                                         "123@gmail.com",
                                         "305 125 432",
                                         "123",
-                                        "USER")))
+                                        "USER",
+                                        "address",
+                                        "10/10/200")))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
@@ -148,7 +155,9 @@ public class UserTest {
                                         "noname@email.com",
                                         "+57 305 125 432",
                                         "123",
-                                        "USER")))
+                                        "USER",
+                                        "address",
+                                        "10/10/200")))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
@@ -175,7 +184,9 @@ public class UserTest {
                                         "new@email.com",
                                         "+57123123123",
                                         "123",
-                                        "not a role")))
+                                        "not a role",
+                                        "address",
+                                        "10/10/200")))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
