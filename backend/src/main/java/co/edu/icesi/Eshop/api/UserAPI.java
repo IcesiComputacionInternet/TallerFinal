@@ -16,6 +16,9 @@ public interface UserAPI {
     @GetMapping("/{userEmail}")
     UserDTO getUser(@PathVariable String userEmail);
 
+    @GetMapping("/current")
+    UserDTO getCurrentUser();
+
     @GetMapping
     List<UserDTO> getAllUsers();
 

@@ -66,8 +66,13 @@ const Register = ({ onRegistrationComplete }: Props) => {
     }
   };
 
+  const handleClick = async (event: any) => {
+    event.preventDefault();
+    navigation("/login");
+  };
+
   return (
-    <div className="container">
+    <div className="container" style={{marginTop:"5%"}}>
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="card">
@@ -141,9 +146,13 @@ const Register = ({ onRegistrationComplete }: Props) => {
                     required
                   />
                 </div>
+                <br />
                 <div className="d-flex justify-content-center">
                   <button type="submit" className="btn btn-primary">
                     Registrarse
+                  </button>
+                  <button type="button" className="btn btn-secondary" onClick={handleClick}>
+                    Volver
                   </button>
                 </div>
               </form>
