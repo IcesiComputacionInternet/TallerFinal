@@ -4,9 +4,10 @@ import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navigation from '../../components/Navigation'
 
-const movie = (props) => {
+const movie = () => {
   const router = useRouter();
 
+  const [categories, setCategories] = useState([]);
   console.log("rou");
   console.log(router.query.movie);
 
@@ -14,7 +15,7 @@ const movie = (props) => {
     if (router.query.movie) {
       let encodedMovie = encodeURIComponent(router.query.movie);
       getData(encodedMovie);
-
+      getCategories()
       console.log(movie);
     }
   }, [router.query.movie]);
@@ -56,10 +57,32 @@ const movie = (props) => {
     }
   }
 
+  async function getCategories() {
+    try {
+      const {data} = await axios.get("http://localhost:8080/categories/all",
+      {
+          headers: {
+              "Access-Control-Allow-Origin": "http://localhost:8080",
+              "MediaType": "application/json",
+              "Authorization": "Bearer " + localStorage.getItem('jwt')
+          }
+  
+      })
+
+      let res = {data}
+      console.log(res)
+      setCategories(res)
+      setIsLoading(false)
+
+    } catch (err) {
+      console.error("Error fetching movies:", err);
+    }
+  }
+
 
   return (
     <div>
-        <Navigation/>
+        <Navigation categories={categories}/>
       {isLoading ? (
         <div class="text-center">
             <div class="spinner-grow spinner-grow-sm" role="status">
