@@ -1,5 +1,5 @@
 import { Button, Stack } from "react-bootstrap"
-import { useShoppingCart } from "../methods/ShoppingCartCtx"
+import { useShoppingCart } from "../services/ShoppingCartCtx"
 import storeItems from "../testData/items.json"
 
 type CartItemProps = {

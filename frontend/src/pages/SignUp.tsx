@@ -2,6 +2,21 @@
 import React, { useState } from "react";
 import '../style/form.css'
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import axios from "axios";
+
+
+interface RequestUserDTO {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    phoneNumber: string;
+    address: string;
+    birthday: string;
+    role: string;
+}
+
+const baseUrl = "http://localhost:8080";
 
 const SignUp = () => {
     const [name, setName] = useState("");
@@ -10,12 +25,46 @@ const SignUp = () => {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [address, setAddress] = useState("");
     const [birthday, setBirthday] = useState("");
-    // const [rol, setRol] = useState("");
+    const [role, setRol] = useState("");
     const [password, setPassword] = useState("");
     const navigation : NavigateFunction = useNavigate();
 
-    const handleSubmit = async (event: any) => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+
+        try {
+            const requestUserDTO: RequestUserDTO = {
+                firstName: name,
+                lastName: lastName,
+                email: email,
+                password: password,
+                phoneNumber: phoneNumber,
+                address: address,
+                birthday: birthday,
+                role: role,
+            };
+
+            console.log(requestUserDTO)
+
+            const userCtx = (requestUserDTO: RequestUserDTO) => {
+                return axios.post(`${baseUrl}/users/create`, requestUserDTO, {
+                headers: {
+                    "Access-Control-Allow-Origin": baseUrl,
+                    "MediaType": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem('jwt')
+                }
+            });
+        }
+
+        const response = await userCtx(requestUserDTO);
+            console.log(response.data)
+            if (response.status == 200) {
+                alert("Success");
+            }
+
+        } catch (error) {
+            alert("Error signing up");
+        }
     };
 
     const cancelSignUp = () => {
@@ -111,18 +160,30 @@ const SignUp = () => {
                 </div>
 
                 <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                           value="SHOP"/>
+                    <input
+                        className="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions"
+                        id="inlineRadio1"
+                        value="SHOP"
+                        onChange={(event) => setRol(event.target.value)}
+                    />
                         <label className="form-check-label" htmlFor="inlineRadio1">Seller</label>
                 </div>
                 <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                           value="USER"/>
+                    <input
+                        className="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions"
+                        id="inlineRadio2"
+                        value="USER"
+                        onChange={(event) => setRol(event.target.value)}
+                    />
                         <label className="form-check-label" htmlFor="inlineRadio2">Buyer</label>
                 </div>
 
                     <div className="button-container">
-                        <button className="btn btn-primary form-button">Sign Up</button>
+                        <button className="btn btn-primary form-button" type="button" onClick={handleSubmit}>Sign Up</button>
                         <button className="btn btn-outline-danger form-button" onClick={cancelSignUp}>Cancel</button>
                     </div>
             </form>

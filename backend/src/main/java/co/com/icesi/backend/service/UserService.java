@@ -39,9 +39,8 @@ public class UserService {
         shopUser.setUserId(UUID.randomUUID());
         shopUser.setRole(role);
         userRepository.save(shopUser);
-        ResponseUserDTO responseUserDTO = userMapper.fromUserToResponseUserDTO(shopUser);
-        responseUserDTO.setRole(roleMapper.fromRoleToRoleDTO(role));
-        return responseUserDTO;
+        System.out.println(requestUserDTO.getFirstName());
+        return userMapper.fromUserToResponseUserDTO(shopUser);
     }
 
     public void checkPermissionsToAssignRole(String roleToAssign) {

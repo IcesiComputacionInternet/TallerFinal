@@ -1,5 +1,5 @@
 import { Button, Card } from "react-bootstrap"
-import { useShoppingCart } from "../methods/ShoppingCartCtx"
+import { useShoppingCart } from "../services/ShoppingCartCtx"
 
 type StoreItemProps = {
     id: number

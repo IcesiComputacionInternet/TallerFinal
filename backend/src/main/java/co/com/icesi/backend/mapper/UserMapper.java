@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 public interface UserMapper {
     @Mapping(target = "role", source = "role",ignore=true)
     ShopUser fromUserDTO(RequestUserDTO requestUserDTO);
-    @Mapping(target = "role", source = "role",ignore=true)
-    ResponseUserDTO fromUserToResponseUserDTO(ShopUser ShopUser);
+    @Mapping(target = "role", expression = "java(shopUser.getRole().getRoleName())")
+    ResponseUserDTO fromUserToResponseUserDTO(ShopUser shopUser);
+
 }

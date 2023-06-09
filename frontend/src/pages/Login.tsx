@@ -1,3 +1,4 @@
+// @ts-ignore
 import React, { useState } from "react";
 import axios from "axios";
 import { NavigateFunction, useNavigate } from "react-router-dom";
@@ -18,8 +19,7 @@ const Login = ({ setLogin }: Props) => {
     const handleSubmit = async (event: any) => {
         event.preventDefault();
 
-        try {
-            const { data } = await axios.post(
+        axios.post(
                 baseUrl + "/token",
                 {
                     username,
@@ -28,21 +28,24 @@ const Login = ({ setLogin }: Props) => {
                 {
                     headers: {
                         "Access-Control-Allow-Origin": baseUrl,
+                        "Content-Type": "application/json"
                     },
                 }
-            );
-            if (data.token) {
-                localStorage.setItem("jwt", data.token);
+            ).then((response) => {
+                console.log(response.data)
+                localStorage.setItem("jwt", response.data.token);
                 localStorage.setItem("userEmail", username);
+                localStorage.setItem("role", response.data.role);
+                console.log(response.data.role)
                 setLogin();
                 navigation("/store");
-            }
-        } catch (error) {
-            alert("Invalid username or password")
-            window.location.reload();
-        }
-
+            }).catch((error) => {
+                alert("Invalid username or password")
+                console.log(error)
+                window.location.reload();
+        });
     };
+
 
     const signUpPage = () => {
         navigation("/signup");

@@ -1,6 +1,6 @@
 import {Button, Container, Nav, Navbar as NavbarBs} from "react-bootstrap"
 // import { NavLink } from "react-router-dom"
-import {useShoppingCart} from "../methods/ShoppingCartCtx.tsx";
+import {useShoppingCart} from "../services/ShoppingCartCtx.tsx";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 
 export function UserNavbar() {

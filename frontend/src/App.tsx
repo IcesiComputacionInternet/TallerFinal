@@ -7,7 +7,7 @@ import Orders from "./pages/Orders.tsx";
 import Roles from "./pages/Roles.tsx";
 import { Store }  from "./pages/Store.tsx";
 import { UserNavbar } from "./components/UserNavbar.tsx"
-import {ShoppingCartProvider} from "./methods/ShoppingCartCtx.tsx";
+import {ShoppingCartProvider} from "./services/ShoppingCartCtx.tsx";
 // import NotFound from "./components/NotFound";
 
 function App() {
