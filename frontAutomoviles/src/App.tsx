@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import Toast from './components/Toast';
 import Cart from './views/Cart/Cart';
 import Orders from './views/Orders/Orders';
+import Category from './views/Manager/Category/Category';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
@@ -64,6 +65,10 @@ function App() {
           <Route
             path="/orders"
             element={<Orders />}
+          />
+          <Route
+            path="/manage/categories"
+            element={<Category />}
           />
           <Route 
             path='/*' 

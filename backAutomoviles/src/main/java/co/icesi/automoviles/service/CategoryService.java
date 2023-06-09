@@ -2,6 +2,10 @@ package co.icesi.automoviles.service;
 
 import java.util.UUID;
 
+import co.icesi.automoviles.model.Item;
+import co.icesi.automoviles.service.utils.SortUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +40,12 @@ public class CategoryService {
         Category updatedCategory = categoryMapper.fromCategoryCreateDTOToCategory(categoryCreateDTO);
         updatedCategory.setCategoryId(category.getCategoryId());
         return categoryMapper.fromCategoryToCategoryShowDTO(categoryRepository.save(category));
+    }
+
+    public Page<CategoryShowDTO> getAllCategories(int page, int perPage, String sortBy, String sortDir){
+        Pageable pageable = SortUtil.sort(page, perPage, sortBy, sortDir);
+        Page<Category> cateogires = categoryRepository.getAllCategories(pageable);
+        return cateogires.map(categoryMapper::fromCategoryToCategoryShowDTO);
     }
 
     private Category getCategory(UUID categoryId){
