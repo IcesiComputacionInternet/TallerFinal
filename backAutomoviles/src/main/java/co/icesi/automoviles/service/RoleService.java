@@ -1,6 +1,8 @@
 package co.icesi.automoviles.service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import co.icesi.automoviles.dto.CategoryShowDTO;
 import co.icesi.automoviles.model.Category;
@@ -44,6 +46,12 @@ public class RoleService {
         Pageable pageable = SortUtil.sort(page, perPage, sortBy, sortDir);
         Page<Role> categories = roleRepository.getAllRoles(pageable);
         return categories.map(roleMapper::fromRoleToRoleShowDTO);
+    }
+
+    public List<RoleShowDTO> getAllRolesList(){
+        return roleRepository.findAll().stream()
+                .map(roleMapper::fromRoleToRoleShowDTO)
+                .collect(Collectors.toList());
     }
 
     private boolean roleNameAvailable(String roleName) {

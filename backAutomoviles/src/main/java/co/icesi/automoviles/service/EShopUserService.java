@@ -1,6 +1,7 @@
 package co.icesi.automoviles.service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import co.icesi.automoviles.dto.EShopUserShowDTO;
@@ -74,7 +75,7 @@ public class EShopUserService {
         }
     }
 
-    public Page<EShopUserShowDTO> getAllUsers(int page, int perPage, String sortBy, String sortDir){
+    public Page<EShopUserShowDTO> getAllUsers(int page, int perPage, String sortBy, String sortDir) {
         Pageable pageable = SortUtil.sort(page, perPage, sortBy, sortDir);
         Page<EShopUser> users = EShopUserRepository.getAllUsers(pageable);
         Page<EShopUserShowDTO> userShowDTOS = users.map(EShopUserMapper::fromEShopUserToEShopUserShowDTO);

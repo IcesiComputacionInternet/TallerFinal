@@ -25,7 +25,6 @@ function Pagination ({totalPages, currentPage, handlePageChange}: Props) {
             if (currentPage >= firstPage+2 && currentPage <= lastPage-2) {
                 pagesToShow.splice(1, 0, '...', currentPage - 1, currentPage, currentPage + 1, '...');
             }
-        
             return pagesToShow;
         }
       };

@@ -13,6 +13,7 @@ public interface EShopUserMapper {
 
     EShopUser fromEShopUserCreateDTO(EShopUserCreateDTO EShopUserCreateDTO);
     EShopUserCreateDTO fromEShopUserToEShopUserCreateDTO(EShopUser eShopUser);
+    @Mapping(source = "EShopUserId", target = "eShopUserId")
     @Mapping(source = "role", target = "role")
     EShopUserShowDTO fromEShopUserToEShopUserShowDTO(EShopUser eShopUser);
     @Mapping(source = "EShopUserId", target = "eShopUserId")

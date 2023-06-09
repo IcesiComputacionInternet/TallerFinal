@@ -32,7 +32,6 @@ function User() {
             <div className="d-flex flex-column align-items-center">
                 <h1 className="text-center">Users</h1>
             </div>
-            <button className="btn btn-primary my-1">Create</button>
             <table className="table table-striped">
                 <thead>
                     <tr>
@@ -52,7 +51,6 @@ function User() {
                             <td>{user.role.roleName}</td>
                             <td className='d-flex justify-content-center'>
                                 <button className="btn btn-primary mx-2" onClick={() => handleChangeRole(user)}>Change Role</button>
-                                <button className="btn btn-danger mx-2">Delete</button>
                             </td>
                         </tr>
                     ))}

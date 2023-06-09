@@ -12,6 +12,8 @@ import co.icesi.automoviles.dto.RoleShowDTO;
 import co.icesi.automoviles.service.RoleService;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class RoleController implements RoleAPI{
@@ -30,5 +32,10 @@ public class RoleController implements RoleAPI{
     public RoleShowDTO registerRole(RoleCreateDTO roleCreateDTO) {
         return roleService.registerRole(roleCreateDTO);
     }
-    
+
+    @Override
+    public List<RoleShowDTO> getAllRolesList() {
+        return roleService.getAllRolesList();
+    }
+
 }

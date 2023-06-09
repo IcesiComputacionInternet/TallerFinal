@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import co.icesi.automoviles.dto.RoleCreateDTO;
 import co.icesi.automoviles.dto.RoleShowDTO;
 
+import java.util.List;
+
 
 @RequestMapping("/roles")  
 public interface RoleAPI {
@@ -24,4 +26,8 @@ public interface RoleAPI {
 
     @PostMapping
     public RoleShowDTO registerRole(@Valid @RequestBody RoleCreateDTO roleCreateDTO);
+
+
+    @GetMapping("list")
+    List<RoleShowDTO> getAllRolesList();
 }

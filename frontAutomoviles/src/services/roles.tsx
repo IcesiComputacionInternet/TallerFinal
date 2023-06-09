@@ -16,6 +16,20 @@ export const getRolesPage = async (page: number) => {
     return data;
 }
 
+export const getRolesList = async () => {
+    const {data} = await axios.get(
+        `${baseUrl}/roles/list`,
+        {
+            headers: {
+                "Access-Control-Allow-Origin": baseUrl,
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`
+            }
+        }
+    );
+    return data;
+}
+
 export const postRole = async (name:string, desc:string) => {
     const {data} = await axios.post(
         `${baseUrl}/roles`,
