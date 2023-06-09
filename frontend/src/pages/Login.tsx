@@ -53,7 +53,7 @@ const Login = ({ setLogin }: Props) => {
         <div className="login-container">
             <form className="login-form">
                 <h3>Sign in</h3>
-                <p>Welcome to (nombre de la tienda)</p>
+                <p>Welcome to LKL Store</p>
                 <div className="input-container">
                     <input required
                            type="text"

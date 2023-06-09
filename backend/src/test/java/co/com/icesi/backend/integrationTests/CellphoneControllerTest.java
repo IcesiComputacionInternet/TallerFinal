@@ -147,7 +147,7 @@ public class CellphoneControllerTest {
                                 ))
                         .header("Authorization", "Bearer "+token.getToken())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isForbidden())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
     }
