@@ -229,6 +229,8 @@ const movie = () => {
       ) : (
         <Navigation user={current.data} categories={categories} />
       )} */}
+
+      <Navigation/>
       
 
       {isLoading ? (
