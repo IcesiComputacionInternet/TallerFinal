@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import MainHome from "./components/MainHome";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import ShopHome from "./pages/users/ShopHome";
+import UsersShopHome from "./pages/users/ShopHome";
 import NotFound from "./components/NotFound";
 import HomeAdmin from "./pages/admin/AdminHome";
 import AdminUsers from "./pages/admin/Users";
@@ -16,6 +16,8 @@ import CreateItems from "./components/CreateItems";
 import Orders from "./components/Orders";
 import CreateCategories from "./pages/admin/CreateCategories";
 import AdminCategories from "./pages/admin/Categories";
+import ShopHome from "./pages/shop/ShopHome";
+import ShopItems from "./pages/shop/Items";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
@@ -41,9 +43,10 @@ function App() {
         />
         <Route
           path="/users/home-shop"
-          element={isLoggedIn ? <ShopHome /> : <Navigate to="/login" />}
+          element={isLoggedIn ? <UsersShopHome /> : <Navigate to="/login" />}
         />
         <Route path="/*" element={<NotFound />} />
+
         <Route path="/admin/home" element={<HomeAdmin />} />
         <Route path="/admin/users" element={<AdminUsers />} />
         <Route path="/admin/items" element={<AdminItems />} />
@@ -54,6 +57,10 @@ function App() {
         <Route path="/admin/roles/create" element={<CreateRoles />} />
         <Route path="/admin/categories/create" element={<CreateCategories />} />
         <Route path="/createitems" element={<CreateItems />} />
+
+        <Route path="/shop/home" element={<ShopHome />} />
+        <Route path="/shop/items" element={<ShopItems />} />
+
         {isLoggedIn && (
           <Route path="/orders" element={<Orders />} />
         )}
