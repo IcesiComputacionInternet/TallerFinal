@@ -63,24 +63,6 @@ const Login = ({ setLogin }: Props) => {
     }
   };
 
-  const data = await axios.get(
-    baseUrl + "/users/" + localStorage.getItem("userEmail"),
-    {
-        headers: {
-            "Access-Control-Allow-Origin": baseUrl,
-            "MediaType": "application/json",
-            "Authorization": "Bearer " + localStorage.getItem('jwt')
-        }
-    }
-);
-console.log(data);
-return data.data;
-}
-async function getRoleData() {
-const result = await userData();
-setRole(result.role);
-}
-
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
