@@ -77,49 +77,96 @@ function Orders(){
             {orders.length === 0 ? (
               <h6>No orders made</h6>
             ) : (
-              orders.map((order) => (
-                <div key={order.orderId} className="card m-3">
-                  <div className="card-body">
-                    <h5 className="card-title">{order.userEmail}</h5>
-                    <h6 className="card-subtitle mb-2 text-body-secondary">
-                       {order.userPhoneNumber}
-                    </h6>
-                    <h6 className="card-subtitle mb-2 text-body-secondary">
+              <div className="container">
+                <div className="row">
+
+              {orders.map((order) => (
+                <div key={order.orderId} className=" col-md-6" >
+                  <div className="card m-3">
+                  <div className="card-body " >
+                    <h5 className="card-title">Order Id: {order.orderId}</h5>
+                    
+                    {order.status==="PENDING" &&
+                      <h6 className="p-3 mb-2 bg-danger text-white">
                        {order.status}
-                    </h6>
-                    <h6 className="card-subtitle mb-2 text-body-secondary">
-                      {order.total}
-                    </h6>
-                    <div>
-                        {order.items.length === 0 ? (
-                            <h6>No items added</h6>
-                            ) : (
-                            order.items.map((item) => (
-                                <div key={item.name} >
-                                    <h5>{item.name}</h5>
-                                    <h5>{item.price}</h5>
-                                </div>
-                         )))}
-                    </div>
+                      </h6>
+                    }
+                    {order.status==="SHIPPED" &&
+                      <h6 className="p-3 mb-2 bg-warning text-dark">
+                          {order.status}
+                      </h6>
+                    }
+                    {order.status==="RECEIVED" &&
+                      <h6 className="p-3 mb-2 bg-success text-white">
+                         {order.status}
+                     </h6>
+                    }
+                    
+                  
+                    <div className="row">
+                                                          
+                              <table className="table table-hover">
+                                  <thead>
+                                      <tr>
+                                          <th>Product</th>
+                                          <td>   </td>
+                                          <th className="text-center">Price</th>
+                                      </tr>
+                                  </thead>
+
+                                  
+                                  <tbody>
+                                 
+                                    {order.items.length === 0 ? (
+                                        <h6>No items added</h6>
+                                        ) : (
+                                        order.items.map((item) => (
+                                            
+                                                <tr key={item.name}>
+                                                    <td className="col-md-5"><em>{item.name}</em></td>
+                                                    <td>   </td>
+                                                    <td className="col-md-1 text-center">${item.price}</td>
+                                                </tr>
+                                            
+                                    )))}
+                                                                                                         
+                                      <tr>
+                                          <td>   </td>
+                                          <td className="col-md-1 text-center"><strong>Total: </strong></td>
+                                          <td className="col-md-1 text-center text-danger"><strong>$ {order.total}</strong></td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          
+                      </div>
+
+                  
                   {(role==='ADMIN' || role==='SHOP') &&
-                    <div>
+                    <div className="text-center">
                       <button
+                      className="btn btn-outline-warning me-3"
                       onClick={() => changeOrderStatus(order.orderId, "SHIPPED")}
                       disabled={order.status === "SHIPPED" || order.status === "RECEIVED"}
                       >
-                      Ship Order
+                      <strong>Ship Order</strong>
                       </button>
+                      
                       <button
+                      className="btn btn-outline-success"
                       onClick={() => changeOrderStatus(order.orderId, "RECEIVED")}
                       disabled={order.status === "RECEIVED"}
                       >
-                      Order Received
+                      <strong>Order Received</strong>
                       </button>
                     </div>
                     }
                   </div>
+                  </div>
                 </div>
-              ))
+                
+              ))}
+               </div>
+                </div>
             )}
           </div>
           
