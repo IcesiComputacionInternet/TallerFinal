@@ -25,6 +25,6 @@ public interface CategoryAPI {
     public CategoryShowDTO registerCategory(@Valid @RequestBody CategoryCreateDTO categoryCreateDTO);
 
     @PatchMapping("{categoryId}")
-    public CategoryShowDTO updateCategory(@PathVariable("categoryId") String categoryId, CategoryCreateDTO categoryCreateDTO);
+    public CategoryShowDTO updateCategory(@PathVariable("categoryId") String categoryId, @RequestBody CategoryCreateDTO categoryCreateDTO);
 
 }

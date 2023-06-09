@@ -145,10 +145,6 @@ public class AutomovilesApplication {
 				.category(sportCategory)
 				.build();
 
-
-
-
-
 		return args -> {
 			roleRepository.save(eShopUserRole1);
 			roleRepository.save(eShopUserRole2);

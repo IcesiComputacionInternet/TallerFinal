@@ -2,6 +2,7 @@ package co.icesi.automoviles.mapper;
 
 import co.icesi.automoviles.dto.ItemCreateDTO;
 import co.icesi.automoviles.dto.ItemShowDTO;
+import co.icesi.automoviles.dto.ItemShowDTOForCategory;
 import co.icesi.automoviles.model.Item;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -11,4 +12,6 @@ public interface ItemMapper {
     Item fromItemCreateDTOToItem(ItemCreateDTO itemCreateDTO);
     @Mapping(target = "category", ignore = true)
     ItemShowDTO fromItemToItemShowDTO(Item item);
+
+    ItemShowDTOForCategory fromItemToItemItemShowDTOForCategory(Item item);
 }

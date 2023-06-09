@@ -103,6 +103,10 @@ public class SecurityConfiguration {
         MvcRequestMatcher categoryEndpoints = new MvcRequestMatcher(introspector, CategoryAPI.ROOT_PATH);
         managerBuilder.add(categoryEndpoints, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 
+        MvcRequestMatcher updateCategory = new MvcRequestMatcher(introspector, CategoryAPI.ROOT_PATH+"/{categoryId}");
+        updateCategory.setMethod(HttpMethod.PATCH);
+        managerBuilder.add(updateCategory, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
+
         MvcRequestMatcher createItem = new MvcRequestMatcher(introspector, ItemAPI.ROOT_PATH);
         createItem.setMethod(HttpMethod.POST);
         managerBuilder.add(createItem, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_SHOP"));

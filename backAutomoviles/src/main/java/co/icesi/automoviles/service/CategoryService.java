@@ -1,7 +1,11 @@
 package co.icesi.automoviles.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import co.icesi.automoviles.dto.ItemShowDTOForCategory;
+import co.icesi.automoviles.mapper.ItemMapper;
 import co.icesi.automoviles.model.Item;
 import co.icesi.automoviles.service.utils.SortUtil;
 import org.springframework.data.domain.Page;
@@ -19,17 +23,23 @@ import co.icesi.automoviles.model.Category;
 import co.icesi.automoviles.repository.CategoryRepository;
 import lombok.AllArgsConstructor;
 
+import javax.transaction.Transactional;
+
 @Service
 @AllArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
+    private final ItemMapper itemMapper;
 
     public CategoryShowDTO registerCategory(CategoryCreateDTO categoryCreateDTO) {
         checkIfTheNameIsAvailable(categoryCreateDTO.getName());
         Category category = categoryMapper.fromCategoryCreateDTOToCategory(categoryCreateDTO);
         category.setCategoryId(UUID.randomUUID());
-        return categoryMapper.fromCategoryToCategoryShowDTO(categoryRepository.save(category));
+        CategoryShowDTO categoryShowDTO = categoryMapper.fromCategoryToCategoryShowDTO(categoryRepository.save(category));
+        categoryShowDTO.setItems(new ArrayList<>());
+        return categoryShowDTO;
+
     }
 
     public CategoryShowDTO updateCategory(String categoryId, CategoryCreateDTO categoryCreateDTO) {
@@ -37,15 +47,19 @@ public class CategoryService {
         if (!category.getName().equals(categoryCreateDTO)){
             checkIfTheNameIsAvailable(categoryCreateDTO.getName());
         }
+        List<Item> itemList = category.getItems();
         Category updatedCategory = categoryMapper.fromCategoryCreateDTOToCategory(categoryCreateDTO);
         updatedCategory.setCategoryId(category.getCategoryId());
-        return categoryMapper.fromCategoryToCategoryShowDTO(categoryRepository.save(category));
+        CategoryShowDTO categoryShowDTO = categoryMapper.fromCategoryToCategoryShowDTO(categoryRepository.save(updatedCategory));
+        List<ItemShowDTOForCategory> itemShowDTOForCategoryList = itemList.stream().map(itemMapper::fromItemToItemItemShowDTOForCategory).toList();
+        categoryShowDTO.setItems(itemShowDTOForCategoryList);
+        return categoryShowDTO;
     }
 
     public Page<CategoryShowDTO> getAllCategories(int page, int perPage, String sortBy, String sortDir){
         Pageable pageable = SortUtil.sort(page, perPage, sortBy, sortDir);
-        Page<Category> cateogires = categoryRepository.getAllCategories(pageable);
-        return cateogires.map(categoryMapper::fromCategoryToCategoryShowDTO);
+        Page<Category> categories = categoryRepository.getAllCategories(pageable);
+        return categories.map(categoryMapper::fromCategoryToCategoryShowDTO);
     }
 
     private Category getCategory(UUID categoryId){
@@ -53,7 +67,7 @@ public class CategoryService {
                 ShopExceptionBuilder.createShopException(
                         "category with id: "+categoryId+ " not found",
                         HttpStatus.NOT_FOUND,
-                        new DetailBuilder(ErrorCode.ERR_404, "category", "id ", categoryId)
+                        new DetailBuilder(ErrorCode.ERR_404, "category", "id", categoryId)
                 )
         );
     }
