@@ -10,7 +10,7 @@ public interface UserApi {
     String USER_BASE_URL = "/users";
 
     @PostMapping("/add")
-    void createUser(@RequestBody @Valid UserDTO user);
+    UserDTO createUser(@RequestBody @Valid UserDTO user);
 
     @GetMapping("get/{id}")
     UserDTO getById(@PathVariable("id") String id);

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Builder
@@ -20,6 +21,8 @@ public class UserDTO {
     private String userId;
     private String firstName;
     private String lastName;
+
+    @NotNull
     private String email;
 
     @NotBlank

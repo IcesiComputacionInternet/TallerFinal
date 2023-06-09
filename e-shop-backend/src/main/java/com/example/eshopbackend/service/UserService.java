@@ -27,7 +27,7 @@ public class UserService {
 
     //private final PasswordEncoder passwordEncoder;
 
-    public void save(UserDTO userToSave){
+    public UserDTO save(UserDTO userToSave){
         //Validate email and phone are not repeated
         validatePhoneAndEmail(userToSave.getPhoneNumber(), userToSave.getEmail());
         //Validate role exists
@@ -39,7 +39,7 @@ public class UserService {
         User user = userMapper.fromUserDTO(userToSave);
         user.setUserId(UUID.randomUUID());
 
-        userRepository.save(user);
+        return userMapper.fromUser(userRepository.save(user));
     }
 
     public void delete(UUID id){
@@ -57,7 +57,7 @@ public class UserService {
             () -> new RuntimeException("The user must have a role"));
 
         roleRepository.findByRoleName(role.getRoleName()).orElseThrow(
-                () -> new RuntimeException("Role does not exist"));
+                () -> new RuntimeException("Role '" +role.getRoleName() + "' does not exist"));
     }
 
     private void validatePhoneAndEmail(String phoneNumber, String email) {
