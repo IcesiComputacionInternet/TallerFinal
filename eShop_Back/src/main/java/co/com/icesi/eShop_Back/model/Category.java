@@ -20,6 +20,7 @@ public class Category {
     private UUID categoryId;
     private String name;
     private String description;
+    private String imageUrl;
     @OneToMany(mappedBy = "category")
     private List<Item> items;
 }

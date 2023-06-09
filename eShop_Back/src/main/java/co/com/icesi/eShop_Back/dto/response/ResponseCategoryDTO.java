@@ -12,5 +12,6 @@ public class ResponseCategoryDTO{
     private UUID id;
     private String name;
     private String description;
+    private String imageUrl;
     private List<ResponseItemDTO> items;
 }

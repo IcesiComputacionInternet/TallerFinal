@@ -1,8 +1,10 @@
 package co.com.icesi.eShop_Back;
 
+import co.com.icesi.eShop_Back.model.Category;
 import co.com.icesi.eShop_Back.model.Role;
 import co.com.icesi.eShop_Back.model.User;
 import co.com.icesi.eShop_Back.model.security.UserPermission;
+import co.com.icesi.eShop_Back.repository.CategoryRepository;
 import co.com.icesi.eShop_Back.repository.PermissionRepository;
 import co.com.icesi.eShop_Back.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -25,6 +27,7 @@ public class EShopBackApplication {
 	public CommandLineRunner loadData(
 			PermissionRepository permissionRepository,
 			UserRepository userRepository,
+			CategoryRepository categoryRepository,
 			PasswordEncoder encoder
 	) {
 		String BASE_URL = "/api";
@@ -98,12 +101,42 @@ public class EShopBackApplication {
 				.role(SHOP)
 				.build();
 		////////////////////////////////////////
+		Category desktop = Category.builder()
+				.categoryId(UUID.randomUUID())
+				.name("Desktop")
+				.description("Desktop")
+				.imageUrl("https://raw.githubusercontent.com/IcesiComputacionInternet/TallerFinal/Grupo_5/eShop_Front/src/resources/images/desktop.webp")
+				.build();
+		Category gaming = Category.builder()
+				.categoryId(UUID.randomUUID())
+				.name("Gaming")
+				.description("Gaming")
+				.imageUrl("https://raw.githubusercontent.com/IcesiComputacionInternet/TallerFinal/Grupo_5/eShop_Front/src/resources/images/gaming.webp")
+				.build();
+		Category pcGamer = Category.builder()
+				.categoryId(UUID.randomUUID())
+				.name("PC Gamer")
+				.description("PC Gamer")
+				.imageUrl("https://raw.githubusercontent.com/IcesiComputacionInternet/TallerFinal/Grupo_5/eShop_Front/src/resources/images/pcgamer.webp")
+				.build();
+		Category laptop = Category.builder()
+				.categoryId(UUID.randomUUID())
+				.name("Laptop")
+				.description("Laptop")
+				.imageUrl("https://raw.githubusercontent.com/IcesiComputacionInternet/TallerFinal/Grupo_5/eShop_Front/src/resources/images/portatiles.webp")
+				.build();
+
+		////////////////////////////////////////
 		permissionRepository.save(users);
 		permissionRepository.save(roles);
 		permissionRepository.save(categories);
 		permissionRepository.save(orders);
 		permissionRepository.save(items);
 		permissionRepository.save(getItems);
+		categoryRepository.save(desktop);
+		categoryRepository.save(gaming);
+		categoryRepository.save(pcGamer);
+		categoryRepository.save(laptop);
 		userRepository.save(admin);
 		userRepository.save(shop);
 
