@@ -9,6 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RequestNewOrderDTO {
+    private String userEmail;
     private List<RequestOrderItemDTO> items;
     private long total;
 }

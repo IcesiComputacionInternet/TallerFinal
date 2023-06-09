@@ -36,7 +36,7 @@ public class TokenService {
                 .claim("userId", customAuthentication.getUserId())
                 .build();
         var encoderParameters = JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS256).build(), claims);
-        TokenDTO token=  new TokenDTO(this.encoder.encode(encoderParameters).getTokenValue());
+        TokenDTO token = new TokenDTO(this.encoder.encode(encoderParameters).getTokenValue());
         return token;
     }
 }
