@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -7,9 +7,23 @@ const baseUrl = "http://localhost:8091";
 function CreateCategories() {
 
   const navigation : NavigateFunction = useNavigate();
+  const [currentUser, setCurrentUser] = useState("");
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if(localStorage.getItem("jwt")){
+      const user = localStorage.getItem("currentRole");
+
+      if(user){
+        setCurrentUser(user);
+      }
+    }else{
+      navigation("/NotFound");
+    }
+    
+  }, []);
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -37,6 +51,10 @@ function CreateCategories() {
       alert("Creation failed! "+error.response.data.details[0].errorMessage);
     }
   };
+
+  if(currentUser !== "ADMIN"){
+    navigation("/NotFound");
+  }
 
   return (
     <div className="container">

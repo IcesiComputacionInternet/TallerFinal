@@ -9,9 +9,21 @@ function Roles (){
 
   const navigation : NavigateFunction = useNavigate();
 
+  const [currentUser, setCurrentUser] = useState("");
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
+
+    if(localStorage.getItem("jwt")){
+      const user = localStorage.getItem("currentRole");
+
+      if(user){
+        setCurrentUser(user);
+      }
+    }else{
+      navigation("/NotFound");
+    }
+
     async function getData() {
 
       const resultUsers = await getRoles();
@@ -24,6 +36,10 @@ function Roles (){
     event.preventDefault();
     navigation("/admin/roles/create");
   };
+
+  if(currentUser !== "ADMIN"){
+    navigation("/NotFound");
+  }
 
   return (
     <>
