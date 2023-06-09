@@ -1,5 +1,7 @@
+import Register from "./RegisterAdmin"
+
 export default function Home(){
     return(
-        <h1>Hello world</h1>
+        <Register></Register>
     )
 }
