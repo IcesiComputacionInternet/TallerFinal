@@ -4,13 +4,16 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const formContainerStyles = {
     padding: '16px',
-    maxWidth: '400px',
+    maxWidth: '500px',
     margin: '0 auto',
 };
 
 const containerStyles = {
-    maxWidth: '500px',
-    margin: '0 auto',
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    zIndex: 9999,
 };
 
 const formItemStyles = {
@@ -19,7 +22,7 @@ const formItemStyles = {
 
 const closeButtonStyles = {
     position: 'absolute',
-    top: '8px',
+    top: '5px',
     right: '8px',
     cursor: 'pointer',
 };
@@ -78,7 +81,7 @@ function EditProfileForm({ user, isVisible }) {
 
     return (
         <Paper elevation={3} style={containerStyles}>
-            <div style={{ position: 'relative' }}>
+            <div style={{ position: 'relative', padding: '5px' }}>
                 <IconButton style={closeButtonStyles} onClick={handleClose}>
                     <CloseIcon />
                 </IconButton>
