@@ -1,12 +1,30 @@
-// @ts-ignore
 import React, { useState } from "react";
 import '../style/form.css'
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const baseUrl = "http://localhost:8080";
+interface CellPhoneDTO {
+    description : string;
+    name : string;
+    price : number;
+    imageUrl : string;
+    brand : string;
+    storage : string;
+    ram : string;
+    operatingSystem : string;
+    frontCameraResolution : string;
+    mainCameraResolution : string;
+    screenSize : string;
+    stock : number;
+    category : string;
+}
 
 const CreateItem = () => {
     const [cellname, setCellName] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
     const [description, setDescription] = useState("");
-    const [price, setPrice] = useState("");
+    const [price, setPrice] = useState(1);
     const [brand, setBrand] = useState("");
     const [storage, setStorage] = useState("");
     const [ram, setRam] = useState("");
@@ -14,11 +32,52 @@ const CreateItem = () => {
     const [frontCamera, setFrontCamera] = useState("");
     const [mainCamera, setMainCamera] = useState("");
     const [screenSize, setScreenSize] = useState("");
-    const [stock, setStock] = useState("");
+    const [stock, setStock] = useState(1);
+    const [category, setCategory] = useState("");
     const navigation : NavigateFunction = useNavigate();
 
-    const handleSubmit = async (event: any) => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+
+        try {
+            const cellPhoneDTO: CellPhoneDTO = {
+                description : description,
+                name : cellname,
+                price : price,
+                imageUrl : imageUrl,
+                brand : brand,
+                storage : storage,
+                ram : ram,
+                operatingSystem : os,
+                frontCameraResolution : frontCamera,
+                mainCameraResolution : mainCamera,
+                screenSize : screenSize,
+                stock : stock,
+                category : category,
+            };
+
+            console.log(cellPhoneDTO)
+
+            const cellCtx = (cellPhoneDTO: CellPhoneDTO) => {
+                return axios.post(baseUrl + "/cellphone/create", cellPhoneDTO, {
+                    headers: {
+                        "Access-Control-Allow-Origin": baseUrl,
+                        "MediaType": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem('jwt')
+                    }
+                });
+            }
+
+            const response = await cellCtx(cellPhoneDTO);
+            console.log(response.data)
+            if (response.status == 200) {
+                alert("Success");
+                navigation("/");
+            }
+
+        } catch (error) {
+            alert("Error creating a new cellphone");
+        }
     };
 
     const cancelNewItem = () => {
@@ -66,7 +125,7 @@ const CreateItem = () => {
                                className="input-field"
                                placeholder="Price"
                                value={price}
-                               onChange={(event) => setPrice(event.target.value)}
+                               onChange={(event) => setPrice(parseInt(event.target.value))}
                         />
                         <label htmlFor="input-field" className="input-label">Price</label>
                         <span className="input-highlight"></span>
@@ -172,7 +231,7 @@ const CreateItem = () => {
                                className="input-field"
                                placeholder="Stock"
                                value={stock}
-                               onChange={(event) => setStock(event.target.value)}
+                               onChange={(event) => setStock(parseInt(event.target.value))}
                         />
                         <label htmlFor="input-field" className="input-label">Stock</label>
                         <span className="input-highlight"></span>
@@ -193,15 +252,35 @@ const CreateItem = () => {
                 </div>
 
                 <div className="col-md-5">
-                    <select id="inputState" className="form-select" style={{marginTop:"40px"}} >
+                    <select
+                        id="inputState"
+                        className="form-select"
+                        style={{marginTop:"40px"}}
+                        value={category}
+                        onChange={(event) => setCategory(event.target.value)}>
+
                         <option value="HIGH_RANGE">HIGH RANGE</option>
                         <option value="MID_RANGE">MID RANGE</option>
                         <option value="LOW_RANGE">LOW RANGE</option>
                     </select>
                 </div>
+
+                <div className="col-md-6">
+                    <div className="input-container">
+                        <input required
+                                  className="input-field"
+                                  placeholder="Image"
+                                  value={imageUrl}
+                                  onChange={(event) => setImageUrl(event.target.value)}
+                        />
+                        <label htmlFor="input-field" className="input-label">Image</label>
+                        <span className="input-highlight"></span>
+                    </div>
+                </div>
+
                 </div>
             <div className="button-cont-item">
-                <button className="btn btn-primary form-button">Done</button>
+                <button className="btn btn-primary form-button" onClick={handleSubmit}>Done</button>
                 <button className="btn btn-outline-danger form-button" onClick={cancelNewItem}>Cancel</button>
         </div>
         </form>

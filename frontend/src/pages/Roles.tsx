@@ -1,45 +1,58 @@
 // @ts-ignore
 import React, { useState } from "react";
-// import axios from "axios";
-// import { NavigateFunction, useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import '../style/form.css'
+import axios from "axios";
+// import {NavigateFunction, useNavigate} from "react-router-dom";
 
 const baseUrl = "http://localhost:8080";
-
+interface RoleDTO {
+    roleName : string;
+    description : string;
+}
 
 const Roles = () => {
     const [roleName, setRoleName] = useState("");
     const [roleDescription, setRoleDescription] = useState("");
-    // const navigation : NavigateFunction = useNavigate();
+    const navigation : NavigateFunction = useNavigate();
 
-    // const handleSubmit = async (event: any) => {
-    //     event.preventDefault();
-    //
-    //     try {
-    //         const { data } = await axios.post(
-    //             baseUrl + "/token",
-    //             {
-    //                 username,
-    //                 password,
-    //             },
-    //             {
-    //                 headers: {
-    //                     "Access-Control-Allow-Origin": baseUrl,
-    //                 },
-    //             }
-    //         );
-    //         if (data.token) {
-    //             localStorage.setItem("jwt", data.token);
-    //             localStorage.setItem("userEmail", username);
-    //             setLogin();
-    //             navigation("/");
-    //         }
-    //     } catch (error) {
-    //         alert("Invalid username or password")
-    //         navigation("/*");
-    //     }
-    //
-    // };
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+
+        try {
+            const roleDTO: RoleDTO = {
+                roleName : roleName,
+                description : roleDescription
+            };
+
+            const roleCtx = (roleDTO: RoleDTO) => {
+                return axios.post(baseUrl + "/roles/create", roleDTO, {
+                    headers: {
+                        "Access-Control-Allow-Origin": baseUrl,
+                        "MediaType": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem('jwt')
+                    }
+                });
+            }
+
+            const response = await roleCtx(roleDTO);
+            console.log(response.data)
+            if (response.status == 200) {
+                alert("Success");
+                navigation("/store");
+            }
+
+        } catch (error) {
+            alert("Error creating new role");
+        }
+    };
+
+    const cancelNewRole = () => {
+        localStorage.removeItem("jwt");
+        localStorage.removeItem("userEmail");
+        localStorage.setItem("logged_user", JSON.stringify(false));
+        navigation("/");
+    }
 
     return (
         <div className="signUp-container">
@@ -69,8 +82,8 @@ const Roles = () => {
                 </div>
 
                 <div className="button-container">
-                    <button className="btn btn-primary form-button">Done</button>
-                    <button className="btn btn-outline-danger form-button" >Cancel</button>
+                    <button className="btn btn-primary form-button" onClick={handleSubmit}>Done</button>
+                    <button className="btn btn-outline-danger form-button" onClick={cancelNewRole}>Cancel</button>
                 </div>
             </form>
         </div>
