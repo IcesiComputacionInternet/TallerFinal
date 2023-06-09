@@ -5,11 +5,12 @@ import '../styles/table.css';
 interface TableColumn {
   heading: string;
   value: string;
+  render?: (item: any) => React.ReactNode;
 }
 
 interface TableProps {
   data: any[];
-  column: TableColumn[];
+  columns: TableColumn[];
 }
 
 interface TableHeadItemProps {
@@ -18,23 +19,23 @@ interface TableHeadItemProps {
 
 interface TableRowProps {
   item: any;
-  column: TableColumn[];
+  columns: TableColumn[];
 }
 
-const Table: React.FC<TableProps> = ({ data, column}) => {
+const Table: React.FC<TableProps> = ({ data, columns }) => {
   return (
     <table>
       <thead>
         <tr>
-          {column.map((item, index) => (
-            <TableHeadItem key={index} item={item} />
+          {columns.map((column, index) => (
+            <TableHeadItem key={index} item={column} />
           ))}
         </tr>
       </thead>
       <tbody>
         {data.map((item, index) => (
-          <TableRow key={index} item={item} column={column}/>
-        ))}        
+          <TableRow key={index} item={item} columns={columns} />
+        ))}
       </tbody>
     </table>
   );
@@ -44,15 +45,13 @@ const TableHeadItem: React.FC<TableHeadItemProps> = ({ item }) => (
   <th>{item.heading}</th>
 );
 
-const TableRow: React.FC<TableRowProps> = ({ item, column}) => (
+const TableRow: React.FC<TableRowProps> = ({ item, columns }) => (
   <tr>
-    {column.map((columnItem, index) => {
-      if (columnItem.value.includes('.')) {
-        const itemSplit = columnItem.value.split('.');
-        return <td key={index}>{item[itemSplit[0]][itemSplit[1]]}</td>;
-      }
-      return <td key={index}>{item[columnItem.value]}</td>;
-    })}
+    {columns.map((column, index) => (
+      <td key={index}>
+        {column.render ? column.render(item[column.value]) : item[column.value]}
+      </td>
+    ))}
   </tr>
 );
 
