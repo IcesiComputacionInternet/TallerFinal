@@ -72,7 +72,6 @@ public class SecurityConfiguration {
     public AuthorizationManager<RequestAuthorizationContext> requestAuthorizationContextAuthenticationManager(
             HandlerMappingIntrospector introspection){
         RequestMatcher permitAll = new AndRequestMatcher(new MvcRequestMatcher(introspection, "/token"));
-
         RequestMatcher permitAllSignUp = new AndRequestMatcher(new MvcRequestMatcher(introspection, "/users/create"));
 
         RequestMatcherDelegatingAuthorizationManager.Builder managerBuilder =

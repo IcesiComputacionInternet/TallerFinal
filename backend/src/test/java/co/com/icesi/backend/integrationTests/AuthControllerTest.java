@@ -40,7 +40,7 @@ public class AuthControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
-        TokenDTO token =objectMapper.readValue(result.getResponse().getContentAsString(), TokenDTO.class);
+        TokenDTO token = objectMapper.readValue(result.getResponse().getContentAsString(), TokenDTO.class);
         assertNotNull(token);
     }
 
