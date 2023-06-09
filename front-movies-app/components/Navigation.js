@@ -2,9 +2,11 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-function Navigation({categories}) {
+function Navigation({categories, user}) {
 
-    console.log(categories)
+    console.log(user)
+
+    const orderLink = "/orders/" + user.email
     
 
     return (
@@ -19,6 +21,12 @@ function Navigation({categories}) {
                         <ul className="navbar-nav">
                             <li className="nav-item">
                             <a className="nav-link active" aria-current="page" href="/Home">Home</a>
+                            </li>
+                            <li className="nav-item">
+                            <a className="nav-link active" aria-current="page" href={orderLink}>My Orders</a>
+                            </li>
+                            <li className="nav-item">
+                            <a className="nav-link active" aria-current="page" href="/Profile">Profile</a>
                             </li>
                             <li className="nav-item dropdown" >
                                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
