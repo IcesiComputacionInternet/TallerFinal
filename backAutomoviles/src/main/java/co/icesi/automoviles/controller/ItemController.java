@@ -34,10 +34,14 @@ public class ItemController implements ItemAPI {
     }
 
     @Override
-    public ResponseEntity<PageResponse<ItemShowDTO>> getItems(Integer page, Integer perPage, String sortBy, String sortDirection) {
+    public ResponseEntity<PageResponse<ItemShowDTO>> getItems(Integer page, Integer perPage, String sortBy, String sortDirection, String filter) {
         int indexPage = page - 1;
         Page<ItemShowDTO> items;
-        items = itemService.getAllItems(indexPage, perPage, sortBy, sortDirection);
+        if(filter == null) {
+            items = itemService.getAllItems(indexPage, perPage, sortBy, sortDirection);
+        }else{
+            items = itemService.getByNameContains(filter, indexPage, perPage, sortBy, sortDirection);
+        }
         PageResponse<ItemShowDTO> response = new PageResponse<>(items, new ItemShowDTO[0]);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

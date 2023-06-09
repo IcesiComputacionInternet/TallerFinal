@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
@@ -13,4 +14,9 @@ import java.util.UUID;
 public interface ItemRepository extends JpaRepository<Item, UUID> {
     @Query("SELECT itm FROM Item itm")
     Page<Item> getAllItems(Pageable pageable);
+
+    @Query( "SELECT itm " +
+            "FROM Item itm " +
+            "WHERE (LOWER(itm.name) LIKE LOWER(CONCAT('%', :name, '%')))")
+    Page<Item> getByNameContains(@Param("name") String name, Pageable pageable);
 }
