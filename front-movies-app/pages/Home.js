@@ -42,6 +42,7 @@ function Home () {
       let res = {data}
       console.log(res)
       setCurrent(res)
+      localStorage.setItem("user", res.data)
       setIsLoadingCurrent(false)
 
     } catch (err) {
@@ -108,8 +109,7 @@ function Home () {
       ) : (
         <Navigation user={current.data} categories={categories}/>
       )}
-      
-      <Carousel/>
+      {/* <Carousel/> */}
 
       {isLoadingMovies ? (
         <h1>Loading...</h1>
