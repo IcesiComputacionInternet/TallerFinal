@@ -24,7 +24,6 @@ public class Item {
 
     private long price;
 
-
     private int warranty;
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)

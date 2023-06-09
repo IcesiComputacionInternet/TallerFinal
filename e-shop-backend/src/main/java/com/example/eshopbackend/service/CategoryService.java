@@ -27,4 +27,15 @@ public class CategoryService {
 
         return categoryMapper.fromCategory(categoryRepository.save(category));
     }
+
+    public CategoryDTO update(String categoryId, CategoryDTO categoryDTO){
+        Category category = categoryRepository.findById(UUID.fromString(categoryId)).orElseThrow(
+                () -> new RuntimeException("La categoría con el id " + categoryId + " no existe.")
+        );
+
+        category.setName(categoryDTO.getName());
+        category.setDescription(categoryDTO.getDescription());
+
+        return categoryMapper.fromCategory(categoryRepository.save(category));
+    }
 }

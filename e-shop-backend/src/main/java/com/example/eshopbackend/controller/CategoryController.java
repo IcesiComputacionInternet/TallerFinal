@@ -13,6 +13,14 @@ public class CategoryController implements CategoryApi {
     private final CategoryService categoryService;
     @Override
     public void createCategory(CategoryDTO categoryDTO) {
+
         categoryService.save(categoryDTO);
     }
+
+    @Override
+    public void updateCategory(String categoryId, CategoryDTO categoryDTO) {
+        categoryService.update(categoryId, categoryDTO);
+    }
+
+
 }
