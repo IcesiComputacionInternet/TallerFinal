@@ -33,7 +33,7 @@ public class PurchaseOrderService {
     private final ItemRepository itemRepository;
 
     public PurchaseOrderShowDTO createPurchaseOrder(PurchaseOrderCreateDTO purchaseOrderCreateDTO, String loggedEShopUser, String role){
-        checkPermissionsToCreate(loggedEShopUser, role, purchaseOrderCreateDTO.getEShopUserUUID());
+        checkPermissionsToCreateOrDelete(loggedEShopUser, role, purchaseOrderCreateDTO.getEShopUserUUID());
         EShopUser eShopUser = getEShopUser(purchaseOrderCreateDTO.getEShopUserUUID());
         List<Item> items = getItems(purchaseOrderCreateDTO.getItems());
         PurchaseOrder purchaseOrder = purchaseOrderMapper.fromPurchaseOrderCreateDTOToPurchaseOrder(purchaseOrderCreateDTO);
@@ -65,7 +65,7 @@ public class PurchaseOrderService {
         );
     }
 
-    private void checkPermissionsToCreate(String loggedEShopUser, String role, String purchaseOrderOwner){
+    private void checkPermissionsToCreateOrDelete(String loggedEShopUser, String role, String purchaseOrderOwner){
         boolean theUsersAreDifferent = !loggedEShopUser.equals(purchaseOrderOwner);
         boolean theRoleIsNotAdmin = !role.equals(RoleType.ADMIN.toString());
         if(theUsersAreDifferent && theRoleIsNotAdmin){
@@ -116,4 +116,9 @@ public class PurchaseOrderService {
         return items.stream().map(this::getItem).toList();
     }
 
+    public void deletePurchaseOrder(String purchaseOrderId, String loggedEShopUser, String role){
+        PurchaseOrder purchaseOrder = getPurchaseOrderById(purchaseOrderId);
+        checkPermissionsToCreateOrDelete(loggedEShopUser, role, purchaseOrder.getPurchaseOrderId().toString());
+        purchaseOrderRepository.delete(purchaseOrder);
+    }
 }

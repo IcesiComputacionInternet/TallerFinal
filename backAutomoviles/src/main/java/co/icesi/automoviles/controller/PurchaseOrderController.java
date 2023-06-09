@@ -37,7 +37,9 @@ public class PurchaseOrderController implements PurchaseOrderAPI {
 
     @Override
     public void deletePurchaseOrder(String purchaseOrderId) {
-
+        String currentUserId = ShopSecurityContext.getCurrentUserId();
+        String currentRole = ShopSecurityContext.getCurrentUserRole();
+        purchaseOrderService.deletePurchaseOrder(purchaseOrderId, currentUserId, currentRole);
     }
 
     @Override
