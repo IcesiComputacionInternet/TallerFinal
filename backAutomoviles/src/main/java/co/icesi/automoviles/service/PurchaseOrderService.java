@@ -1,5 +1,6 @@
 package co.icesi.automoviles.service;
 
+import co.icesi.automoviles.dto.ItemCreateDTO;
 import co.icesi.automoviles.dto.PurchaseOrderCreateDTO;
 import co.icesi.automoviles.dto.PurchaseOrderShowDTO;
 import co.icesi.automoviles.enums.PurchaseOrderStatus;
@@ -157,5 +158,20 @@ public class PurchaseOrderService {
         Page<PurchaseOrder> purchaseOrders = purchaseOrderRepository.getAllPurchaseOrders(pageable);
         Page<PurchaseOrderShowDTO> purchaseOrderShowDTOS = purchaseOrders.map(entity -> fromPurchaseOrderToShowDTO(entity));
         return purchaseOrderShowDTOS;
+    }
+
+    public PurchaseOrderShowDTO updatePurchaseOrder(String purchaseOrderId, PurchaseOrderCreateDTO purchaseOrderCreateDTO){
+        PurchaseOrder purchaseOrderOriginal = getPurchaseOrderById(purchaseOrderId);
+        EShopUser eShopUser = getEShopUser(purchaseOrderCreateDTO.getEShopUserUUID());
+        List<Item> items = getItems(purchaseOrderCreateDTO.getItems());
+        PurchaseOrder purchaseOrderUpdated = purchaseOrderMapper.fromPurchaseOrderCreateDTOToPurchaseOrder(purchaseOrderCreateDTO);
+        purchaseOrderUpdated.setPurchaseOrderId(purchaseOrderOriginal.getPurchaseOrderId());
+        purchaseOrderUpdated.setItems(items);
+        purchaseOrderUpdated.setEShopUser(eShopUser);
+        purchaseOrderUpdated.setStatus(purchaseOrderOriginal.getStatus());
+        purchaseOrderUpdated.setTotal(getTotalCost(items));
+        PurchaseOrderShowDTO purchaseOrderShowDTO = purchaseOrderMapper.fromPurchaseOrderToPurchaseOrderShowDTO(purchaseOrderRepository.save(purchaseOrderUpdated));
+        purchaseOrderShowDTO.setEShopUser(eShopUserMapper.fromEShopUserToEShopUserShowDTOForPurchaseOrder(eShopUser));
+        return purchaseOrderShowDTO;
     }
 }

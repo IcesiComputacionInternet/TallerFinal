@@ -1,7 +1,6 @@
 package co.icesi.automoviles.controller;
 
 import co.icesi.automoviles.api.PurchaseOrderAPI;
-import co.icesi.automoviles.dto.ItemShowDTO;
 import co.icesi.automoviles.dto.PageResponse;
 import co.icesi.automoviles.dto.PurchaseOrderCreateDTO;
 import co.icesi.automoviles.dto.PurchaseOrderShowDTO;
@@ -56,6 +55,6 @@ public class PurchaseOrderController implements PurchaseOrderAPI {
 
     @Override
     public PurchaseOrderShowDTO updatePurchaseOrder(String purchaseOrderId, PurchaseOrderCreateDTO purchaseOrderCreateDTO) {
-        return null;
+        return purchaseOrderService.updatePurchaseOrder(purchaseOrderId, purchaseOrderCreateDTO);
     }
 }
