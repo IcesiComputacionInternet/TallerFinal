@@ -52,7 +52,7 @@ public class UserControllerTest {
     }
 
     private void loginAsUser() throws Exception {
-        token = getToken("johndoe2@email.com", "password");
+        token = getToken("juanpalta@hotmail.com", "password");
     }
 
     private void loginAsBank() throws Exception {
@@ -80,6 +80,29 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testCreateAUserIncorrect_Path() throws Exception {
+        loginAsUser();
+        var result = mvc.perform(MockMvcRequestBuilders.post("/users/add").content(
+                                mapper.writeValueAsString(
+                                        UserDTO.builder()
+                                                .firstName("name")
+                                                .lastName("lastname")
+                                                .address("address")
+                                                .birthDate(LocalDateTime.now())
+                                                .phoneNumber("123456789")
+                                                .email("email@hotmail.com")
+                                                .password(new BCryptPasswordEncoder().encode("password"))
+                                                .role(RoleDTO.builder().roleId(("09ca0952-b5a7-4998-b6f5-0628002b519b")).roleName("ADMIN").description("Role for demo").build())
+                                                .build()
+                                ))
+                        .header("Authorization", "Bearer "+token)
+                        .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andReturn();
+    System.out.println(result.getResponse().getContentAsString());
     }
 
     @Test
