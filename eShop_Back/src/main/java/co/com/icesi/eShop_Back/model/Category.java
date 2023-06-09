@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -19,7 +17,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Category {
     @Id
-    @Type(type = "uuid-char")
     private UUID categoryId;
     private String name;
     private String description;

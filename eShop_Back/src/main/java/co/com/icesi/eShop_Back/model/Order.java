@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,7 +17,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Order {
     @Id
-    @Type(type = "uuid-char")
     private UUID orderId;
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "user_user_id")
