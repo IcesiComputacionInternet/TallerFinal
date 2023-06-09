@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ResponseOrderDTO {
     private UUID orderId;
-    private User user;
+    private UUID user;
     private Status status;
     private Long total;
     private List<ResponseItemDTO> items;

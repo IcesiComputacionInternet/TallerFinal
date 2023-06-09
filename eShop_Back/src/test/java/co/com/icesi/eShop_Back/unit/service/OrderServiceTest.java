@@ -161,16 +161,16 @@ public class OrderServiceTest {
 
     @Test
     public void getByUserTest() {
-        String email = "admin@gmail.com";
+        User user = defaultUser();
         Order order = defaultOrder();
 
         when(orderRepository.findByUserEmail(anyString())).thenReturn(Optional.of(order));
         when(orderMapper.orderToOrderDTO(any(Order.class))).thenReturn(defaultResponseOrderDTO());
 
-        ResponseOrderDTO responseOrderDTO = orderService.getByUser(email);
+        ResponseOrderDTO responseOrderDTO = orderService.getByUser(user.getEmail());
 
         assertNotNull(responseOrderDTO);
-        assertEquals(email, responseOrderDTO.getUser().getEmail());
+        assertEquals(user.getUserId(), responseOrderDTO.getUser());
     }
 
     @Test
@@ -237,7 +237,7 @@ public class OrderServiceTest {
     private ResponseOrderDTO defaultResponseOrderDTO() {
         return ResponseOrderDTO.builder()
                 .orderId(UUID.randomUUID())
-                .user(defaultUser())
+                .user(UUID.fromString("f7c2c8a0-2b7a-4e1a-8f1a-3b9b4b1b1b1b"))
                 .status(Status.PENDING)
                 .build();
     }

@@ -67,6 +67,7 @@ public class OrderService {
     private ResponseOrderDTO createResponseOrderDTO(Order aux){
         var items = aux.getItems().stream().map(itemMapper::fromItem).toList();
         var response = orderMapper.orderToOrderDTO(aux);
+        response.setUser(aux.getUser().getUserId());
         response.setItems(items);
         return response;
     }
