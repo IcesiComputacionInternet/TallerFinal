@@ -13,6 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
 @Table(name = "orders")
 public class Order {
     @Id

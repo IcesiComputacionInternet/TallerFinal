@@ -1,17 +1,20 @@
 import { useEffect, useReducer, useState } from "react";
 import { TYPES } from "../actions/shoppingAction";
-import {
-  shoppingInitialState,
-  shoppingReducer,
-} from "../reducers/shoppingReducer";
+import { shoppingReducer } from "../reducers/shoppingReducer";
+import "../helpers/helpHttp";
 import CartItem from "./CartItem";
 import ProductItem from "./ProductItem";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import helpHttp from "../helpers/helpHttp";
+import { shoppingInitialState } from "../reducers/initialState";
 
 interface CartProduct {
   name: string;
-  id: number;
+  itemId: number;
   price: number;
+  category: string;
+  imageUrl: string;
+  warranty: number;
   quantity: number;
 }
 
@@ -21,6 +24,11 @@ interface Props {
 }
 
 const ShoppingCart = ({ setCart, cartApp }: Props) => {
+  helpHttp()
+    .get("/items/getAll", {})
+    .then((res) => {
+      shoppingInitialState.products = res;
+    });
   const [state, dispatch] = useReducer(shoppingReducer, shoppingInitialState);
   const { products, cart, total } = state;
   const navigation: NavigateFunction = useNavigate();
@@ -58,7 +66,7 @@ const ShoppingCart = ({ setCart, cartApp }: Props) => {
               {products.map((product: any) => {
                 return (
                   <ProductItem
-                    key={product.id}
+                    key={product.itemId}
                     data={product}
                     addToCart={addToCart}
                   />
