@@ -1,10 +1,8 @@
-import { StoreItem } from "../components/StoreItem"
-import {Col, Container, Row} from "react-bootstrap"
-import storeItems from "../testData/items.json"
 import {UserNavbar} from "../components/UserNavbar.tsx";
 import {AdminNavbar} from "../components/AdminNavbar.tsx";
 import {ShopNavbar} from "../components/ShopNavbar.tsx";
 import {useEffect, useState} from "react";
+import {Container} from "react-bootstrap"
 import axios from "axios";
 
 export function Store() {
@@ -21,12 +19,12 @@ export function Store() {
             }
         }
     );
-    console.log(data);
     return data.data;
 }
 async function getRoleData() {
     const result = await userData();
     setRole(result.role);
+    console.log(result.data)
 }
 
 
@@ -36,7 +34,7 @@ useEffect(() => {
 
     let navbarComponent;
     if (role === "USER") {
-    navbarComponent = <UserNavbar />;
+        navbarComponent = <UserNavbar />;
     } else if (role === "ADMIN") {
         navbarComponent = <AdminNavbar />;
     } else if (role === "SHOP"){
@@ -45,17 +43,7 @@ useEffect(() => {
 
     return (
         <Container  style= {{ width: "-webkit-max-content"}}>
-            {navbarComponent}
-            <h1>Store</h1>
-            <Row md={2} xs={1} lg={3} className="g-3">
-                {storeItems.map(item => (
-                    <Col key={item.id}>
-                        <StoreItem {...item} />
-                    </Col>
-                ))}
-            </Row>
+        {navbarComponent}
         </Container>
-
-
     )
 }

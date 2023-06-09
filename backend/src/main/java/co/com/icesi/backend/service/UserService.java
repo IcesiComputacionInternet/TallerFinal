@@ -79,7 +79,6 @@ public class UserService {
     }
 
     public ResponseUserDTO getUser(String userEmail) {
-        checkPermissionsToView();
         return userMapper.fromUserToResponseUserDTO(
                 userRepository.findByEmail(userEmail).orElseThrow(
                         () -> exceptionBuilder.notFoundException(

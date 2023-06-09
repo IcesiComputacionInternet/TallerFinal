@@ -1,7 +1,9 @@
-import {Button, Container, Nav, Navbar as NavbarBs} from "react-bootstrap"
+import {Button, Col, Container, Nav, Navbar as NavbarBs, Row} from "react-bootstrap"
 // import { NavLink } from "react-router-dom"
 import {useShoppingCart} from "../services/ShoppingCartCtx.tsx";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import storeItems from "../testData/items.json";
+import {StoreItem} from "./StoreItem.tsx";
 
 export function UserNavbar() {
     const { openCart, cartQuantity } = useShoppingCart()
@@ -10,12 +12,15 @@ export function UserNavbar() {
     const handleLogOut = () => {
         localStorage.removeItem("jwt");
         localStorage.removeItem("userEmail");
+        localStorage.removeItem("shopping-cart")
         localStorage.setItem("logged_user", JSON.stringify(false));
         navigation("/");
     }
 
 
 return (
+
+    <Container  style= {{ width: "-webkit-max-content"}}>
         <NavbarBs sticky="top" className="bg-white shadow-sm mb-3">
             <Container>
                 <Nav className="me-auto">
@@ -58,5 +63,14 @@ return (
                 )}
             </Container>
         </NavbarBs>
+        <h1>Store</h1>
+        <Row md={2} xs={1} lg={3} className="g-3">
+            {storeItems.map(item => (
+                <Col key={item.id}>
+                    <StoreItem {...item} />
+                </Col>
+            ))}
+        </Row>
+    </Container>
     )
 }
