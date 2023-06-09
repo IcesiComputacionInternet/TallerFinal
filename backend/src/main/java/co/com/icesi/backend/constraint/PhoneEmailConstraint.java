@@ -15,5 +15,5 @@ import java.lang.annotation.Target;
 public @interface PhoneEmailConstraint {
     String message() default "Email or phone number are required";
     Class<?>[] groups() default {};
-    Class<? extends Payload[]>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 }

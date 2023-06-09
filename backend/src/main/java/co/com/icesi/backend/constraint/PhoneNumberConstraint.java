@@ -13,5 +13,5 @@ import java.lang.annotation.*;
 public @interface PhoneNumberConstraint {
     String message() default "Invalid phone number";
     Class<?>[] groups() default {};
-    Class<? extends Payload[]>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 }

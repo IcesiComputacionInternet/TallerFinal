@@ -6,13 +6,15 @@ import co.com.icesi.backend.dto.request.RequestUserDTO;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class EmailValidator implements ConstraintValidator<EmailConstraint, RequestUserDTO> {
+public class EmailValidator implements ConstraintValidator<EmailConstraint, String> {
     @Override
     public void initialize(EmailConstraint emailConstraint){
-        ConstraintValidator.super.initialize(emailConstraint);
+
     }
+
     @Override
-    public boolean isValid(RequestUserDTO requestUserDTO, ConstraintValidatorContext constraintValidatorContext) {
-        return requestUserDTO.getEmail().isEmpty() || requestUserDTO.getEmail().matches("([a-z0-9]+(\\\\.?[a-z0-9])*)+@(([a-z]+)\\\\.([a-z]+))+");
+    public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
+        return s.isEmpty() || s.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
     }
+
 }

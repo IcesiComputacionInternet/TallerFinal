@@ -9,10 +9,10 @@ import javax.validation.ConstraintValidatorContext;
 public class PhoneAndEmailValidator implements ConstraintValidator<PhoneEmailConstraint, RequestUserDTO> {
     @Override
     public void initialize(PhoneEmailConstraint phoneEmailConstraint){
-        ConstraintValidator.super.initialize(phoneEmailConstraint);
+
     }
     @Override
     public boolean isValid(RequestUserDTO requestUserDTO, ConstraintValidatorContext constraintValidatorContext) {
-        return !requestUserDTO.getEmail().isEmpty() && !requestUserDTO.getPhoneNumber().isEmpty();
+        return requestUserDTO.getEmail()!=null || requestUserDTO.getPhoneNumber()!=null;
     }
 }

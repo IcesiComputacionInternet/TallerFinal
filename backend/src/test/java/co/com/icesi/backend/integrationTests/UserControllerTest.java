@@ -35,7 +35,7 @@ public class UserControllerTest {
     @Test
     public void testCreateAUserWhenRoleNameIsNull() throws Exception {
         var resultToken = mockMvc.perform(MockMvcRequestBuilders.post("/token").content(
-                                objectMapper.writeValueAsString(new LoginDTO("johndoe@email.com", "password"))
+                                objectMapper.writeValueAsString(new LoginDTO("lauramartinez@gmail.com", "password"))
                         )
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -49,13 +49,14 @@ public class UserControllerTest {
                                                 .phoneNumber("+573254789615")
                                                 .firstName("Sara")
                                                 .lastName("Alvarez")
+                                                .address("Calle 5A # 9-15")
                                                 .password("password")
+                                                .birthday("2023-06-05")
                                                 .role(null)
                                                 .build()
                                 ))
-                        .header("Authorization", "Bearer "+token.getToken())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound())
+                .andExpect(status().isBadRequest())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
     }
@@ -63,7 +64,7 @@ public class UserControllerTest {
     @Test
     public void testCreateAUserWhenRoleDoesNotExists() throws Exception {
         var resultToken = mockMvc.perform(MockMvcRequestBuilders.post("/token").content(
-                                objectMapper.writeValueAsString(new LoginDTO("johndoe@email.com", "password"))
+                                objectMapper.writeValueAsString(new LoginDTO("lauramartinez@gmail.com", "password"))
                         )
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
