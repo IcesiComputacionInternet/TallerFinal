@@ -26,8 +26,6 @@ public class MovieService {
 
     private final CategoryRepository categoryRepository;
 
-    private final CategoryMapper categoryMapper;
-
 
     public MovieDTO save(MovieDTO movieDTO){
         if(movieRepository.findByName(movieDTO.getName()).isPresent()){
@@ -58,13 +56,13 @@ public class MovieService {
     }
 
     public List<MovieDTO> findAll(){
-        List<CategoryDTO> categories = movieRepository.findAll().stream().map(movie -> movie.getCategory()).map(categoryMapper::fromCategory).toList();
+        /*List<CategoryDTO> categories = movieRepository.findAll().stream().map(movie -> movie.getCategory()).map(categoryMapper::fromCategory).toList();
         List<MovieDTO> movies = movieRepository.findAll().stream().map(movieMapper::fromMovie).toList();
         for (int i = 0; i < categories.size(); i++) {
             movies.get(i).setCategoryDTO(categories.get(i));
-        }
+        }*/
 
-        return movies;
+        return movieRepository.findAll().stream().map(movieMapper::fromMovie).toList();
     }
 
     public MovieDTO findByName(String name) {
@@ -77,13 +75,14 @@ public class MovieService {
             throw new RuntimeException("Hubo un problema al transformar");
         }
 
-        CategoryDTO category = movieRepository.findByName(decodedName).map(movie -> movie.getCategory()).map(categoryMapper::fromCategory).orElseThrow(
+        /*CategoryDTO category = movieRepository.findByName(decodedName).map(movie -> movie.getCategory()).map(categoryMapper::fromCategory).orElseThrow(
                 () -> new RuntimeException("La pelicula no tiene categoría")
         );
         MovieDTO movie = movieRepository.findByName(decodedName).map(movieMapper::fromMovie).orElseThrow(
                 () -> new RuntimeException("La pelicula no existe"));
-        movie.setCategoryDTO(category);
-        return movie;
+        movie.setCategoryDTO(category);*/
+        return movieRepository.findByName(decodedName).map(movieMapper::fromMovie).orElseThrow(
+                () -> new RuntimeException("La pelicula no existe"));
     }
 
     public List<MovieDTO> findByCategory(String name){
