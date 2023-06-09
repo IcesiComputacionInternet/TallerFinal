@@ -6,7 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.icesi.backend.error.exception.E_SHOP_Error;
 import com.icesi.backend.error.exception.E_SHOP_Exception;
 import com.icesi.backend.errorConstants.BackendApplicationErrors;
-import com.icesi.backend.service.LoginService;
+import com.icesi.backend.models.PermissionUser;
+import com.icesi.backend.service.LoginService_Interfase;
 import com.icesi.backend.service.impl.TOken_Parser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -31,8 +32,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
-import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @Component
 @AllArgsConstructor
@@ -62,7 +61,7 @@ public class AuthorizationTokenFilter extends OncePerRequestFilter {
             "OPTIONS /orders"
     };
 
-    private final LoginService loginService;
+    private final LoginService_Interfase loginService;
 
 
     /**
@@ -82,6 +81,7 @@ public class AuthorizationTokenFilter extends OncePerRequestFilter {
                 Claims claims = TOken_Parser.decodeJWT(jwtToken);
                 SecurityContext context = parseClaims(jwtToken, claims);
                 SecurityContextHolder.setUserContext(context);
+                roleFilter(context, request, response);
                 filterChain.doFilter(request, response);
             } else {
                 createUnauthorizedFilter(
@@ -99,6 +99,51 @@ public class AuthorizationTokenFilter extends OncePerRequestFilter {
             SecurityContextHolder.clearContext();
         }
     }
+
+    /**
+     * Filtra los permisos de acuerdo al contexto de seguridad y la solicitud HTTP.
+     * Si el contexto de seguridad no tiene permisos válidos para la solicitud, se crea una respuesta de error no autorizada.
+     *
+     * @param context  El contexto de seguridad que contiene el ID del rol.
+     * @param request  La solicitud HTTP que se está procesando.
+     * @param response La respuesta HTTP donde se enviará la respuesta de error en caso de no estar autorizado.
+     */
+    private void roleFilter(SecurityContext context, HttpServletRequest request, HttpServletResponse response) {
+        List<PermissionUser> permissions = loginService.getPermissionsByRoleId(context.getRoleId());
+
+        boolean isValid = checkPermissions(permissions, request);
+
+        if (!isValid) {
+            E_SHOP_Exception unauthorizedException = createUnauthorizedException();
+            createUnauthorizedFilter(unauthorizedException, response);
+        }
+    }
+
+    /**
+     * Verifica si la lista de permisos contiene un permiso válido para la solicitud.
+     *
+     * @param permissions La lista de permisos que se deben verificar.
+     * @param request     La solicitud HTTP que se está procesando.
+     * @return {@code true} si se encuentra un permiso válido, {@code false} en caso contrario.
+     */
+    private boolean checkPermissions(List<PermissionUser> permissions, HttpServletRequest request) {
+        return permissions.stream()
+                .anyMatch(p -> p.getMethod().equals(request.getMethod()) && request.getRequestURI().startsWith(p.getUri()));
+    }
+
+    /**
+     * Crea una instancia de E_SHOP_Exception con los parámetros adecuados para representar una respuesta de error no autorizada.
+     *
+     * @return Una instancia de E_SHOP_Exception con el código de error y mensaje correspondientes.
+     */
+    private E_SHOP_Exception createUnauthorizedException() {
+        E_SHOP_Error error = new E_SHOP_Error(BackendApplicationErrors.CODE_L_03, BackendApplicationErrors.CODE_L_03.getMessage());
+        return new E_SHOP_Exception(HttpStatus.UNAUTHORIZED, error);
+    }
+
+
+
+
 
     /**
      * Parsea los claims del token y los asigna a un objeto SecurityContext.

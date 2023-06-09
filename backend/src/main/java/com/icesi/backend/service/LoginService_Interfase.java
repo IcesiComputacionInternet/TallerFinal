@@ -3,17 +3,17 @@ package com.icesi.backend.service;
 
 import com.icesi.backend.DTO.LoginDTO;
 import com.icesi.backend.DTO.TokenDTO;
+import com.icesi.backend.models.PermissionUser;
 
-import java.security.Permission;
 import java.util.List;
 import java.util.UUID;
 
-public interface LoginService {
+public interface LoginService_Interfase {
 
     TokenDTO loginByEmail(LoginDTO loginDTO);
 
     TokenDTO loginByPhoneNumber(LoginDTO loginDTO);
 
-    List<Permission> getPermissionsByRoleId(UUID role);
+    List<PermissionUser> getPermissionsByRoleId(UUID role);
 
 }
