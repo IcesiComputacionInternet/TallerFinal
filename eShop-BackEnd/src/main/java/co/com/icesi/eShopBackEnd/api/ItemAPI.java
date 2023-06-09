@@ -1,6 +1,8 @@
 package co.com.icesi.eShopBackEnd.api;
 
 import co.com.icesi.eShopBackEnd.dto.CreateItemDTO;
+import co.com.icesi.eShopBackEnd.dto.DeleteItemDTO;
+import co.com.icesi.eShopBackEnd.dto.response.ResponseDTO;
 import co.com.icesi.eShopBackEnd.dto.response.ResponseItemDTO;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,5 +28,10 @@ public interface ItemAPI {
 
     @GetMapping("/all")
     List<ResponseItemDTO> getAllItems();
+
+    @DeleteMapping("/delete")
+    ResponseDTO deleteItem(@Valid @RequestBody DeleteItemDTO itemDTO);
+
+
 
 }

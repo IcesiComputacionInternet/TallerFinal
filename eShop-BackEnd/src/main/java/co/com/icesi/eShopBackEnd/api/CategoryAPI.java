@@ -2,6 +2,7 @@ package co.com.icesi.eShopBackEnd.api;
 
 import co.com.icesi.eShopBackEnd.dto.AssignCategoryDTO;
 import co.com.icesi.eShopBackEnd.dto.CreateCategoryDTO;
+import co.com.icesi.eShopBackEnd.dto.response.ResponseDTO;
 import co.com.icesi.eShopBackEnd.dto.response.ResponseItemDTO;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,7 @@ public interface CategoryAPI {
     List<CreateCategoryDTO> getAllCategories();
 
     @DeleteMapping("/delete")
+    ResponseDTO deleteCategory(@RequestBody CreateCategoryDTO categoryName);
 
 
 

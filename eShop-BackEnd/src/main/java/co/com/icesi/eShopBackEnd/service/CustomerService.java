@@ -35,25 +35,6 @@ public class CustomerService {
     private final SecurityContext context;
 
 
-    @Transactional
-    public ResponseCustomerDTO updateCustomer(CreateCustomerDTO user) {
-        validatePhone( user.phoneNumber());
-        Customer newCustomer = customerRepository.findUserByEmail(user.email()).orElseThrow(
-                ArgumentsExceptionBuilder.createArgumentsExceptionSup(
-                        "Not existing data",
-                        HttpStatus.BAD_REQUEST,
-                        new DetailBuilder(ErrorCode.ERR_NOT_FOUND,"customer")
-                )
-        );
-
-        newCustomer.setFirstName(user.firstName());
-        newCustomer.setLastName(user.lastName());
-        newCustomer.setAddress(user.address());
-        newCustomer.setPhoneNumber(user.phoneNumber());
-        newCustomer.setPassword(encoder.encode(user.password()));
-        customerRepository.uptadeInformation(newCustomer,newCustomer.getEmail());
-        return customerMapper.fromUserToResponseUserDTO(newCustomer);
-    }
 
     public ResponseCustomerDTO save(CreateCustomerDTO user) {
         validateEmailAndPhone(user.email(), user.phoneNumber());
@@ -107,6 +88,27 @@ public class CustomerService {
         }
     }
 
+    @Transactional
+    public ResponseCustomerDTO updateCustomer(CreateCustomerDTO user) {
+        validatePhone( user.phoneNumber());
+        Customer newCustomer = customerRepository.findUserByEmail(user.email()).orElseThrow(
+                ArgumentsExceptionBuilder.createArgumentsExceptionSup(
+                        "Not existing data",
+                        HttpStatus.BAD_REQUEST,
+                        new DetailBuilder(ErrorCode.ERR_NOT_FOUND,"customer")
+                )
+        );
+
+        newCustomer.setFirstName(user.firstName());
+        newCustomer.setLastName(user.lastName());
+        newCustomer.setAddress(user.address());
+        newCustomer.setPhoneNumber(user.phoneNumber());
+        newCustomer.setPassword(encoder.encode(user.password()));
+        customerRepository.uptadeInformation(newCustomer,newCustomer.getEmail());
+        return customerMapper.fromUserToResponseUserDTO(newCustomer);
+    }
+
+
     private void validatePhone( String userPhone){
         boolean phoneNumber = customerRepository.findByPhoneNumber(userPhone);
 
@@ -130,6 +132,11 @@ public class CustomerService {
 
         List<SalesOrder> orders = customer.getSalesOrders();
         return orders.stream().map(salesOrderMapper::fromSalesOrderToResponse).toList();
+    }
+
+    public List<ResponseCustomerDTO> getAllCustomers(){
+        List<Customer> customers = customerRepository.findAll();
+        return customers.stream().map(customerMapper::fromUserToResponseUserDTO).toList();
     }
 
 

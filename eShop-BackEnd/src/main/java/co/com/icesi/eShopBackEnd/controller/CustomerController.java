@@ -30,4 +30,9 @@ public class CustomerController implements CustomerAPI {
     public ResponseCustomerDTO updateCustomer(CreateCustomerDTO user) {
         return customerService.updateCustomer(user);
     }
+
+    @Override
+    public List<ResponseCustomerDTO> getAllCustomers() {
+        return customerService.getAllCustomers();
+    }
 }

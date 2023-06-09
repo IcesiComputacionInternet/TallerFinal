@@ -78,14 +78,16 @@ public class SecurityConfiguration {
                 .add(permitAll,(context,other)-> new AuthorizationDecision(true));
 
         //Category
-        managerBuilder.add(new MvcRequestMatcher(introspector,"/category/**"),
-                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_SHOP","SCOPE_ADMIN"));
+
 
         managerBuilder.add(new MvcRequestMatcher(introspector,"/category/delete"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_SHOP","SCOPE_ADMIN"));
 
         managerBuilder.add(new MvcRequestMatcher(introspector,"/category/itemsByCategory/**"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_SHOP","SCOPE_ADMIN"));
+
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/category/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_SHOP","SCOPE_ADMIN"));
 
         //Customer
 
@@ -99,23 +101,38 @@ public class SecurityConfiguration {
 
         //Item
 
-        //Para que el usuario pueda ver los items y todos los items
+
+
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/item"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_SHOP","SCOPE_ADMIN"));
+
+
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/item/name/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER"));
+
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/item/itemId/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER"));
+
         managerBuilder.add(new MvcRequestMatcher(introspector,"/item/**"),
-                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_SHOP","SCOPE_ADMIN"));
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_SHOP","SCOPE_ADMIN"));
+
+
 
         //Role
         managerBuilder.add(new MvcRequestMatcher(introspector,"/role"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 
         //SalesOrder
-        managerBuilder.add(new MvcRequestMatcher(introspector,"/salesOrder/**"),
-                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_ADMIN"));
+
 
         managerBuilder.add(new MvcRequestMatcher(introspector,"/salesOrder/getOrder/**"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_ADMIN","SCOPE_SHOP"));
 
         managerBuilder.add(new MvcRequestMatcher(introspector,"/salesOrder/updateState"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_SHOP","SCOPE_ADMIN"));
+
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/salesOrder/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_ADMIN"));
 
         //ADMIN
 

@@ -2,6 +2,7 @@ package co.com.icesi.eShopBackEnd.service;
 
 import co.com.icesi.eShopBackEnd.dto.AssignCategoryDTO;
 import co.com.icesi.eShopBackEnd.dto.CreateCategoryDTO;
+import co.com.icesi.eShopBackEnd.dto.response.ResponseDTO;
 import co.com.icesi.eShopBackEnd.dto.response.ResponseItemDTO;
 import co.com.icesi.eShopBackEnd.error.enums.ErrorCode;
 import co.com.icesi.eShopBackEnd.error.util.ArgumentsExceptionBuilder;
@@ -87,6 +88,16 @@ public class CategoryService {
     public List<CreateCategoryDTO> getAllCategories(){
         List<Category> list = categoryRepository.findAll();
         return list.stream().map(categoryMapper::fromCategory).toList();
+    }
+
+    public ResponseDTO deleteCategory(CreateCategoryDTO categoryDTO){
+        Category category = validateExistingCategory(categoryDTO.name());
+        categoryRepository.delete(category);
+
+        return ResponseDTO.builder()
+                .message("Category deleted")
+                .build();
+
     }
 
 }

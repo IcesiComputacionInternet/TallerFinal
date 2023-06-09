@@ -3,6 +3,7 @@ package co.com.icesi.eShopBackEnd.controller;
 import co.com.icesi.eShopBackEnd.api.CategoryAPI;
 import co.com.icesi.eShopBackEnd.dto.AssignCategoryDTO;
 import co.com.icesi.eShopBackEnd.dto.CreateCategoryDTO;
+import co.com.icesi.eShopBackEnd.dto.response.ResponseDTO;
 import co.com.icesi.eShopBackEnd.dto.response.ResponseItemDTO;
 import co.com.icesi.eShopBackEnd.service.CategoryService;
 import lombok.AllArgsConstructor;
@@ -32,5 +33,10 @@ public class CategoryController implements CategoryAPI {
     @Override
     public List<CreateCategoryDTO> getAllCategories() {
         return categoryService.getAllCategories();
+    }
+
+    @Override
+    public ResponseDTO deleteCategory(CreateCategoryDTO categoryName) {
+        return categoryService.deleteCategory(categoryName);
     }
 }

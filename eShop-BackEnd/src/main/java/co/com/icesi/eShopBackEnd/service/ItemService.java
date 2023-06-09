@@ -1,6 +1,8 @@
 package co.com.icesi.eShopBackEnd.service;
 
 import co.com.icesi.eShopBackEnd.dto.CreateItemDTO;
+import co.com.icesi.eShopBackEnd.dto.DeleteItemDTO;
+import co.com.icesi.eShopBackEnd.dto.response.ResponseDTO;
 import co.com.icesi.eShopBackEnd.dto.response.ResponseItemDTO;
 import co.com.icesi.eShopBackEnd.error.enums.ErrorCode;
 import co.com.icesi.eShopBackEnd.error.util.ArgumentsExceptionBuilder;
@@ -76,5 +78,19 @@ public class ItemService {
     public List<ResponseItemDTO> getAllItems(){
         List<Item> list = itemRepository.findAll();
         return list.stream().map(itemMapper::fromItemToResponseItemDTO).toList();
+    }
+
+    public ResponseDTO deleteItem(DeleteItemDTO itemDTO){
+        Item item = itemRepository.returnItemById(UUID.fromString(itemDTO.itemId())).orElseThrow(
+                ArgumentsExceptionBuilder.createArgumentsExceptionSup(
+                        "Not existing data",
+                        HttpStatus.BAD_REQUEST,
+                        new DetailBuilder(ErrorCode.ERR_NOT_FOUND,"item")
+                )
+        );
+        itemRepository.delete(item);
+        return ResponseDTO.builder()
+                .message("Item deleted successfully")
+                .build();
     }
 }

@@ -2,6 +2,8 @@ package co.com.icesi.eShopBackEnd.controller;
 
 import co.com.icesi.eShopBackEnd.api.ItemAPI;
 import co.com.icesi.eShopBackEnd.dto.CreateItemDTO;
+import co.com.icesi.eShopBackEnd.dto.DeleteItemDTO;
+import co.com.icesi.eShopBackEnd.dto.response.ResponseDTO;
 import co.com.icesi.eShopBackEnd.dto.response.ResponseItemDTO;
 import co.com.icesi.eShopBackEnd.service.ItemService;
 import lombok.AllArgsConstructor;
@@ -33,5 +35,10 @@ public class ItemController implements ItemAPI {
     @Override
     public List<ResponseItemDTO> getAllItems() {
         return itemService.getAllItems();
+    }
+
+    @Override
+    public ResponseDTO deleteItem(DeleteItemDTO itemDTO) {
+        return null;
     }
 }

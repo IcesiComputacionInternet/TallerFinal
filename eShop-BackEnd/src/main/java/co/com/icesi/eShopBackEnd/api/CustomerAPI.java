@@ -25,4 +25,7 @@ public interface CustomerAPI {
 
     @PutMapping("/updateUser")
     ResponseCustomerDTO updateCustomer(@Valid @RequestBody CreateCustomerDTO user);
+
+    @GetMapping("/all")
+    List<ResponseCustomerDTO> getAllCustomers();
 }
