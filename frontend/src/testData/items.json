@@ -1,26 +1,26 @@
 [
   {
     "id": 1,
-    "name": "Book",
-    "price": 10.99,
-    "imgUrl": "/imgs/book.jpg"
+    "name": "Apple iPhone 13 128 GB",
+    "price": 3789000,
+    "imgUrl": "/imgs/apple.jpg"
   },
   {
     "id": 2,
-    "name": "Computer",
-    "price": 1199,
-    "imgUrl": "/imgs/computer.jpg"
+    "name": "Celular HUAWEI nova Y70 128 GB Blanco",
+    "price": 3199600,
+    "imgUrl": "/imgs/huawei.jpg"
   },
   {
     "id": 3,
-    "name": "Banana",
-    "price": 1.05,
-    "imgUrl": "/imgs/banana.jpg"
+    "name": "Celular Samsung Galaxy A22 5G 128 GB",
+    "price": 933000,
+    "imgUrl": "/imgs/samsung.jpg"
   },
   {
     "id": 4,
-    "name": "Car",
-    "price": 14000,
-    "imgUrl": "/imgs/car.jpg"
+    "name": "Celular HONOR X6s 128GB Azul",
+    "price": 619900,
+    "imgUrl": "/imgs/honor.jpg"
   }
 ]
