@@ -10,7 +10,6 @@ public record RequestCategoryDTO(
         String name,
         @NotBlank(message = "Description is mandatory")
         String description,
-
         String imageUrl
 ) {
 }
