@@ -59,7 +59,7 @@ public class UserService {
 
     public UserDTO get(UUID id){
         User user = userRepository.findById(id).orElseThrow(
-            () -> new RuntimeException("The user must have a role"));
+            () -> new RuntimeException("Id not found"));
         return userMapper.fromUser(user);
     }
 
