@@ -111,13 +111,10 @@ function CreateItems(){
         event.preventDefault();
         navigation("/items");
       };
-    
-    return (
+
+      return (
         <div>
-          <div
-            className="p-3 navbar bg-body-tertiary"
-            style={{ backgroundColor: "#e3f2fd" }}
-          >
+          <div className="p-3 navbar bg-body-tertiary" style={{ backgroundColor: "#e3f2fd" }}>
             <div className="col-1">
               <h4>Home</h4>
             </div>
@@ -125,228 +122,200 @@ function CreateItems(){
               <Logout />
             </div>
           </div>
-          <div className="m-3">
+          <div className="m-3 text-center">
             <h2>Create Items</h2>
           </div>
-    
-            <div>
-                
-                <form onSubmit={handleSubmit}>
-                  <div className="form-group row">
-                    <label htmlFor="inputName" className="col-sm-2 col-form-label">Name</label>
-                    <div className="col-sm-10">
-                      <input
-                         type="text" 
-                         className="form-control" 
-                         id="inputName" 
-                         placeholder="Name"
-                         name="name"
-                         value={formData.name}
-                         onChange={handleChange}
-                         />
-                    </div>
-                  </div>
-                  
-                  <div className="form-group row">
-                    <label htmlFor="textarea1" className="col-sm-2 col-form-label">Description</label>
-                    <div className="col-sm-10">
-                      <textarea 
-                      className="form-control" 
-                      id="textarea1" 
-                      rows={3}
-                      name="description"
-                      value={formData.description}
-                      onChange={handleChange}></textarea>
-                    </div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label htmlFor="inputPrice" className="col-sm-2 col-form-label">Price</label>
-                    <div className="col-sm-10">
-                      <input 
-                        type="number" 
-                        className="form-control" 
-                        id="inputPrice" 
-                        placeholder="$"
-                        name="price"
-                        value={formData.price}
-                        onChange={handleChange}/>
-                    </div>
-                  </div>
-                 
-                  <div className="form-group row">
-                    <label htmlFor="inputImg" className="col-sm-2 col-form-label">Image</label>
-                    <div className="col-sm-10">
-                      <input 
-                        type="text" 
-                        className="form-control" 
-                        id="inputImg" 
-                        placeholder="URL"
-                        name="imgURL"
-                         value={formData.imgURL}
-                         onChange={handleChange}/>
-                    </div>
-                  </div>
-
-
-                  <div className="form-group row">
-                    <label htmlFor="selectCategory" className="col-sm-2 col-form-label">Category</label>
-                    <div className="col-sm-10">
-                      <select 
-                        className="form-control" 
-                        id="selectCategory" 
-                        name="category"
-                         value={formData.category}
-                         onChange={handleChange}>
-
-                        <option value="">Choose...</option>
-                        {
-                          categories.map((category)=>(
+      
+          <div className="container d-flex justify-content-center">
+            <div className="scroll-container" style={{ height: "500px", overflowY: "scroll", width: "50%" }}>
+              <form onSubmit={handleSubmit}>
+                <div className="row">
+                  <div className="col-md-12">
+                    <ul className="list-group">
+                      <li className="list-group-item mb-3">
+                        <label htmlFor="inputName">Name</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="inputName"
+                          placeholder="Name"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                        />
+                      </li>
+                      <li className="list-group-item mb-3">
+                        <label htmlFor="textarea1">Description</label>
+                        <textarea
+                          className="form-control"
+                          id="textarea1"
+                          rows={3}
+                          name="description"
+                          value={formData.description}
+                          onChange={handleChange}
+                        ></textarea>
+                      </li>
+                      <li className="list-group-item mb-3">
+                        <label htmlFor="inputPrice">Price</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          id="inputPrice"
+                          placeholder="$"
+                          name="price"
+                          value={formData.price}
+                          onChange={handleChange}
+                        />
+                      </li>
+                      <li className="list-group-item mb-3">
+                        <label htmlFor="inputImg">Image</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="inputImg"
+                          placeholder="URL"
+                          name="imgURL"
+                          value={formData.imgURL}
+                          onChange={handleChange}
+                        />
+                      </li>
+                      <li className="list-group-item mb-3">
+                        <label htmlFor="selectCategory">Category</label>
+                        <select
+                          className="form-control"
+                          id="selectCategory"
+                          name="category"
+                          value={formData.category}
+                          onChange={handleChange}
+                        >
+                          <option value="">Choose...</option>
+                          {categories.map((category) => (
                             <option key={category.name}>{category.name}</option>
-                          ))
-                        }
-                      </select>
-                    </div>                    
+                          ))}
+                        </select>
+                      </li>
+                      <li className="list-group-item mb-3">
+                        <label htmlFor="inputMinV">Minimum Voltage</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          id="inputMinV"
+                          placeholder="0"
+                          name="minVoltage"
+                          value={formData.minVoltage}
+                          onChange={handleChange}
+                        />
+                      </li>
+                      <li className="list-group-item mb-3">
+                        <label htmlFor="inputMaxV">Maximum Voltage</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          id="inputMaxV"
+                          placeholder="0"
+                          name="maxVoltage"
+                          value={formData.maxVoltage}
+                          onChange={handleChange}
+                        />
+                      </li>
+                      <li className="list-group-item mb-3">
+                        <label htmlFor="inputSOE">Source of Energy</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="inputSOE"
+                          placeholder="Source of energy"
+                          name="sourceOfEnergy"
+                          value={formData.sourceOfEnergy}
+                          onChange={handleChange}
+                        />
+                      </li>
+                      <li className="list-group-item mb-3">
+                        <label htmlFor="selectLevel">Level of Efficiency</label>
+                        <select
+                          className="form-control"
+                          id="selectLevel"
+                          name="levelOfEfficiency"
+                          value={formData.levelOfEfficiency}
+                          onChange={handleChange}
+                        >
+                          <option value="">Choose...</option>
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+                          <option>E</option>
+                          <option>F</option>
+                          <option>G</option>
+                        </select>
+                      </li>
+                      <li className="list-group-item mb-3">
+                        <label htmlFor="inputBrand">Brand</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="inputBrand"
+                          placeholder="Brand"
+                          name="marca"
+                          value={formData.marca}
+                          onChange={handleChange}
+                        />
+                      </li>
+                      <li className="list-group-item mb-3">
+                        <label htmlFor="inputModel">Model</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="inputModel"
+                          placeholder="Model"
+                          name="model"
+                          value={formData.model}
+                          onChange={handleChange}
+                        />
+                      </li>
+                      <li className="list-group-item mb-3">
+                        <label htmlFor="inputGu">Guarantee</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          id="inputGu"
+                          placeholder="Months"
+                          name="guarantee"
+                          value={formData.guarantee}
+                          onChange={handleChange}
+                        />
+                      </li>
+                      <li className="list-group-item mb-3">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="gridCheck1"
+                            name="available"
+                            onChange={handleChange}
+                            checked={formData.available}
+                          />
+                          <label className="form-check-label" htmlFor="gridCheck1">
+                            Available
+                          </label>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
-
-                  <div className="form-group row">
-                    <label htmlFor="inputMinV" className="col-sm-2 col-form-label">Minimun Voltage</label>
-                    <div className="col-sm-10">
-                      <input 
-                        type="number" 
-                        className="form-control" 
-                        id="inputMinV" 
-                        placeholder="0"
-                        name="minVoltage"
-                        value={formData.minVoltage}
-                        onChange={handleChange}/>
-                    </div>
+                </div>
+                <div className="row justify-content-center d-flex">
+                  <div className="col-md-6 justify-content-between d-flex">
+                    <button type="submit" className="btn btn-primary btn-block">
+                      Create Item
+                    </button>
+                    <button type="button" className="btn btn-secondary btn-block" onClick={handleClick}>
+                      Volver
+                    </button>
                   </div>
-
-                  <div className="form-group row">
-                    <label htmlFor="inputMaxV" className="col-sm-2 col-form-label">Maximun Voltage</label>
-                    <div className="col-sm-10">
-                      <input 
-                        type="number" 
-                        className="form-control" 
-                        id="inputMaxV" 
-                        placeholder="0"
-                        name="maxVoltage"
-                         value={formData.maxVoltage}
-                         onChange={handleChange}/>
-                    </div>
-                  </div>
-
-
-                  <div className="form-group row">
-                    <label htmlFor="inputSOE" className="col-sm-2 col-form-label">Source of energy</label>
-                    <div className="col-sm-10">
-                      <input 
-                        type="text" 
-                        className="form-control" 
-                        id="inputSOE" 
-                        placeholder="Source of energy"
-                        name="sourceOfEnergy"
-                         value={formData.sourceOfEnergy}
-                         onChange={handleChange}/>
-                    </div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label htmlFor="selectLevel" className="col-sm-2 col-form-label">Level of Efficiency</label>
-                    <div className="col-sm-10">
-                      <select 
-                        className="form-control" 
-                        id="selectLevel" 
-                        name="levelOfEfficiency"
-                         value={formData.levelOfEfficiency}
-                         onChange={handleChange}>
-                        <option value="">Choose...</option>
-                        <option>A</option>
-                        <option>B</option>
-                        <option>C</option>
-                        <option>D</option>
-                        <option>E</option>
-                        <option>F</option>
-                        <option>G</option>
-                      </select>
-                    </div>                    
-                  </div>
-
-                  <div className="form-group row">
-                    <label htmlFor="inputBrand" className="col-sm-2 col-form-label">Brand</label>
-                    <div className="col-sm-10">
-                      <input 
-                        type="text" 
-                        className="form-control" 
-                        id="inputBrand" 
-                        placeholder="Brand"
-                        name="marca"
-                         value={formData.marca}
-                         onChange={handleChange}/>
-                    </div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label htmlFor="inputModel" className="col-sm-2 col-form-label">Model</label>
-                    <div className="col-sm-10">
-                      <input 
-                        type="text" 
-                        className="form-control" 
-                        id="inputModel" 
-                        placeholder="Model"
-                        name="model"
-                         value={formData.model}
-                         onChange={handleChange}/>
-                    </div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label htmlFor="inputGu" className="col-sm-2 col-form-label">Guarantee</label>
-                    <div className="col-sm-10">
-                      <input 
-                        type="number" 
-                        className="form-control" 
-                        id="inputGu" 
-                        placeholder="Months"
-                        name="guarantee"
-                         value={formData.guarantee}
-                         onChange={handleChange}/>
-                    </div>
-                  </div>
-
-                 
-                  <div className="form-group row">
-                    <div className="col-sm-2"></div>
-                    <div className="col-sm-10">
-                      <div className="form-check">
-                        <input 
-                        className="form-check-input" 
-                        type="checkbox" id="gridCheck1" 
-                        name="available"
-                        onChange={handleChange} 
-                         checked ={formData.available}/>
-                        <label className="form-check-label" htmlFor="gridCheck1">
-                          Available
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-
-
-                  <div className="form-group row">
-                    <div className="col-sm-10">
-                      <button type="submit" className="btn btn-primary">Create Item</button>
-                    </div>
-                  </div>
-                  <br />
-                  <div className="col-sm-10">
-                      <button type="submit" className="btn btn-secondary" onClick={handleClick}>Volver</button>
-                  </div>
-
-                </form>
-
+                </div>
+              </form>
             </div>
+          </div>
         </div>
       );
 }
