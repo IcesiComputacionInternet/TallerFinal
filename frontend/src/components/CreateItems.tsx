@@ -115,9 +115,13 @@ function CreateItems(){
       return (
         <div>
           <Navbar/>
-          <br />      
+          <br />   
+          <div className="text-center">
+              <h2>Crear ítem</h2>
+          </div>   
+          <br />
           <div className="container d-flex justify-content-center">
-            <div className="scroll-container" style={{ height: "800px", overflowY: "scroll", width: "50%" }}>
+            <div className="scroll-container" style={{ height: "700px", overflowY: "scroll", width: "50%" }}>
               <form onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="col-md-12">
