@@ -24,6 +24,8 @@ function HomeAdmin (){
         setCurrentUser(user);
       }
 
+    }else{
+      navigation("/NotFound");
     }
 
     async function getData() {

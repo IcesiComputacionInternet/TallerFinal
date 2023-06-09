@@ -21,6 +21,8 @@ function ShopHome (){
       if(user){
         setCurrentUser(user)
       }
+    }else{
+      navigation("/NotFound");
     }
 
     async function getData() {

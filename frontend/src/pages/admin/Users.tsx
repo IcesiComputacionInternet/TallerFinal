@@ -8,10 +8,22 @@ const baseUrl = "http://localhost:8091";
 function Users (){
 
   const navigation : NavigateFunction = useNavigate();
+  const [currentUser, setCurrentUser] = useState("");
 
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
+
+    if(localStorage.getItem("jwt")){
+      const user = localStorage.getItem("currentRole");
+
+      if(user){
+        setCurrentUser(user);
+      }
+    }else{
+      navigation("/NotFound");
+    }
+
     async function getData() {
 
       const resultUsers = await getUsers();
@@ -24,6 +36,10 @@ function Users (){
     event.preventDefault();
     navigation("/admin/users/create");
   };
+
+  if(currentUser !== "ADMIN"){
+    navigation("/NotFound");
+  }
 
   return (
     <>
