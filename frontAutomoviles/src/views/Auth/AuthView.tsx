@@ -5,9 +5,10 @@ import RegisterForm from "./components/RegisterForm";
 
 interface Props {
     setLogin: () => void;
+    setInfoToast: (message:string, title:string) => void;
 }
 
-function AuthView ({setLogin}: Props) {
+function AuthView ({setLogin, setInfoToast}: Props) {
     const [viewLogin, setViewLogin] = useState<boolean>(true);
 
     const toggleView = () => {
@@ -18,9 +19,9 @@ function AuthView ({setLogin}: Props) {
         <div className="container d-flex align-items-center">
             <div className="row justify-content-center w-100">
                 {viewLogin ? (
-                        <div className="row" style={{height:'78vh'}}>
+                        <div className="row" style={{height:'80.5vh'}}>
                             <div className="col-md-6 container d-flex">
-                                <LoginForm setLogin={setLogin} />
+                                <LoginForm setLogin={setLogin} setInfoToast={setInfoToast}/>
                             </div>
                             <p className="text-center">
                                 ¿No tienes una cuenta?{' '}

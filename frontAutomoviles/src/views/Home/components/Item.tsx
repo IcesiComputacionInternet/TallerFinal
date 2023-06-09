@@ -11,12 +11,16 @@ interface Props {
         }
     },
     isLogged: boolean;
+    setInfoToast: (message: string, title: string) => void;
 }
 
-function Item  ({item, isLogged}:Props) {
+function Item  ({item, isLogged, setInfoToast}:Props) {
     const handleAddToCart = () => {
         if(isLogged){
             console.log('Add to cart');
+            setInfoToast('Item added to cart', 'Success');
+        }else{
+            setInfoToast('You must be logged in to add items to the cart', 'Warning');
         }
     }
 
