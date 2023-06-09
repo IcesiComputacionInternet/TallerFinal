@@ -1,14 +1,18 @@
 interface Props {
   data: {
     name: string;
-    id: number;
+    itemId: number;
     price: number;
+    category: string;
+    imageUrl: string;
+    warranty: number;
     quantity: number;
   };
   delFromCart: (id: number, all?: boolean) => void;
 }
 const CartItem = ({ data, delFromCart }: Props) => {
-  const { name, id, price, quantity } = data;
+  const { name, itemId, price, quantity } = data;
+  console.log(data);
   return (
     <div style={{ borderBottom: "thin solid gray", padding: "1rem" }}>
       <h5>
@@ -22,7 +26,7 @@ const CartItem = ({ data, delFromCart }: Props) => {
         <button
           className="btn btn-outline-primary col-md-6 btn-sm"
           onClick={() => {
-            delFromCart(id);
+            delFromCart(itemId);
           }}
         >
           Eliminar unidad
@@ -30,7 +34,7 @@ const CartItem = ({ data, delFromCart }: Props) => {
         <button
           className="btn btn-outline-primary col-md-6 btn-sm"
           onClick={() => {
-            delFromCart(id, true);
+            delFromCart(itemId, true);
           }}
         >
           Eliminar todo

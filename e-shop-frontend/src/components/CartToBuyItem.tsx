@@ -1,14 +1,17 @@
 interface CartProduct {
   data: {
     name: string;
-    id: number;
+    itemId: number;
     price: number;
+    category: string;
+    imageUrl: string;
+    warranty: number;
     quantity: number;
   };
 }
 
 const CartToBuyItem = ({ data }: CartProduct) => {
-  const { name, price, quantity } = data;
+  const { name, price, quantity, imageUrl } = data;
   return (
     <div className="col-lg-4 col-md-12 mb-4">
       <div className="card">
@@ -16,10 +19,7 @@ const CartToBuyItem = ({ data }: CartProduct) => {
           className="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
           data-mdb-ripple-color="light"
         >
-          <img
-            src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/belt.webp"
-            className="w-100"
-          />
+          <img src={imageUrl} className="w-100" />
           <a href="#!">
             <div className="mask">
               <div className="d-flex justify-content-start align-items-end h-100">

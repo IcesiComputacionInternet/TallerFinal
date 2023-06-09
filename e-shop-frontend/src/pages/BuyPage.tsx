@@ -25,7 +25,7 @@ const BuyPage = ({ cart, setCart }: Props) => {
       <h1>Buy Page</h1>
       <div className="row align-items-start">
         {cart.map((product: any) => {
-          return <CartToBuyItem key={product.id} data={product} />;
+          return <CartToBuyItem key={product.itemId} data={product} />;
         })}
       </div>
       <div className="row align-items-start">
