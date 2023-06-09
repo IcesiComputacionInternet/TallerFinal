@@ -9,6 +9,7 @@ import co.edu.icesi.Eshop.model.EShopUser;
 import co.edu.icesi.Eshop.model.Roles;
 import co.edu.icesi.Eshop.repository.RoleRepository;
 import co.edu.icesi.Eshop.repository.UserRepository;
+import co.edu.icesi.Eshop.security.EShopSecurityContext;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -63,6 +64,10 @@ public class UserService {
         user.setUserId(UUID.randomUUID());
         return userMapper.fromUser(userRepository.save(user));
 
+    }
+
+    public UserDTO getCurrentUser() {
+        return  userMapper.fromUser(userRepository.findById(UUID.fromString(EShopSecurityContext.getCurrentUserId())).get());
     }
     public UserDTO getUser(String userEmail) {
         return  userMapper.fromUser(userRepository.findByEmail(userEmail).orElseThrow(

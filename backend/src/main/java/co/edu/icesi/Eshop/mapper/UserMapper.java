@@ -11,5 +11,6 @@ public interface UserMapper {
     EShopUser fromUserDTO(UserDTO userDTO);
 
     @Mapping(target = "roleName", expression = "java(eShopUser.getRole().getRoleName())")
+    @Mapping(target="password",ignore = true)
     UserDTO fromUser(EShopUser eShopUser);
 }
