@@ -35,4 +35,10 @@ public class UserDTO {
     @NotBlank
     private String roleName;
 
+    @NotBlank
+    private String address;
+
+    @NotBlank
+    private String birthDate;
+
 }
