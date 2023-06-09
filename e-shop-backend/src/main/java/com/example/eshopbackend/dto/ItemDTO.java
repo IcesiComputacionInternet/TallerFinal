@@ -19,7 +19,7 @@ public class ItemDTO {
     @NotBlank
     private String description;
     @NotBlank
-    private String category;
+    private CategoryDTO category;
 
     private int warranty;
 }
