@@ -10,9 +10,9 @@ import java.util.UUID;
 @Entity
 @Builder
 @Data
+@Table(name = "role")
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "role")
 public class Role {
     @Id
     @Column(nullable = false, unique = true)

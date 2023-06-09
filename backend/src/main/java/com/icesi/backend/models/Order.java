@@ -13,9 +13,9 @@ import java.util.UUID;
 @Entity
 @Builder
 @Data
+@Table(name = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "orders")
 public class Order {
     @Id
     @Column(nullable = false, unique = true)

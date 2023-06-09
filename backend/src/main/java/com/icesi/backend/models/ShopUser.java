@@ -13,9 +13,9 @@ import java.util.UUID;
 @Entity
 @Builder
 @Data
-
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class ShopUser {
     @Id
     @Column(nullable = false, unique = true)

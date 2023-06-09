@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid } from '@mui/material';
+import { Navigate } from "react-router-dom";
 
 function Login() {
-  const [contact, setContact] = useState('');
-  const [password, setPassword] = useState('');
+    const [contact, setContact] = useState('');
+    const [password, setPassword] = useState('');
+    const [log, setLog] = useState(false);
 
-  const handleContactChange = (event) => {
-    setContact(event.target.value);
-  };
+    const handleContactChange = (event) => {
+        setContact(event.target.value);
+    };
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value);
+    };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setLog(true);
+        console.log('Contact:', contact);
+        console.log('Password:', password);
+    };
 
-    console.log('Contact:', contact);
-    console.log('Password:', password);
-  };
-
-  return (
+    return (
     <form onSubmit={handleSubmit}>
         <Grid container justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
             <Grid item>
@@ -50,12 +52,13 @@ function Login() {
                         <Button type="submit" variant="contained" color="primary" fullWidth>
                             Login
                         </Button>
+                        {log && <Navigate to={"/home"}/>}
                     </Grid>
                 </Grid>
             </Grid>
         </Grid>
     </form>
-  );
+    );
 }
 
 export default Login;
