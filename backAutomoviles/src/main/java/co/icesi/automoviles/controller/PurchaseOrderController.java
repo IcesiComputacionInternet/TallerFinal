@@ -25,7 +25,9 @@ public class PurchaseOrderController implements PurchaseOrderAPI {
 
     @Override
     public PurchaseOrderShowDTO getPurchaseOrderById(String purchaseOrderId) {
-        return null;
+        String currentUserId = ShopSecurityContext.getCurrentUserId();
+        String currentRole = ShopSecurityContext.getCurrentUserRole();
+        return purchaseOrderService.getPurchaseOrderShowDTOById(purchaseOrderId, currentUserId, currentRole);
     }
 
     @Override

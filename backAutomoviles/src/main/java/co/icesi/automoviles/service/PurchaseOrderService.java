@@ -47,14 +47,44 @@ public class PurchaseOrderService {
         return purchaseOrderShowDTO;
     }
 
+    public PurchaseOrderShowDTO getPurchaseOrderShowDTOById(String purchaseOrderId, String loggedEShopUser, String role){
+        PurchaseOrder purchaseOrder = getPurchaseOrderById(purchaseOrderId);
+        checkPermissionsToGet(loggedEShopUser, role, purchaseOrder.getPurchaseOrderId().toString());
+        PurchaseOrderShowDTO purchaseOrderShowDTO = purchaseOrderMapper.fromPurchaseOrderToPurchaseOrderShowDTO(purchaseOrderRepository.save(purchaseOrder));
+        purchaseOrderShowDTO.setEShopUser(eShopUserMapper.fromEShopUserToEShopUserShowDTOForPurchaseOrder(purchaseOrder.getEShopUser()));
+        return purchaseOrderShowDTO;
+    }
+
+    private PurchaseOrder getPurchaseOrderById(String purchaseOrderId){
+        return purchaseOrderRepository.findById(UUID.fromString(purchaseOrderId)).orElseThrow(
+                ShopExceptionBuilder.createShopException(
+                        "purchase order with id: "+purchaseOrderId+ " not found",
+                        HttpStatus.NOT_FOUND,
+                        new DetailBuilder(ErrorCode.ERR_404, "purchase order", "id ", purchaseOrderId)
+                )
+        );
+    }
+
     private void checkPermissionsToCreate(String loggedEShopUser, String role, String purchaseOrderOwner){
         boolean theUsersAreDifferent = !loggedEShopUser.equals(purchaseOrderOwner);
         boolean theRoleIsNotAdmin = !role.equals(RoleType.ADMIN.toString());
         if(theUsersAreDifferent && theRoleIsNotAdmin){
             throw ShopExceptionBuilder.createShopException(
-                    "you can only create purchase orders for yourself",
+                    "you only have access to your own purchase orders",
                     HttpStatus.FORBIDDEN,
-                    new DetailBuilder(ErrorCode.ERR_403, "you can only create purchase orders for yourself")
+                    new DetailBuilder(ErrorCode.ERR_403, "you only have access to your own purchase orders")
+            ).get();
+        }
+    }
+
+    private void checkPermissionsToGet(String loggedEShopUser, String role, String purchaseOrderOwner){
+        boolean theUsersAreDifferent = !loggedEShopUser.equals(purchaseOrderOwner);
+        boolean theRoleIsNeitherAdminNorShop = !role.equals(RoleType.ADMIN.toString()) && !role.equals(RoleType.SHOP.toString());
+        if(theUsersAreDifferent && theRoleIsNeitherAdminNorShop){
+            throw ShopExceptionBuilder.createShopException(
+                    "you only have access to your own purchase orders",
+                    HttpStatus.FORBIDDEN,
+                    new DetailBuilder(ErrorCode.ERR_403, "you only have access to your own purchase orders")
             ).get();
         }
     }
