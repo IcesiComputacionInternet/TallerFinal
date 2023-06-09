@@ -1,5 +1,5 @@
-import React from 'react';
-import '../styles/table.css';
+import React from "react";
+import "../styles/table.css";
 
 
 interface TableColumn {
@@ -10,7 +10,7 @@ interface TableColumn {
 
 interface TableProps {
   data: any[];
-  columns: TableColumn[];
+  columns: TableColumn[]
 }
 
 interface TableHeadItemProps {
@@ -19,10 +19,13 @@ interface TableHeadItemProps {
 
 interface TableRowProps {
   item: any;
-  columns: TableColumn[];
+  columns: TableColumn[]
 }
 
-const Table: React.FC<TableProps> = ({ data, columns }) => {
+
+
+const Table: React.FC<TableProps> = ({ data, columns}) => {
+
   return (
     <table>
       <thead>
@@ -34,7 +37,11 @@ const Table: React.FC<TableProps> = ({ data, columns }) => {
       </thead>
       <tbody>
         {data.map((item, index) => (
-          <TableRow key={index} item={item} columns={columns} />
+          <TableRow
+            key={index}
+            item={item}
+            columns={columns}
+          />
         ))}
       </tbody>
     </table>
@@ -45,15 +52,22 @@ const TableHeadItem: React.FC<TableHeadItemProps> = ({ item }) => (
   <th>{item.heading}</th>
 );
 
-const TableRow: React.FC<TableRowProps> = ({ item, columns }) => (
-  <tr>
-    {columns.map((column, index) => (
-      <td key={index}>
-        {column.render ? column.render(item[column.value]) : item[column.value]}
-      </td>
-    ))}
-  </tr>
-);
+const TableRow: React.FC<TableRowProps> = ({
+  item,
+  columns
+}) => {
+  
+  return (
+    <tr>
+      {columns.map((column, index) => (
+        <td key={index}>
+          {column.render ? column.render(item[column.value]) : item[column.value]}
+        </td>
+      ))}
+      
+      
+    </tr>
+  );
+};
 
 export default Table;
-
