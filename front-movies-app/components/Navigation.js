@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -7,6 +7,11 @@ function Navigation({categories, user}) {
     console.log(user)
     let email = user != undefined ? user.email : localStorage.getItem("user").email
     const orderLink = "/orders/" + email
+
+    const removeAccess = () => {
+        localStorage.removeItem("jwt")
+        localStorage.removeItem("user")
+    }
     
 
     return (
@@ -27,6 +32,20 @@ function Navigation({categories, user}) {
                             </li>
                             <li className="nav-item">
                             <a className="nav-link active" aria-current="page" href="/Profile">Profile</a>
+                            </li>
+                            {
+                                user.role.name == 'ADMIN' ? 
+                                (
+                                    <li className="nav-item">
+                                    <a className="nav-link active" aria-current="page" href="/movies">Movies</a>
+                                    </li>
+                                ) :
+                                (
+                                    <></>
+                                )
+                            }
+                            <li className="nav-item">
+                            <a className="nav-link active" aria-current="page" href="/login" onClick={removeAccess}>Logout</a>
                             </li>
                             <li className="nav-item dropdown" >
                                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

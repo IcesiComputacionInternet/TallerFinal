@@ -14,6 +14,7 @@ const getCurrentUser = async () => {
   
         let res = {data}
         console.log(res)
+        return res
         // setCurrent(res)
         // setIsLoadingCurrent(false)
   

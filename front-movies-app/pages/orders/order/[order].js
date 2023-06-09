@@ -117,7 +117,7 @@ export default function orderDetails() {
               {isLoading ? (
                   <h1>Loading...</h1>
               ) : (
-                <MoviesList movies={order.movies}/>
+                <MoviesList movies={order.movies} buttonAction={'Order'} orderNumber={order.orderNumber}/>
               )}
             </div>
         </div>

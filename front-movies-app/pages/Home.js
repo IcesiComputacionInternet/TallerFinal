@@ -110,11 +110,14 @@ function Home () {
         <Navigation user={current.data} categories={categories}/>
       )}
       {/* <Carousel/> */}
+      <h2>New movies</h2>
 
       {isLoadingMovies ? (
         <h1>Loading...</h1>
       ) : (
-        <MoviesList movies={movies.data}/>
+        <div className='text-center d-flex align-items-center justify-content-center'>
+          <MoviesList movies={movies.data} buttonAction={'Home'} orderNumber={''}/>
+        </div>
       )}
       
       
