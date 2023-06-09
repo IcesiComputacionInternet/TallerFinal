@@ -72,7 +72,7 @@ public class ItemControllerTest {
         var result = mvc.perform(MockMvcRequestBuilders.post("/items/add").content(
                                 mapper.writeValueAsString(
                                         ItemDTO.builder()
-                                                .name("Mesa Nogal 2")
+                                                .name("Mesa Nogal 3")
                                                 .description("Acabados en Nogal")
                                                 .price((long) 3000.0)
                                                 .warranty(1)
