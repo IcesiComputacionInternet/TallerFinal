@@ -4,6 +4,8 @@ package com.peliculas.grupo3.integration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.peliculas.grupo3.TestConfigurationData;
 import com.peliculas.grupo3.dto.*;
+import com.peliculas.grupo3.dto.response.RoleResponseDTO;
+import com.peliculas.grupo3.dto.response.UserResponseDTO;
 import com.peliculas.grupo3.error.exception.MovieError;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -380,6 +384,320 @@ public class OrderTest {
         MovieError movieError = objectMapper.readValue(result.getResponse().getContentAsString(), MovieError.class);
         assertNotNull(movieError);
         assertEquals("No existe una orden con este numero", movieError.getDetails());
+    }
+
+    @Test
+    public void createOrderHappyPath() throws Exception{
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/")
+                        .content(objectMapper.writeValueAsString(OrderDTO.builder()
+                                .orderNumber("10")
+                                .movies(List.of(MovieDTO.builder()
+                                            .pgRating("PG-13")
+                                            .imageURL("https://image.tmdb.org/t/p/original/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg")
+                                            .price(10L)
+                                            .description("After reuniting with Gwen Stacy, Brooklyn’s full-time, friendly neighborhood Spider-Man is catapulted across the Multiverse.")
+                                            .name("Spider-Man: Across the Spider-Verse")
+                                            .categoryDTO(new CategoryDTO("Accion","Peliculas de accion"))
+                                            .build()))
+                                        .status("confirmada")
+                                        .total(10L)
+                                        .user(UserResponseDTO.builder()
+                                                .email("noname@email.com")
+                                                .firstName("he who")
+                                                .lastName("must not be named")
+                                                .phone("+57123123123")
+                                                .role(RoleResponseDTO.builder()
+                                                        .name("ADMIN")
+                                                        .build())
+                                                .build()
+                                        )
+                                .build()
+                        ))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().isOk())
+                .andReturn();
+        OrderDTO orderDTO = objectMapper.readValue(result.getResponse().getContentAsString(), OrderDTO.class);
+        assertNotNull(orderDTO);
+
+    }
+
+    @Test
+    public void createOrderTakenNumber() throws Exception{
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/")
+                        .content(objectMapper.writeValueAsString(OrderDTO.builder()
+                                .orderNumber("2")
+                                .movies(List.of(MovieDTO.builder()
+                                        .pgRating("PG-13")
+                                        .imageURL("https://image.tmdb.org/t/p/original/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg")
+                                        .price(10L)
+                                        .description("After reuniting with Gwen Stacy, Brooklyn’s full-time, friendly neighborhood Spider-Man is catapulted across the Multiverse.")
+                                        .name("Spider-Man: Across the Spider-Verse")
+                                        .categoryDTO(new CategoryDTO("Accion","Peliculas de accion"))
+                                        .build()))
+                                .status("confirmada")
+                                .total(10L)
+                                .user(UserResponseDTO.builder()
+                                        .email("noname@email.com")
+                                        .firstName("he who")
+                                        .lastName("must not be named")
+                                        .phone("+57123123123")
+                                        .role(RoleResponseDTO.builder()
+                                                .name("ADMIN")
+                                                .build())
+                                        .build()
+                                )
+                                .build()
+                        ))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().is5xxServerError())
+                .andReturn();
+        MovieError movieError = objectMapper.readValue(result.getResponse().getContentAsString(), MovieError.class);
+        assertNotNull(movieError);
+        assertEquals("Ya existe una orden con este numero", movieError.getDetails());
+
+    }
+
+    @Test
+    public void createOrderBadPrice() throws Exception{
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/")
+                        .content(objectMapper.writeValueAsString(OrderDTO.builder()
+                                .orderNumber("11")
+                                .movies(List.of(MovieDTO.builder()
+                                        .pgRating("PG-13")
+                                        .imageURL("https://image.tmdb.org/t/p/original/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg")
+                                        .price(10L)
+                                        .description("After reuniting with Gwen Stacy, Brooklyn’s full-time, friendly neighborhood Spider-Man is catapulted across the Multiverse.")
+                                        .name("Spider-Man: Across the Spider-Verse")
+                                        .categoryDTO(new CategoryDTO("Accion","Peliculas de accion"))
+                                        .build()))
+                                .status("confirmada")
+                                .total(-10L)
+                                .user(UserResponseDTO.builder()
+                                        .email("noname@email.com")
+                                        .firstName("he who")
+                                        .lastName("must not be named")
+                                        .phone("+57123123123")
+                                        .role(RoleResponseDTO.builder()
+                                                .name("ADMIN")
+                                                .build())
+                                        .build()
+                                )
+                                .build()
+                        ))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().is5xxServerError())
+                .andReturn();
+        MovieError movieError = objectMapper.readValue(result.getResponse().getContentAsString(), MovieError.class);
+        assertNotNull(movieError);
+        assertEquals("El total no puede ser negativo", movieError.getDetails());
+
+    }
+
+    @Test
+    public void createOrderInvalidUser() throws Exception{
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/")
+                        .content(objectMapper.writeValueAsString(OrderDTO.builder()
+                                .orderNumber("11")
+                                .movies(List.of(MovieDTO.builder()
+                                        .pgRating("PG-13")
+                                        .imageURL("https://image.tmdb.org/t/p/original/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg")
+                                        .price(10L)
+                                        .description("After reuniting with Gwen Stacy, Brooklyn’s full-time, friendly neighborhood Spider-Man is catapulted across the Multiverse.")
+                                        .name("Spider-Man: Across the Spider-Verse")
+                                        .categoryDTO(new CategoryDTO("Accion","Peliculas de accion"))
+                                        .build()))
+                                .status("confirmada")
+                                .total(10L)
+                                .user(UserResponseDTO.builder()
+                                        .email("not a @email.com")
+                                        .firstName("he who")
+                                        .lastName("must not be named")
+                                        .phone("+57123123123")
+                                        .role(RoleResponseDTO.builder()
+                                                .name("ADMIN")
+                                                .build())
+                                        .build()
+                                )
+                                .build()
+                        ))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().is5xxServerError())
+                .andReturn();
+        MovieError movieError = objectMapper.readValue(result.getResponse().getContentAsString(), MovieError.class);
+        assertNotNull(movieError);
+        assertEquals("No existe un usuario con este email", movieError.getDetails());
+
+    }
+
+    @Test
+    public void createOrderNoMoviesBadPrice() throws Exception{
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/")
+                        .content(objectMapper.writeValueAsString(OrderDTO.builder()
+                                .orderNumber("11")
+                                .movies(List.of())
+                                .status("confirmada")
+                                .total(10L)
+                                .user(UserResponseDTO.builder()
+                                        .email("noname@email.com")
+                                        .firstName("he who")
+                                        .lastName("must not be named")
+                                        .phone("+57123123123")
+                                        .role(RoleResponseDTO.builder()
+                                                .name("ADMIN")
+                                                .build())
+                                        .build()
+                                )
+                                .build()
+                        ))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().is5xxServerError())
+                .andReturn();
+        MovieError movieError = objectMapper.readValue(result.getResponse().getContentAsString(), MovieError.class);
+        assertNotNull(movieError);
+        assertEquals("No se puede tener un total mayor a 0 sin peliculas", movieError.getDetails());
+
+    }
+
+    @Test
+    public void createOrderInvalidStatus() throws Exception{
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/")
+                        .content(objectMapper.writeValueAsString(OrderDTO.builder()
+                                .orderNumber("11")
+                                .movies(List.of(MovieDTO.builder()
+                                        .pgRating("PG-13")
+                                        .imageURL("https://image.tmdb.org/t/p/original/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg")
+                                        .price(10L)
+                                        .description("After reuniting with Gwen Stacy, Brooklyn’s full-time, friendly neighborhood Spider-Man is catapulted across the Multiverse.")
+                                        .name("Spider-Man: Across the Spider-Verse")
+                                        .categoryDTO(new CategoryDTO("Accion","Peliculas de accion"))
+                                        .build()))
+                                .status("definitivamente confirmada")
+                                .total(10L)
+                                .user(UserResponseDTO.builder()
+                                        .email("noname@email.com")
+                                        .firstName("he who")
+                                        .lastName("must not be named")
+                                        .phone("+57123123123")
+                                        .role(RoleResponseDTO.builder()
+                                                .name("ADMIN")
+                                                .build())
+                                        .build()
+                                )
+                                .build()
+                        ))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().is5xxServerError())
+                .andReturn();
+        MovieError movieError = objectMapper.readValue(result.getResponse().getContentAsString(), MovieError.class);
+        assertNotNull(movieError);
+        assertEquals("El estado de la orden no es valido", movieError.getDetails());
+
+    }
+
+    @Test
+    public void createOrderMovieNotFound() throws Exception{
+        String token = mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("noname@email.com", "password"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        TokenDTO tokenDTO = objectMapper.readValue(token, TokenDTO.class);
+        var result = mocMvc.perform(MockMvcRequestBuilders.post("/orders/")
+                        .content(objectMapper.writeValueAsString(OrderDTO.builder()
+                                .orderNumber("11")
+                                .movies(List.of(MovieDTO.builder()
+                                        .pgRating("PG-13")
+                                        .imageURL("https://image.tmdb.org/t/p/original/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg")
+                                        .price(10L)
+                                        .description("After reuniting with Gwen Stacy, Brooklyn’s full-time, friendly neighborhood Spider-Man is catapulted across the Multiverse.")
+                                        .name("Spider-Man: Migel Ohara is not definitly not racist")
+                                        .categoryDTO(new CategoryDTO("Accion","Peliculas de accion"))
+                                        .build()))
+                                .status("confirmada")
+                                .total(10L)
+                                .user(UserResponseDTO.builder()
+                                        .email("noname@email.com")
+                                        .firstName("he who")
+                                        .lastName("must not be named")
+                                        .phone("+57123123123")
+                                        .role(RoleResponseDTO.builder()
+                                                .name("ADMIN")
+                                                .build())
+                                        .build()
+                                )
+                                .build()
+                        ))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()))
+                .andExpect(status().is5xxServerError())
+                .andReturn();
+        MovieError movieError = objectMapper.readValue(result.getResponse().getContentAsString(), MovieError.class);
+        assertNotNull(movieError);
+        assertEquals("No existe una pelicula de la orden", movieError.getDetails());
+
     }
 
 
