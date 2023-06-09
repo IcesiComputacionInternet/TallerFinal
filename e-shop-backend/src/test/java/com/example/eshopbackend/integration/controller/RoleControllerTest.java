@@ -54,7 +54,7 @@ public class RoleControllerTest {
                                 mapper.writeValueAsString(
                                         RoleDTO.builder()
                                                 .description("Role for testing")
-                                                .roleName("ADMIN")
+                                                .roleName("ADMIN-2")
                                                 .build()
                                 ))
                         .header("Authorization", "Bearer "+token)

@@ -82,8 +82,4 @@ public class CategoryControllerTest{
         token = getToken("johndoe3@email.com", "password");
     }
 
-    @Test
-    public void noAlcance(){
-        System.out.println("xd");
-    }
 }
