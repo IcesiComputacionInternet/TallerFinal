@@ -20,7 +20,6 @@ public class CategoryService {
     private final CategoryMapper categoryMapper;
     private final ItemMapper itemMapper;
 
-    //create crud
     public void create(RequestCategoryDTO requestCategoryDTO) {
         boolean exists = categoryRepository.existsByName(requestCategoryDTO.name());
         if (exists) {throw new CustomException("Category already exists");}
