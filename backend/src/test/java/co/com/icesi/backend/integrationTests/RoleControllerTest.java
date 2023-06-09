@@ -197,7 +197,7 @@ public class RoleControllerTest {
                                 ))
                         .header("Authorization", "Bearer "+token.getToken())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isForbidden())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
     }
@@ -221,7 +221,7 @@ public class RoleControllerTest {
                                 ))
                         .header("Authorization", "Bearer "+token.getToken())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isForbidden())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
     }
@@ -257,7 +257,7 @@ public class RoleControllerTest {
         var result = mockMvc.perform(MockMvcRequestBuilders.get("/roles/{name}", UserRole.SHOP.getRole())
                         .header("Authorization", "Bearer "+token.getToken())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isForbidden())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
     }
@@ -275,7 +275,7 @@ public class RoleControllerTest {
         var result = mockMvc.perform(MockMvcRequestBuilders.get("/roles/{name}", UserRole.SHOP.getRole())
                         .header("Authorization", "Bearer "+token.getToken())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isForbidden())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
     }

@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 public class CellphoneServiceTest {
-    /*private CellphoneService cellphoneService;
+    private CellphoneService cellphoneService;
     private CellphoneRepository cellphoneRepository;
     private CategoryRepository categoryRepository;
     private CellphoneMapper cellphoneMapper;
@@ -137,5 +137,5 @@ public class CellphoneServiceTest {
                 .name(CategoryType.HIGH_RANGE.getCategory())
                 .description("Loreno Insomnio, I never knew how to say it")
                 .build();
-    }*/
+    }
 }

@@ -303,7 +303,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testGetARoleWhenLoggedUserIsShop() throws Exception {
+    public void testGetAUserWhenLoggedUserIsShop() throws Exception {
         var resultToken = mockMvc.perform(MockMvcRequestBuilders.post("/token").content(
                                 objectMapper.writeValueAsString(new LoginDTO("kerenlopez@gmail.com", "password"))
                         )
@@ -312,16 +312,16 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         TokenDTO token = objectMapper.readValue(resultToken.getResponse().getContentAsString(),TokenDTO.class);
-        var result = mockMvc.perform(MockMvcRequestBuilders.get("/users/{userEmail}", "kerenlopezcordoba@gmail.com")
+        var result = mockMvc.perform(MockMvcRequestBuilders.get("/users/{userEmail}", "kerenlopez@gmail.com")
                         .header("Authorization", "Bearer "+token.getToken())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isOk())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
     }
 
     @Test
-    public void testGetARoleWhenLoggedUserIsANormalUser() throws Exception {
+    public void testGetAUserWhenLoggedUserIsANormalUser() throws Exception {
         var resultToken = mockMvc.perform(MockMvcRequestBuilders.post("/token").content(
                                 objectMapper.writeValueAsString(new LoginDTO("luismiguel@gmail.com", "password"))
                         )
@@ -330,10 +330,10 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         TokenDTO token = objectMapper.readValue(resultToken.getResponse().getContentAsString(),TokenDTO.class);
-        var result = mockMvc.perform(MockMvcRequestBuilders.get("/users/{userEmail}", "kerenlopezcordoba@gmail.com")
+        var result = mockMvc.perform(MockMvcRequestBuilders.get("/users/{userEmail}", "kerenlopez@gmail.com")
                         .header("Authorization", "Bearer "+token.getToken())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isOk())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
     }

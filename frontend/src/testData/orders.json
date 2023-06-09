@@ -1,0 +1,26 @@
+[
+  {
+    "user" : "luismiguel@gmail.com",
+    "items" : "Apple iPhone 13 128 GB",
+    "address" : "Cra 7 #69-64",
+    "total" : "3789000"
+  },
+  {
+    "user" : "santiagokmids@gmail.com",
+    "items" : "Celular HUAWEI nova Y70 128 GB Blanco",
+    "address" : "Cra 9",
+    "total" : "3199600"
+  },
+  {
+    "user" : "kerenlopez08@gmail.com",
+    "items" : "Celular Samsung Galaxy A22 5G 128 GB Gris",
+    "address" : "Cra 7 #69-64",
+    "total" : "933000"
+  },
+  {
+    "user" : "laralaraaaa@gmail.com",
+    "items" : "Celular HONOR X6s 128GB Azul",
+    "address" : "Cra 100 #50",
+    "total" : "619900"
+  }
+]
