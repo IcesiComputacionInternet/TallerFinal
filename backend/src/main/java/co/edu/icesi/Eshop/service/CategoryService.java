@@ -33,7 +33,6 @@ public class CategoryService {
     }
 
     public List<CategoryDTO> getAllCategories(){
-        adminAuthorizationOnly();
         return categoryRepository.findAll().stream().map(categoryMapper::fromCategory).toList();
     }
 
@@ -44,13 +43,6 @@ public class CategoryService {
                     HttpStatus.CONFLICT,
                     new DetailBuilder(ErrorCode.ERR_DUPLICATED, "Category with name", categoryName)
             ).get();
-        }
-    }
-
-    private void adminAuthorizationOnly(){
-        //Validar que el rol es un admin
-        if (true){
-
         }
     }
 

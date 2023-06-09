@@ -31,7 +31,7 @@ function Categories (){
      <br />
      {categories.length > 0 ?(
         <div className="container mt-4">
-          <p className="h4">Categorias añadidas</p>
+          <p className="h4">Categorías registradas</p>
           <br />
           <table className="table table-striped-columns" style={{tableLayout:"fixed"}}>
             <thead>

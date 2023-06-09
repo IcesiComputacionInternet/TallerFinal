@@ -32,7 +32,7 @@ const Login = ({ setLogin }: Props) =>{
         if (data.token){
           localStorage.setItem("jwt", data.token);
           setLogin(true);
-          navigation("/home-shop");
+          navigation("/users/home-shop");
         }
           
       } catch (error) {
