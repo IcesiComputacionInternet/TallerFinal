@@ -14,8 +14,8 @@ public class UserController implements UserApi {
 
     private final UserService userService;
     @Override
-    public void createUser(UserDTO user) {
-        userService.save(user);
+    public UserDTO createUser(UserDTO user) {
+        return userService.save(user);
     }
 
     @Override

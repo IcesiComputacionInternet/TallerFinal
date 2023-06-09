@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-
+@Data
 @Entity
 @Builder
 @AllArgsConstructor
@@ -33,8 +33,8 @@ public class User {
 
     private LocalDateTime birthDate;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "roleId",nullable = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "role_role_id",nullable = false)
     private Role role;
 
     @OneToMany(mappedBy = "user")

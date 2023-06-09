@@ -12,5 +12,5 @@ public interface RoleApi {
     String ROLE_BASE_URL = "/roles";
 
     @PostMapping("/add")
-    void createRole(@RequestBody @Valid RoleDTO roleDTO);
+    RoleDTO createRole(@RequestBody @Valid RoleDTO roleDTO);
 }

@@ -12,7 +12,7 @@ public class RoleController implements RoleApi {
 
     private final RoleService roleService;
     @Override
-    public void createRole(RoleDTO roleDTO) {
-        roleService.save(roleDTO);
+    public RoleDTO createRole(RoleDTO roleDTO) {
+        return roleService.save(roleDTO);
     }
 }

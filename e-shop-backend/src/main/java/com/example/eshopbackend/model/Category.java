@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
-
+@Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,6 +20,6 @@ public class Category {
 
     private String description;
 
-    @OneToMany(mappedBy = "itemId")
+    @OneToMany(mappedBy = "category")
     private List<Item> items;
 }

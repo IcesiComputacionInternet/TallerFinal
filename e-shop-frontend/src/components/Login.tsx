@@ -24,6 +24,7 @@ const Login = ({ setLogin }: Props) => {
       console.log(res);
       if (res.token) {
         localStorage.setItem("jwt", res.token);
+        sessionStorage.setItem("username", username);
         setLogin(true);
         navigation("/");
       } else {
