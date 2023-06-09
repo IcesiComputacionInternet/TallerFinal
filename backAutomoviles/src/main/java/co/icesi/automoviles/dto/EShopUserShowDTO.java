@@ -17,5 +17,6 @@ public class EShopUserShowDTO {
     private String phoneNumber;
     private String address;
     private LocalDateTime birthDate;
+    private RoleShowDTO role;
     private List<PurchaseOrderShowDTO> orders;
 }

@@ -42,10 +42,10 @@ function Category ({setInfoToast}: Props) {
 
     return (
         <div className="container">
-            <button className="btn btn-primary my-4" onClick={() => setCreateModal(true)}>Create</button>
             <div className="d-flex flex-column align-items-center">
                 <h1 className="text-center">Categories</h1>
             </div>
+            <button className="btn btn-primary my-1" onClick={() => setCreateModal(true)}>Create</button>
             <table className="table table-striped">
                 <thead>
                     <tr>

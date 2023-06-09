@@ -5,9 +5,14 @@ import java.util.UUID;
 
 import co.icesi.automoviles.dto.EShopUserShowDTO;
 import co.icesi.automoviles.dto.EShopUserCreateDTO;
+import co.icesi.automoviles.dto.PurchaseOrderShowDTO;
 import co.icesi.automoviles.enums.RoleType;
 import co.icesi.automoviles.mapper.EShopUserMapper;
 import co.icesi.automoviles.model.EShopUser;
+import co.icesi.automoviles.model.PurchaseOrder;
+import co.icesi.automoviles.service.utils.SortUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -67,6 +72,13 @@ public class EShopUserService {
                     new DetailBuilder(ErrorCode.ERR_400, "email or phone number", allErrorMessages)
             ).get();
         }
+    }
+
+    public Page<EShopUserShowDTO> getAllUsers(int page, int perPage, String sortBy, String sortDir){
+        Pageable pageable = SortUtil.sort(page, perPage, sortBy, sortDir);
+        Page<EShopUser> users = EShopUserRepository.getAllUsers(pageable);
+        Page<EShopUserShowDTO> userShowDTOS = users.map(EShopUserMapper::fromEShopUserToEShopUserShowDTO);
+        return userShowDTOS;
     }
 
     private boolean emailAvailable(String email){

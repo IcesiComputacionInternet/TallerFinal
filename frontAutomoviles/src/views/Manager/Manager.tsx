@@ -1,5 +1,7 @@
 import {faTag,
-        faScroll} from "@fortawesome/free-solid-svg-icons";
+        faScroll,
+        faBagShopping,
+        faUsers} from "@fortawesome/free-solid-svg-icons";
 import {faProductHunt} from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -9,9 +11,9 @@ const ManageCategories = () => {
             <a href="/manage/categories" className="nav-link text-black">
                 <ul className="list-inline">
                     <li className="list-inline-item">
-                        <FontAwesomeIcon icon={faTag}/>
+                        <FontAwesomeIcon icon={faTag} size="2x"/>
                     </li>
-                    <li className="list-inline-item">
+                    <li className="list-inline-item" style={{fontSize:'20px', borderBottom:'1px solid #000'}}>
                         Manage Categories
                     </li>
                 </ul>
@@ -26,9 +28,9 @@ const ManageRoles = () => {
             <a href="/manage/roles" className="nav-link text-black">
                 <ul className="list-inline">
                     <li className="list-inline-item">
-                        <FontAwesomeIcon icon={faScroll}/>
+                        <FontAwesomeIcon icon={faScroll} size="2x"/>
                     </li>
-                    <li className="list-inline-item">
+                    <li className="list-inline-item" style={{fontSize:'20px', borderBottom:'1px solid #000'}}>
                         Manage Roles
                     </li>
                 </ul>
@@ -43,10 +45,44 @@ const ManageItems = () => {
             <a href="/manage/items" className="nav-link text-black">
                 <ul className="list-inline">
                     <li className="list-inline-item">
-                        <FontAwesomeIcon icon={faProductHunt}/>
+                        <FontAwesomeIcon icon={faProductHunt} size="2x"/>
                     </li>
-                    <li className="list-inline-item">
+                    <li className="list-inline-item" style={{fontSize:'20px', borderBottom:'1px solid #000'}}>
                         Manage Items
+                    </li>
+                </ul>
+            </a>
+        </strong>
+    )
+}
+
+const ManageOrders = () => {
+    return(
+        <strong>
+            <a href="/manage/orders" className="nav-link text-black">
+                <ul className="list-inline">
+                    <li className="list-inline-item">
+                        <FontAwesomeIcon icon={faBagShopping} size="2x"/>
+                    </li>
+                    <li className="list-inline-item" style={{fontSize:'20px', borderBottom:'1px solid #000'}}>
+                        Manage Orders
+                    </li>
+                </ul>
+            </a>
+        </strong>
+    )
+}
+
+const ManageUsers = () => {
+    return(
+        <strong>
+            <a href="/manage/users" className="nav-link text-black">
+                <ul className="list-inline">
+                    <li className="list-inline-item">
+                        <FontAwesomeIcon icon={faUsers} size="2x"/>
+                    </li>
+                    <li className="list-inline-item" style={{fontSize:'20px', borderBottom:'1px solid #000'}}>
+                        Manage Users
                     </li>
                 </ul>
             </a>
@@ -66,11 +102,11 @@ function Manager() {
                     <ManageCategories/>
                     <ManageRoles/>
                     <ManageItems/>
-                    {/* Manage Users */}
-                    {/* Manage Orders */}
+                    <ManageOrders/>
+                    <ManageUsers/>
                 </>: <>
                     <ManageItems/>
-                    {/* Manage Orders */}
+                    <ManageOrders/>
                 </>}
             </div>
         </div>

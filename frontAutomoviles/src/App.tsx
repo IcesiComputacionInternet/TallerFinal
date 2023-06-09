@@ -13,6 +13,8 @@ import Category from './views/Manager/Category/Category';
 import Manager from './views/Manager/Manager';
 import Role from './views/Manager/Role/Role';
 import Item from './views/Manager/Item/Item';
+import PurchaseOrder from './views/Manager/PurchaseOrder/PurchaseOrder';
+import User from './views/Manager/User/User';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
@@ -79,12 +81,20 @@ function App() {
             element={localStorage.getItem('role') === 'ADMIN' || localStorage.getItem('role') === 'SHOP'  ? <Item setInfoToast={handleOpenToast} /> : <Navigate to='/' />}
           />
           <Route
+            path="/manage/orders"
+            element={localStorage.getItem('role') === 'ADMIN' || localStorage.getItem('role') === 'SHOP'  ? <PurchaseOrder /> : <Navigate to='/' />}
+          />
+          <Route
             path="/manage/categories"
             element={localStorage.getItem('role') === 'ADMIN' ? <Category setInfoToast={handleOpenToast}/> : <Navigate to='/' />}
           />
           <Route
             path="/manage/roles"
             element={localStorage.getItem('role') === 'ADMIN' ? <Role setInfoToast={handleOpenToast} /> : <Navigate to='/' />}
+          />
+          <Route
+            path="/manage/users"
+            element={localStorage.getItem('role') === 'ADMIN' ? <User /> : <Navigate to='/' />}
           />
           <Route 
             path='/*' 

@@ -1,6 +1,5 @@
 package co.icesi.automoviles.service;
 
-import co.icesi.automoviles.dto.ItemCreateDTO;
 import co.icesi.automoviles.dto.PurchaseOrderCreateDTO;
 import co.icesi.automoviles.dto.PurchaseOrderShowDTO;
 import co.icesi.automoviles.enums.PurchaseOrderStatus;
@@ -26,8 +25,6 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
