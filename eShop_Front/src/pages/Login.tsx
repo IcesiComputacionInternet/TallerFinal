@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 import { useNavigate, NavigateFunction } from "react-router-dom";
 
 
@@ -29,7 +29,6 @@ const Login = ({ setLogin }: Props) => {
   const navigation: NavigateFunction = useNavigate();
 
   const handleSubmit = async (event: any) => {
-    console.log(username, password);
     event.preventDefault();
 
     const { data } = await axios.post(
@@ -44,13 +43,15 @@ const Login = ({ setLogin }: Props) => {
         },
       }
     );
+    console.log(data.token)
 
-    if (data.token) {
+    if (data.token!=null) {
       localStorage.setItem("jwt", data.token);
       setLogin(true);
       navigation("/home");
-      console.log(data.token)
+      // console.log(data.token)
     } else {
+      console.log("entre")
       alert("Invalid username or password");
     }
   };
@@ -96,7 +97,7 @@ const Login = ({ setLogin }: Props) => {
               autoComplete="current-password"
               onChange={(event) => setPassword(event.target.value)}
             />
-
+            
             <Button
               type="submit"
               fullWidth

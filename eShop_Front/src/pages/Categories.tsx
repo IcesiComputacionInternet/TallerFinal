@@ -51,7 +51,7 @@ const Categories = () => {
                         <CardMedia
                             component="img"
                             height= "auto"
-                            image="src/resources/images/all-in-one.png"
+                            image="src/resources/images/all-in-one.webp"
                             alt="portatiles"
                         />
                         <CardContent>
@@ -65,8 +65,8 @@ const Categories = () => {
                     <Card className="cardCategory" onClick={handleClick}>
                         <CardMedia
                             component="img"
-                            height= "auto"
-                            image="src/resources/images/gaming.webp"
+                            height="auto"
+                            image="src/resources/images/pcgamer.webp"
                             alt="portatiles"
                         />
                         <CardContent>

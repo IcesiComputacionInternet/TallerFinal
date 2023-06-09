@@ -19,11 +19,6 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public void saveClient(RequestUserDTO userDTO) {
-        userService.create(userDTO, "CLIENT");
-    }
-
-    @Override
     public RequestUserDTO getById(String id) {
         return userService.get(UUID.fromString(id));
     }

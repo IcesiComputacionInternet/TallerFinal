@@ -12,9 +12,6 @@ public interface UserApi {
     @PostMapping
     void save(@RequestBody @Valid RequestUserDTO userDTO);
 
-    @PostMapping("/add")
-    void saveClient (@RequestBody @Valid RequestUserDTO userDTO);
-
     @GetMapping("/get/id/{id}")
     RequestUserDTO getById(@PathVariable("id") String id);
 
