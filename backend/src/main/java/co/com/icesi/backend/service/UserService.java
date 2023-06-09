@@ -44,7 +44,6 @@ public class UserService {
         shopUser.setBirthday(LocalDateTime.of(Integer.parseInt(birthday[0]), Integer.parseInt(birthday[1]), Integer.parseInt(birthday[2]), 0,0));
         shopUser.setPassword(passwordEncoder.encode(requestUserDTO.getPassword()));
         userRepository.save(shopUser);
-        System.out.println(requestUserDTO.getFirstName());
         return userMapper.fromUserToResponseUserDTO(shopUser);
     }
 

@@ -448,7 +448,7 @@ public class CellphoneControllerTest {
         System.out.println(result.getResponse().getContentAsString());
     }
 
-    /*@Test
+    @Test
     public void testGetACellphone() throws Exception {
         var resultToken = mockMvc.perform(MockMvcRequestBuilders.post("/token").content(
                                 objectMapper.writeValueAsString(new LoginDTO("lauramartinez@gmail.com", "password"))
@@ -458,7 +458,7 @@ public class CellphoneControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         TokenDTO token = objectMapper.readValue(resultToken.getResponse().getContentAsString(),TokenDTO.class);
-        var result = mockMvc.perform(MockMvcRequestBuilders.get("/cellphones/{name}", UserRole.SHOP.getRole())
+        var result = mockMvc.perform(MockMvcRequestBuilders.get("/cellphones/{id}","de7ae704-6bbf-47da-925a-b0bdd13351cf")
                         .header("Authorization", "Bearer "+token.getToken())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -467,7 +467,7 @@ public class CellphoneControllerTest {
     }
 
     @Test
-    public void testGetAllCategories() throws Exception {
+    public void testGetAllCellphones() throws Exception {
         var resultToken = mockMvc.perform(MockMvcRequestBuilders.post("/token").content(
                                 objectMapper.writeValueAsString(new LoginDTO("lauramartinez@gmail.com", "password"))
                         )
@@ -476,11 +476,11 @@ public class CellphoneControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         TokenDTO token = objectMapper.readValue(resultToken.getResponse().getContentAsString(),TokenDTO.class);
-        var result = mockMvc.perform(MockMvcRequestBuilders.get("/roles/getRoles")
+        var result = mockMvc.perform(MockMvcRequestBuilders.get("/cellphones/getItems")
                         .header("Authorization", "Bearer "+token.getToken())
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
         System.out.println(result.getResponse().getContentAsString());
-    }*/
+    }
 }

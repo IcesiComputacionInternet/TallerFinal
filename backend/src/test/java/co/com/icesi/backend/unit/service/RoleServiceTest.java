@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
 
 public class RoleServiceTest {
-    /*private RoleService roleService;
+    private RoleService roleService;
     private RoleRepository roleRepository;
     private RoleMapper roleMapper;
 
@@ -89,5 +89,5 @@ public class RoleServiceTest {
                 .description("Este rol puede acceder a la creacion de items y manejo de pedidos de la tienda (cambiar los estados)")
                 .roleName("SHOP")
                 .build();
-    }*/
+    }
 }

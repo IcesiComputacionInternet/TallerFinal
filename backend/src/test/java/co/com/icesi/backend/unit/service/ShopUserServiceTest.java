@@ -14,7 +14,9 @@ import co.com.icesi.backend.service.UserService;
 import co.com.icesi.backend.unit.service.matcher.UserMatcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,19 +28,19 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 
 public class ShopUserServiceTest {
-    /*private UserService userService;
+    private UserService userService;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private UserMapper userMapper;
-    private RoleMapper roleMapper;
+    private PasswordEncoder passwordEncoder;
 
     @BeforeEach
     private void init(){
         userRepository = mock(UserRepository.class);
         roleRepository = mock(RoleRepository.class);
         userMapper = spy(UserMapperImpl.class);
-        roleMapper = spy(RoleMapper.class);
-        userService = new UserService(userRepository, roleRepository, userMapper,roleMapper);
+        passwordEncoder = spy(PasswordEncoder.class);
+        userService = new UserService(userRepository, roleRepository, userMapper,passwordEncoder);
         userService=spy(userService);
     }
 
@@ -58,7 +60,8 @@ public class ShopUserServiceTest {
                 .lastName("David")
                 .email("ykaar@gmail.com")
                 .phoneNumber("3152485689")
-                .password("taEkbs08")
+                .password(passwordEncoder.encode("taEkbs08"))
+                .birthday(LocalDateTime.of(2023,5,9,0,0))
                 .build();
         verify(userRepository, times(1)).findByEmail(any());
         verify(userRepository, times(1)).findByPhoneNumber(any());
@@ -168,6 +171,7 @@ public class ShopUserServiceTest {
                 .email("ykaar@gmail.com")
                 .phoneNumber("3152485689")
                 .password("taEkbs08")
+                .birthday("2023-05-09")
                 .build();
     }
 
@@ -190,7 +194,8 @@ public class ShopUserServiceTest {
                 .lastName("David")
                 .email("ykaar@gmail.com")
                 .phoneNumber("3152485689")
-                .password("taEkbs08")
+                .password(passwordEncoder.encode("taEkbs08"))
+                .birthday(LocalDateTime.of(2023,5,9,0,0))
                 .build();
     }
 
@@ -200,5 +205,5 @@ public class ShopUserServiceTest {
                 .description("Director del programa de Ingenieria de sistemas")
                 .roleName("Director SIS")
                 .build();
-    }*/
+    }
 }
