@@ -8,7 +8,7 @@ import com.icesi.backend.error.exception.E_SHOP_Exception;
 import com.icesi.backend.errorConstants.BackendApplicationErrors;
 import com.icesi.backend.models.PermissionUser;
 import com.icesi.backend.service.LoginService_Interfase;
-import com.icesi.backend.service.impl.TOken_Parser;
+import com.icesi.backend.service.impl.Token_Parser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -78,7 +78,7 @@ public class AuthorizationTokenFilter extends OncePerRequestFilter {
         try {
             if (containsToken(request)) {
                 String jwtToken = request.getHeader(AUTHORIZATION_HEADER).replace(TOKEN_PREFIX, StringUtils.EMPTY);
-                Claims claims = TOken_Parser.decodeJWT(jwtToken);
+                Claims claims = Token_Parser.decodeJWT(jwtToken);
                 SecurityContext context = parseClaims(jwtToken, claims);
                 SecurityContextHolder.setUserContext(context);
                 roleFilter(context, request, response);
