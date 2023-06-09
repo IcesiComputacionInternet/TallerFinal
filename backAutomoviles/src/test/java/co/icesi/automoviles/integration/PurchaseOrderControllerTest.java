@@ -5,6 +5,9 @@ import co.icesi.automoviles.api.ItemAPI;
 import co.icesi.automoviles.api.PurchaseOrderAPI;
 import co.icesi.automoviles.dto.*;
 import co.icesi.automoviles.enums.PurchaseOrderStatus;
+import co.icesi.automoviles.error.exception.ErrorCode;
+import co.icesi.automoviles.error.exception.ShopError;
+import co.icesi.automoviles.error.exception.ShopErrorDetail;
 import co.icesi.automoviles.repository.PurchaseOrderRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -13,16 +16,18 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.List;
 import java.util.UUID;
 
 import static co.icesi.automoviles.utils.DTOBuilder.defaultPurchaseOrderCreateDTOForAdmin;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static co.icesi.automoviles.utils.DTOBuilder.defaultPurchaseOrderCreateDTOForUser;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -66,8 +71,8 @@ public class PurchaseOrderControllerTest {
         tokenDTO = login("johndoe3@email.com", "password");
     }
 
-    private void deletePurchaseOrder(String uuid) throws Exception {
-        purchaseOrderRepository.deleteById(UUID.fromString(uuid));
+    private void deletePurchaseOrder(UUID uuid) throws Exception {
+        purchaseOrderRepository.deleteById(uuid);
     }
 
     @Test
@@ -90,116 +95,112 @@ public class PurchaseOrderControllerTest {
         assertEquals("e9c14553-3e76-4968-b78c-0d6fc8dfcdbb", purchaseOrderShowDTO.getItems().get(0).getItemId().toString());
         assertEquals("30eadfff-5cc6-4968-9755-11de28678e38", purchaseOrderShowDTO.getItems().get(1).getItemId().toString());
         assertEquals("5f81aa60-fb85-4de6-b7c4-824ea6b7fdf1", purchaseOrderShowDTO.getItems().get(2).getItemId().toString());
-
+        deletePurchaseOrder(purchaseOrderShowDTO.getPurchaseOrderId());
     }
 
     @Test
-    public void testEndpointForPurchaseOrderCreationWithAdminCredentialsForOther(){
-
+    public void testEndpointForPurchaseOrderCreationWithAdminCredentialsForOther() throws Exception {
+        loginAsAdmin();
+        PurchaseOrderCreateDTO purchaseOrderCreateDTO = defaultPurchaseOrderCreateDTOForUser();
+        var result = mockMvc.perform(MockMvcRequestBuilders.post(PurchaseOrderAPI.ROOT_PATH)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken())
+                        .content(objectMapper.writeValueAsString(purchaseOrderCreateDTO))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        PurchaseOrderShowDTO purchaseOrderShowDTO = objectMapper.readValue(result.getResponse().getContentAsString(), PurchaseOrderShowDTO.class);
+        assertNotNull(purchaseOrderShowDTO.getPurchaseOrderId());
+        assertEquals(purchaseOrderCreateDTO.getEShopUserUUID(), purchaseOrderShowDTO.getEShopUser().getEShopUserId().toString());
+        assertEquals(PurchaseOrderStatus.Processing_order.toString(), purchaseOrderShowDTO.getStatus());
+        assertEquals(30000000, purchaseOrderShowDTO.getTotal());
+        assertEquals(3, purchaseOrderShowDTO.getItems().size());
+        assertEquals("e9c14553-3e76-4968-b78c-0d6fc8dfcdbb", purchaseOrderShowDTO.getItems().get(0).getItemId().toString());
+        assertEquals("30eadfff-5cc6-4968-9755-11de28678e38", purchaseOrderShowDTO.getItems().get(1).getItemId().toString());
+        assertEquals("5f81aa60-fb85-4de6-b7c4-824ea6b7fdf1", purchaseOrderShowDTO.getItems().get(2).getItemId().toString());
+        deletePurchaseOrder(purchaseOrderShowDTO.getPurchaseOrderId());
     }
 
     @Test
-    public void testEndpointForPurchaseOrderCreationWithUserCredentialsForHimself(){
-
+    public void testEndpointForPurchaseOrderCreationWithUserCredentialsForHimself() throws Exception {
+        loginAsUser();
+        PurchaseOrderCreateDTO purchaseOrderCreateDTO = defaultPurchaseOrderCreateDTOForUser();
+        var result = mockMvc.perform(MockMvcRequestBuilders.post(PurchaseOrderAPI.ROOT_PATH)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken())
+                        .content(objectMapper.writeValueAsString(purchaseOrderCreateDTO))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        PurchaseOrderShowDTO purchaseOrderShowDTO = objectMapper.readValue(result.getResponse().getContentAsString(), PurchaseOrderShowDTO.class);
+        assertNotNull(purchaseOrderShowDTO.getPurchaseOrderId());
+        assertEquals(purchaseOrderCreateDTO.getEShopUserUUID(), purchaseOrderShowDTO.getEShopUser().getEShopUserId().toString());
+        assertEquals(PurchaseOrderStatus.Processing_order.toString(), purchaseOrderShowDTO.getStatus());
+        assertEquals(30000000, purchaseOrderShowDTO.getTotal());
+        assertEquals(3, purchaseOrderShowDTO.getItems().size());
+        assertEquals("e9c14553-3e76-4968-b78c-0d6fc8dfcdbb", purchaseOrderShowDTO.getItems().get(0).getItemId().toString());
+        assertEquals("30eadfff-5cc6-4968-9755-11de28678e38", purchaseOrderShowDTO.getItems().get(1).getItemId().toString());
+        assertEquals("5f81aa60-fb85-4de6-b7c4-824ea6b7fdf1", purchaseOrderShowDTO.getItems().get(2).getItemId().toString());
+        deletePurchaseOrder(purchaseOrderShowDTO.getPurchaseOrderId());
     }
 
     @Test
-    public void testEndpointForPurchaseOrderCreationWithUserCredentialsForOther(){
-
+    public void testEndpointForPurchaseOrderCreationWithUserCredentialsForOther() throws Exception {
+        loginAsUser();
+        PurchaseOrderCreateDTO purchaseOrderCreateDTO = defaultPurchaseOrderCreateDTOForAdmin();
+        var result = mockMvc.perform(MockMvcRequestBuilders.post(PurchaseOrderAPI.ROOT_PATH)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken())
+                        .content(objectMapper.writeValueAsString(purchaseOrderCreateDTO))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden())
+                .andReturn();
+        ShopError shopError = objectMapper.readValue(result.getResponse().getContentAsString(), ShopError.class);
+        List<ShopErrorDetail> icesiErrorDetailList = shopError.getDetails();
+        assertEquals(HttpStatus.FORBIDDEN, shopError.getStatus());
+        assertEquals(icesiErrorDetailList.size(), 1);
+        assertEquals(ErrorCode.ERR_403.getCode(), icesiErrorDetailList.get(0).getErrorCode());
+        assertEquals("you only have access to your own purchase orders", icesiErrorDetailList.get(0).getErrorMessage());
     }
 
     @Test
-    public void testEndpointForPurchaseOrderCreationWithShop(){
-
+    public void testEndpointForPurchaseOrderCreationWithShop() throws Exception {
+        loginAsShop();
+        PurchaseOrderCreateDTO purchaseOrderCreateDTO = defaultPurchaseOrderCreateDTOForAdmin();
+        var result = mockMvc.perform(MockMvcRequestBuilders.post(PurchaseOrderAPI.ROOT_PATH)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken())
+                        .content(objectMapper.writeValueAsString(purchaseOrderCreateDTO))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden())
+                .andReturn();
+        assertTrue(result.getResponse().getContentAsString().isEmpty());
     }
 
     @Test
-    public void testEndpointForGetPurchaseOrderByIdWithAdminCredentialsWhenAdminIsTheOwner(){
-
+    public void testEndpointForGetPurchaseOrderByIdWithUserCredentialsWhenUserIsNotTheOwner() throws Exception {
+        loginAsUser();
+        var result = mockMvc.perform(MockMvcRequestBuilders.get(PurchaseOrderAPI.ROOT_PATH+"/f3d8bd3c-1a49-41ac-b9c2-ea11c1cb1db3")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden())
+                .andReturn();
+        ShopError shopError = objectMapper.readValue(result.getResponse().getContentAsString(), ShopError.class);
+        List<ShopErrorDetail> icesiErrorDetailList = shopError.getDetails();
+        assertEquals(HttpStatus.FORBIDDEN, shopError.getStatus());
+        assertEquals(icesiErrorDetailList.size(), 1);
+        assertEquals(ErrorCode.ERR_403.getCode(), icesiErrorDetailList.get(0).getErrorCode());
+        assertEquals("you only have access to your own purchase orders", icesiErrorDetailList.get(0).getErrorMessage());
     }
 
-    @Test
-    public void testEndpointForGetPurchaseOrderByIdWithAdminCredentialsWhenAdminIsNotTheOwner(){
 
+    private void changeStateToProcessingOrder() throws Exception {
+        loginAsAdmin();
+        var result = mockMvc.perform(MockMvcRequestBuilders.patch(PurchaseOrderAPI.ROOT_PATH+"/bb1e3f7a-be5f-4b07-8dde-ae4441c78b51/"+PurchaseOrderStatus.Processing_order)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
     }
 
-    @Test
-    public void testEndpointForGetPurchaseOrderByIdWithUserCredentialsWhenUserIsTheOwner(){
-
-    }
-
-    @Test
-    public void testEndpointForGetPurchaseOrderByIdWithUserCredentialsWhenUserIsNotTheOwner(){
-
-    }
-
-    @Test
-    public void testEndpointForGetPurchaseOrderByIdWithShopCredentialsWhenShopIsTheOwner(){
-
-    }
-
-    @Test
-    public void testEndpointForGetPurchaseOrderByIdWithShopCredentialsWhenShopIsNotTheOwner(){
-
-    }
-
-    @Test
-    public void testEndpointForGetAllPurchaseOrderWithAdminCredentials(){
-
-    }
-
-    @Test
-    public void testEndpointForGetAllPurchaseOrderWithUserCredentials(){
-
-    }
-
-    @Test
-    public void testEndpointForGetAllPurchaseOrderWithShopCredentials(){
-
-    }
-
-    @Test
-    public void testEndpointForDeletePurchaseOrderWithAdminCredentials(){
-
-    }
-
-    @Test
-    public void testEndpointForDeletePurchaseOrderWithUserCredentials(){
-
-    }
-
-    @Test
-    public void testEndpointForDeletePurchaseOrderWithShopCredentials(){
-
-    }
-
-    @Test
-    public void testEndpointForUpdatePurchaseOrderStateWithAdminCredentials(){
-
-    }
-
-    @Test
-    public void testEndpointForUpdatePurchaseOrderStateWithUserCredentials(){
-
-    }
-
-    @Test
-    public void testEndpointForUpdatePurchaseOrderStateWithShopCredentials(){
-
-    }
-
-    @Test
-    public void testEndpointForUpdatePurchaseOrderWithAdminCredentials(){
-
-    }
-
-    @Test
-    public void testEndpointForUpdatePurchaseOrderWithUserCredentials(){
-
-    }
-
-    @Test
-    public void testEndpointForUpdatePurchaseOrderWithShopCredentials(){
-
-    }
 }

@@ -1,18 +1,14 @@
 package co.icesi.automoviles;
+import co.icesi.automoviles.enums.PurchaseOrderStatus;
 import co.icesi.automoviles.enums.RoleType;
-import co.icesi.automoviles.model.Category;
-import co.icesi.automoviles.model.EShopUser;
-import co.icesi.automoviles.model.Item;
-import co.icesi.automoviles.model.Role;
-import co.icesi.automoviles.repository.CategoryRepository;
-import co.icesi.automoviles.repository.EShopUserRepository;
-import co.icesi.automoviles.repository.ItemRepository;
-import co.icesi.automoviles.repository.RoleRepository;
+import co.icesi.automoviles.model.*;
+import co.icesi.automoviles.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 @TestConfiguration
@@ -22,6 +18,7 @@ public class TestConfigurationData {
                                         RoleRepository roleRepository,
                                         CategoryRepository categoryRepository,
                                         ItemRepository itemRepository,
+                                        PurchaseOrderRepository purchaseOrderRepository,
                                         PasswordEncoder encoder) {
         Role eShopUserRole1 = Role.builder()
                 .roleId(UUID.fromString("f218a75c-c6af-4f1e-a2c6-b2b47f1a0678"))
@@ -135,6 +132,25 @@ public class TestConfigurationData {
                 .imageUrl("https://img.freepik.com/fotos-premium/fondos-coches-deportivos-azules_2227-2.jpg?w=500")
                 .category(sportCategory)
                 .build();
+        ArrayList<Item> items1 = new ArrayList<>();
+        items1.add(car1);
+        PurchaseOrder purchaseOrder1 = PurchaseOrder.builder()
+                .purchaseOrderId(UUID.fromString("f3d8bd3c-1a49-41ac-b9c2-ea11c1cb1db3"))
+                .eShopUser(eShopUser1)
+                .status(PurchaseOrderStatus.Processing_order.toString())
+                .total(10000000)
+                .items(items1)
+                .build();
+        ArrayList<Item> items2 = new ArrayList<>();
+        items2.add(car1);
+        items2.add(car2);
+        PurchaseOrder purchaseOrder2 = PurchaseOrder.builder()
+                .purchaseOrderId(UUID.fromString("bb1e3f7a-be5f-4b07-8dde-ae4441c78b51"))
+                .eShopUser(eShopUser2)
+                .status(PurchaseOrderStatus.Processing_order.toString())
+                .total(20000000)
+                .items(items2)
+                .build();
 
         return args -> {
             roleRepository.save(eShopUserRole1);
@@ -152,6 +168,8 @@ public class TestConfigurationData {
             itemRepository.save(car6);
             itemRepository.save(car7);
             itemRepository.save(car8);
+            purchaseOrderRepository.save(purchaseOrder1);
+            purchaseOrderRepository.save(purchaseOrder2);
         };
     }
 }

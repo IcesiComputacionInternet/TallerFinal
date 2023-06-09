@@ -137,7 +137,7 @@ public class SecurityConfiguration {
 
         MvcRequestMatcher updatePurchaseOrderStateById = new MvcRequestMatcher(introspector, PurchaseOrderAPI.ROOT_PATH+"/{purchaseOrderId}/{newState}");
         updatePurchaseOrderStateById.setMethod(HttpMethod.PATCH);
-        managerBuilder.add(updatePurchaseOrderStateById, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_SHOP"));
+        managerBuilder.add(updatePurchaseOrderStateById, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_SHOP", "SCOPE_USER"));
 
         MvcRequestMatcher updatePurchaseOrderById = new MvcRequestMatcher(introspector, PurchaseOrderAPI.ROOT_PATH+"/{purchaseOrderId}");
         updatePurchaseOrderById.setMethod(HttpMethod.PATCH);

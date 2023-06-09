@@ -52,7 +52,7 @@ public class PurchaseOrderService {
 
     public PurchaseOrderShowDTO getPurchaseOrderShowDTOById(String purchaseOrderId, String loggedEShopUser, String role){
         PurchaseOrder purchaseOrder = getPurchaseOrderById(purchaseOrderId);
-        checkPermissionsToGet(loggedEShopUser, role, purchaseOrder.getPurchaseOrderId().toString());
+        checkPermissionsToGet(loggedEShopUser, role, purchaseOrder.getEShopUser().getEShopUserId().toString());
         PurchaseOrderShowDTO purchaseOrderShowDTO = purchaseOrderMapper.fromPurchaseOrderToPurchaseOrderShowDTO(purchaseOrderRepository.save(purchaseOrder));
         purchaseOrderShowDTO.setEShopUser(eShopUserMapper.fromEShopUserToEShopUserShowDTOForPurchaseOrder(purchaseOrder.getEShopUser()));
         return purchaseOrderShowDTO;
