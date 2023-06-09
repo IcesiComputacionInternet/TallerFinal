@@ -16,8 +16,12 @@ import CreateItems from "./components/CreateItems";
 import Orders from "./components/Orders";
 import CreateCategories from "./pages/admin/CreateCategories";
 import AdminCategories from "./pages/admin/Categories";
+<<<<<<< HEAD
 import ShopHome from "./pages/shop/ShopHome";
 import ShopItems from "./pages/shop/Items";
+=======
+import Draft from "./components/Draft";
+>>>>>>> c8d29a069d237956a9c910bf7e2144a3edebe902
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
@@ -57,10 +61,14 @@ function App() {
         <Route path="/admin/roles/create" element={<CreateRoles />} />
         <Route path="/admin/categories/create" element={<CreateCategories />} />
         <Route path="/createitems" element={<CreateItems />} />
+<<<<<<< HEAD
 
         <Route path="/shop/home" element={<ShopHome />} />
         <Route path="/shop/items" element={<ShopItems />} />
 
+=======
+        <Route path="/draft" element={<Draft />} />
+>>>>>>> c8d29a069d237956a9c910bf7e2144a3edebe902
         {isLoggedIn && (
           <Route path="/orders" element={<Orders />} />
         )}

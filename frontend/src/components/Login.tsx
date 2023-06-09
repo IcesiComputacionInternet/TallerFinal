@@ -32,6 +32,20 @@ const Login = ({ setLogin }: Props) =>{
         if (data.token){
           localStorage.setItem("jwt", data.token);
           setLogin(true);
+
+          var token=localStorage.getItem("jwt");
+          const response = await axios.get(baseUrl + "/users/current", {
+            headers: {
+              "Access-Control-Allow-Origin": baseUrl,
+              "MediaType": "application/json",
+              Authorization: `Bearer ${token}`
+            }
+          });
+          const user=response.data;
+          const role=user.roleName
+          localStorage.setItem("currentRole",role);
+          
+
           navigation("/users/home-shop");
         }
           
