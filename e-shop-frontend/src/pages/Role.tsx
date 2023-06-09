@@ -1,16 +1,16 @@
 import CrudApi from "../components/CrudApi";
 import NavBar from "../components/NavBar";
 
-const Order = () => {
+const Role = () => {
   return (
     <div>
       <NavBar role="ADMIN" />
       <br />
       <br />
       <br />
-      <CrudApi type="ORDER" />;
+      <CrudApi type="ROLES" />;
     </div>
   );
 };
 
-export default Order;
+export default Role;

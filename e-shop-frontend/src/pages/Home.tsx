@@ -1,8 +1,8 @@
 import NavBar from "../components/NavBar";
 import { useEffect, useState } from "react";
-import TableAccounts from "../components/AccountsTable";
+import TableAccounts from "../components/OrdersTable";
 import helpHttp from "../helpers/helpHttp";
-import AccountsTable from "../components/AccountsTable";
+import AccountsTable from "../components/OrdersTable";
 import ShoppingCart from "../components/ShoppingCart";
 
 interface CartProduct {
@@ -42,7 +42,7 @@ const Home = ({ role, setCart, cart }: Props) => {
 
   return (
     <div className="row">
-      <NavBar role="ADMIN" />
+      <NavBar role="SHOP" />
       <main>
         <br />
         <br />
