@@ -1,13 +1,52 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Grid, Card, CardContent, Typography, CardMedia } from '@mui/material';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import '../styles/categories.css';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 
+const baseURL = "http://localhost:8080/api/categories";
+
+interface Category {
+    name: string;
+    description: string;
+    imageURL: string;
+}
+
 const Categories = () => {
+    const [categories, setCategories] = useState<Category[]>([]); // [state, function
     const navigation: NavigateFunction = useNavigate();
+    const token = localStorage.getItem("jwt");
 
     const handleClick = () => {
         navigation("/orders");
+    };
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+    const fetchCategories = async () => {
+        try {
+            const response = await axios.get(baseURL + "/get/all", 
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+            console.log("Categories fetched: ", response.data);
+            const mappedCategories = response.data.map((
+                { name, description, imageURL}: { name: string, description: number, imageURL: string,}) => 
+                ({
+                    name,
+                    description,
+                    imageURL,
+                }
+                ));
+            setCategories(mappedCategories);
+        } catch (error) {
+            console.error("Error fetching the categories: ", error);
+        }
     };
 
     return (
@@ -51,7 +90,7 @@ const Categories = () => {
                         <CardMedia
                             component="img"
                             height= "auto"
-                            image="src/resources/images/all-in-one.webp"
+                            image="src/resources/images/all-in-one.png"
                             alt="portatiles"
                         />
                         <CardContent>
@@ -66,7 +105,7 @@ const Categories = () => {
                         <CardMedia
                             component="img"
                             height="auto"
-                            image="src/resources/images/pcgamer.webp"
+                            image="src/resources/images/gaming.webp"
                             alt="portatiles"
                         />
                         <CardContent>
