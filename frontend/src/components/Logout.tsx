@@ -17,6 +17,7 @@ function Logout (){
 
         localStorage.removeItem('jwt');
         localStorage.removeItem('currentRole');
+        localStorage.removeItem("cartItems");
         localStorage.setItem("logged_user", JSON.stringify(false))
     };
 

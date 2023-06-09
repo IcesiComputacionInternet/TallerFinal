@@ -15,14 +15,38 @@ import Orders from "./pages/admin-shop/Orders";
 import CreateCategories from "./pages/admin/CreateCategories";
 import AdminCategories from "./pages/admin/Categories";
 import HomeShop from "./pages/shop/ShopHome";
+import UserOrders from "./pages/users/UserOrders";
+interface Item {
+  itemId: string;
+  description: string;
+  name: string;
+  price: number;
+  imageUrl: string;
+  minVoltage: number;
+  maxVoltage: number;
+  sourceOfEnergy: string;
+  levelOfEfficiency: string;
+  marca: string;
+  model: string;
+  guarantee: number;
+  available?: boolean;
+}
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
     () => localStorage.getItem("jwt") !== null
   );
 
+  const [cartItems, setCartItems] = useState<Item[]>(() => {
+    const storedCartItems = localStorage.getItem("cartItems");
+    return storedCartItems ? JSON.parse(storedCartItems) : [];
+  });
+  
+
   useEffect(() => {
     localStorage.setItem("logged_user", JSON.stringify(isLoggedIn));
+    localStorage.setItem("cartItems",JSON.stringify(cartItems));
+    
   }, [isLoggedIn]);
 
   const logIn = () => setIsLoggedIn(true);
@@ -54,6 +78,7 @@ function App() {
         <Route path="/admin/categories/create" element={<CreateCategories />} />
         <Route path="/createitems" element={<CreateItems />} />
         <Route path="/shop/home" element={<HomeShop/>} />
+        <Route path="/user/orders" element={<UserOrders/>} />
 
         {isLoggedIn && (
           <Route path="/orders" element={<Orders />} />
