@@ -20,7 +20,7 @@ public interface CategoryAPI {
     @PostMapping
     CreateCategoryDTO createCategory(@Valid @RequestBody CreateCategoryDTO categoryDTO);
 
-    @PatchMapping("/assignCategory/")
+    @PatchMapping("/assignCategory")
     ResponseItemDTO assignCategory(@Valid @RequestBody AssignCategoryDTO assignCategoryDTO);
 
     @GetMapping("/itemsByCategory/{categoryName}")
@@ -30,7 +30,7 @@ public interface CategoryAPI {
     List<CreateCategoryDTO> getAllCategories();
 
     @DeleteMapping("/delete")
-    ResponseDTO deleteCategory(@RequestBody CreateCategoryDTO categoryName);
+    ResponseDTO deleteCategory(@Valid @RequestBody CreateCategoryDTO categoryName);
 
 
 

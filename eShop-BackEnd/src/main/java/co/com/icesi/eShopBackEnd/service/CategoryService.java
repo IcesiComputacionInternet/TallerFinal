@@ -90,13 +90,39 @@ public class CategoryService {
         return list.stream().map(categoryMapper::fromCategory).toList();
     }
 
+    @Transactional
     public ResponseDTO deleteCategory(CreateCategoryDTO categoryDTO){
         Category category = validateExistingCategory(categoryDTO.name());
+
+        setNoneCategory(category.getName());
+
         categoryRepository.delete(category);
 
         return ResponseDTO.builder()
                 .message("Category deleted")
                 .build();
+
+    }
+
+    @Transactional
+    public void setNoneCategory(String categoryName){
+        Category none = categoryRepository.returnCategory("NONE").orElseThrow(
+                ArgumentsExceptionBuilder.createArgumentsExceptionSup(
+                        "Category not found",
+                        HttpStatus.NOT_FOUND,
+                        new DetailBuilder(ErrorCode.ERR_NOT_FOUND,"Category")
+                )
+        );
+
+        List<Item> items = getItemsByCategory(categoryName)
+                .stream()
+                .map(itemMapper::fromResponseItemDTOToItem)
+                .toList();
+
+        items.forEach(item ->{
+            item.setCategory(none);
+            itemRepository.updateCategory(item.getName(), none);
+        });
 
     }
 

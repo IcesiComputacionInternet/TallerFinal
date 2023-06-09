@@ -17,5 +17,7 @@ public interface ItemMapper {
 
     ResponseItemDTO fromItemToResponseItemDTO(Item item);
 
+    Item fromResponseItemDTOToItem(ResponseItemDTO responseItemDTO);
+
 
 }

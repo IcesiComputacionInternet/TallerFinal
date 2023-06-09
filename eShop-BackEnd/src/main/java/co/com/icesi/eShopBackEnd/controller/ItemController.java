@@ -37,8 +37,5 @@ public class ItemController implements ItemAPI {
         return itemService.getAllItems();
     }
 
-    @Override
-    public ResponseDTO deleteItem(DeleteItemDTO itemDTO) {
-        return null;
-    }
+
 }

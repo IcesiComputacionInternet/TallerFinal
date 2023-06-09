@@ -62,6 +62,13 @@ public class EShopBackEndApplication {
 				.description("Category 1")
 				.build();
 
+		Category none = Category.builder()
+				.categoryId(UUID.randomUUID())
+				.name("NONE")
+				.description("None category")
+				.build();
+
+
 		LocalDate date1 = LocalDate.of(1990, 1, 1);
 
 		Customer adminCustomer = Customer.builder()
@@ -105,6 +112,7 @@ public class EShopBackEndApplication {
 			users.save(normalCustomer);
 			users.save(shopCustomer);
 			categories.save(category);
+			categories.save(none);
 		};
 
 	}

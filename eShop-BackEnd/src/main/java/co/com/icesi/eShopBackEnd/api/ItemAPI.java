@@ -29,9 +29,5 @@ public interface ItemAPI {
     @GetMapping("/all")
     List<ResponseItemDTO> getAllItems();
 
-    @DeleteMapping("/delete")
-    ResponseDTO deleteItem(@Valid @RequestBody DeleteItemDTO itemDTO);
-
-
 
 }
