@@ -64,6 +64,7 @@ public class SalesOrderServiceTest {
             assertEquals("Not existing data", exception.getMessage());
         }
     }
+
     @Test
     public void testCreateSalesOrderService() {
 
@@ -76,7 +77,21 @@ public class SalesOrderServiceTest {
 
 
     }
+    @Test
+    public void testCreateSalesOrderServiceWithNotEnoughStock() {
+try{
+        when(customerRepository.findByIdTheCustomer(any())).thenReturn(Optional.of(defaultCustomer()));
+        when(itemRepository.returnItem(any())).thenReturn(Optional.of(defaultItemWithNotEnoughStock()));
+        SalesOrder salesOrder = defaulSalesOrder();
+        when(salesOrderMapper.fromCreateSalesOrderDTO(any())).thenReturn(salesOrder);
+        when(salesOrderRepository.save(any())).thenReturn(salesOrder);
+        salesOrderService.save(defaultSalesOderDTO());
+    } catch (RuntimeException exception) {
+        assertEquals("Not enough stock", exception.getMessage());
+    }
 
+
+    }
     private SalesOrder defaulSalesOrder() {
         return SalesOrder.builder().total(500L).customer(defaultCustomer()).items(itemsI()).build();
     }
@@ -151,6 +166,9 @@ public class SalesOrderServiceTest {
     }
     private Item defaultItem() {
         return Item.builder().name("TV").price(2000L).category(defaulCategory()).brand("password").stock(3).imageURL("tv.com").description("TV").build();
+    }
+    private Item defaultItemWithNotEnoughStock() {
+        return Item.builder().name("TV").price(2000L).category(defaulCategory()).brand("password").stock(1).imageURL("tv.com").description("TV").build();
     }
     private Category defaulCategory() {
         return Category.builder().name("TV").description("TV").build();
