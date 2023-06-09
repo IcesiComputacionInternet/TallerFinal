@@ -17,7 +17,7 @@ import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
-public class OutSecurityController {
+public class SignController {
 
     private final TokenService tokenService;
     private final UserService userService;
