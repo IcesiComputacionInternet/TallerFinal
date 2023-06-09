@@ -19,8 +19,11 @@ import Category from "./pages/Category";
 
 interface CartProduct {
   name: string;
-  id: number;
+  itemId: number;
   price: number;
+  category: string;
+  imageUrl: string;
+  warranty: number;
   quantity: number;
 }
 

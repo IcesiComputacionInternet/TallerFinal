@@ -6,6 +6,7 @@ import com.example.eshopbackend.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,6 +22,11 @@ public class UserController implements UserApi {
     @Override
     public UserDTO getById(String id) {
         return userService.get(UUID.fromString(id));
+    }
+
+    @Override
+    public List<UserDTO> getAll() {
+        return userService.getAll();
     }
 
     @Override

@@ -11,6 +11,8 @@ import lombok.Builder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -57,7 +59,7 @@ public class UserService {
 
     public UserDTO get(UUID id){
         User user = userRepository.findById(id).orElseThrow(
-            () -> new RuntimeException("The user must have a role"));
+            () -> new RuntimeException("Id not found"));
         return userMapper.fromUser(user);
     }
 
@@ -97,5 +99,9 @@ public class UserService {
         User newUser = userMapper.fromUserDTO(userDTO);
         newUser.setUserId(id);
         userRepository.save(newUser);
+    }
+
+    public List<UserDTO> getAll() {
+        return userRepository.findAll().stream().map(userMapper::fromUser).toList();
     }
 }

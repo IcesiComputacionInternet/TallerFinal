@@ -44,7 +44,7 @@ const Home = ({ role, setCart, cart }: Props) => {
 
   return (
     <div className="row">
-      <NavBar role="SHOP" />
+      <NavBar role="USERS" />
       <main>
         <br />
         <br />

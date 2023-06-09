@@ -13,7 +13,26 @@ interface props {
 //CRUD API CON REDUCER
 const CrudApi = ({ type }: props) => {
   const api = helpHttp();
-  const url = "/";
+  let url = "";
+  switch (type) {
+    case "USERS":
+      url = "/users";
+      break;
+    case "PRODUCTS":
+      url = "/items";
+      break;
+    case "ROLES":
+      url = "/roles";
+      break;
+    case "ORDERS":
+      url = "/orders";
+      break;
+    case "CATEGORIES":
+      url = "/categories";
+      break;
+    default:
+      break;
+  }
 
   //const [db, setDb] = useState(null);
   const [state, dispatch] = useReducer(crudReducer, crudInitialState);
@@ -27,7 +46,7 @@ const CrudApi = ({ type }: props) => {
   useEffect(() => {
     setLoading(true);
     helpHttp()
-      .get(url, {})
+      .get(`${url}/getAll`, {})
       .then((res) => {
         //Si no hay error entonces hago la insercion al estado
         if (res !== undefined && !res.err) {
@@ -55,7 +74,7 @@ const CrudApi = ({ type }: props) => {
       },
     };
     //la peticion por si sola hace la eliminacion o metodo correspondiente a dicho endpoint, solo nos quedara cambiar el estado para que se vuelva a graficar
-    api.post(url, options).then((res) => {
+    api.post(`${url}/add`, options).then((res) => {
       //Si no hay error entonces actualiza la base de datos
       if (res !== undefined && !res.err) {
         //setDb([...db, res]);
@@ -71,9 +90,6 @@ const CrudApi = ({ type }: props) => {
     const endpoint = `${url}/${data.id}`;
     const options = {
       body: data,
-      headers: {
-        "content-type": "application/json",
-      },
     };
     //la peticion por si sola hace la eliminacion o metodo correspondiente a dicho endpoint, solo nos quedara cambiar el estado para que se vuelva a graficar
     api.put(endpoint, options).then((res) => {
@@ -136,6 +152,7 @@ const CrudApi = ({ type }: props) => {
 
         {db && (
           <CrudTable
+            type={type}
             data={db}
             deleteData={deleteData}
             setDataToEdit={setDataToEdit}

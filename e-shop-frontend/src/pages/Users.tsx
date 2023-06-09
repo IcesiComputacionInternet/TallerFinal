@@ -8,7 +8,7 @@ const Users = () => {
       <br />
       <br />
       <br />
-      <CrudApi type="USER" />;
+      <CrudApi type="USERS" />;
     </div>
   );
 };
