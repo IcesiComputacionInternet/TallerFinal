@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid } from '@mui/material';
 import { Navigate } from "react-router-dom";
-
+import { useDispatch } from 'react-redux';
 function Login() {
     const [contact, setContact] = useState('');
     const [password, setPassword] = useState('');
     const [log, setLog] = useState(false);
+    const [redirect, setRedirect] = useState(false)
+    
+    const dispatch = useDispatch()
 
     const handleContactChange = (event) => {
         setContact(event.target.value);
@@ -17,10 +20,18 @@ function Login() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        if(contact.includes('@')){
+            dispatch({type: 'LOG_USER', payload: {email: contact, password: password}})
+        } else {
+            dispatch({type: 'LOG_USER', payload: {phoneNumber: contact, password: password}})
+        }
+        
         setLog(true);
-        console.log('Contact:', contact);
-        console.log('Password:', password);
     };
+
+    const handleLoginRedirect = () => {
+        setRedirect(true);
+      };
 
     return (
     <form onSubmit={handleSubmit}>
@@ -55,6 +66,12 @@ function Login() {
                         {log && <Navigate to={"/home"}/>}
                     </Grid>
                 </Grid>
+            </Grid>
+            <Grid item style={{ position: 'absolute', top: 10, right: 10 }}>
+                <Button onClick={handleLoginRedirect} variant="outlined" color="primary">
+                    Register
+                </Button>
+                {redirect && <Navigate to={"/register"}/>}
             </Grid>
         </Grid>
     </form>
