@@ -35,3 +35,18 @@ export const getOrders = async (page:number) => {
     );
     return data;
 }
+
+
+export const updateStatus = async (purchaseOrderId:string, state:string) => {
+    const {data} = await axios.patch(
+        `${baseUrl}/purchaseOrders/${purchaseOrderId}/${state}`,
+        {
+            headers: {
+                "Access-Control-Allow-Origin": baseUrl,
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`
+            }
+        }
+    );
+    return data;
+}
