@@ -41,7 +41,7 @@ public class SalesOrderServiceTest {
     @Test
     public void testCreateSalesOrderServiceWhenCustomerNotExist() {
         try {
-            when(customerRepository.findById(any())).thenReturn(Optional.of(defaultCustomer()));
+            when(customerRepository.findById(any())).thenReturn(Optional.of(defaultCustomerWithIdNotExist()));
             salesOrderService.save(defaultSalesOderDTO());
         } catch (RuntimeException exception) {
             assertEquals("Not existing data", exception.getMessage());
@@ -49,7 +49,7 @@ public class SalesOrderServiceTest {
 
     }
     @Test
-    public void testCreateSalesOrderServiceWhenItemsNotExist() {
+    public void testCreateSalesOrderService() {
         try{
         when(customerRepository.findUserByEmail(any())).thenReturn(Optional.of(defaultCustomer()));
         salesOrderService.save(defaultSalesOderDTO());
@@ -59,7 +59,7 @@ public class SalesOrderServiceTest {
 
     }
     @Test
-    public void testCreateSalesOrderService() {
+    public void testCreateSalesOrderServiceWhenItemsNotExist() {
         // Mocking customer repository
         when(customerRepository.findUserByEmail(any())).thenReturn(Optional.of(defaultCustomer()));
 
@@ -116,6 +116,20 @@ public class SalesOrderServiceTest {
                 .role(admin())
                 .build();
     }
+    private Customer defaultCustomerWithIdNotExist() {
+        return
+                Customer.builder()
+                        .customerId(UUID.fromString("92f51a65-8545-41d5-8402-75412fc574ec"))
+                        .firstName("John")
+                        .lastName("Doe")
+                        .email("jhonDoe@email.com")
+                        .password("password")
+                        .phoneNumber("+573258690127")
+                        .address("Calle 123")
+                        .birthday(date1())
+                        .role(admin())
+                        .build();
+    }
 
     private Role admin() {
         Role admin = Role.builder()
@@ -127,8 +141,7 @@ public class SalesOrderServiceTest {
     }
 
     private LocalDate date1() {
-         LocalDate date1 = LocalDate.of(1990, 1, 1);
-        return date1;
+        return LocalDate.of(1990, 1, 1);
     }
 
     private Role defaultRole() {
