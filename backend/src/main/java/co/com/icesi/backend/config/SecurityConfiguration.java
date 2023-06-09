@@ -34,12 +34,12 @@ import javax.servlet.http.HttpServletRequest;
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfiguration {
-    private final CellphoneShopAuthenticationManager authenticationManager;
+    private final CellphoneShopAuthenticationManager cellphoneShopAuthenticationManager;
     private final String secret = "longenoughsecrettotestencryptadasdasdasdasdasd";
 
     @Bean
     public AuthenticationManager authenticationManager(){
-        return new ProviderManager(authenticationManager);
+        return new ProviderManager(cellphoneShopAuthenticationManager);
     }
 
     @Bean
@@ -47,9 +47,9 @@ public class SecurityConfiguration {
         return http
                 .cors().and()
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorization -> authorization
+                .authorizeHttpRequests(auth -> auth
                         .anyRequest()
-                        .access(access))
+                        .access(access)) //.access(access)
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
@@ -60,7 +60,6 @@ public class SecurityConfiguration {
         byte[] bytes = secret.getBytes();
         SecretKeySpec key = new SecretKeySpec(bytes,0, bytes.length, "RSA");
         return NimbusJwtDecoder.withSecretKey(key).macAlgorithm(MacAlgorithm.HS256).build();
-
     }
 
     @Bean
@@ -69,30 +68,18 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public AuthorizationManager<RequestAuthorizationContext> requestAuthorizationContextAuthenticationManager(
-            HandlerMappingIntrospector introspection){
-        RequestMatcher permitAll = new AndRequestMatcher(new MvcRequestMatcher(introspection, "/token"));
-        RequestMatcher permitAllSignUp = new AndRequestMatcher(new MvcRequestMatcher(introspection, "/users/create"));
+    public AuthorizationManager<RequestAuthorizationContext> requestAuthorizationContextAuthorizationManager
+            (HandlerMappingIntrospector introspector){
+        RequestMatcher permitAll = new AndRequestMatcher(new MvcRequestMatcher(introspector, "/token"));
 
-        RequestMatcherDelegatingAuthorizationManager.Builder managerBuilder =
-            RequestMatcherDelegatingAuthorizationManager.builder()
-                    .add(permitAll, (context, other) -> new AuthorizationDecision(true))
-                    .add(permitAllSignUp, (context, other) -> new AuthorizationDecision(true));
+        MvcRequestMatcher mvcRequestMatcher;
 
-        managerBuilder.add(new MvcRequestMatcher(introspection, "/roles/**"),
-                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
-
-        managerBuilder.add(new MvcRequestMatcher(introspection, "/cellphone/**"),
-                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN","SCOPE_SHOP"));
-
-        managerBuilder.add(new MvcRequestMatcher(introspection, "/users/**"),
-                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN","SCOPE_SHOP", "SCOPE_USER"));
-
-        managerBuilder.add(new MvcRequestMatcher(introspection, "/orders/**"),
-                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN","SCOPE_SHOP"));
-
+        RequestMatcherDelegatingAuthorizationManager.Builder managerBuilder
+                = RequestMatcherDelegatingAuthorizationManager.builder()
+                .add(permitAll, (context, other) -> new AuthorizationDecision(true));
 
         AuthorizationManager<HttpServletRequest> manager = managerBuilder.build();
         return (authentication, object) -> manager.check(authentication, object.getRequest());
     }
 }
+

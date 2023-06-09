@@ -16,17 +16,20 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 
-@Service
 @AllArgsConstructor
+@Service
 public class TokenService {
+
     private final JwtEncoder encoder;
 
     public TokenDTO generateToken(Authentication authentication){
+
         CustomAuthentication customAuthentication = (CustomAuthentication) authentication;
-        Instant now= Instant.now();
-        String scope =  authentication.getAuthorities().stream()
+        Instant now = Instant.now();
+        String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
+
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
@@ -36,7 +39,6 @@ public class TokenService {
                 .claim("userId", customAuthentication.getUserId())
                 .build();
         var encoderParameters = JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS256).build(), claims);
-        TokenDTO token = new TokenDTO(this.encoder.encode(encoderParameters).getTokenValue());
-        return token;
+        return new TokenDTO(this.encoder.encode(encoderParameters).getTokenValue());
     }
 }
