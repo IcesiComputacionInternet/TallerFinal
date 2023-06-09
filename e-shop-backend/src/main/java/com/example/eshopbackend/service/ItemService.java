@@ -24,7 +24,6 @@ public class ItemService {
         validateItemName(newItem.getName());
         Category category = validateItemCategory(newItem.getCategory().getName());
         validateItemPrice(newItem.getPrice());
-
         Item item = itemMapper.fromItemDTO(newItem);
         item.setItemId(UUID.randomUUID());
         item.setCategory(category);
