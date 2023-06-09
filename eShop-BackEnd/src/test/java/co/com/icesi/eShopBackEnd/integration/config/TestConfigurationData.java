@@ -23,7 +23,7 @@ import java.util.UUID;
 
 @TestConfiguration
 public class TestConfigurationData {
-    @Bean
+  //  @Bean
     CommandLineRunner commandLineRunner(CustomerRepository users,
                                         PasswordEncoder encoder, CategoryRepository categoryRepository, ItemRepository itemRepository,CustomerRepository customerRepository) {
 
@@ -62,7 +62,7 @@ public class TestConfigurationData {
         LocalDate date1 = LocalDate.of(1990, 1, 1);
 
         Customer adminCustomer = Customer.builder()
-                .customerId(UUID.randomUUID())
+                .customerId(UUID.fromString("92f51af5-8545-49d5-8402-75412fc574ec"))
                 .firstName("John")
                 .lastName("Doe")
                 .email("jhonDoe@email.com")

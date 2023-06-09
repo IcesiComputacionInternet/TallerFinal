@@ -18,10 +18,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -44,6 +41,7 @@ public class SalesOrderServiceTest {
     @Test
     public void testCreateSalesOrderServiceWhenCustomerNotExist() {
         try {
+            when(customerRepository.findById(any())).thenReturn(Optional.of(defaultCustomer()));
             salesOrderService.save(defaultSalesOderDTO());
         } catch (RuntimeException exception) {
             assertEquals("Not existing data", exception.getMessage());
@@ -82,7 +80,7 @@ public class SalesOrderServiceTest {
     }
 
     private CreateSalesOderDTO defaultSalesOderDTO() {
-        return CreateSalesOderDTO.builder().customer("luis").items(items()).build();
+        return CreateSalesOderDTO.builder().customer("92f51af5-8545-49d5-8402-75412fc574ec").items(items()).build();
     }
 
     private List<CreateItemDTO> items() {
@@ -105,8 +103,34 @@ public class SalesOrderServiceTest {
     }
 
     private Customer defaultCustomer() {
-        return Customer.builder().firstName("luis").lastName("andres").email("lucho@email.com").password("password").phoneNumber("332036584").address("call 65 Nº 32").birthday(LocalDate.parse("2003-06-06")).role(defaultRole()).build();
+        return
+        Customer.builder()
+                .customerId(UUID.fromString("92f51af5-8545-49d5-8402-75412fc574ec"))
+                .firstName("John")
+                .lastName("Doe")
+                .email("jhonDoe@email.com")
+                .password("password")
+                .phoneNumber("+573258690127")
+                .address("Calle 123")
+                .birthday(date1())
+                .role(admin())
+                .build();
     }
+
+    private Role admin() {
+        Role admin = Role.builder()
+                .roleId(UUID.randomUUID())
+                .roleName("ADMIN")
+                .description("Role Admin")
+                .build();
+        return  admin;
+    }
+
+    private LocalDate date1() {
+         LocalDate date1 = LocalDate.of(1990, 1, 1);
+        return date1;
+    }
+
     private Role defaultRole() {
         return Role.builder().roleName("USER").description("Is a teacher the university Icesi").build();
     }
