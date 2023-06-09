@@ -35,13 +35,12 @@ import javax.servlet.http.HttpServletRequest;
 @AllArgsConstructor
 public class SecurityConfiguration {
     private final CellphoneShopAuthenticationManager authenticationManager;
-    private final String secret = "thisisasecuresecrettodotheencryptationprocess";
+    private final String secret = "longenoughsecrettotestencryptadasdasdasdasdasd";
 
     @Bean
     public AuthenticationManager authenticationManager(){
         return new ProviderManager(authenticationManager);
     }
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthorizationManager<RequestAuthorizationContext> access) throws Exception {
@@ -92,7 +91,6 @@ public class SecurityConfiguration {
 
         managerBuilder.add(new MvcRequestMatcher(introspection, "/orders/**"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN","SCOPE_SHOP"));
-
 
 
         AuthorizationManager<HttpServletRequest> manager = managerBuilder.build();

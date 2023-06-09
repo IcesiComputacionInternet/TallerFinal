@@ -1,28 +1,29 @@
 package co.com.icesi.backend.unit.service;
 
 import co.com.icesi.backend.Enum.CategoryType;
+import co.com.icesi.backend.Enum.OrderStatus;
 import co.com.icesi.backend.Enum.UserRole;
+import co.com.icesi.backend.dto.request.RequestChangeOrderDTO;
 import co.com.icesi.backend.dto.request.RequestNewOrderDTO;
 import co.com.icesi.backend.dto.request.RequestOrderItemDTO;
+import co.com.icesi.backend.dto.response.ResponseOrderDTO;
 import co.com.icesi.backend.mapper.CellphoneMapper;
 import co.com.icesi.backend.mapper.OrderMapper;
 import co.com.icesi.backend.mapper.OrderMapperImpl;
-import co.com.icesi.backend.model.Category;
-import co.com.icesi.backend.model.Cellphone;
-import co.com.icesi.backend.model.Role;
-import co.com.icesi.backend.model.ShopUser;
+import co.com.icesi.backend.model.*;
 import co.com.icesi.backend.repository.CellphoneRepository;
 import co.com.icesi.backend.repository.OrderRepository;
 import co.com.icesi.backend.repository.UserRepository;
+import co.com.icesi.backend.security.CellphoneSecurityContext;
 import co.com.icesi.backend.service.OrderService;
+import co.com.icesi.backend.unit.service.matcher.OrderMatcher;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class OrderServiceTest {
@@ -34,8 +35,11 @@ public class OrderServiceTest {
     private CellphoneMapper cellphoneMapper;
 
 
+    @BeforeEach
     private void init(){
         orderRepository = mock(OrderRepository.class);
+        userRepository = mock(UserRepository.class);
+        cellphoneRepository = mock(CellphoneRepository.class);
         orderMapper = spy(OrderMapperImpl.class);
         orderService = new OrderService(userRepository, orderRepository, cellphoneRepository, orderMapper, cellphoneMapper);
         orderService = spy(orderService);
@@ -47,20 +51,62 @@ public class OrderServiceTest {
         when(userRepository.findByEmail(any())).thenReturn(Optional.ofNullable(defaultUser()));
         when(cellphoneRepository.findById(any())).thenReturn(Optional.ofNullable(defaultItem()));
 
-        orderService.saveOrder(defaultOrder());
+        ResponseOrderDTO responseOrderDTO = orderService.saveOrder(defaultOrderDTO());
+        ShopOrder order = defaultOrder();
+
+        assertEquals("Order successfully created", responseOrderDTO.getMessage());
+        verify(orderRepository, times(1)).save(argThat(new OrderMatcher(order)));
+        verify(userRepository, times(1)).findByEmail(any());
+        verify(orderMapper, times(1)).fromRequestOrderDTO(any());
+        verify(orderMapper, times(1)).fromOrderToResponseOrderDTO(any(), any());
     }
 
-    private RequestNewOrderDTO defaultOrder() {
-        List<Cellphone> cellphones = new ArrayList<>();
-        cellphones.add(defaultItem());
+    @Test
+    public void testChangeOrderStatus_HappyPath(){
+        doNothing().when(orderService).checkPermissionToChangeStatus();
+        when(orderRepository.findById(any())).thenReturn(Optional.ofNullable(defaultOrder()));
+
+        ResponseOrderDTO responseOrderDTO = orderService.changeOrderStatus(defaultChangeOrderDTO());
+
+        assertEquals(OrderStatus.DELIVERED.getStatus(), responseOrderDTO.getStatus());
+        verify(orderRepository, times(1)).findById(any());
+        verify(orderRepository, times(1)).save(any());
+        verify(orderMapper, times(1)).fromRequestChangeToResponseOrderDTO(any(), any());
+    }
+
+    private RequestChangeOrderDTO defaultChangeOrderDTO(){
+        return RequestChangeOrderDTO.builder()
+                .orderId(UUID.fromString("de7ae704-6bbf-47da-925a-b0bdd13351cf"))
+                .newStatus(OrderStatus.DELIVERED.getStatus())
+                .build();
+    }
+
+    private ShopOrder defaultOrder() {
+        List<Cellphone> items = new ArrayList<>();
+        Set<Integer> quantities = new HashSet<>();
+        items.add(defaultItem());
+        return ShopOrder.builder()
+                .orderId(UUID.randomUUID())
+                .shopUser(defaultUser())
+                .status(OrderStatus.IN_PROCESS)
+                .total(3789000L)
+                .items(items)
+                .quantities(quantities)
+                .build();
+    }
+
+    private RequestNewOrderDTO defaultOrderDTO() {
+        List<RequestOrderItemDTO> cellphones = new ArrayList<>();
+        cellphones.add(defaultOrderItemDTO());
         return RequestNewOrderDTO.builder()
                 .total(3789000L)
+                .items(cellphones)
                 .build();
     }
 
     private Cellphone defaultItem() {
         return Cellphone.builder()
-                .cellphoneId(UUID.randomUUID())
+                .cellphoneId(UUID.fromString("de7ae704-6bbf-47da-925a-b0bdd13351cf"))
                 .name("Apple iPhone 13 128 GB")
                 .description("iPhone 13. Tu nuevo superpoder. ¿Cómo hicimos para ponerle cámaras " +
                         "tan poderosas? Pensando en diagonal Diseñamos una arquitectura " +
@@ -76,6 +122,13 @@ public class OrderServiceTest {
                 .screenSize("Pantalla Super Retina XDR de 6.1 pulgadas")
                 .stock(20)
                 .category(defaultCategory())
+                .build();
+    }
+
+    private RequestOrderItemDTO defaultOrderItemDTO(){
+        return RequestOrderItemDTO.builder()
+                .id(UUID.fromString("de7ae704-6bbf-47da-925a-b0bdd13351cf"))
+                .quantity(5)
                 .build();
     }
 

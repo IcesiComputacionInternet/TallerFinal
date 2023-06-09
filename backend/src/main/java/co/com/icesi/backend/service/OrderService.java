@@ -37,7 +37,7 @@ public class OrderService {
 
     public ResponseOrderDTO saveOrder(RequestNewOrderDTO requestOrderDTO) {
         checkPermissionsToCreate();
-        var userEmail = CellphoneSecurityContext.getCurrentUserEmail();
+        var userEmail = requestOrderDTO.getUserEmail();
         ShopUser shopUser =  userRepository.findByEmail(userEmail).orElseThrow(
                 () -> exceptionBuilder.notFoundException(
                         "The user with the specified email does not exists.", userEmail));
@@ -45,9 +45,7 @@ public class OrderService {
                 .stream()
                 .map(this::checkIfItemExists)
                 .collect(Collectors.toList());
-        List<ResponseCellphoneDTO> cellphones = items.stream()
-                .map(cellphoneMapper::fromCellphoneToResponseCellphoneDTO)
-                .collect(Collectors.toList());
+
         Set<Integer> quantities = requestOrderDTO.getItems()
                 .stream()
                 .map(RequestOrderItemDTO::getQuantity)
@@ -59,10 +57,7 @@ public class OrderService {
         shopOrder.setItems(items);
         shopOrder.setQuantities(quantities);
         orderRepository.save(shopOrder);
-        ResponseOrderDTO responseOrderDTO = orderMapper.fromOrderToResponseOrderDTO(shopOrder);
-        responseOrderDTO.setItems(cellphones);
-        responseOrderDTO.setMessage("Order successfully created");
-        return responseOrderDTO;
+        return orderMapper.fromOrderToResponseOrderDTO(shopOrder, "Order successfully created");
     }
 
     private Cellphone checkIfItemExists(RequestOrderItemDTO item) {
@@ -86,7 +81,7 @@ public class OrderService {
         return orderMapper.fromRequestChangeToResponseOrderDTO(shopOrder, "Status successfully updated");
     }
 
-    private void checkPermissionToChangeStatus() {
+    public void checkPermissionToChangeStatus() {
         var currentRole = CellphoneSecurityContext.getCurrentUserRole();
         if(currentRole.equals(UserRole.USER.getRole())){
             throw exceptionBuilder.noPermissionException(
