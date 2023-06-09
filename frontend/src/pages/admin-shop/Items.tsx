@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../../components/Navbar";
 import { Modal } from "react-bootstrap";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 const baseUrl = "http://localhost:8091";
 
@@ -23,11 +24,26 @@ interface Item {
 
 const Items = () => {
 
+  const navigation : NavigateFunction = useNavigate();
+
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [showModal, setShowModal] = useState(false);
 
+  const [currentUser, setCurrentUser] = useState("");
+
   useEffect(() => {
+
+    if(localStorage.getItem("jwt")){
+      const user = localStorage.getItem("currentRole");
+
+      if(user){
+        setCurrentUser(user);
+      }
+    }else{
+      navigation("/NotFound");
+    }
+
     async function getData() {
       const resultItems = await getItems();
       setItems(resultItems);
@@ -43,6 +59,11 @@ const Items = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  const handleClick = async (event: any) => {
+    event.preventDefault();
+    navigation("/createitems");
   };
 
   return (
@@ -93,6 +114,15 @@ const Items = () => {
           </Modal.Body>
         </Modal>
       )}
+
+      <br />
+      <div className="container">
+          {(currentUser ==='ADMIN' || currentUser==='SHOP') &&(
+                <div style={{textAlign:"center"}}>
+                  <button type="button" className="btn btn-primary" onClick={handleClick}>Crear ítems</button>
+                </div>
+          )}
+      </div>
     </div>
   );
 };
