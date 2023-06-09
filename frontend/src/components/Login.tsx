@@ -67,7 +67,7 @@ const Login = ({ setLogin }: Props) =>{
         }
           
       } catch (error) {
-        alert("Invalid credentials "+error.response.data.details[0].errorMessage)
+        alert("Credenciales invalidas "+error.response.data.details[0].errorMessage)
       }
     };
 

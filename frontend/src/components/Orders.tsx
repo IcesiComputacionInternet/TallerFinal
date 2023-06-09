@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import {NavigateFunction,useNavigate} from "react-router-dom";
-import Logout from "./Logout";
 import Navbar from "./Navbar";
 
 const baseUrl="http://localhost:8091";
@@ -70,12 +69,12 @@ function Orders(){
           <Navbar/>
 
           <div className="m-3">
-            <h2>My orders</h2>
+            <h2>Mis órdenes</h2>
           </div>
     
           <div className="m-3">
             {orders.length === 0 ? (
-              <h6>No orders made</h6>
+              <h6>Nunca es tarde para hacer una compra ;)</h6>
             ) : (
               <div className="container">
                 <div className="row">
@@ -84,21 +83,21 @@ function Orders(){
                 <div key={order.orderId} className=" col-md-6" >
                   <div className="card m-3">
                   <div className="card-body " >
-                    <h5 className="card-title">Order Id: {order.orderId}</h5>
+                    <h5 className="card-title">ID Orden: {order.orderId}</h5>
                     
                     {order.status==="PENDING" &&
                       <h6 className="p-3 mb-2 bg-danger text-white">
-                       {order.status}
+                       Pendiente
                       </h6>
                     }
                     {order.status==="SHIPPED" &&
                       <h6 className="p-3 mb-2 bg-warning text-dark">
-                          {order.status}
+                          Enviado
                       </h6>
                     }
                     {order.status==="RECEIVED" &&
                       <h6 className="p-3 mb-2 bg-success text-white">
-                         {order.status}
+                         Recibido
                      </h6>
                     }
                     
@@ -108,9 +107,9 @@ function Orders(){
                               <table className="table table-hover">
                                   <thead>
                                       <tr>
-                                          <th>Product</th>
+                                          <th>Producto</th>
                                           <td>   </td>
-                                          <th className="text-center">Price</th>
+                                          <th className="text-center">Precio</th>
                                       </tr>
                                   </thead>
 
@@ -118,7 +117,7 @@ function Orders(){
                                   <tbody>
                                  
                                     {order.items.length === 0 ? (
-                                        <h6>No items added</h6>
+                                        <h6>No se han agregado productos</h6>
                                         ) : (
                                         order.items.map((item) => (
                                             
@@ -148,7 +147,7 @@ function Orders(){
                       onClick={() => changeOrderStatus(order.orderId, "SHIPPED")}
                       disabled={order.status === "SHIPPED" || order.status === "RECEIVED"}
                       >
-                      <strong>Ship Order</strong>
+                      <strong>Enviar orden</strong>
                       </button>
                       
                       <button
@@ -156,7 +155,7 @@ function Orders(){
                       onClick={() => changeOrderStatus(order.orderId, "RECEIVED")}
                       disabled={order.status === "RECEIVED"}
                       >
-                      <strong>Order Received</strong>
+                      <strong>Orden recibida</strong>
                       </button>
                     </div>
                     }
