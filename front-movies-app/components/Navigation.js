@@ -4,7 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Navigation({categories}) {
 
-
+    console.log(categories)
+    
 
     return (
         <div>
@@ -24,17 +25,20 @@ function Navigation({categories}) {
                                     Categories
                                 </a>
                                 <ul className="dropdown-menu">
-                                    {typeof categories === 'undefined' ? (categories.data.map((category) => (
-                                        <li><a className="dropdown-item" href="#">{category.name}</a></li>
-                                    ))):(<li><a className="dropdown-item" href="#">Category 1</a></li>)}
+                                    {categories.data.map((category) => (
+                                        <li key={category.name}>
+                                            <a className="dropdown-item" href="#">{category.name}</a>
+                                        </li>
+                                    ))}
                                 </ul>
+                                
                             </li>
                         </ul>
                     </div>
                     <form className="d-flex" role="search">
                     <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
                     
-                    <button className="btn btn-outline-success" type="submit">Search</button>
+                    <button type="submit" className="btn btn-outline-success" >Search</button>
                     </form>
                 </div>
             </nav>

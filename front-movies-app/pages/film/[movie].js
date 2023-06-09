@@ -21,6 +21,7 @@ const movie = () => {
   }, [router.query.movie]);
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
 
   const [movie, setMovie] = useState({
     name: "",
@@ -72,7 +73,7 @@ const movie = () => {
       let res = {data}
       console.log(res)
       setCategories(res)
-      setIsLoading(false)
+      setIsLoadingCategories(false)
 
     } catch (err) {
       console.error("Error fetching movies:", err);
@@ -82,7 +83,11 @@ const movie = () => {
 
   return (
     <div>
+        {isLoadingCategories ? (
+      <h1>Loading...</h1>
+      ) : (
         <Navigation categories={categories}/>
+      )}
       {isLoading ? (
         <div class="text-center">
             <div class="spinner-grow spinner-grow-sm" role="status">
@@ -113,7 +118,7 @@ const movie = () => {
             Buy For {movie.price}$
           </button>
           <button class= "btn btn-primary">
-            Add To Basket
+            Add To Order
           </button>
           </div>
           

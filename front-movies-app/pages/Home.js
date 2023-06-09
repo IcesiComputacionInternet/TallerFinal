@@ -13,12 +13,14 @@ function Home () {
 
   const [movies, setMovies] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+  const [isLoadingMovies, setIsLoadingMovies] = useState(true);
 
   useEffect(() => {
     getMovies()
-    getCategories()
     console.log(movies)
+    getCategories()
+    console.log(categories)
   }, [])
 
   async function getMovies() {
@@ -36,7 +38,7 @@ function Home () {
       let res = {data}
       console.log(res)
       setMovies(res)
-      setIsLoading(false)
+      setIsLoadingMovies(false)
 
     } catch (err) {
       console.error("Error fetching movies:", err);
@@ -58,10 +60,10 @@ function Home () {
       let res = {data}
       console.log(res)
       setCategories(res)
-      setIsLoading(false)
+      setIsLoadingCategories(false)
 
     } catch (err) {
-      console.error("Error fetching movies:", err);
+      console.error("Error fetching categories:", err);
     }
   }
 
@@ -75,21 +77,16 @@ function Home () {
         
       </Head>
       
-      <Navigation categories={categories}/>
+      {isLoadingCategories ? (
+      <h1>Loading...</h1>
+      ) : (
+        <Navigation categories={categories}/>
+      )}
+      
       <Carousel/>
 
-      {isLoading ? (
-        <div class="text-center">
-        <div class="spinner-grow spinner-grow-sm" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-        <div class="spinner-grow spinner-grow-sm" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-        <div class="spinner-grow spinner-grow-sm" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div>
+      {isLoadingMovies ? (
+        <h1>Loading...</h1>
       ) : (
         <MoviesList movies={movies} />
       )}
