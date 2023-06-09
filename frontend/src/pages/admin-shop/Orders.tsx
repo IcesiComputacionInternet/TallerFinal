@@ -66,8 +66,8 @@ function Orders(){
     return (
         <div>
           <Navbar/>
-
-          <div className="m-3">
+          <br />
+          <div className="text-center">
             <h2>Mis órdenes</h2>
           </div>
     
