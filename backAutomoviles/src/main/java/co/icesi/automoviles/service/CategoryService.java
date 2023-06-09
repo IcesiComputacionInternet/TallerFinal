@@ -91,7 +91,7 @@ public class CategoryService {
     }
 
     public List<CategoryShowDTO> getAllCategories(){
-        return categoryRepository.getAllCategories().stream()
+        return categoryRepository.findAll().stream()
                 .map(categoryMapper::fromCategoryToCategoryShowDTO).toList();
     }
 }

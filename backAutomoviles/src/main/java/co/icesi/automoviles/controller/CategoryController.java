@@ -41,7 +41,7 @@ public class CategoryController implements CategoryAPI {
 
     @Override
     public List<CategoryShowDTO> getAllCategories() {
-        return getAllCategories();
+        return categoryService.getAllCategories();
     }
 
 }
