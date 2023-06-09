@@ -24,7 +24,6 @@ export default function orderDetails() {
     useEffect(() => {
         if (router.query.order) {
           getOrders(router.query.order)
-          getCategories()
           getCurrentUser()
         }
     }, [router.query.order]);
