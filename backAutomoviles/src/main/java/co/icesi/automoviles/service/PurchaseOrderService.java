@@ -19,9 +19,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -120,5 +122,26 @@ public class PurchaseOrderService {
         PurchaseOrder purchaseOrder = getPurchaseOrderById(purchaseOrderId);
         checkPermissionsToCreateOrDelete(loggedEShopUser, role, purchaseOrder.getPurchaseOrderId().toString());
         purchaseOrderRepository.delete(purchaseOrder);
+    }
+
+    public PurchaseOrderShowDTO updateStateOfPurchaseOrder(String purchaseOrderId, String newState){
+        try{
+            PurchaseOrderStatus purchaseOrderStatus = PurchaseOrderStatus.valueOf(newState);
+            PurchaseOrder purchaseOrder = getPurchaseOrderById(purchaseOrderId);
+            purchaseOrder.setStatus(purchaseOrderStatus.toString());
+            PurchaseOrderShowDTO purchaseOrderShowDTO = purchaseOrderMapper.fromPurchaseOrderToPurchaseOrderShowDTO(purchaseOrderRepository.save(purchaseOrder));
+            purchaseOrderShowDTO.setEShopUser(eShopUserMapper.fromEShopUserToEShopUserShowDTOForPurchaseOrder(purchaseOrder.getEShopUser()));
+            return purchaseOrderShowDTO;
+        }catch (IllegalArgumentException illegalArgumentException){
+            String possibleValues = Arrays.stream(PurchaseOrderStatus.values())
+                    .map(Enum::name)
+                    .reduce((e1, e2) -> e1 + ", " + e2)
+                    .orElse("");
+            throw ShopExceptionBuilder.createShopException(
+                    "status: the allowed values are " + possibleValues,
+                    HttpStatus.BAD_REQUEST,
+                    new DetailBuilder(ErrorCode.ERR_400, "status", "the allowed values are " + possibleValues)
+            ).get();
+        }
     }
 }

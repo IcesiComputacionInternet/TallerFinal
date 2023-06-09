@@ -44,7 +44,7 @@ public class PurchaseOrderController implements PurchaseOrderAPI {
 
     @Override
     public PurchaseOrderShowDTO updateStateOfPurchaseOrder(String purchaseOrderId, String newState) {
-        return null;
+        return purchaseOrderService.updateStateOfPurchaseOrder(purchaseOrderId, newState);
     }
 
     @Override
