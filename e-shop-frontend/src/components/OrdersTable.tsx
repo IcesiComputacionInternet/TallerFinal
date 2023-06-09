@@ -23,7 +23,7 @@ const OrdersTable = ({ orders }: Order) => {
                     <th scope="col">User</th>
                     <th scope="col">Status</th>
                     <th scope="col" colSpan={3}>
-                      Status
+                      Asignar Status
                     </th>
                   </tr>
                 </thead>
