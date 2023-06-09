@@ -2,6 +2,8 @@ package com.example.eshopbackend.integration.controller;
 
 import com.example.eshopbackend.TestConfigurationData;
 import com.example.eshopbackend.dto.LoginDTO;
+import com.example.eshopbackend.dto.RoleDTO;
+import com.example.eshopbackend.dto.UserDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -10,9 +12,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -54,7 +60,38 @@ public class UserControllerTest {
     }
 
     @Test
-    public void noAlcance(){
-        System.out.println("xd");
+    public void testCreateAUserHappy_Path() throws Exception {
+        loginAsAdmin();
+        var result = mvc.perform(MockMvcRequestBuilders.post("/users/add").content(
+                                mapper.writeValueAsString(
+                                        UserDTO.builder()
+                                                .firstName("name")
+                                                .lastName("lastname")
+                                                .address("address")
+                                                .birthDate(LocalDateTime.now())
+                                                .phoneNumber("123456789")
+                                                .email("email@hotmail.com")
+                                                .password(new BCryptPasswordEncoder().encode("password"))
+                                                .role(RoleDTO.builder().roleId(("09ca0952-b5a7-4998-b6f5-0628002b519b")).roleName("ADMIN").description("Role for demo").build())
+                                                .build()
+                                ))
+                        .header("Authorization", "Bearer "+token)
+                        .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
     }
+
+    @Test
+    public void testGetAllUsers() throws Exception {
+        loginAsAdmin();
+        var result = mvc.perform(MockMvcRequestBuilders.get("/users/get/all")
+                        .header("Authorization", "Bearer "+token)
+                        .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+
 }

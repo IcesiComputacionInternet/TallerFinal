@@ -27,7 +27,7 @@ public class UserService {
 
     private final RoleRepository roleRepository;
 
-    //private final PasswordEncoder passwordEncoder;
+
 
     public UserDTO save(UserDTO userToSave){
         // validatePhoneOrEmail(userToSave);

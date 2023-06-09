@@ -13,7 +13,7 @@ public interface UserApi {
     @PostMapping("/add")
     UserDTO createUser(@RequestBody @Valid UserDTO user);
 
-    @GetMapping("get/{id}")
+    @GetMapping("/get/{id}")
     UserDTO getById(@PathVariable("id") String id);
 
     @GetMapping("/get/all")
