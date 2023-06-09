@@ -1,4 +1,4 @@
-import Items from "../admin-shop/Items";
+import Orders from "../admin-shop/Orders";
 import { Modal, Button, Navbar } from "react-bootstrap";
 import ReactModal from "react-modal";
 import { Link } from "react-router-dom";
@@ -26,6 +26,23 @@ interface Item {
 const UserOrders = () => {
     const [cartItems, setCartItems] = useState<Item[]>([]);
     const [showCartModal, setShowCartModal] = useState(false);
+
+    useEffect(() => {
+        
+        const loadCartItems= async () => {
+        
+        var token=localStorage.getItem("jwt");
+        if (token) {
+            var items=localStorage.getItem("cartItems");
+            if(items){
+                const cartProds = JSON.parse(items);
+                setCartItems(cartProds);
+
+            }
+        }
+        };
+        loadCartItems();
+      }, []);
 
     const handleOpenCartModal = () => {
         setShowCartModal(true);
@@ -108,7 +125,7 @@ const UserOrders = () => {
                 </Button>
                 </div>
             </ReactModal>
-            <Items/>
+            <Orders/>
         </div>
     );
 }

@@ -40,7 +40,7 @@ const ShopHome = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-
+       
         if(localStorage.getItem("jwt")){
           const user = localStorage.getItem("currentRole");
 
@@ -74,15 +74,55 @@ const ShopHome = () => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
+  useEffect(() => {
+    console.log("AAAAAAAA")
+    const loadCartItems= async () => {
+        
+      var token=localStorage.getItem("jwt");
+      if (token) {
+          var items=localStorage.getItem("cartItems");
+          if(items){
+              const cartProds = JSON.parse(items);
+              setCartItems(cartProds);
 
-  const addItemToCart = () => {
+          }
+      }
+      };
+      loadCartItems();
+  }, []);
+
+  const addItemToCart = async () => {
+    var items=localStorage.getItem("cartItems");
+    if(items){
+        const cartProds = JSON.parse(items);
+        
+        console.log(items);
+
+    }
     if (selectedItem && selectedItem.available) {
-      setCartItems((prevItems) => [...prevItems, selectedItem]);
+       setCartItems((prevItems) => [...prevItems, selectedItem]);
+       var items= localStorage.getItem("cartItems");
+       if(items){
+               
+       handleLocalStorageItems();
+    }
       setSelectedItem(null);
       setShowModal(false);
+       
       alert("Producto añadido al carrito");
+      
     }
+    
+   
+   
   };
+
+  const handleLocalStorageItems= async () => {
+    
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    
+
+  }
 
   const handleOpenCartModal = () => {
     setShowCartModal(true);
@@ -118,7 +158,7 @@ const ShopHome = () => {
 
   const handleClick = async (event: any) => {
     event.preventDefault();
-    navigation("/orders");
+    navigation("/user/orders");
   };
 
   if(currentUser !== "USER"){
