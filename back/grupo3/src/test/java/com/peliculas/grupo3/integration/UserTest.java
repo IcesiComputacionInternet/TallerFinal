@@ -70,11 +70,11 @@ public class UserTest {
                                 objectMapper.writeValueAsString(new UserDTO(
                                         "nombre",
                                         "apellido",
-                                        "123@gmail.co",
-                                        "+57 305 123 432",
-                                        "123",
+                                        "1@gmail.co",
+                                        "+57305123432",
+                                        "1",
                                         "USER",
-                                "address",
+                                        "address",
                                         "10/10/200"
                                         )))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -84,7 +84,16 @@ public class UserTest {
         UserResponseDTO userResponseDTO = objectMapper.readValue(result.andReturn().getResponse().getContentAsString(), UserResponseDTO.class);
         assertNotNull(userResponseDTO);
         assertEquals("nombre", userResponseDTO.getFirstName());
+        mocMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("1@gmail.co", "1"))
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
     }
+
+
 
     @Test
     public void createUserBadEmail() throws Exception {

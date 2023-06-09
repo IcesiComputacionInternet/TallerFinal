@@ -12,6 +12,7 @@ import com.peliculas.grupo3.error.util.MovieExceptionBuilder;
 import com.peliculas.grupo3.security.SecurityContext;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.net.URLDecoder;
@@ -30,6 +31,8 @@ public class UserService {
     private final RoleRepository roleRepository;
 
     private final UserResponseMapper userResponseMapper;
+
+    private final PasswordEncoder encoder;
 
 
     public UserDTO save(UserDTO userDTO) {
@@ -56,6 +59,8 @@ public class UserService {
         MovieUser user = userMapper.fromUserDTO(userDTO);
         user.setRole(role);
         user.setUserId(UUID.randomUUID());
+        user.setPassword(encoder.encode(userDTO.getPassword()));
+        System.out.println(user.getPassword());
         userRepository.save(user);
 
         return userDTO;

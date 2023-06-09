@@ -12,6 +12,7 @@ import com.peliculas.grupo3.repository.UserRepository;
 import com.peliculas.grupo3.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -32,6 +33,8 @@ public class UserServiceTest {
 
     private RoleRepository roleRepository;
 
+    private PasswordEncoder encoder;
+
     Role user = Role.builder()
             .roleId(UUID.randomUUID())
             .description("Role for demo")
@@ -44,7 +47,8 @@ public class UserServiceTest {
         roleRepository=mock(RoleRepository.class);
         userMapper=spy(UserMapperImpl.class);
         userResponseMapper=spy(UserResponseMapperImpl.class);
-        userService= new UserService(userRepository,userMapper,roleRepository,userResponseMapper);
+        encoder = mock(PasswordEncoder.class);
+        userService= new UserService(userRepository,userMapper,roleRepository,userResponseMapper,encoder);
     }
 
     @Test
