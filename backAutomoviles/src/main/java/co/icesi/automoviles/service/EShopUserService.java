@@ -35,7 +35,9 @@ public class EShopUserService {
         eShopUser.setRole(role);
         eShopUser.setEShopUserId(UUID.randomUUID());
         eShopUser.setPassword(passwordEncoder.encode(EShopUserCreateDTO.getPassword()));
-        return EShopUserMapper.fromEShopUserToEShopUserShowDTO(EShopUserRepository.save(eShopUser));
+        EShopUserShowDTO eShopUserShowDTO = EShopUserMapper.fromEShopUserToEShopUserShowDTO(EShopUserRepository.save(eShopUser));
+        eShopUserShowDTO.setEShopUserId(eShopUser.getEShopUserId());
+        return eShopUserShowDTO;
     }
 
     private void checkConditionsToCreateEShopUser(EShopUserCreateDTO EShopUserCreateDTO){
@@ -94,7 +96,9 @@ public class EShopUserService {
         EShopUser eShopUser = findEShopUserById(eShopUserId);
         Role role = findRoleByName(roleName);
         eShopUser.setRole(role);
-        return EShopUserMapper.fromEShopUserToEShopUserShowDTO(EShopUserRepository.save(eShopUser));
+        EShopUserShowDTO eShopUserShowDTO = EShopUserMapper.fromEShopUserToEShopUserShowDTO(EShopUserRepository.save(eShopUser));
+        eShopUserShowDTO.setEShopUserId(eShopUser.getEShopUserId());
+        return eShopUserShowDTO;
     } 
 
     private EShopUser findEShopUserById(String eShopUserId){
