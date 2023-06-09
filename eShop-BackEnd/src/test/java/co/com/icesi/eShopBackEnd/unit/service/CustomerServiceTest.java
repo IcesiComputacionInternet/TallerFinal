@@ -128,7 +128,6 @@ public class CustomerServiceTest {
     @Order(6)
     public void testUpdate() {
         when(customerRepository.findUserByEmail(any())).thenReturn(Optional.of(defaultCustomer()));
-        when(customerRepository.uptadeInformation(any(),any())).thenReturn(((defaultCustomer())));
         customerService.updateCustomer(createCustomerDTO());
         assertEquals("call 65 Nº 32", defaultCustomer().getAddress());
         assertEquals("lucho@email.com", defaultCustomer().getEmail());

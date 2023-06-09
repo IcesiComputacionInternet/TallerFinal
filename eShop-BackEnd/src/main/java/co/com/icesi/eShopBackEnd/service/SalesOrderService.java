@@ -35,7 +35,7 @@ public class SalesOrderService {
     @Transactional
     public ResponseSalesOrderDTO save(CreateSalesOderDTO createDTO){
 
-        Customer customer = customerRepository.findByIdTheCustomer(UUID.fromString(createDTO.customer())).orElseThrow(
+        Customer customer = customerRepository.findById(UUID.fromString(createDTO.customer())).orElseThrow(
                 ArgumentsExceptionBuilder.createArgumentsExceptionSup(
                         "Not existing data",
                         HttpStatus.BAD_REQUEST,
@@ -142,7 +142,7 @@ public class SalesOrderService {
     }
 
     public ResponseSalesOrderDTO updateOrderState(UpdateOrderStateDTO orderDTO){
-        SalesOrder order = salesOrderRepository.returnOrder(orderDTO.orderId()).orElseThrow(
+        SalesOrder order = salesOrderRepository.returnOrder(UUID.fromString(orderDTO.orderId())).orElseThrow(
                 ArgumentsExceptionBuilder.createArgumentsExceptionSup(
                         "Not existing data",
                         HttpStatus.BAD_REQUEST,
@@ -151,7 +151,7 @@ public class SalesOrderService {
         );
 
         order.setStatus(orderDTO.status());
-        salesOrderRepository.updateStateOrder(orderDTO.orderId(),orderDTO.status());
+        salesOrderRepository.updateStateOrder(UUID.fromString(orderDTO.orderId()),orderDTO.status());
         return salesOrderMapper.fromSalesOrderToResponse(order);
 
     }

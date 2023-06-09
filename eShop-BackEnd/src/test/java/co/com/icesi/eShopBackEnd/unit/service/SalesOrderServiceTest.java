@@ -41,7 +41,7 @@ public class SalesOrderServiceTest {
     @Test
     public void testCreateSalesOrderServiceWhenCustomerNotExist() {
         try {
-            when(customerRepository.findByIdTheCustomer(any())).thenReturn(Optional.of(defaultCustomerWithIdNotExist()));
+            when(customerRepository.findById(any())).thenReturn(Optional.of(defaultCustomerWithIdNotExist()));
             salesOrderService.save(defaultSalesOderDTO());
         } catch (RuntimeException exception) {
             assertEquals("Not existing data", exception.getMessage());
@@ -52,7 +52,7 @@ public class SalesOrderServiceTest {
     @Test
     public void testCreateSalesOrderServiceWhenItemsNotExist() {
         try{
-        when(customerRepository.findByIdTheCustomer(any())).thenReturn(Optional.of(defaultCustomer()));
+        when(customerRepository.findById(any())).thenReturn(Optional.of(defaultCustomer()));
         when(itemRepository.returnItem(any())).thenReturn(Optional.of(defaultItemInvalid()));
 
         SalesOrder salesOrder = defaulSalesOrder();
@@ -68,7 +68,7 @@ public class SalesOrderServiceTest {
     @Test
     public void testCreateSalesOrderService() {
 
-            when(customerRepository.findByIdTheCustomer(any())).thenReturn(Optional.of(defaultCustomer()));
+            when(customerRepository.findById(any())).thenReturn(Optional.of(defaultCustomer()));
             when(itemRepository.returnItem(any())).thenReturn(Optional.of(defaultItem()));
             SalesOrder salesOrder = defaulSalesOrder();
             when(salesOrderMapper.fromCreateSalesOrderDTO(any())).thenReturn(salesOrder);
@@ -80,7 +80,7 @@ public class SalesOrderServiceTest {
     @Test
     public void testCreateSalesOrderServiceWithNotEnoughStock() {
 try{
-        when(customerRepository.findByIdTheCustomer(any())).thenReturn(Optional.of(defaultCustomer()));
+        when(customerRepository.findById(any())).thenReturn(Optional.of(defaultCustomer()));
         when(itemRepository.returnItem(any())).thenReturn(Optional.of(defaultItemWithNotEnoughStock()));
         SalesOrder salesOrder = defaulSalesOrder();
         when(salesOrderMapper.fromCreateSalesOrderDTO(any())).thenReturn(salesOrder);
