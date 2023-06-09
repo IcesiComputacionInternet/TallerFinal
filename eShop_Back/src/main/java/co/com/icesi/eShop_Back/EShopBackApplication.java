@@ -1,13 +1,9 @@
 package co.com.icesi.eShop_Back;
 
-import co.com.icesi.eShop_Back.model.Category;
-import co.com.icesi.eShop_Back.model.Item;
-import co.com.icesi.eShop_Back.model.Role;
-import co.com.icesi.eShop_Back.model.User;
+import co.com.icesi.eShop_Back.enums.Status;
+import co.com.icesi.eShop_Back.model.*;
 import co.com.icesi.eShop_Back.model.security.UserPermission;
-import co.com.icesi.eShop_Back.repository.CategoryRepository;
-import co.com.icesi.eShop_Back.repository.PermissionRepository;
-import co.com.icesi.eShop_Back.repository.UserRepository;
+import co.com.icesi.eShop_Back.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,7 +28,9 @@ public class EShopBackApplication {
 			PermissionRepository permissionRepository,
 			UserRepository userRepository,
 			CategoryRepository categoryRepository,
-			PasswordEncoder encoder
+			PasswordEncoder encoder,
+			ItemRepository itemRepository,
+			OrderRepository orderRepository
 	) {
 		String BASE_URL = "/api";
 
@@ -129,6 +128,35 @@ public class EShopBackApplication {
 				.imageUrl("https://raw.githubusercontent.com/IcesiComputacionInternet/TallerFinal/Grupo_5/eShop_Front/src/resources/images/portatiles.webp")
 				.build();
 
+		Item item1 = Item.builder()
+				.itemId(UUID.randomUUID())
+				.name("item1")
+				.description("este es el item 1")
+				.price(1000L)
+				.imageUrl("")
+				.category(desktop)
+				.build();
+
+		List<Item> itemsS = new ArrayList<>();
+		itemsS.add(item1);
+
+		Order order1 = Order.builder()
+				.orderId(UUID.randomUUID())
+				.user(admin)
+				.status(Status.PENDING)
+				.total(1000L)
+				.items(itemsS)
+				.build();
+
+		Order order2 = Order.builder()
+				.orderId(UUID.randomUUID())
+				.user(admin)
+				.status(Status.DELIVERED)
+				.total(1000L)
+				.items(itemsS)
+				.build();
+
+
 		////////////////////////////////////////
 		permissionRepository.save(users);
 		permissionRepository.save(roles);
@@ -142,6 +170,10 @@ public class EShopBackApplication {
 		categoryRepository.save(laptop);
 		userRepository.save(admin);
 		userRepository.save(shop);
+		itemRepository.save(item1);
+		orderRepository.save(order1);
+		orderRepository.save(order2);
+
 
 		return (args) -> System.out.println("loadData");
 	}
