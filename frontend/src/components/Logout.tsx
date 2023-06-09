@@ -16,6 +16,7 @@ function Logout (){
         navigation("/login");
 
         localStorage.removeItem('jwt');
+        localStorage.removeItem('currentRole');
         localStorage.setItem("logged_user", JSON.stringify(false))
     };
 
