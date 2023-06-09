@@ -102,7 +102,7 @@ public class OrderService {
     }
 
     public OrderDTO addMovie(OrderTargetDTO targetDTO){
-        MovieOrder order = orderRepository.findByOrderNumber(targetDTO.getOrdernumber()).orElseThrow(
+        MovieOrder order = orderRepository.findByOrderNumber(targetDTO.getOrderNumber()).orElseThrow(
                 ()-> new RuntimeException("No existe una orden con este numero") );
 
         Movie movie = movieRepository.findByName(targetDTO.getMovieName()).orElseThrow(
@@ -114,7 +114,7 @@ public class OrderService {
         }
         order.getMovies().add(movie);
         order.setTotal(order.getTotal()+movie.getPrice());
-
+        orderRepository.save(order);
         return orderMapper.fromOrder(order);
     }
 
@@ -136,7 +136,7 @@ public class OrderService {
     }
 
     public OrderDTO changeStatus(OrderTargetDTO targetDTO){
-        MovieOrder order = orderRepository.findByOrderNumber(targetDTO.getOrdernumber()).orElseThrow(
+        MovieOrder order = orderRepository.findByOrderNumber(targetDTO.getOrderNumber()).orElseThrow(
                 ()-> new RuntimeException("No existe una orden con este numero") );
 
         if(targetDTO.getMovieName().equalsIgnoreCase("cancelada")
@@ -152,7 +152,7 @@ public class OrderService {
     }
 
     public OrderDTO removeMovie(OrderTargetDTO targetDTO){
-        MovieOrder order = orderRepository.findByOrderNumber(targetDTO.getOrdernumber()).orElseThrow(
+        MovieOrder order = orderRepository.findByOrderNumber(targetDTO.getOrderNumber()).orElseThrow(
                 ()-> new RuntimeException("No existe una orden con este numero") );
 
         Movie movie = movieRepository.findByName(targetDTO.getMovieName()).orElseThrow(

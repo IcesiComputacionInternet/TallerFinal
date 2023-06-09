@@ -2,6 +2,8 @@ import { Container, TextField, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import axios from 'axios'
 import { useRouter } from 'next/router';
+import Swal from 'sweetalert2';
+
 export default function newOrder() {
     const router = useRouter()
     const baseURL = "http://localhost:8080";
@@ -25,21 +27,38 @@ export default function newOrder() {
     const handleCreateOrder = async () => {
         console.log(order)
         console.log(localStorage.getItem('jwt'))
-        const {data} = await axios.post(
-            baseURL+"/orders/", 
-            order,
-            {
-                headers: {
-                    "Access-Control-Allow-Origin": baseURL,
-                    "Content-Type": "application/json",
-                    "Authorization" : "Bearer " + localStorage.getItem("jwt")
-                }
-            }
-          );
-
-          console.log(data)
+        try {
+          const {data} = await axios.post(
+              baseURL+"/orders/", 
+              order,
+              {
+                  headers: {
+                      "Access-Control-Allow-Origin": baseURL,
+                      "Content-Type": "application/json",
+                      "Authorization" : "Bearer " + localStorage.getItem("jwt")
+                  }
+              }
+            );
+            console.log(data)
           let email = JSON.parse(localStorage.getItem("user")).email
-          router.push(`/orders/${email}`)
+          if (data) {
+            Swal.fire({
+              title: '¡Éxito!',
+              text: 'Se ha creado la orden correctamente.',
+              icon: 'success',
+              confirmButtonText: 'Ok',
+            });
+            router.push(`/orders/${email}`)
+          }
+        } catch (err) {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Ha habido un error creando la orden',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+          });
+        }
+
 
     }
 

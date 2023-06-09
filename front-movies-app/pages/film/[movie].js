@@ -3,8 +3,10 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from "../../components/Navigation";
+import Swal from "sweetalert2";
 
 const movie = () => {
+  const baseUrl = "http://localhost:8080";
   const router = useRouter();
 
   const [categories, setCategories] = useState([]);
@@ -12,6 +14,7 @@ const movie = () => {
   console.log(router.query.movie);
 
   const [current, setCurrent] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [isLoadingCurrent, setIsLoadingCurrent] = useState(true);
 
   useEffect(() => {
@@ -26,6 +29,7 @@ const movie = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+  const [isReady, setIsReady] = useState(false);
 
   const [movie, setMovie] = useState({
     name: "",
@@ -103,27 +107,121 @@ const movie = () => {
     }
   }
 
+  useEffect(() => {
+    if (isReady) {
+      handleSwal(orders);
+    }
+  }, [isReady, orders]);
+
   async function handleOrder() {
     console.log("Order!");
-    let order = {};
-    if (localStorage.getItem("order") == null) {
-      let newOrder = {
-        status: "en proceso",
-        total: movie.price,
-        user: current.data,
-        orderNumber: "3",
-        movies: [movie],
-      };
-      localStorage.setItem("order", JSON.stringify(newOrder));
-    } else {
-      order = JSON.parse(localStorage.getItem("order"));
-      order.movies.push(movie);
-      order.total = order.total + movie.price;
-      console.log(order)
-      localStorage.setItem("order", JSON.stringify(order))
+    try {
+      let email = await JSON.parse(localStorage.getItem("user")).email;
+      console.log(email);
+      const response = await axios.get(
+        "http://localhost:8080/orders/getUserOrders/" + email,
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "http://localhost:8080",
+            MediaType: "application/json",
+            Authorization: "Bearer " + localStorage.getItem("jwt"),
+          },
+        }
+      );
+
+      let { data } = response;
+      console.log(data);
+      let newData = data;
+      console.log(newData);
+      setOrders(data);
+      console.log(orders);
+      setIsReady(true);
+    } catch (err) {
+      console.error("Error fetching movies:", err);
+      Swal.fire({
+        title: "Error!",
+        text: "Ha habido un problema obteniendo las ordenes.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
     }
   }
 
+  async function handleSwal(orders) {
+    const orderOptions = orders
+      .filter((order) => order.status != "confirmada")
+      .map((order) => order.orderNumber);
+    console.log(orders);
+    const { value: selectedOrderNumber } = await Swal.mixin({
+      input: "select",
+      inputOptions: {
+        ...orderOptions.reduce((obj, orderNumber) => {
+          obj[orderNumber] = orderNumber;
+          return obj;
+        }, {}),
+      },
+      inputPlaceholder: "Select an order",
+      showCancelButton: true,
+      confirmButtonText: "Confirm",
+      cancelButtonText: "Cancel",
+      inputValidator: (value) => {
+        return new Promise((resolve) => {
+          if (value !== "") {
+            resolve();
+          } else {
+            resolve("Please select an order");
+          }
+        });
+      },
+    }).fire();
+
+    if (selectedOrderNumber) {
+      console.log("Selected order: " + selectedOrderNumber);
+      handleAddMovie(selectedOrderNumber);
+    }
+  }
+
+  async function handleAddMovie(orderNumber) {
+    console.log(orderNumber)
+    console.log(movie.name)
+    let order = {
+      orderNumber: orderNumber,
+      movieName: movie.name
+    }
+    console.log("Order: ",order)
+    try {
+      const {data} = await axios.post(
+        `${baseUrl}/orders/addMovie`,
+        order,
+        {
+          headers: {
+            "Access-Control-Allow-Origin": baseUrl,
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("jwt"),
+          },
+        }
+      );
+
+      let res = {data}
+      console.log("Res: ", res)
+      if (res) {
+        Swal.fire({
+          title: "Todo correcto!",
+          text: "Se ha añadido la pelicula a la orden",
+          icon: "success",
+          confirmButtonText: "Ok",
+        });
+      }
+    } catch (err) {
+      console.error(err)
+      Swal.fire({
+        title: "Ha habido un error",
+        text: "No se ha podido añadir la pelicula a la orden",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+  }
   return (
     <div>
       {isLoadingCategories || isLoadingCurrent ? (

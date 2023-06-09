@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderTargetDTO {
-    String Ordernumber;
+    String orderNumber;
 
     String movieName;
 }

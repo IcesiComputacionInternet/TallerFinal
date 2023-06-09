@@ -32,6 +32,7 @@ public class OrderController implements OrderApi {
 
     @Override
     public OrderDTO addMovie(OrderTargetDTO targetDTO) {
+        System.out.println(targetDTO);
         return orderService.addMovie(targetDTO);
     }
 
