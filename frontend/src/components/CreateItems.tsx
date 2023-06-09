@@ -109,7 +109,7 @@ function CreateItems(){
 
       const handleClick = async (event: any) => {
         event.preventDefault();
-        navigation("/users/home-shop");
+        navigation("/items");
       };
     
     return (

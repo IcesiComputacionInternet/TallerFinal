@@ -61,7 +61,6 @@ function Orders(){
             }
           );
           window.location.reload();
-      
       };
     
     return (
