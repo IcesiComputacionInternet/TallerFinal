@@ -2,23 +2,19 @@ import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Button, IconButton, Badge } from '@mui/material';
 import { AccountCircle, ShoppingCart } from '@mui/icons-material';
 import UserProfile from './UserProfile';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 function Navbar() {
     
+    const products = useSelector((state) => state.products)
     const [showProfile, setShowProfile] = useState(false);
     
-    const user = {
-        firstName: "John",
-        lastName: "Doe",
-        email: "john@example.com",
-        phoneNumber: "+123456789",
-        address: "123 Main St, City, Country",
-        birthday: new Date(1990, 0, 1), // January 1, 1990
-        isLoggedIn: true
-      };
+    const userLog = useSelector((state) => state.userAccount)
+    const dispatch = useDispatch()
 
     const handleLogout = () => {
-        console.log('Logged out');
+        dispatch({type: 'LOG_OUT'})
     };
 
     const handleProfile = () => {
@@ -37,10 +33,10 @@ function Navbar() {
                             Book Shop
                         </Typography>
 
-                        {user.isLoggedIn ? (
+                        {userLog ? (
                         <div>
                             <Button color="inherit" startIcon={<AccountCircle />} onClick={handleProfile}>
-                                {user.firstName + ' ' + user.lastName}
+                                {userLog.email ? (userLog.email):(userLog.phoneNumber)}
                             </Button>
                             <Button color="inherit" onClick={handleLogout}>
                                 Logout
@@ -53,13 +49,14 @@ function Navbar() {
                         )}
 
                         <IconButton color="inherit" onClick={handleCart}>
-                        <Badge badgeContent={1} color="error">
+                        <Badge badgeContent={products.length} color="error">
                             <ShoppingCart />
                         </Badge>
                         </IconButton>
                     </Toolbar>
                     </AppBar>
-            {showProfile && <UserProfile user={user} isVisible={setShowProfile}/>}
+            {showProfile && <UserProfile user={userLog} isVisible={setShowProfile}/>}
+            {userLog ? (<div></div>):(<Navigate to={"/"}/>)}
         </div>
         
     );

@@ -25,9 +25,8 @@ function Register() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log('Contact Type:', contactType);
-    console.log('Contact:', contact);
-    console.log('Password:', password);
+    setContact("")
+    setPassword("")
   };
 
   const handleLoginRedirect = () => {
@@ -95,7 +94,7 @@ function Register() {
           <Button onClick={handleLoginRedirect} variant="outlined" color="primary">
             Login
           </Button>
-          {redirect && <Navigate to={"/login"}/>}
+          {redirect && <Navigate to={"/"}/>}
         </Grid>
       </Grid>
     </form>
