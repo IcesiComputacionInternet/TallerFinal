@@ -15,7 +15,10 @@ import co.icesi.automoviles.model.PurchaseOrder;
 import co.icesi.automoviles.repository.EShopUserRepository;
 import co.icesi.automoviles.repository.ItemRepository;
 import co.icesi.automoviles.repository.PurchaseOrderRepository;
+import co.icesi.automoviles.service.utils.SortUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -129,9 +132,7 @@ public class PurchaseOrderService {
             PurchaseOrderStatus purchaseOrderStatus = PurchaseOrderStatus.valueOf(newState);
             PurchaseOrder purchaseOrder = getPurchaseOrderById(purchaseOrderId);
             purchaseOrder.setStatus(purchaseOrderStatus.toString());
-            PurchaseOrderShowDTO purchaseOrderShowDTO = purchaseOrderMapper.fromPurchaseOrderToPurchaseOrderShowDTO(purchaseOrderRepository.save(purchaseOrder));
-            purchaseOrderShowDTO.setEShopUser(eShopUserMapper.fromEShopUserToEShopUserShowDTOForPurchaseOrder(purchaseOrder.getEShopUser()));
-            return purchaseOrderShowDTO;
+            return fromPurchaseOrderToShowDTO(purchaseOrderRepository.save(purchaseOrder));
         }catch (IllegalArgumentException illegalArgumentException){
             String possibleValues = Arrays.stream(PurchaseOrderStatus.values())
                     .map(Enum::name)
@@ -143,5 +144,18 @@ public class PurchaseOrderService {
                     new DetailBuilder(ErrorCode.ERR_400, "status", "the allowed values are " + possibleValues)
             ).get();
         }
+    }
+
+    private PurchaseOrderShowDTO fromPurchaseOrderToShowDTO(PurchaseOrder purchaseOrder){
+        PurchaseOrderShowDTO purchaseOrderShowDTO = purchaseOrderMapper.fromPurchaseOrderToPurchaseOrderShowDTO(purchaseOrder);
+        purchaseOrderShowDTO.setEShopUser(eShopUserMapper.fromEShopUserToEShopUserShowDTOForPurchaseOrder(purchaseOrder.getEShopUser()));
+        return purchaseOrderShowDTO;
+    }
+
+    public Page<PurchaseOrderShowDTO> getAllPurchaseOrders(int page, int perPage, String sortBy, String sortDir){
+        Pageable pageable = SortUtil.sort(page, perPage, sortBy, sortDir);
+        Page<PurchaseOrder> purchaseOrders = purchaseOrderRepository.getAllPurchaseOrders(pageable);
+        Page<PurchaseOrderShowDTO> purchaseOrderShowDTOS = purchaseOrders.map(entity -> fromPurchaseOrderToShowDTO(entity));
+        return purchaseOrderShowDTOS;
     }
 }

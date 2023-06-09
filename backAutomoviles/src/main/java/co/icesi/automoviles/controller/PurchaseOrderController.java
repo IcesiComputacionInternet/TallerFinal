@@ -1,12 +1,15 @@
 package co.icesi.automoviles.controller;
 
 import co.icesi.automoviles.api.PurchaseOrderAPI;
+import co.icesi.automoviles.dto.ItemShowDTO;
 import co.icesi.automoviles.dto.PageResponse;
 import co.icesi.automoviles.dto.PurchaseOrderCreateDTO;
 import co.icesi.automoviles.dto.PurchaseOrderShowDTO;
 import co.icesi.automoviles.security.ShopSecurityContext;
 import co.icesi.automoviles.service.PurchaseOrderService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,8 +34,12 @@ public class PurchaseOrderController implements PurchaseOrderAPI {
     }
 
     @Override
-    public ResponseEntity<PageResponse<PurchaseOrderShowDTO>> getAllPurchaseOrder() {
-        return null;
+    public ResponseEntity<PageResponse<PurchaseOrderShowDTO>> getAllPurchaseOrder(Integer page, Integer perPage, String sortBy, String sortDirection) {
+        int indexPage = page - 1;
+        Page<PurchaseOrderShowDTO> purchaseOrderShowDTOS;
+        purchaseOrderShowDTOS = purchaseOrderService.getAllPurchaseOrders(indexPage, perPage, sortBy, sortDirection);
+        PageResponse<PurchaseOrderShowDTO> response = new PageResponse<>(purchaseOrderShowDTOS, new PurchaseOrderShowDTO[0]);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @Override
