@@ -1,6 +1,7 @@
 package co.com.icesi.eShop_Back;
 
 import co.com.icesi.eShop_Back.model.Category;
+import co.com.icesi.eShop_Back.model.Item;
 import co.com.icesi.eShop_Back.model.Role;
 import co.com.icesi.eShop_Back.model.User;
 import co.com.icesi.eShop_Back.model.security.UserPermission;
