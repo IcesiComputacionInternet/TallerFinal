@@ -1,5 +1,6 @@
 package com.example.eshopbackend.integration.controller;
 import com.example.eshopbackend.TestConfigurationData;
+import com.example.eshopbackend.dto.CategoryDTO;
 import com.example.eshopbackend.dto.LoginDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
@@ -40,6 +41,35 @@ public class CategoryControllerTest{
         return json.getString("token");
     }
 
+    @Test
+    public void testCreateCategory() throws Exception {
+        loginAsAdmin();
+        var result = mvc.perform(MockMvcRequestBuilders.post("/categories/add").content(
+                                mapper.writeValueAsString(
+                                        CategoryDTO.builder()
+                                                .description("Category for testing")
+                                                .name("Test Category")
+                                                .build()
+                                ))
+                        .header("Authorization", "Bearer "+token)
+                        .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testGetAllCategories() throws Exception {
+        loginAsAdmin();
+        var result = mvc.perform(MockMvcRequestBuilders.get("/categories/getAll")
+                        .header("Authorization", "Bearer "+token)
+                        .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+
+    }
+
     private void loginAsAdmin() throws Exception {
         token = getToken("johndoe@gmail.com", "password");
     }
@@ -48,7 +78,7 @@ public class CategoryControllerTest{
         token = getToken("johndoe2@email.com", "password");
     }
 
-    private void loginAsBank() throws Exception {
+    private void loginAsShop() throws Exception {
         token = getToken("johndoe3@email.com", "password");
     }
 
