@@ -94,6 +94,10 @@ export default function orders() {
         }
       }
 
+      const handleAddOrder = () => {
+        router.push("/orders/newOrder")
+      }
+
     return(
         <div>
             {isLoadingCategories || isLoadingCurrent ? (
@@ -106,7 +110,10 @@ export default function orders() {
                 {isLoadingCurrent ? (
                     <h1>Loading...</h1>
                 ) : (
+                  <>
                     <h1>{current.data.firstName}'s Orders</h1>
+                    <button className="btn btn-primary mb-2" onClick={handleAddOrder}>Añadir orden</button>
+                  </>
                 )}
 
                 {isLoading ? (

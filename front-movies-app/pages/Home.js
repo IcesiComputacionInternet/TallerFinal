@@ -42,7 +42,7 @@ function Home () {
       let res = {data}
       console.log(res)
       setCurrent(res)
-      localStorage.setItem("user", res.data)
+      localStorage.setItem("user", JSON.stringify(res.data))
       setIsLoadingCurrent(false)
 
     } catch (err) {

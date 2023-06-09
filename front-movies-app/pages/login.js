@@ -39,7 +39,7 @@ export default function Login() {
       },
       {
           headers: {
-              "Access-Control-Allow-Origin": baseURL,
+              "Access-Control-Allow-Origin": baseURL
           }
       }
     );
