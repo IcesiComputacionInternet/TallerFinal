@@ -41,11 +41,11 @@ const Home = ({ role, setCart, cart }: Props) => {
   }, []);
 
   return (
-    <div>
-      <header className="dark">
-        <NavBar />
-      </header>
+    <div className="row">
+      <NavBar role="ADMIN" />
       <main>
+        <br />
+        <br />
         <ShoppingCart setCart={setCart} cartApp={cart} />
       </main>
     </div>

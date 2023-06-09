@@ -1,50 +1,78 @@
 import { NavigateFunction, useNavigate } from "react-router-dom";
-
-const NavBar = () => {
+interface NavBarProps {
+  role: string;
+}
+const NavBar = ({ role }: NavBarProps) => {
   const navigation: NavigateFunction = useNavigate();
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar fixed-top navbar-light bg-dark">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          Muebles
+        <a className="navbar-brand me-2" href="https://mdbgo.com/">
+          <img
+            src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
+            height="16"
+            alt="MDB Logo"
+            loading="lazy"
+          />
         </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavDropdown"
-          aria-controls="navbarNavDropdown"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
-                Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="">
-                Hell@ {sessionStorage.getItem("username")}
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                className="nav-link"
-                href=""
-                onClick={() => {
-                  localStorage.removeItem("jwt");
-                  sessionStorage.removeItem("username");
-                  navigation("/login");
-                }}
-              >
-                Logout
-              </a>
-            </li>
-          </ul>
+        {role === "ADMIN" && (
+          <a className="navbar-brand text-white" href="#">
+            Productos
+          </a>
+        )}
+        {role === "ADMIN" && (
+          <a className="navbar-brand text-white" href="#">
+            Usuarios
+          </a>
+        )}
+        {role === "ADMIN" && (
+          <a className="navbar-brand text-white" href="#">
+            Roles
+          </a>
+        )}
+        {role === "ADMIN" && (
+          <a className="navbar-brand text-white" href="#">
+            Categorias
+          </a>
+        )}
+        {role === "ADMIN" && (
+          <a className="navbar-brand text-white" href="#">
+            Ordenes
+          </a>
+        )}
+        {role === "SHOP" && (
+          <a className="navbar-brand text-white" href="#">
+            Productos
+          </a>
+        )}
+        {role === "SHOP" && (
+          <a className="navbar-brand text-white" href="#">
+            Ordenes
+          </a>
+        )}
+        <div className="d-flex align-items-center">
+          {localStorage.getItem("jwt") == null && (
+            <button
+              type="button"
+              className="btn btn-primary me-3"
+              onClick={() => navigation("/login")}
+            >
+              Login
+            </button>
+          )}
+          {localStorage.getItem("jwt") !== null && (
+            <button
+              type="button"
+              className="btn btn-danger me-3"
+              onClick={() => {
+                localStorage.removeItem("jwt");
+                sessionStorage.removeItem("username");
+                navigation("/");
+              }}
+            >
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </nav>
