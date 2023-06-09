@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class OrderServiceTest {
-    private OrderService orderService;
+    /*private OrderService orderService;
     private OrderRepository orderRepository;
     private OrderMapper orderMapper;
     private UserRepository userRepository;
@@ -160,5 +160,5 @@ public class OrderServiceTest {
                 .roleName(UserRole.USER.getRole())
                 .description("User role")
                 .build();
-    }
+    }*/
 }

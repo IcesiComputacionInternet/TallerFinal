@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 @AllArgsConstructor
 public class SecurityConfiguration {
     private final CellphoneShopAuthenticationManager cellphoneShopAuthenticationManager;
-    private final String secret = "longenoughsecrettotestencryptadasdasdasdasdasd";
+    private final String secret = "longenoughsecrettotestencryptadasdasdasdasdasdgsgsdgsgsgfsgfsgsfgsgsg";
 
     @Bean
     public AuthenticationManager authenticationManager(){
