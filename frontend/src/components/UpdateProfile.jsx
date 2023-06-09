@@ -1,15 +1,30 @@
 import React, { useState } from 'react';
-import { TextField, Button, Grid, Paper } from '@mui/material';
+import { TextField, Button, Grid, Paper, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 const formContainerStyles = {
-  padding: '16px',
+    padding: '16px',
+    maxWidth: '400px',
+    margin: '0 auto',
+};
+
+const containerStyles = {
+    maxWidth: '500px',
+    margin: '0 auto',
 };
 
 const formItemStyles = {
   marginBottom: '16px',
 };
 
-function EditProfileForm({ user }) {
+const closeButtonStyles = {
+    position: 'absolute',
+    top: '8px',
+    right: '8px',
+    cursor: 'pointer',
+};
+
+function EditProfileForm({ user, isVisible }) {
     const [firstName, setFirstName] = useState(user.firstName);
     const [lastName, setLastName] = useState(user.lastName);
     const [email, setEmail] = useState(user.email);
@@ -53,89 +68,99 @@ function EditProfileForm({ user }) {
             birthday,
         };
         
-        //onSave(updatedUser);
+        console.log(updatedUser)
     };
 
+    const handleClose = () => {
+        isVisible(false);
+    };
+    
+
     return (
-        <Paper elevation={3}>
-        <form onSubmit={handleSubmit}>
-            <Grid container spacing={2} style={formContainerStyles}>
-            <Grid item xs={12} sm={6}>
-                <TextField
-                label="First Name"
-                type="text"
-                value={firstName}
-                onChange={handleFirstNameChange}
-                fullWidth
-                required
-                style={formItemStyles}
-                />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-                <TextField
-                label="Last Name"
-                type="text"
-                value={lastName}
-                onChange={handleLastNameChange}
-                fullWidth
-                required
-                style={formItemStyles}
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <TextField
-                label="Email"
-                type="email"
-                value={email}
-                onChange={handleEmailChange}
-                fullWidth
-                required
-                style={formItemStyles}
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <TextField
-                label="Phone Number"
-                type="tel"
-                value={phoneNumber}
-                onChange={handlePhoneNumberChange}
-                fullWidth
-                required
-                style={formItemStyles}
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <TextField
-                label="Address"
-                type="text"
-                value={address}
-                onChange={handleAddressChange}
-                fullWidth
-                required
-                style={formItemStyles}
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <TextField
-                label="Birthday"
-                type="date"
-                value={birthday}
-                onChange={handleBirthdayChange}
-                fullWidth
-                required
-                style={formItemStyles}
-                InputLabelProps={{
-                    shrink: true,
-                }}
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <Button type="submit" variant="contained" color="primary" fullWidth>
-                Save Changes
-                </Button>
-            </Grid>
-            </Grid>
-        </form>
+        <Paper elevation={3} style={containerStyles}>
+            <div style={{ position: 'relative' }}>
+                <IconButton style={closeButtonStyles} onClick={handleClose}>
+                    <CloseIcon />
+                </IconButton>
+            </div>
+            <form onSubmit={handleSubmit}>
+                <Grid container spacing={2} style={formContainerStyles}>
+                <Grid item xs={12} sm={6}>
+                    <TextField
+                    label="First Name"
+                    type="text"
+                    value={firstName}
+                    onChange={handleFirstNameChange}
+                    fullWidth
+                    required
+                    style={formItemStyles}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <TextField
+                    label="Last Name"
+                    type="text"
+                    value={lastName}
+                    onChange={handleLastNameChange}
+                    fullWidth
+                    required
+                    style={formItemStyles}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                    label="Email"
+                    type="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    fullWidth
+                    required
+                    style={formItemStyles}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                    label="Phone Number"
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={handlePhoneNumberChange}
+                    fullWidth
+                    required
+                    style={formItemStyles}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                    label="Address"
+                    type="text"
+                    value={address}
+                    onChange={handleAddressChange}
+                    fullWidth
+                    required
+                    style={formItemStyles}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                    label="Birthday"
+                    type="date"
+                    value={birthday}
+                    onChange={handleBirthdayChange}
+                    fullWidth
+                    required
+                    style={formItemStyles}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <Button type="submit" variant="contained" color="primary" fullWidth>
+                    Save Changes
+                    </Button>
+                </Grid>
+                </Grid>
+            </form>
         </Paper>
     );
 }

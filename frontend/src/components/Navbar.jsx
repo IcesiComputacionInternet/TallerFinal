@@ -30,35 +30,38 @@ function Navbar() {
     };
 
     return (
-        <AppBar position="static">
-        <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Book Shop
-            </Typography>
+        <div>
+            <AppBar position="static">
+                    <Toolbar>
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                            Book Shop
+                        </Typography>
 
-            {user.isLoggedIn ? (
-            <div>
-                <Button color="inherit" startIcon={<AccountCircle />} onClick={handleProfile}>
-                    {user.firstName + ' ' + user.lastName}
-                </Button>
-                {showProfile && <UserProfile user={user} isVisible={setShowProfile}/>}
-                <Button color="inherit" onClick={handleLogout}>
-                    Logout
-                </Button>
-            </div>
-            ) : (
-            <Button color="inherit" startIcon={<AccountCircle />} onClick={handleProfile}>
-                Login
-            </Button>
-            )}
+                        {user.isLoggedIn ? (
+                        <div>
+                            <Button color="inherit" startIcon={<AccountCircle />} onClick={handleProfile}>
+                                {user.firstName + ' ' + user.lastName}
+                            </Button>
+                            <Button color="inherit" onClick={handleLogout}>
+                                Logout
+                            </Button>
+                        </div>
+                        ) : (
+                        <Button color="inherit" startIcon={<AccountCircle />} onClick={handleProfile}>
+                            Login
+                        </Button>
+                        )}
 
-            <IconButton color="inherit" onClick={handleCart}>
-            <Badge badgeContent={1} color="error">
-                <ShoppingCart />
-            </Badge>
-            </IconButton>
-        </Toolbar>
-        </AppBar>
+                        <IconButton color="inherit" onClick={handleCart}>
+                        <Badge badgeContent={1} color="error">
+                            <ShoppingCart />
+                        </Badge>
+                        </IconButton>
+                    </Toolbar>
+                    </AppBar>
+            {showProfile && <UserProfile user={user} isVisible={setShowProfile}/>}
+        </div>
+        
     );
 }
 

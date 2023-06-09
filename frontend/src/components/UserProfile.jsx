@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Typography, Button, Grid, Paper } from '@mui/material';
+import { Typography, Button, Grid, Paper} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import UpdateProfile from './UpdateProfile.jsx'
 
@@ -37,7 +37,7 @@ const closeButtonStyles = {
 };
 
 const responsiveCardContainerStyles = {
-  '@media (max-width: 480px)': {
+  '@media (maxWidth: 480px)': {
     width: '90%',
     left: '5%',
     transform: 'translate(0, -50%)',
@@ -57,54 +57,60 @@ function UserProfile({ user, isVisible }) {
     };
 
     return (
-        <Paper elevation={3} style={{ ...cardContainerStyles, ...responsiveCardContainerStyles }}>
-        <CloseIcon style={closeButtonStyles} onClick={handleClose} />
-        <Typography variant="h5" style={titleStyles} gutterBottom>
-            User Profile
-        </Typography>
-        <Grid container spacing={2}>
-            <Grid item xs={12}>
-                <Typography variant="body1" style={infoItemStyles}>
-                    <strong>First Name:</strong> {firstName}
+        <div>
+            { !update ? (
+                <Paper elevation={3} style={{ ...cardContainerStyles, ...responsiveCardContainerStyles }}>
+                <CloseIcon style={closeButtonStyles} onClick={handleClose} />
+                <Typography variant="h5" style={titleStyles} gutterBottom>
+                    User Profile
                 </Typography>
-            </Grid>
-            <Grid item xs={12}>
-                <Typography variant="body1" style={infoItemStyles}>
-                    <strong>Last Name:</strong> {lastName}
-                </Typography>
-            </Grid>
-            <Grid item xs={12}>
-                <Typography variant="body1" style={infoItemStyles}>
-                    <strong>Email:</strong> {email}
-                </Typography>
-            </Grid>
-            <Grid item xs={12}>
-                <Typography variant="body1" style={infoItemStyles}>
-                    <strong>Phone Number:</strong> {phoneNumber}
-                </Typography>
-            </Grid>
-            <Grid item xs={12}>
-                <Typography variant="body1" style={infoItemStyles}>
-                    <strong>Address:</strong> {address}
-                </Typography>
-            </Grid>
-            <Grid item xs={12}>
-                <Typography variant="body1" style={infoItemStyles}>
-                    <strong>Birthday:</strong> {convertDate(birthday)}
-                </Typography>
-            </Grid>
-        </Grid>
-        <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            style={editButtonStyles}
-            onClick={handleEditProfile}
-        >
-            Edit Profile
-        </Button>
-        {update && <UpdateProfile user={user}/>}
-        </Paper>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <Typography variant="body1" style={infoItemStyles}>
+                            <strong>First Name:</strong> {firstName}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="body1" style={infoItemStyles}>
+                            <strong>Last Name:</strong> {lastName}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="body1" style={infoItemStyles}>
+                            <strong>Email:</strong> {email}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="body1" style={infoItemStyles}>
+                            <strong>Phone Number:</strong> {phoneNumber}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="body1" style={infoItemStyles}>
+                            <strong>Address:</strong> {address}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="body1" style={infoItemStyles}>
+                            <strong>Birthday:</strong> {convertDate(birthday)}
+                        </Typography>
+                    </Grid>
+                    </Grid>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        style={editButtonStyles}
+                        onClick={handleEditProfile}
+                    >
+                        Edit Profile
+                    </Button>
+                </Paper>
+            ):(
+                update && <UpdateProfile user={user} isVisible={setUpdate}/>
+            )}
+        </div>
+        
     );
 }
 
