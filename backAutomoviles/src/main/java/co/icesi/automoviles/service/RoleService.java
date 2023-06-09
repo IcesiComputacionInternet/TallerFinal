@@ -2,6 +2,11 @@ package co.icesi.automoviles.service;
 
 import java.util.UUID;
 
+import co.icesi.automoviles.dto.CategoryShowDTO;
+import co.icesi.automoviles.model.Category;
+import co.icesi.automoviles.service.utils.SortUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +38,12 @@ public class RoleService {
         Role role = roleMapper.fromRoleCreateDTOToRole(roleCreateDTO);
         role.setRoleId(UUID.randomUUID());
         return roleMapper.fromRoleToRoleShowDTO(roleRepository.save(role));
+    }
+
+    public Page<RoleShowDTO> getAllRoles(int page, int perPage, String sortBy, String sortDir){
+        Pageable pageable = SortUtil.sort(page, perPage, sortBy, sortDir);
+        Page<Role> categories = roleRepository.getAllRoles(pageable);
+        return categories.map(roleMapper::fromRoleToRoleShowDTO);
     }
 
     private boolean roleNameAvailable(String roleName) {

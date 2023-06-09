@@ -1,11 +1,9 @@
 package co.icesi.automoviles.controller;
 
-import co.icesi.automoviles.dto.ItemShowDTO;
 import co.icesi.automoviles.dto.PageResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.icesi.automoviles.api.CategoryAPI;

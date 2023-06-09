@@ -10,11 +10,14 @@ import Toast from './components/Toast';
 import Cart from './views/Cart/Cart';
 import Orders from './views/Orders/Orders';
 import Category from './views/Manager/Category/Category';
+import Manager from './views/Manager/Manager';
+import Role from './views/Manager/Role/Role';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
     () => localStorage.getItem('jwt') !== null
   );
+
   const [infoToast, setInfoToast] = useState({
     show: false,
     message: "",
@@ -67,8 +70,16 @@ function App() {
             element={<Orders />}
           />
           <Route
+            path="/manage"
+            element={localStorage.getItem('role') === 'ADMIN' ? <Manager /> : <Navigate to='/' />}
+          />
+          <Route
             path="/manage/categories"
-            element={<Category />}
+            element={localStorage.getItem('role') === 'ADMIN' ? <Category setInfoToast={handleOpenToast}/> : <Navigate to='/' />}
+          />
+          <Route
+            path="/manage/roles"
+            element={localStorage.getItem('role') === 'ADMIN' ? <Role setInfoToast={handleOpenToast} /> : <Navigate to='/' />}
           />
           <Route 
             path='/*' 

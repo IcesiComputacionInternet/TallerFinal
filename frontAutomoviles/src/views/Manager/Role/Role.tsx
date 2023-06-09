@@ -1,26 +1,23 @@
 import { useEffect, useState } from 'react';
-import { getCategoriesPage } from '../../../services/categories';
 import Pagination from '../../../components/Pagination';
-import ModalEdit from './ModalEdit';
+import { getRolesPage } from '../../../services/roles';
 import ModalCreate from './ModalCreate';
 
 interface Props {
     setInfoToast: (message: string, title: string) => void;
 }
 
-function Category ({setInfoToast}: Props) {
-    const [categories, setCategories] = useState([]);
+function Role ({setInfoToast}: Props) {
+    const [roles, setRoles] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
 
     const [createModal, setCreateModal] = useState(false);
-    const [editModal, setEditModal] = useState(false);
-    const [category, setCategory] = useState({});
 
     useEffect(() => {
-        getCategoriesPage(currentPage).then((result) => {
+        getRolesPage(currentPage).then((result) => {
             setTotalPages(result.totalPages);
-            setCategories(result.items);
+            setRoles(result.items);
         });
     }, [currentPage]);
 
@@ -28,14 +25,6 @@ function Category ({setInfoToast}: Props) {
         setCurrentPage(pageNumber);
     };
 
-    const handleEdit = (category: any) => {
-        setEditModal(true);
-        setCategory(category);
-    }
-
-    const handleCancelEdit = () => {
-        setEditModal(false);
-    }
     const handleCancelCreate = () => {
         setCreateModal(false);
     }
@@ -44,24 +33,20 @@ function Category ({setInfoToast}: Props) {
         <div className="container">
             <button className="btn btn-primary my-4" onClick={() => setCreateModal(true)}>Create</button>
             <div className="d-flex flex-column align-items-center">
-                <h1 className="text-center">Categories</h1>
+                <h1 className="text-center">Roles</h1>
             </div>
             <table className="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">Category</th>
-                        <th scope="col">Description</th>
-                        <th scope="col" className='d-flex justify-content-center'>Actions</th>
+                        <th scope="col" >Role</th>
+                        <th scope="col" >Description</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {categories.map((category: any) => (
-                        <tr key={category.categoryId}>
-                            <td>{category.name}</td>
-                            <td>{category.description}</td>
-                            <td className='d-flex justify-content-center'>
-                                <button className="btn btn-primary" onClick={() => handleEdit(category)}>Edit</button>
-                            </td>
+                    {roles.map((role: any) => (
+                        <tr key={role.roleId} >
+                            <td>{role.roleName}</td>
+                            <td>{role.description}</td>
                         </tr>
                     ))}
                 </tbody>
@@ -71,14 +56,11 @@ function Category ({setInfoToast}: Props) {
                 currentPage={currentPage}
                 handlePageChange={handlePageChange}
             />
-            {editModal && (
-                <ModalEdit Category={category} handleCancel={handleCancelEdit} setEditModal={setEditModal} setInfoToast={setInfoToast}/>
-            )}
             {createModal && (
                 <ModalCreate handleCancel={handleCancelCreate} setCreateModal={setCreateModal} setInfoToast={setInfoToast}/>
             )}
         </div>
-    )   
+    )
 }
 
-export default Category;
+export default Role;

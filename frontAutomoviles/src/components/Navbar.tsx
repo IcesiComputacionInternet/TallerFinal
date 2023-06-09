@@ -1,8 +1,10 @@
+
 import {faHouse,
         faCartShopping,
         faBagShopping,
         faRightFromBracket,
-        faRightToBracket } from "@fortawesome/free-solid-svg-icons";
+        faRightToBracket,
+        faGear} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const logOut = () => {
@@ -77,6 +79,21 @@ const LogOut = () => {
     )
 }
 
+const Manage = () => {
+    return (
+        <li>
+            <a href="/manage" className="nav-link text-white">
+                <ul className="list-inline">
+                    <li className="list-inline-item">
+                        <FontAwesomeIcon icon={faGear}/>
+                    </li>
+                    <li className="list-inline-item">Manage</li>
+                </ul>
+            </a>
+        </li>
+    );
+};
+
 interface Props {
     isLoggedIn: boolean;
 }
@@ -87,6 +104,11 @@ function Navbar({isLoggedIn}: Props) {
     if(!isLoggedIn){
         menuItems.push(<AuthView />)
     }else if(localStorage.getItem('role') === 'USER'){
+        menuItems.push(<Orders />)
+        menuItems.push(<Cart />)
+        menuItems.push(<LogOut />)
+    }else if(localStorage.getItem('role') === 'ADMIN'){
+        menuItems.push(<Manage />)
         menuItems.push(<Orders />)
         menuItems.push(<Cart />)
         menuItems.push(<LogOut />)
