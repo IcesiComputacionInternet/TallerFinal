@@ -35,8 +35,8 @@ const Login = ({ setLogin }: Props) => {
                 console.log(response.data)
                 localStorage.setItem("jwt", response.data.token);
                 localStorage.setItem("userEmail", username);
-                localStorage.setItem("role", response.data.role);
-                console.log(response.data.role)
+                // localStorage.setItem("role", response.data.role);
+                // console.log(response.data.role)
                 setLogin();
                 navigation("/store");
             }).catch((error) => {
