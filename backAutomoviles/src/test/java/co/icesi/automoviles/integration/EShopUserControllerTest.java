@@ -10,6 +10,7 @@ import co.icesi.automoviles.enums.RoleType;
 import co.icesi.automoviles.error.exception.ErrorCode;
 import co.icesi.automoviles.error.exception.ShopError;
 import co.icesi.automoviles.error.exception.ShopErrorDetail;
+import co.icesi.automoviles.model.EShopUser;
 import co.icesi.automoviles.repository.EShopUserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +27,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static co.icesi.automoviles.utils.DTOBuilder.defaultEShopUserCreateDTO;
 import static org.junit.jupiter.api.Assertions.*;
@@ -151,7 +154,13 @@ public class EShopUserControllerTest {
         assertNull(eShopUserShowDTO.getBirthDate());
         loginAsUser();
         assertEquals(RoleType.ADMIN.toString(), tokenDTO.getRole());
-        mockMvc.perform(MockMvcRequestBuilders.patch(EShopUserAPI.ROOT_PATH+"/df17e266-dcc4-4bf2-923c-bb5559722f50/role/"+ RoleType.USER));
+        mockMvc.perform(MockMvcRequestBuilders.patch(EShopUserAPI.ROOT_PATH+"/df17e266-dcc4-4bf2-923c-bb5559722f50/role/"+ RoleType.USER)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer "+tokenDTO.getToken()));
+        Optional<EShopUser> eShopUser = eShopUserRepository.findById(UUID.fromString("df17e266-dcc4-4bf2-923c-bb5559722f50"));
+        if (eShopUser.isEmpty()){
+            fail();
+        }
+        assertEquals(RoleType.USER.toString(),eShopUser.get().getRole().getRoleName());
     }
 
     @Test

@@ -147,7 +147,6 @@ public class CategoryControllerTest {
 
 
     @Test
-    @Transactional
     public void testEndpointForCategoryUpdateWithAdminCredentials() throws Exception {
         loginAsAdmin();
         CategoryCreateDTO categoryCreateDTO = defaultCategoryCreateDTO();

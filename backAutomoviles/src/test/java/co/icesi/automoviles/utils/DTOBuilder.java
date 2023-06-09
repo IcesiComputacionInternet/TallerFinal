@@ -2,6 +2,7 @@ package co.icesi.automoviles.utils;
 
 import co.icesi.automoviles.dto.CategoryCreateDTO;
 import co.icesi.automoviles.dto.EShopUserCreateDTO;
+import co.icesi.automoviles.dto.RoleCreateDTO;
 
 import java.time.LocalDateTime;
 
@@ -22,6 +23,13 @@ public class DTOBuilder {
                 .address("Calle 100")
                 .birthDate(LocalDateTime.now())
                 .password("password")
+                .build();
+    }
+
+    public static RoleCreateDTO defaultRoleCreateDTO(){
+        return RoleCreateDTO.builder()
+                .roleName("Role 1")
+                .description("Description for Role 1")
                 .build();
     }
 }

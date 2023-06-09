@@ -12,5 +12,4 @@ public class RoleShowDTO {
     private UUID roleId;
     private String roleName;
     private String description;
-    private List<EShopUserShowDTO> eShopUsers;
 }
