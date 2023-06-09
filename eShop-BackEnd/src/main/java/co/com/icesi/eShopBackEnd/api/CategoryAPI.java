@@ -28,4 +28,8 @@ public interface CategoryAPI {
     @GetMapping("/all")
     List<CreateCategoryDTO> getAllCategories();
 
+    @DeleteMapping("/delete")
+
+
+
 }

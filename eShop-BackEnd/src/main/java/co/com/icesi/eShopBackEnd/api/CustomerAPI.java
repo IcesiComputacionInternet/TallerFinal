@@ -22,4 +22,7 @@ public interface CustomerAPI {
 
     @GetMapping("/order/{userEmail}")
     List<ResponseSalesOrderDTO> getOrdersByUserEmail(@PathVariable String userEmail);
+
+    @PutMapping("/updateUser")
+    ResponseCustomerDTO updateCustomer(@Valid @RequestBody CreateCustomerDTO user);
 }

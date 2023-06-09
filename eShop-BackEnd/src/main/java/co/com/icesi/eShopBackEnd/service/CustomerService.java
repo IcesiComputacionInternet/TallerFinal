@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -34,6 +35,7 @@ public class CustomerService {
     private final SecurityContext context;
 
 
+    @Transactional
     public ResponseCustomerDTO updateCustomer(CreateCustomerDTO user) {
         validatePhone( user.phoneNumber());
         Customer newCustomer = customerRepository.findUserByEmail(user.email()).orElseThrow(
@@ -43,15 +45,16 @@ public class CustomerService {
                         new DetailBuilder(ErrorCode.ERR_NOT_FOUND,"customer")
                 )
         );
+
         newCustomer.setFirstName(user.firstName());
         newCustomer.setLastName(user.lastName());
         newCustomer.setAddress(user.address());
-        newCustomer.setBirthday(LocalDate.parse(user.birthday()));
         newCustomer.setPhoneNumber(user.phoneNumber());
-        newCustomer.setPassword(user.password());
-        ResponseCustomerDTO userResponse = customerMapper.fromUserToResponseUserDTO(customerRepository.uptadeInformation(newCustomer,newCustomer.getEmail()));
-        return userResponse;
+        newCustomer.setPassword(encoder.encode(user.password()));
+        customerRepository.uptadeInformation(newCustomer,newCustomer.getEmail());
+        return customerMapper.fromUserToResponseUserDTO(newCustomer);
     }
+
     public ResponseCustomerDTO save(CreateCustomerDTO user) {
         validateEmailAndPhone(user.email(), user.phoneNumber());
 

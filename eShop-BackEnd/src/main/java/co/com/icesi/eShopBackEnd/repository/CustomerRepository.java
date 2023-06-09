@@ -2,6 +2,7 @@ package co.com.icesi.eShopBackEnd.repository;
 
 import co.com.icesi.eShopBackEnd.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -23,8 +24,9 @@ public interface CustomerRepository extends JpaRepository<Customer, UUID> {
     @Query(value = "SELECT c FROM Customer c WHERE c.customerId = :idNumber")
     Optional<Customer> getCustomerById(UUID idNumber);
 
+    @Modifying
     @Query("UPDATE Customer customer SET customer = :customer WHERE customer.email = :email")
-    Customer uptadeInformation(Customer customer, String email);
+    void uptadeInformation(Customer customer, String email);
 
 
 }

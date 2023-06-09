@@ -9,7 +9,7 @@ import java.util.UUID;
 @Builder
 public record UpdateOrderStateDTO(
         @NotBlank
-        UUID orderId,
+        String orderId,
         @NotBlank
         OrderState status
 ) {

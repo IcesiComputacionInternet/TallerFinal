@@ -81,6 +81,9 @@ public class SecurityConfiguration {
         managerBuilder.add(new MvcRequestMatcher(introspector,"/category/**"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_SHOP","SCOPE_ADMIN"));
 
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/category/delete"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_SHOP","SCOPE_ADMIN"));
+
         managerBuilder.add(new MvcRequestMatcher(introspector,"/category/itemsByCategory/**"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_SHOP","SCOPE_ADMIN"));
 
@@ -88,6 +91,9 @@ public class SecurityConfiguration {
 
         //Porque el usuario debería poder ver sus ordenes
         managerBuilder.add(new MvcRequestMatcher(introspector,"/user/order/**"),
+                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_ADMIN"));
+
+        managerBuilder.add(new MvcRequestMatcher(introspector,"/user/updateUser"),
                 AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER","SCOPE_ADMIN"));
 
 
