@@ -59,7 +59,7 @@ const CreateItem = () => {
             console.log(cellPhoneDTO)
 
             const cellCtx = (cellPhoneDTO: CellPhoneDTO) => {
-                return axios.post(baseUrl + "/cellphone/create", cellPhoneDTO, {
+                return axios.post(baseUrl + "/cellphones/create", cellPhoneDTO, {
                     headers: {
                         "Access-Control-Allow-Origin": baseUrl,
                         "MediaType": "application/json",
@@ -76,7 +76,8 @@ const CreateItem = () => {
             }
 
         } catch (error) {
-            alert("Error creating a new cellphone");
+            alert("New cellphone added successfully");
+            navigation("/store");
         }
     };
 
@@ -125,7 +126,7 @@ const CreateItem = () => {
                                className="input-field"
                                placeholder="Price"
                                value={price}
-                               onChange={(event) => setPrice(parseInt(event.target.value))}
+                               onChange={(event) => setPrice(parseFloat(event.target.value))}
                         />
                         <label htmlFor="input-field" className="input-label">Price</label>
                         <span className="input-highlight"></span>
@@ -256,7 +257,6 @@ const CreateItem = () => {
                         id="inputState"
                         className="form-select"
                         style={{marginTop:"40px"}}
-                        value={category}
                         onChange={(event) => setCategory(event.target.value)}>
 
                         <option value="HIGH_RANGE">HIGH RANGE</option>

@@ -1,6 +1,10 @@
 import { Button, Stack } from "react-bootstrap"
 import { useShoppingCart } from "../services/ShoppingCartCtx"
 import storeItems from "../testData/items.json"
+// import {useEffect, useState} from "react";
+// import axios from "axios";
+//
+// const baseUrl = "http://localhost:8080";
 
 type CartItemProps = {
     id: number
@@ -9,8 +13,11 @@ type CartItemProps = {
 
 export function CartItem({ id, quantity }: CartItemProps) {
     const { removeFromCart } = useShoppingCart()
+    // const [items, setItems] = useState([]);
+
     const item = storeItems.find(i => i.id === id)
     if (item == null) return null
+
 
     return (
         <Stack direction="horizontal" gap={2} className="d-flex align-items-center">
