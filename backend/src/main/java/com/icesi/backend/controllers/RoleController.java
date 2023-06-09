@@ -2,7 +2,7 @@ package com.icesi.backend.controllers;
 
 import com.icesi.backend.DTO.RoleCreateDTO;
 import com.icesi.backend.models.Role;
-import com.icesi.backend.service.RoleService;
+import com.icesi.backend.service.impl.RoleService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,8 +1,6 @@
 package com.icesi.backend.models;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -10,6 +8,8 @@ import java.util.UUID;
 @Entity
 @Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "category")
 public class Category {
     @Id
