@@ -8,6 +8,8 @@ const baseUrl="http://localhost:8091";
 
 function CreateItems(){
 
+    const navigation : NavigateFunction = useNavigate();
+
     const [categories,setCategories]=useState([])
 
     const [formData, setFormData] = useState({
@@ -105,6 +107,10 @@ function CreateItems(){
         });
       };
 
+      const handleClick = async (event: any) => {
+        event.preventDefault();
+        navigation("/users/home-shop");
+      };
     
     return (
         <div>
@@ -332,6 +338,10 @@ function CreateItems(){
                     <div className="col-sm-10">
                       <button type="submit" className="btn btn-primary">Create Item</button>
                     </div>
+                  </div>
+                  <br />
+                  <div className="col-sm-10">
+                      <button type="submit" className="btn btn-secondary" onClick={handleClick}>Volver</button>
                   </div>
 
                 </form>

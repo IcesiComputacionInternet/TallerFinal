@@ -7,11 +7,22 @@ const baseUrl = "http://localhost:8091";
 
 function ShopHome (){
 
+  const [currentUser, setCurrentUser] = useState("");
+
   const navigation : NavigateFunction = useNavigate();
 
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
+
+    if(localStorage.getItem("jwt")){
+      const user = localStorage.getItem("currentRole");
+
+      if(user){
+        setCurrentUser(user)
+      }
+    }
+
     async function getData() {
 
       const resultOrders = await getOrders();
@@ -21,10 +32,10 @@ function ShopHome (){
     getData();
   }, []);
 
-  const handleClickMoreOrders = async (event: any) => {
-    event.preventDefault();
-    navigation("/admin/orders");
-  };
+
+  if(currentUser !== "SHOP"){
+    navigation("/NotFound");
+  }
 
   return (
     <>
@@ -34,7 +45,6 @@ function ShopHome (){
   );
       
 }
-
 
 async function getOrders(){
 

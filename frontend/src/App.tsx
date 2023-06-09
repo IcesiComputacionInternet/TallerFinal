@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import MainHome from "./components/MainHome";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import UsersShopHome from "./pages/users/ShopHome";
@@ -18,7 +17,6 @@ import CreateCategories from "./pages/admin/CreateCategories";
 import AdminCategories from "./pages/admin/Categories";
 import ShopHome from "./pages/shop/ShopHome";
 import ShopItems from "./pages/shop/Items";
-import Draft from "./components/Draft";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
@@ -36,8 +34,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login setLogin={logIn} />} />
-        <Route path="/" element={<MainHome />} />
+        <Route path="/login" element={<Login setLogin={logIn}/>}></Route>
         <Route
           path="/register"
           element={<Register onRegistrationComplete={registered} />}
@@ -46,8 +43,9 @@ function App() {
           path="/users/home-shop"
           element={isLoggedIn ? <UsersShopHome /> : <Navigate to="/login" />}
         />
-        <Route path="/*" element={<NotFound />} />
-
+         <Route path="/*"
+            element={isLoggedIn ? <NotFound />: <Navigate to = "/login"/>}
+        ></Route>
         <Route path="/admin/home" element={<HomeAdmin />} />
         <Route path="/admin/users" element={<AdminUsers />} />
         <Route path="/admin/items" element={<AdminItems />} />
@@ -61,8 +59,6 @@ function App() {
 
         <Route path="/shop/home" element={<ShopHome />} />
         <Route path="/shop/items" element={<ShopItems />} />
-
-        <Route path="/draft" element={<Draft />} />
         {isLoggedIn && (
           <Route path="/orders" element={<Orders />} />
         )}
