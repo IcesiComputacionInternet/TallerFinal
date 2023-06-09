@@ -30,11 +30,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(cellphoneException.getError().getStatus()).body(cellphoneException.getError());
     }
 
-   @ExceptionHandler(RuntimeException.class)
+   /*@ExceptionHandler(RuntimeException.class)
     public ResponseEntity<CellphoneError> handleRuntimeException(){
         var error = createCellphoneError(HttpStatus.INTERNAL_SERVER_ERROR, new DetailBuilder(ErrorCode.ERROR_500));
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
-    }
+    }*/
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<CellphoneError> handleMethodArgumentNotValidException(

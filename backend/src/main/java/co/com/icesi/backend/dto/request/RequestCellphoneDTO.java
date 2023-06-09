@@ -20,9 +20,7 @@ public class RequestCellphoneDTO {
     @NotBlank(message = "The name of a cellphone can't be blank")
     private String name;
 
-    @Min(value=0, message = "The price of a new cellphone must be greater than 0")
-    @NotNull(message = "The price of a cellphone can't be null")
-    @NotBlank(message = "The price of a cellphone can't be blank")
+    @Min(value=1, message = "The price of a new cellphone must be greater than 0")
     private long price;
 
     @NotNull(message = "The image of a cellphone can't be null")
@@ -57,8 +55,7 @@ public class RequestCellphoneDTO {
     @NotBlank(message = "The screen size of a cellphone can't be blank")
     private String screenSize;
 
-    @NotNull(message = "The screen size of a cellphone can't be null")
-    @NotBlank(message = "The screen size of a cellphone can't be blank")
+    @Min(value = 1, message = "The stock of a category has to be greater than 0")
     private int stock;
 
     @NotNull(message = "The category of a user can't be null")

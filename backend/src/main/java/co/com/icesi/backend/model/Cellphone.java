@@ -17,7 +17,7 @@ public class Cellphone {
     private UUID cellphoneId;
     private String name;
     private String description;
-    private Long price;
+    private long price;
     private String imageUrl;
     private String brand;
     private String storage;

@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @RequestMapping(CellphonesAPI.BASE_CELLPHONE_URL)
 public interface CellphonesAPI {
-    String BASE_CELLPHONE_URL = "/cellphone";
+    String BASE_CELLPHONE_URL = "/cellphones";
     @PostMapping("/create")
     ResponseCellphoneDTO createCellphone(@RequestBody @Valid RequestCellphoneDTO cellphoneDTO);
     @GetMapping("/{id}")
