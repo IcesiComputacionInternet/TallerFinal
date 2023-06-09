@@ -100,7 +100,7 @@ public class UserControllerTest {
                                 ))
                         .header("Authorization", "Bearer "+token)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isForbidden())
                 .andReturn();
     System.out.println(result.getResponse().getContentAsString());
     }
