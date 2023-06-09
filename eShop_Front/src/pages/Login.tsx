@@ -9,8 +9,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate, NavigateFunction } from "react-router-dom";
 
 const theme = createTheme();
@@ -25,6 +25,7 @@ const Login = ({ setLogin }: Props) => {
   localStorage.clear();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
   const navigation: NavigateFunction = useNavigate();
 
   const handleSubmit = async (event: any) => {
@@ -49,6 +50,8 @@ const Login = ({ setLogin }: Props) => {
           },
         }
       );
+      setRole(response.data.role)
+      console.log(role)
       if (response.status === 200) {
         localStorage.setItem("jwt", response.data.token);
         navigation("/home");
@@ -59,6 +62,24 @@ const Login = ({ setLogin }: Props) => {
       alert("Username or password incorrect");
     }
   };
+
+  const data = await axios.get(
+    baseUrl + "/users/" + localStorage.getItem("userEmail"),
+    {
+        headers: {
+            "Access-Control-Allow-Origin": baseUrl,
+            "MediaType": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem('jwt')
+        }
+    }
+);
+console.log(data);
+return data.data;
+}
+async function getRoleData() {
+const result = await userData();
+setRole(result.role);
+}
 
   return (
     <ThemeProvider theme={theme}>

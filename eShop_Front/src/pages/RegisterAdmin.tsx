@@ -19,7 +19,7 @@ const theme = createTheme();
 
 const baseUrl = "http://localhost:8080";
 
-export default function Register() {
+export default function RegisterAdmin() {
   const navigate = useNavigate();
 
   const [firstName, setFirstName] = useState("");
