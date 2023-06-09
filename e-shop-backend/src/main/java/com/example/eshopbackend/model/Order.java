@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
+@Data
 @Entity
 @AllArgsConstructor
 @Getter
@@ -17,8 +18,8 @@ public class Order {
     @Id
     private UUID orderId;
 
-    @ManyToOne
-    @JoinColumn(name="userId", nullable=false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name="user_user_id", nullable=false)
     private User user;
 
     private OrderStatus status;
@@ -28,8 +29,8 @@ public class Order {
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
             name = "order_item",
-            joinColumns = @JoinColumn(name = "orderId"),
-            inverseJoinColumns = @JoinColumn(name = "itemId"))
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
     private List<Item> items;
 
 

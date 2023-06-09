@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
-
+@Data
 @Entity
 @AllArgsConstructor
 @Getter
@@ -26,8 +26,8 @@ public class Item {
 
     private int warranty;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "categoryId",nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "category_category_id",nullable = false)
     private Category category;
 
     @ManyToMany(mappedBy = "items")

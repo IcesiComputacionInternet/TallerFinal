@@ -1,5 +1,6 @@
 package com.example.eshopbackend.dto;
 
+import com.example.eshopbackend.model.Category;
 import lombok.Builder;
 import lombok.Data;
 
