@@ -55,34 +55,6 @@ export default function Categories() {
     
     const gridColumns = Math.ceil(categories.length / 2); // Divide the number of categories into 2 columns. If the number is odd, add an extra column with ceiling function.
 
-    let testCategories = [
-        {
-            id: 1,
-            name: "Portatiles",
-            description: "Portatiles",
-            imageUrl: "src/resources/images/portatiles.webp",
-        },
-        {
-            id: 2,
-            name: "Computadores de escritorio",
-            description: "Computadores de escritorio",
-            imageUrl: "src/resources/images/desktop.webp",
-        },
-        {
-            id: 3,
-            name: "All-in-one",
-            description: "All-in-one",
-            imageUrl: "src/resources/images/all-in-one.png",
-        },
-        {
-            id: 4,
-            name: "Gaming",
-            description: "Gaming",
-            imageUrl: "src/resources/images/gaming.webp",
-        },
-    ];
-
-    /*setCategories(testCategories);*/
 
     return (
         <div className="containerGrid">    

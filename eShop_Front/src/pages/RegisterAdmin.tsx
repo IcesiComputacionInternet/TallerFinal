@@ -14,7 +14,6 @@ import { useState } from "react";
 import { useNavigate, NavigateFunction } from "react-router-dom";
 import axios from "axios";
 import { InputLabel, Select, MenuItem, SelectChangeEvent, FormControl } from "@mui/material";
-import { AlternateEmail } from "@mui/icons-material";
 
 const theme = createTheme();
 

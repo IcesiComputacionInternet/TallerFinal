@@ -1,5 +1,6 @@
 package co.com.icesi.eShop_Back.controller.api;
 
+import co.com.icesi.eShop_Back.dto.request.RequestChangeStatusOrder;
 import co.com.icesi.eShop_Back.dto.request.RequestOrderDTO;
 import co.com.icesi.eShop_Back.dto.response.ResponseOrderDTO;
 import org.springframework.web.bind.annotation.*;
@@ -26,15 +27,7 @@ public interface OrderApi {
     @DeleteMapping("/delete/{id}")
     void deleteById(@PathVariable String id);
 
-    @PutMapping("/pay/{id}")
-    void pay(@PathVariable String id);
+    @PatchMapping("/update/status")
+    void updateStatus(@RequestBody @Valid RequestChangeStatusOrder requestChangeStatusOrder);
 
-    @PutMapping("/cancel/{id}")
-    void cancel(@PathVariable String id);
-
-    @PutMapping("/deliver/{id}")
-    void deliver(@PathVariable String id);
-
-    @PutMapping("/done/{id}")
-    void done(@PathVariable String id);
 }

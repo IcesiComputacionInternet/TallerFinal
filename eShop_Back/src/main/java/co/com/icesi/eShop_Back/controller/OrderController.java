@@ -1,9 +1,9 @@
 package co.com.icesi.eShop_Back.controller;
 
 import co.com.icesi.eShop_Back.controller.api.OrderApi;
+import co.com.icesi.eShop_Back.dto.request.RequestChangeStatusOrder;
 import co.com.icesi.eShop_Back.dto.request.RequestOrderDTO;
 import co.com.icesi.eShop_Back.dto.response.ResponseOrderDTO;
-import co.com.icesi.eShop_Back.enums.Status;
 import co.com.icesi.eShop_Back.service.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,24 +39,9 @@ public class OrderController implements OrderApi {
     public void deleteById(String id) {
         orderService.delete(UUID.fromString(id));
     }
-
     @Override
-    public void pay(String id) {
-        orderService.updateStatus(UUID.fromString(id), Status.PAID);
+    public void updateStatus(RequestChangeStatusOrder requestChangeStatusOrder) {
+        orderService.updateStatus(UUID.fromString(requestChangeStatusOrder.orderId()), requestChangeStatusOrder.status());
     }
 
-    @Override
-    public void cancel(String id) {
-        orderService.updateStatus(UUID.fromString(id), Status.CANCELLED);
-    }
-
-    @Override
-    public void deliver(String id) {
-        orderService.updateStatus(UUID.fromString(id), Status.DELIVERED);
-    }
-
-    @Override
-    public void done(String id) {
-        orderService.updateStatus(UUID.fromString(id), Status.DONE);
-    }
 }
