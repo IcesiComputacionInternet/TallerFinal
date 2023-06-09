@@ -1,11 +1,8 @@
 package co.icesi.automoviles.config;
 
-import co.icesi.automoviles.api.CategoryAPI;
-import co.icesi.automoviles.api.ItemAPI;
+import co.icesi.automoviles.api.*;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 
-import co.icesi.automoviles.api.EShopUserAPI;
-import co.icesi.automoviles.api.RoleAPI;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -117,6 +114,30 @@ public class SecurityConfiguration {
         MvcRequestMatcher deleteItem = new MvcRequestMatcher(introspector, ItemAPI.ROOT_PATH+"/{itemId}");
         deleteItem.setMethod(HttpMethod.DELETE);
         managerBuilder.add(deleteItem, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_SHOP"));
+
+        MvcRequestMatcher createPurchaseOrder = new MvcRequestMatcher(introspector, PurchaseOrderAPI.ROOT_PATH);
+        createPurchaseOrder.setMethod(HttpMethod.POST);
+        managerBuilder.add(createPurchaseOrder, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_USER"));
+
+        MvcRequestMatcher getPurchaseOrderById = new MvcRequestMatcher(introspector, PurchaseOrderAPI.ROOT_PATH+"/{purchaseOrderId}");
+        getPurchaseOrderById.setMethod(HttpMethod.GET);
+        managerBuilder.add(getPurchaseOrderById, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_USER", "SCOPE_SHOP"));
+
+        MvcRequestMatcher getAllPurchaseOrder = new MvcRequestMatcher(introspector, PurchaseOrderAPI.ROOT_PATH);
+        getAllPurchaseOrder.setMethod(HttpMethod.GET);
+        managerBuilder.add(getAllPurchaseOrder, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_USER", "SCOPE_SHOP"));
+
+        MvcRequestMatcher updatePurchaseOrderStateById = new MvcRequestMatcher(introspector, PurchaseOrderAPI.ROOT_PATH+"/{purchaseOrderId}/{newState}");
+        updatePurchaseOrderStateById.setMethod(HttpMethod.PATCH);
+        managerBuilder.add(updatePurchaseOrderStateById, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_SHOP"));
+
+        MvcRequestMatcher updatePurchaseOrderById = new MvcRequestMatcher(introspector, PurchaseOrderAPI.ROOT_PATH+"/{purchaseOrderId}");
+        updatePurchaseOrderById.setMethod(HttpMethod.PATCH);
+        managerBuilder.add(updatePurchaseOrderById, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
+
+        MvcRequestMatcher deletePurchaseOrderById = new MvcRequestMatcher(introspector, PurchaseOrderAPI.ROOT_PATH+"/{purchaseOrderId}");
+        deletePurchaseOrderById.setMethod(HttpMethod.DELETE);
+        managerBuilder.add(deletePurchaseOrderById, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 
         AuthorizationManager<HttpServletRequest> manager = managerBuilder.build();
         return (authentication, object) -> manager.check(authentication,object.getRequest());

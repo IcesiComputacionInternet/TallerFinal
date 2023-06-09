@@ -12,5 +12,5 @@ public class CategoryShowDTO {
     private UUID categoryId;
     private String name;
     private String description;
-    private List<ItemShowDTO> items;
+    private List<ItemShowDTOForCategory> items;
 }

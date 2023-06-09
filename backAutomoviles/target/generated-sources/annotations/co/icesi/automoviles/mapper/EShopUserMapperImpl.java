@@ -3,6 +3,7 @@ package co.icesi.automoviles.mapper;
 import co.icesi.automoviles.dto.CategoryShowDTOForItem;
 import co.icesi.automoviles.dto.EShopUserCreateDTO;
 import co.icesi.automoviles.dto.EShopUserShowDTO;
+import co.icesi.automoviles.dto.EShopUserShowDTOForPurchaseOrder;
 import co.icesi.automoviles.dto.ItemShowDTO;
 import co.icesi.automoviles.dto.PurchaseOrderShowDTO;
 import co.icesi.automoviles.dto.RoleShowDTO;
@@ -18,8 +19,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-08T18:09:05-0500",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Oracle Corporation)"
+    date = "2023-06-08T23:11:04-0500",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component
 public class EShopUserMapperImpl implements EShopUserMapper {
@@ -81,6 +82,25 @@ public class EShopUserMapperImpl implements EShopUserMapper {
         eShopUserShowDTO.orders( purchaseOrderListToPurchaseOrderShowDTOList( eShopUser.getOrders() ) );
 
         return eShopUserShowDTO.build();
+    }
+
+    @Override
+    public EShopUserShowDTOForPurchaseOrder fromEShopUserToEShopUserShowDTOForPurchaseOrder(EShopUser eShopUser) {
+        if ( eShopUser == null ) {
+            return null;
+        }
+
+        EShopUserShowDTOForPurchaseOrder.EShopUserShowDTOForPurchaseOrderBuilder eShopUserShowDTOForPurchaseOrder = EShopUserShowDTOForPurchaseOrder.builder();
+
+        eShopUserShowDTOForPurchaseOrder.eShopUserId( eShopUser.getEShopUserId() );
+        eShopUserShowDTOForPurchaseOrder.firstName( eShopUser.getFirstName() );
+        eShopUserShowDTOForPurchaseOrder.lastName( eShopUser.getLastName() );
+        eShopUserShowDTOForPurchaseOrder.email( eShopUser.getEmail() );
+        eShopUserShowDTOForPurchaseOrder.phoneNumber( eShopUser.getPhoneNumber() );
+        eShopUserShowDTOForPurchaseOrder.address( eShopUser.getAddress() );
+        eShopUserShowDTOForPurchaseOrder.birthDate( eShopUser.getBirthDate() );
+
+        return eShopUserShowDTOForPurchaseOrder.build();
     }
 
     protected Role roleShowDTOToRole(RoleShowDTO roleShowDTO) {
