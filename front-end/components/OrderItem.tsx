@@ -15,7 +15,6 @@ interface OrderItemProps {
     orderId: String;
     state: String;
     total: Number;
-    date: String;
 }
 
 const theme = createTheme({
@@ -46,17 +45,14 @@ export default function OrderItem(props: OrderItemProps){
 
     return(
         <div className={styles.itemDiv}>
-            <div style={{flexGrow:2,borderRight:"1px solid black"}}>
+            <div style={{width:405,borderRight:"1px solid black"}}>
                 <h3 style={{fontWeight:"normal",marginLeft:5}}>{props.orderId}</h3>
             </div>
-            <div style={{flexGrow:2,borderRight:"1px solid black",paddingLeft:10}}>
+            <div style={{width:318,borderRight:"1px solid black",paddingLeft:10}}>
                 <h3 style={{fontWeight:"normal"}}>{props.state}</h3>
             </div>
-            <div style={{flexGrow:2,borderRight:"1px solid black",paddingLeft:10}}>
+            <div style={{width:263,borderRight:"1px solid black",paddingLeft:10}}>
                 <h3 style={{fontWeight:"normal"}}>{props.total+"$"}</h3>
-            </div>
-            <div style={{flexGrow:2,paddingLeft:10}}>
-                <h3 style={{fontWeight:"normal"}}>{props.date}</h3>
             </div>
             <div style={{flexGrow:1,display:"flex",justifyContent:"flex-end"}}>
                 <ThemeProvider theme={theme}>

@@ -14,7 +14,7 @@ export default function ProductCard({name,price,productId,imageUrl}:ProductCardP
     return(
         <div className={styles.cardDiv} onClick={handleClick}>
             <div className={styles.imageSection}>
-                <img src={imageUrl} alt="product image" style={{height:150,objectFit:"cover",width:250}}/>
+                <img src={imageUrl} alt="product image" style={{height:150,objectFit:"scale-down",width:250,borderRadius:"15px 15px 0px 0px"}}/>
             </div>
             <div className={styles.infoSection}>
                 <h3>{name}</h3>

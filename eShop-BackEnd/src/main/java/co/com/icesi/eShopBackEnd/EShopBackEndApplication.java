@@ -1,7 +1,9 @@
 package co.com.icesi.eShopBackEnd;
 
+import co.com.icesi.eShopBackEnd.model.Category;
 import co.com.icesi.eShopBackEnd.model.Customer;
 import co.com.icesi.eShopBackEnd.model.Role;
+import co.com.icesi.eShopBackEnd.repository.CategoryRepository;
 import co.com.icesi.eShopBackEnd.repository.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -34,7 +36,7 @@ public class EShopBackEndApplication {
 	}
 	@Bean
 	@Profile("!test")
-	CommandLineRunner commandLineRunner(CustomerRepository users,
+	CommandLineRunner commandLineRunner(CustomerRepository users, CategoryRepository categories,
 										PasswordEncoder encoder) {
 
 		Role admin = Role.builder()
@@ -53,6 +55,11 @@ public class EShopBackEndApplication {
 				.roleId(UUID.randomUUID())
 				.roleName("SHOP")
 				.description("Role Shop")
+				.build();
+		Category category = Category.builder()
+				.categoryId(UUID.randomUUID())
+				.name("Category 1")
+				.description("Category 1")
 				.build();
 
 		LocalDate date1 = LocalDate.of(1990, 1, 1);
@@ -85,6 +92,7 @@ public class EShopBackEndApplication {
 		return args -> {
 			users.save(adminCustomer);
 			users.save(normalCustomer);
+			categories.save(category);
 		};
 
 	}

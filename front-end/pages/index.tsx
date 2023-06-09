@@ -38,6 +38,7 @@ export default function index() {
         console.log(response.data);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("role", response.data.role.toLowerCase());
+        localStorage.setItem("userId", response.data.userId);
         window.location.href = "/home";
     }).catch((error) => {
         console.log(error)

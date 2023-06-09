@@ -1,10 +1,22 @@
 import styles from "../../styles/Admin.module.css";
 import UserItem from "../../components/UserItem";
 import {useState,useEffect} from "react";
+import axios from "axios";
 
 export default function Users(){
     const [users,setUsers] = useState([]);
-    
+    /**useEffect(() => {
+        axios.get("http://localhost:9090/item/all",{
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        }).then((response) => {
+            setProducts(response.data);
+        }).catch((error) => {
+            console.log(error);
+        });
+    },[]);**/
 
     return(
         <div className={styles.maxContainer} >

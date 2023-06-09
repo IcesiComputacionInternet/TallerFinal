@@ -51,7 +51,6 @@ export default function Producst(props:any){
                 </div>
                 <div className={styles.itemsSection}>
                     <div className={styles.itemsList}>
-                        <ProductItem name="Product 1" price={100} amount={10} category="Category 1" productId="1"/>
                         {products.map((product:any) => {
                             return <ProductItem name={product.name} price={product.price} amount={product.stock} category={product.category.name} productId={product.id}/>
                         })

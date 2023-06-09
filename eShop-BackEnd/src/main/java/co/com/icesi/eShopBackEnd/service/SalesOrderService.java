@@ -35,7 +35,7 @@ public class SalesOrderService {
     @Transactional
     public ResponseSalesOrderDTO save(CreateSalesOderDTO createDTO){
 
-        Customer customer = customerRepository.findUserByEmail(createDTO.customer()).orElseThrow(
+        Customer customer = customerRepository.findById(UUID.fromString(createDTO.customer())).orElseThrow(
                 ArgumentsExceptionBuilder.createArgumentsExceptionSup(
                         "Not existing data",
                         HttpStatus.BAD_REQUEST,
