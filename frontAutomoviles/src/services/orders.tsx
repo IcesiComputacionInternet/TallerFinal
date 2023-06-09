@@ -21,10 +21,10 @@ export const postOrder = async (userId:string, items:string[]) => {
     return data;
 }
 
-export const getOrders = async () => {
+export const getOrders = async (page:number) => {
     const jwt = localStorage.getItem("jwt");
     const {data} = await axios.get(
-        `${baseUrl}/purchaseOrders/`,
+        `${baseUrl}/purchaseOrders?page=${page}`,
         {
             headers: {
                 "Access-Control-Allow-Origin": baseUrl,

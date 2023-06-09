@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import OrderItem from './components/OrderItem';
 import { getOrders } from '../../services/orders';
+import Pagination from '../../components/Pagination';
 
 interface Order {
     purchaseOrderId: string,
@@ -25,13 +26,20 @@ interface Item {
 
 function Orders () {
     const [orders, setOrders] = useState<Order[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
-        getOrders().then((result) => {
-            console.log(result.items);
+        getOrders(currentPage).then((result) => {
+            setTotalPages(result.totalPages);
             setOrders(result.items);
         });
-    }, []);
+    }, [currentPage]);
+
+
+    const handlePageChange = (pageNumber: number) => {
+        setCurrentPage(pageNumber);
+    };
 
     return (
         <div className="container">
@@ -42,7 +50,12 @@ function Orders () {
                         <OrderItem Order={order}/>
                     </div>
                 ))}
-            </div>
+            </div>  
+        <Pagination 
+            totalPages={totalPages} 
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
+        />
         </div>
     )
 }

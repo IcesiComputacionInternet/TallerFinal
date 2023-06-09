@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getItemsPage } from "../../services/items";
 import Item from "./components/Item";
-import Pagination from "./components/Pagination";
+import Pagination from "../../components/Pagination";
 
 interface Props {
   isLogged: boolean;
