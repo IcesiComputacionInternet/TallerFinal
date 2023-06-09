@@ -137,3 +137,8 @@
   .cart-modal .text-center {
     margin-top: 20px;
   }
+
+  .btn-primary {
+    font-size: 20px;
+    margin-right: 10px;
+  }  

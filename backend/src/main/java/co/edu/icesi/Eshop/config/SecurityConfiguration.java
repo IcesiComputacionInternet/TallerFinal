@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authorization.AuthorityAuthorizationManager;
@@ -89,6 +90,10 @@ public class SecurityConfiguration {
         managerBuilder.add(new MvcRequestMatcher(introspector, "/orders/**"), AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN", "SCOPE_SHOP","SCOPE_USER"));
 
         managerBuilder.add(new MvcRequestMatcher(introspector, "/users/**"), AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
+
+        MvcRequestMatcher  tempMvcRequestMatcher = new MvcRequestMatcher(introspector, "/categories");
+        tempMvcRequestMatcher.setMethod(HttpMethod.GET);
+        managerBuilder.add(tempMvcRequestMatcher, AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_SHOP","SCOPE_ADMIN"));
 
         managerBuilder.add(new MvcRequestMatcher(introspector, "/categories/**"), AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_ADMIN"));
 

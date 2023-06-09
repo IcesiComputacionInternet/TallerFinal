@@ -5,6 +5,7 @@ import { BsCartFill, BsTrash } from "react-icons/bs";
 import Logout from "./Logout";
 import "../ShopHome.css";
 import ReactModal from "react-modal";
+import { Link } from "react-router-dom";
 
 interface Item {
   itemId: string;
@@ -19,7 +20,7 @@ interface Item {
   marca: string;
   model: string;
   guarantee: number;
-  available: boolean;
+  available?: boolean;
 }
 
 const ShopHome = () => {
@@ -79,12 +80,38 @@ const ShopHome = () => {
     }
   };
 
+  const handleOrder = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8091/orders",
+        {
+          items: cartItems.map((item) => item.itemId),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
+        }
+      );
+      if (response.status === 201) {
+        setCartItems([]);
+        alert("Orden realizada con éxito");
+      }
+    } catch (error) {
+      console.error("Error creating order:", error);
+      alert("Ocurrió un error al crear la orden");
+    }
+  };
+
   return (
     <div>
       <Navbar bg="primary" variant="dark" fixed="top" className="justify-content-between">
         <Navbar.Brand href="#home">Mi Tienda</Navbar.Brand>
-        <div className="d-flex align-items-center ml-auto">
-          <div className="cart-icon-container mr-3" onClick={handleOpenCartModal}>
+        <div className="d-flex align-items-center">
+          <div className="mr-4">
+            <Link to="/orders" className="btn btn-light">Orders</Link>
+          </div>
+          <div className="cart-icon-container ml-auto" onClick={handleOpenCartModal}>
             <BsCartFill size={24} />
             <span className="cart-item-count">{cartItems.length}</span>
           </div>
@@ -128,8 +155,8 @@ const ShopHome = () => {
           <p>No hay productos en el carrito</p>
         )}
         <div className="text-center">
-          <Button variant="danger" onClick={handleClearCart} disabled={cartItems.length === 0}>
-            <BsTrash /> Eliminar todos los productos
+          <Button variant="danger" onClick={handleOrder} disabled={cartItems.length === 0}>
+            Hacer orden
           </Button>
           <Button variant="secondary" onClick={handleCloseCartModal}>
             Cerrar
