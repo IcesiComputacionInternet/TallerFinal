@@ -75,7 +75,7 @@ const movie = () => {
         imageURL: data.imageURL,
         pgRating: data.pgRating,
         price: data.price,
-        categoryName: data.categoryDTO.name,
+        categoryName: data.categoryName,
       });
       //console.log(movie);
       setIsLoading(false);
