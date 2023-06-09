@@ -56,8 +56,6 @@
 .imageSection{
     border-radius: 15px 15px 0px 0px;
     height:50%;
-    background-image: url("https://img.freepik.com/free-psd/helmet-mock-up_1310-159.jpg?w=1060&t=st=1686239528~exp=1686240128~hmac=64e1bfc487d13dc3f516ed6bcbbdd4ddd1a8528957c7d7d22339cc9562ac1c6a");
-    background-size: contain;
 }
 
 .infoSection{

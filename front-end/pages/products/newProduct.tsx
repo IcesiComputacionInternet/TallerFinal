@@ -3,11 +3,29 @@ import { Button, Divider } from "@mui/material";
 import {TextField} from "@mui/material";
 import Autocomplete from '@mui/material/Autocomplete';
 import axios from "axios";
-import { useRef } from "react";
+import { useRef,useState,useEffect } from "react";
 
 const options = [{ label: 'The Shawshank Redemption', year: 1994 },{label:'Hey',year:1886} ];
 
 export default function NewProduct(){
+    const [categories,setCategories] = useState([]);
+        useEffect(() => {
+            axios.get("http://localhost:9090/category/all",{
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                }
+            }).then((response) => {
+                setCategories(response.data.map((category:any) => {
+                    return {label: category.name, id: category.id};
+                }));
+                console.log(categories);
+            }).catch((error) => {
+                console.log(error);
+            });
+        },[]);
+
+
     const nameRef = useRef();
     const priceRef = useRef();
     const brandRef = useRef();
@@ -35,8 +53,13 @@ export default function NewProduct(){
             category: category,
             description: description,
             imageURL:image
+        },{
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
         }).then((response) => {
-            console.log(response);
+            console.log(response.data);
             alert("Product created successfully");
             window.location.href = "/products";
         }).catch((error) => {
@@ -46,6 +69,8 @@ export default function NewProduct(){
     };
 
     return(
+        
+
         <div className={styles.maxContainer}>
             <div className={styles.insideContainer}>
                 <div className={styles.formSection}>
@@ -60,12 +85,12 @@ export default function NewProduct(){
                     <h2>Initial stock</h2>
                     <TextField id="outlined-basic"  variant="outlined" size="small" inputRef={stockRef}/>
                     <h2>Image URL</h2>
-                    <TextField id="outlined-basic"  variant="outlined" size="small" inputRef={stockRef}/>
+                    <TextField id="outlined-basic"  variant="outlined" size="small" inputRef={imgRef}/>
                     <h2>Category</h2>
                     <Autocomplete
                         disablePortal
                         id="combo-box-demo"
-                        options={options}
+                        options={categories}
                         sx={{ width: 300 }}
                         renderInput={(params) => <TextField {...params} size="small"  inputRef={categoryRef}/>}
                     />

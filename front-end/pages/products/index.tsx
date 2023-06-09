@@ -4,6 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ProductItem from "../../components/ProductItem";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 const theme = createTheme({
     palette: {
@@ -17,6 +18,20 @@ const theme = createTheme({
 });
 
 export default function Producst(props:any){
+    const [products,setProducts] = useState([]);
+    useEffect(() => {
+        axios.get("http://localhost:9090/item/all",{
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        }).then((response) => {
+            setProducts(response.data);
+        }).catch((error) => {
+            console.log(error);
+        });
+    },[]);
+
     const handleAddProduct = () => {
         window.location.href = "/products/newProduct";
     }
@@ -37,24 +52,13 @@ export default function Producst(props:any){
                 <div className={styles.itemsSection}>
                     <div className={styles.itemsList}>
                         <ProductItem name="Product 1" price={100} amount={10} category="Category 1" productId="1"/>
-                        
+                        {products.map((product:any) => {
+                            return <ProductItem name={product.name} price={product.price} amount={product.stock} category={product.category.name} productId={product.id}/>
+                        })
+                        }
                     </div>
                 </div>
             </div>
         </div>
     )
 }
-
-/**export async function getServerSideProps(context:any){
-    const data = await axios.get("http://localhost:9090/item/all",{
-        headers:{
-            "Authorization":"Bearer " + localStorage.getItem("token"),
-            "Content-Type":"application/json"
-        }
-    })
-    return{
-        props:{
-            data
-        }
-    }
-}**/

@@ -36,8 +36,9 @@ export default function index() {
       password: password
     }).then((response) => {
         console.log(response.data);
-        //localStorage.setItem("token", response.data.token);
-        //localStorage.setItem("role", response.data.role);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("role", response.data.role.toLowerCase());
+        window.location.href = "/home";
     }).catch((error) => {
         console.log(error)
     });

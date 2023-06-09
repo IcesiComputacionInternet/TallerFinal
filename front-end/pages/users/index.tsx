@@ -1,7 +1,11 @@
 import styles from "../../styles/Admin.module.css";
 import UserItem from "../../components/UserItem";
+import {useState,useEffect} from "react";
 
 export default function Users(){
+    const [users,setUsers] = useState([]);
+    
+
     return(
         <div className={styles.maxContainer} >
             <div className={styles.insideContainer}>
