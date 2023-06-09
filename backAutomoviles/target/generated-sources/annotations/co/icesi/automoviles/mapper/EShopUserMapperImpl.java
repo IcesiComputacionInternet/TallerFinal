@@ -6,12 +6,10 @@ import co.icesi.automoviles.dto.EShopUserShowDTO;
 import co.icesi.automoviles.dto.EShopUserShowDTOForPurchaseOrder;
 import co.icesi.automoviles.dto.ItemShowDTO;
 import co.icesi.automoviles.dto.PurchaseOrderShowDTO;
-import co.icesi.automoviles.dto.RoleShowDTO;
 import co.icesi.automoviles.model.Category;
 import co.icesi.automoviles.model.EShopUser;
 import co.icesi.automoviles.model.Item;
 import co.icesi.automoviles.model.PurchaseOrder;
-import co.icesi.automoviles.model.Role;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -19,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-08T23:11:04-0500",
+    date = "2023-06-09T07:05:44-0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component
@@ -40,7 +38,6 @@ public class EShopUserMapperImpl implements EShopUserMapper {
         eShopUser.address( EShopUserCreateDTO.getAddress() );
         eShopUser.birthDate( EShopUserCreateDTO.getBirthDate() );
         eShopUser.password( EShopUserCreateDTO.getPassword() );
-        eShopUser.role( roleShowDTOToRole( EShopUserCreateDTO.getRole() ) );
 
         return eShopUser.build();
     }
@@ -60,7 +57,6 @@ public class EShopUserMapperImpl implements EShopUserMapper {
         eShopUserCreateDTO.address( eShopUser.getAddress() );
         eShopUserCreateDTO.birthDate( eShopUser.getBirthDate() );
         eShopUserCreateDTO.password( eShopUser.getPassword() );
-        eShopUserCreateDTO.role( roleToRoleShowDTO( eShopUser.getRole() ) );
 
         return eShopUserCreateDTO.build();
     }
@@ -101,34 +97,6 @@ public class EShopUserMapperImpl implements EShopUserMapper {
         eShopUserShowDTOForPurchaseOrder.birthDate( eShopUser.getBirthDate() );
 
         return eShopUserShowDTOForPurchaseOrder.build();
-    }
-
-    protected Role roleShowDTOToRole(RoleShowDTO roleShowDTO) {
-        if ( roleShowDTO == null ) {
-            return null;
-        }
-
-        Role.RoleBuilder role = Role.builder();
-
-        role.roleId( roleShowDTO.getRoleId() );
-        role.roleName( roleShowDTO.getRoleName() );
-        role.description( roleShowDTO.getDescription() );
-
-        return role.build();
-    }
-
-    protected RoleShowDTO roleToRoleShowDTO(Role role) {
-        if ( role == null ) {
-            return null;
-        }
-
-        RoleShowDTO.RoleShowDTOBuilder roleShowDTO = RoleShowDTO.builder();
-
-        roleShowDTO.roleId( role.getRoleId() );
-        roleShowDTO.roleName( role.getRoleName() );
-        roleShowDTO.description( role.getDescription() );
-
-        return roleShowDTO.build();
     }
 
     protected CategoryShowDTOForItem categoryToCategoryShowDTOForItem(Category category) {
