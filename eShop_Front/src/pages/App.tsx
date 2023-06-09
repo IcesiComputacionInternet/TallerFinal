@@ -14,7 +14,6 @@ function App() {
   );
   
   const token = localStorage.getItem("jwt")
-  console.log(token)
   useEffect(() => {
     localStorage.setItem("logged_user", JSON.stringify(isLoggedIn));
   }, [isLoggedIn]);
