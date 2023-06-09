@@ -1,5 +1,6 @@
 import {faTag,
-        faScroll } from "@fortawesome/free-solid-svg-icons";
+        faScroll} from "@fortawesome/free-solid-svg-icons";
+import {faProductHunt} from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ManageCategories = () => {
@@ -36,6 +37,24 @@ const ManageRoles = () => {
     )
 }
 
+const ManageItems = () => {
+    return(
+        <strong>
+            <a href="/manage/items" className="nav-link text-black">
+                <ul className="list-inline">
+                    <li className="list-inline-item">
+                        <FontAwesomeIcon icon={faProductHunt}/>
+                    </li>
+                    <li className="list-inline-item">
+                        Manage Items
+                    </li>
+                </ul>
+            </a>
+        </strong>
+    )
+}
+
+
 function Manager() {
     return(
         <div className="container">
@@ -43,8 +62,16 @@ function Manager() {
                 <h1 className="text-center">Manager</h1>
             </div>
             <div className="row d-flex">
-                <ManageCategories/>
-                <ManageRoles/>
+                {localStorage.getItem('role') === 'ADMIN' ? <>
+                    <ManageCategories/>
+                    <ManageRoles/>
+                    <ManageItems/>
+                    {/* Manage Users */}
+                    {/* Manage Orders */}
+                </>: <>
+                    <ManageItems/>
+                    {/* Manage Orders */}
+                </>}
             </div>
         </div>
     )

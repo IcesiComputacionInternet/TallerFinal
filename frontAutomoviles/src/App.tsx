@@ -12,6 +12,7 @@ import Orders from './views/Orders/Orders';
 import Category from './views/Manager/Category/Category';
 import Manager from './views/Manager/Manager';
 import Role from './views/Manager/Role/Role';
+import Item from './views/Manager/Item/Item';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
@@ -71,7 +72,11 @@ function App() {
           />
           <Route
             path="/manage"
-            element={localStorage.getItem('role') === 'ADMIN' ? <Manager /> : <Navigate to='/' />}
+            element={localStorage.getItem('role') === 'ADMIN' || localStorage.getItem('role') === 'SHOP'  ? <Manager /> : <Navigate to='/' />}
+          />
+          <Route
+            path="/manage/items"
+            element={localStorage.getItem('role') === 'ADMIN' || localStorage.getItem('role') === 'SHOP'  ? <Item setInfoToast={handleOpenToast} /> : <Navigate to='/' />}
           />
           <Route
             path="/manage/categories"
