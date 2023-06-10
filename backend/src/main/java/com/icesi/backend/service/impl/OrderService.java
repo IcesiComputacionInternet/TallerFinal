@@ -75,13 +75,13 @@ public class OrderService implements OrderServiceInterface {
         orderItems.forEach(it-> {
             it.getItems().forEach(item -> {
                 item.setAvailable(false);
-                itemRepository.updateItemAvailabilityByItemId (item.getDescription(),item.getName(),(long)item.getPrice(),item.getImgUrl(),item.getCategory(),item.isAvailable(), item.getItemId());
+                itemRepository.updateItemAvailabilityByItemId (false, item.getItemId());
             });                                             //String description, String name, Double price, String imgUrl, String category, boolean available, UUID itemId
         });
 
         double total = orderItems.stream().reduce(0.0, (a, b) ->{
             Optional<Item> item = b.getItems().stream().findFirst();
-            return item.map(value -> a + b.getQuantity() * value.getPrice()).orElse(a);
+            return item.map(value -> a + b.getQuantity() * value.getItemType().getPrice()).orElse(a);
         } , Double::sum);
 
         order.setTotal((long) total);

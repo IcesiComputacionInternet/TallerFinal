@@ -19,7 +19,7 @@ public interface ItemRepository extends JpaRepository<Item, UUID> {
 
     @Transactional
     @Modifying
-    @Query("update Item i SET i.description = ?1, i.name = ?2, i.price = ?3, i.imgUrl = ?4, i.category = ?5, i.available = ?6 WHERE i.itemId = ?7")
-    void updateItemAvailabilityByItemId(String description, String name, long price, String imgUrl, Category category, boolean available, UUID itemId);
+    @Query("update Item i set i.available = ?1 where i.itemId = ?2")
+    void updateItemAvailabilityByItemId(boolean available, UUID itemId);
 
 }

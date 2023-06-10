@@ -11,8 +11,33 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
+    @Mapping(source = "orderId", target = "orderId")
+    @Mapping(source = "status", target = "status")
+    @Mapping(source = "total", target = "total")
+    @Mapping(source = "user.userId", target = "userId")
+    @Mapping(source = "orderItemList", target = "orderItems")
+    OrderDTO fromOrder(Order order);
 
+    @Mapping(source = "orderId", target = "orderId")
+    @Mapping(source = "status", target = "status")
+    @Mapping(source = "total", target = "total")
+    @Mapping(source = "userId", target = "user.userId")
+    @Mapping(source = "orderItems", target = "orderItemList")
+    Order fromDTO(OrderDTO orderDTO);
 
+    @Mapping(target = "orderItemId", source = "orderItemId")
+    @Mapping(target = "quantity", source = "quantity")
+    OrderItem fromDTO(OrderItemDTO orderItemDTO);
+
+    @Mapping(target = "orderItemId", source = "orderItemId")
+    @Mapping(target = "quantity", source = "quantity")
+    default OrderItemDTO fromOrderItem(OrderItem orderItem){
+        return OrderItemDTO.builder()
+                .orderItemId(orderItem.getOrderItemId())
+                .quantity(orderItem.getQuantity())
+                .itemId(orderItem.getItems().stream().findFirst().orElseThrow().getItemType().getItemTypeId())
+                .build();
+    }
 
     default String fromOrderStatus(OrderStatus status) {
         return status.getMessage();
@@ -21,4 +46,6 @@ public interface OrderMapper {
     default OrderStatus toOrderStatus(String status) {
         return OrderStatus.valueOf(status);
     }
+
+
 }

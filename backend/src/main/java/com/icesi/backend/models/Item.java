@@ -14,23 +14,19 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Item {
 
-    @Column(nullable = false, unique = true)
     @Id
     @Type(type = "org.hibernate.type.PostgresUUIDType")
     private UUID itemId;
-    private String description;
-    private String name;
-    private Long price;
-    private String imgUrl;
-    @ManyToOne
-    private Category category;
+
     private boolean available;
+
+    @ManyToOne
+    @JoinColumn(name = "item_type_id")
+    private ItemType itemType;
+
 
     @PrePersist
     public void generateId() {
         this.itemId = UUID.randomUUID();
     }
-
-
-
 }
