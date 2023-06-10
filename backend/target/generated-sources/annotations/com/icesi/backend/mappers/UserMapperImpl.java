@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-10T09:37:21-0500",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Oracle Corporation)"
+    date = "2023-06-10T13:25:03-0500",
+    comments = "version: 1.5.3.Final, compiler: Eclipse JDT (IDE) 3.34.0.v20230511-1142, environment: Java 17.0.7 (Eclipse Adoptium)"
 )
 @Component
 public class UserMapperImpl implements UserMapper {
@@ -44,14 +44,14 @@ public class UserMapperImpl implements UserMapper {
 
         ShopUser.ShopUserBuilder shopUser = ShopUser.builder();
 
-        shopUser.userId( userUpdateDTO.getUserId() );
-        shopUser.password( userUpdateDTO.getPassword() );
-        shopUser.firstName( userUpdateDTO.getFirstName() );
-        shopUser.lastName( userUpdateDTO.getLastName() );
-        shopUser.email( userUpdateDTO.getEmail() );
-        shopUser.phoneNumber( userUpdateDTO.getPhoneNumber() );
         shopUser.address( userUpdateDTO.getAddress() );
         shopUser.birthday( userUpdateDTO.getBirthday() );
+        shopUser.email( userUpdateDTO.getEmail() );
+        shopUser.firstName( userUpdateDTO.getFirstName() );
+        shopUser.lastName( userUpdateDTO.getLastName() );
+        shopUser.password( userUpdateDTO.getPassword() );
+        shopUser.phoneNumber( userUpdateDTO.getPhoneNumber() );
+        shopUser.userId( userUpdateDTO.getUserId() );
 
         return shopUser.build();
     }
@@ -64,11 +64,11 @@ public class UserMapperImpl implements UserMapper {
 
         ShopUser.ShopUserBuilder shopUser = ShopUser.builder();
 
-        shopUser.userId( userDTO.getUserId() );
+        shopUser.address( userDTO.getAddress() );
         shopUser.email( userDTO.getEmail() );
         shopUser.phoneNumber( userDTO.getPhoneNumber() );
-        shopUser.address( userDTO.getAddress() );
         shopUser.role( roleDTOToRole( userDTO.getRole() ) );
+        shopUser.userId( userDTO.getUserId() );
 
         return shopUser.build();
     }
@@ -81,11 +81,11 @@ public class UserMapperImpl implements UserMapper {
 
         UserDTO userDTO = new UserDTO();
 
-        userDTO.setUserId( user.getUserId() );
+        userDTO.setAddress( user.getAddress() );
         userDTO.setEmail( user.getEmail() );
         userDTO.setPhoneNumber( user.getPhoneNumber() );
-        userDTO.setAddress( user.getAddress() );
         userDTO.setRole( roleToRoleDTO( user.getRole() ) );
+        userDTO.setUserId( user.getUserId() );
 
         return userDTO;
     }
@@ -98,8 +98,8 @@ public class UserMapperImpl implements UserMapper {
 
         ShopUser.ShopUserBuilder shopUser = ShopUser.builder();
 
-        shopUser.password( userCreateDTO.getPassword() );
         shopUser.email( userCreateDTO.getEmail() );
+        shopUser.password( userCreateDTO.getPassword() );
         shopUser.phoneNumber( userCreateDTO.getPhoneNumber() );
 
         return shopUser.build();
@@ -112,9 +112,9 @@ public class UserMapperImpl implements UserMapper {
 
         PermissionUser.PermissionUserBuilder permissionUser = PermissionUser.builder();
 
-        permissionUser.uri( permissionUserDTO.getUri() );
-        permissionUser.permissionKey( permissionUserDTO.getPermissionKey() );
         permissionUser.method( permissionUserDTO.getMethod() );
+        permissionUser.permissionKey( permissionUserDTO.getPermissionKey() );
+        permissionUser.uri( permissionUserDTO.getUri() );
 
         return permissionUser.build();
     }
@@ -152,9 +152,9 @@ public class UserMapperImpl implements UserMapper {
 
         PermissionUserDTO permissionUserDTO = new PermissionUserDTO();
 
-        permissionUserDTO.setUri( permissionUser.getUri() );
-        permissionUserDTO.setPermissionKey( permissionUser.getPermissionKey() );
         permissionUserDTO.setMethod( permissionUser.getMethod() );
+        permissionUserDTO.setPermissionKey( permissionUser.getPermissionKey() );
+        permissionUserDTO.setUri( permissionUser.getUri() );
 
         return permissionUserDTO;
     }

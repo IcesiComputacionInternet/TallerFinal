@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-10T09:37:21-0500",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.6 (Oracle Corporation)"
+    date = "2023-06-10T13:25:02-0500",
+    comments = "version: 1.5.3.Final, compiler: Eclipse JDT (IDE) 3.34.0.v20230511-1142, environment: Java 17.0.7 (Eclipse Adoptium)"
 )
 @Component
 public class RoleMapperImpl implements RoleMapper {
@@ -26,8 +26,8 @@ public class RoleMapperImpl implements RoleMapper {
 
         Role.RoleBuilder role = Role.builder();
 
-        role.roleName( roleCreateDTO.getRoleName() );
         role.description( roleCreateDTO.getDescription() );
+        role.roleName( roleCreateDTO.getRoleName() );
 
         return role.build();
     }
@@ -67,9 +67,9 @@ public class RoleMapperImpl implements RoleMapper {
 
         PermissionUser.PermissionUserBuilder permissionUser = PermissionUser.builder();
 
-        permissionUser.uri( permissionUserDTO.getUri() );
-        permissionUser.permissionKey( permissionUserDTO.getPermissionKey() );
         permissionUser.method( permissionUserDTO.getMethod() );
+        permissionUser.permissionKey( permissionUserDTO.getPermissionKey() );
+        permissionUser.uri( permissionUserDTO.getUri() );
 
         return permissionUser.build();
     }
@@ -94,9 +94,9 @@ public class RoleMapperImpl implements RoleMapper {
 
         PermissionUserDTO permissionUserDTO = new PermissionUserDTO();
 
-        permissionUserDTO.setUri( permissionUser.getUri() );
-        permissionUserDTO.setPermissionKey( permissionUser.getPermissionKey() );
         permissionUserDTO.setMethod( permissionUser.getMethod() );
+        permissionUserDTO.setPermissionKey( permissionUser.getPermissionKey() );
+        permissionUserDTO.setUri( permissionUser.getUri() );
 
         return permissionUserDTO;
     }

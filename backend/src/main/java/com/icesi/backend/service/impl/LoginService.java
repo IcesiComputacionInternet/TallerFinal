@@ -4,8 +4,6 @@ package com.icesi.backend.service.impl;
 
 import com.icesi.backend.DTO.LoginDTO;
 import com.icesi.backend.DTO.TokenDTO;
-import com.icesi.backend.error.exception.EShopError;
-import com.icesi.backend.error.exception.EShopException;
 import com.icesi.backend.errorConstants.BackendApplicationErrors;
 import com.icesi.backend.models.PermissionUser;
 import com.icesi.backend.models.Role;
@@ -26,27 +24,29 @@ import java.util.UUID;
 @Service
 public class LoginService implements LoginServiceInterface {
 
-    public final UserRepository userRepository;
+    private UserRepository userRepository;
 
-    public final RoleRepository roleRepository;
+    private  RoleRepository roleRepository;
 
     @Override
     public TokenDTO loginByEmail(LoginDTO loginDTO) {
-        ShopUser user = userRepository.findByEmail(loginDTO.getUsername()).orElseThrow(()->new EShopException(HttpStatus.NOT_FOUND, new EShopError(BackendApplicationErrors.CODE_U_01, BackendApplicationErrors.CODE_U_01.getMessage())));
+        ShopUser user = userRepository.findByEmail(loginDTO.getUsername()).orElseThrow(()->new RuntimeException(BackendApplicationErrors.CODE_U_01.getMessage()));
         validatePassword(user.getPassword(), loginDTO.getPassword());
         return createTokenDTO(user);
     }
 
     @Override
     public TokenDTO loginByPhoneNumber(LoginDTO loginDTO) {
-        ShopUser user = userRepository.findByPhoneNumber(loginDTO.getUsername()).orElseThrow(()->new EShopException(HttpStatus.NOT_FOUND, new EShopError(BackendApplicationErrors.CODE_U_01, BackendApplicationErrors.CODE_U_01.getMessage())));
+
+        ShopUser user = userRepository.findByPhoneNumber(loginDTO.getUsername()).orElseThrow(()->new RuntimeException(BackendApplicationErrors.CODE_I_01.getMessage()));
+
         validatePassword(user.getPassword(), loginDTO.getPassword());
         return createTokenDTO(user);
     }
 
     @Override
     public List<PermissionUser> getPermissionsByRoleId(UUID roleId) {
-        Role role = roleRepository.findById(roleId).orElseThrow(()->new EShopException(HttpStatus.NOT_FOUND, new EShopError(BackendApplicationErrors.CODE_L_04, BackendApplicationErrors.CODE_L_04.getMessage())));
+        Role role = roleRepository.findById(roleId).orElseThrow(()->new RuntimeException(BackendApplicationErrors.CODE_L_02.getMessage()));
         return role.getRolePermissions();
     }
 
@@ -54,12 +54,12 @@ public class LoginService implements LoginServiceInterface {
         Map<String, String> claims = new HashMap<>();
         claims.put("userId", user.getUserId().toString());
         claims.put("roleId", user.getRole().getRoleId().toString());
-        return new TokenDTO(Token_Parser.createJWT(user.getUserId().toString(), user.getEmail(), user.getEmail(), claims, 1000L*60*20), user.getRole().getRoleName(), user.getUserId().toString());
+        return new TokenDTO(Token_Parser.createJWT(user.getUserId().toString(), user.getEmail(), user.getEmail(), claims, 1000L*60*20), "shopUser", user.getUserId().toString());
     }
 
     private void validatePassword(String userPassword, String loginDTOPassword) {
         if (!userPassword.equals(loginDTOPassword))
-            throw new EShopException(HttpStatus.BAD_REQUEST, new EShopError(BackendApplicationErrors.CODE_L_02, BackendApplicationErrors.CODE_L_02.getMessage()));
+            throw new RuntimeException(BackendApplicationErrors.CODE_U_01.getMessage());
     }
 
 }
