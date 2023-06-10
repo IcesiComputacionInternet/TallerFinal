@@ -7,7 +7,7 @@ import com.icesi.backend.error.exception.EShopException;
 import com.icesi.backend.errorConstants.BackendApplicationErrors;
 import com.icesi.backend.models.PermissionUser;
 import com.icesi.backend.service.LoginServiceInterface;
-import com.icesi.backend.service.impl.Token_Parser;
+import com.icesi.backend.service.impl.TokenParser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -19,7 +19,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -30,6 +29,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
+
+import org.springframework.security.core.Authentication;
 
 @Component
 @AllArgsConstructor
@@ -76,7 +77,7 @@ public class AuthorizationTokenFilter extends OncePerRequestFilter implements Au
         try {
             if (containsToken(request)) {
                 String jwtToken = request.getHeader(AUTHORIZATION_HEADER).replace(TOKEN_PREFIX, StringUtils.EMPTY);
-                Claims claims = Token_Parser.decodeJWT(jwtToken);
+                Claims claims = TokenParser.decodeJWT(jwtToken);
                 SecurityContext context = parseClaims(jwtToken, claims);
                 SecurityContextHolder.setUserContext(context);
                 roleFilter(context, request, response);

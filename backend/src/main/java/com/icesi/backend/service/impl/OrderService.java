@@ -1,6 +1,8 @@
 package com.icesi.backend.service.impl;
 
 import com.icesi.backend.DTO.OrderItemDTO;
+import com.icesi.backend.error.exception.EShopError;
+import com.icesi.backend.error.exception.EShopException;
 import com.icesi.backend.errorConstants.BackendApplicationErrors;
 import com.icesi.backend.mappers.OrderMapper;
 import com.icesi.backend.models.Item;

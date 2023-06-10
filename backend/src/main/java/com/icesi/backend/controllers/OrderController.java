@@ -5,7 +5,6 @@ import com.icesi.backend.DTO.OrderUpdateDTO;
 import com.icesi.backend.api.OrderAPI;
 import com.icesi.backend.mappers.OrderMapper;
 import com.icesi.backend.service.impl.OrderService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;

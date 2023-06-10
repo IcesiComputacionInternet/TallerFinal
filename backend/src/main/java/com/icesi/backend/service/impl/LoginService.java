@@ -12,7 +12,6 @@ import com.icesi.backend.respositories.RoleRepository;
 import com.icesi.backend.respositories.UserRepository;
 import com.icesi.backend.service.LoginServiceInterface;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -54,7 +53,7 @@ public class LoginService implements LoginServiceInterface {
         Map<String, String> claims = new HashMap<>();
         claims.put("userId", user.getUserId().toString());
         claims.put("roleId", user.getRole().getRoleId().toString());
-        return new TokenDTO(Token_Parser.createJWT(user.getUserId().toString(), user.getEmail(), user.getEmail(), claims, 1000L*60*20), "shopUser", user.getUserId().toString());
+        return new TokenDTO(TokenParser.createJWT(user.getUserId().toString(), user.getEmail(), user.getEmail(), claims, 1000L*60*20), "shopUser", user.getUserId().toString());
     }
 
     private void validatePassword(String userPassword, String loginDTOPassword) {

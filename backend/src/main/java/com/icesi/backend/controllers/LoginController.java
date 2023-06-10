@@ -5,9 +5,13 @@ import com.icesi.backend.validation.EmailValidator;
 import com.icesi.backend.validation.PhoneNumberValidator;
 import com.icesi.backend.DTO.TokenDTO;
 import com.icesi.backend.api.LoginAPI;
+import com.icesi.backend.error.exception.EShopError;
+import com.icesi.backend.error.exception.EShopException;
 import com.icesi.backend.errorConstants.BackendApplicationErrors;
 import com.icesi.backend.service.LoginServiceInterface;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 

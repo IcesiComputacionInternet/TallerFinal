@@ -1,5 +1,6 @@
 package com.icesi.backend.error.exception;
 
+import com.icesi.backend.errorConstants.BackendApplicationErrors;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 

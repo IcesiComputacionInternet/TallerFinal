@@ -1,5 +1,10 @@
 package com.icesi.backend.service.impl;
 
+import com.icesi.backend.DTO.ItemCreateDTO;
+import com.icesi.backend.error.EshopErrorCode;
+import com.icesi.backend.error.exception.EShopError;
+import com.icesi.backend.error.exception.EShopException;
+import com.icesi.backend.error.exception.ErrorDetail;
 import com.icesi.backend.errorConstants.BackendApplicationErrors;
 import com.icesi.backend.models.Item;
 import com.icesi.backend.models.ItemType;
@@ -7,6 +12,7 @@ import com.icesi.backend.respositories.ItemRepository;
 import com.icesi.backend.respositories.ItemTypeRepository;
 import com.icesi.backend.service.ItemServiceInterface;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 

@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Map;
 
 
-public class Token_Parser {
+public class TokenParser {
 
     private static final String SECRET_KEY = "longenoguhkeytotestthisimplementationsomebytesmore";
 

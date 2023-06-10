@@ -24,7 +24,7 @@ public class SecurityContext implements Serializable {
     public UUID getUserId() {
         return Optional.ofNullable(userId).orElseThrow();
     }
-
+    
     public UUID getRoleId() {
         return Optional.ofNullable(roleId).orElseThrow();
     }
